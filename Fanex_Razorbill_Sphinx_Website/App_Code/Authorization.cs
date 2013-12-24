@@ -1,0 +1,75 @@
+﻿using System;
+using System.Collections;
+using Fanex.Data.DNAide;
+using Sunplus.Agent.Utilities;
+
+public class Authorization
+{
+    public static void LoginVerifyDownline(
+        string userName,
+        string password,
+        string ip,
+        string domain,
+        out int custId,
+        out int subAccId,
+        out DateTime loginTime,
+        out int errCode,
+        out string errMsg)
+    {
+
+        Hashtable parameters = new Hashtable();
+        parameters.Add("username", userName);
+        parameters.Add("userpwd", Encryption.CfsEnCode(password));
+        parameters.Add("custid", 0);
+        parameters.Add("subaccid", 0);
+        parameters.Add("loginip", ip);
+        parameters.Add("logindomain", domain);
+        parameters.Add("serverid", 0);
+        parameters.Add("logintime", DateTime.Now);
+        parameters.Add("language", AppSessions.LangKey);
+        parameters.Add("errcode", 0);
+        parameters.Add("errmsg", string.Empty);
+
+        DbResult dr = ExecSp("Age_LoginVerifyDownline", parameters, DbTypes.MAIN);
+
+        errCode = (int)(dr.Outputs["errcode"]);
+        errMsg = (string)(dr.Outputs["errmsg"]);
+        custId = (int)(dr.Outputs["custid"]);
+        subAccId = (int)(dr.Outputs["subaccid"]);
+        loginTime = (DateTime)(dr.Outputs["logintime"]);
+    }
+
+    #region Base
+
+    const int _DefaultTimeOut = 600;
+
+    private static DbResult ExecSp(string spName, Hashtable parameters, string dbType)
+    {
+        return ExecSp(spName, parameters, dbType, _DefaultTimeOut);
+    }
+
+    private static DbResult ExecSp(string spName, Hashtable parameters, string dbType, int timeOut)
+    {
+        DbResult dbResult = null;
+        try
+        {
+            dbResult = DbHelper.ExecuteDbResult(spName, parameters, timeOut);
+        }
+        catch (System.Data.SqlClient.SqlException e)
+        {
+            // Logging SP error here
+            Logs.Write(e);
+
+            // Throw for system redirect to CustomError pages
+#if DEBUG
+                throw;
+#endif
+        }
+
+        return dbResult;
+    }
+
+    #endregion
+
+}
+

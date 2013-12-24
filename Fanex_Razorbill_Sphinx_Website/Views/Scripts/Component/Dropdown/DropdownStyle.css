@@ -1,0 +1,123 @@
+﻿
+
+.ddSelect {
+    width: 150px;
+}
+
+.ddSelect .ddItem
+{
+    cursor: pointer;    
+           
+}
+
+.ddSelect .ddItem .flag-en {
+    background-image: url("Image/flags_en.jpg");
+    background-repeat: no-repeat;
+    color: #B96643;
+    display: inline-block;
+    height: 17px;
+    line-height: 11px;
+    padding-left: 30px;
+    padding-top: 2px;
+    vertical-align: text-top;
+}
+.ddSelect .ddItem .flag-vn {
+    background-image: url("Image/flags_vn.jpg");
+    background-repeat: no-repeat;
+    color: #B96643;
+    display: inline-block;
+    height: 17px;
+    line-height: 11px;
+    padding-left: 30px;
+    padding-top: 2px;
+    vertical-align: text-top;
+}
+.ddSelect .ddItem .flag-tw {
+    background-image: url("Image/flags_tw.jpg");
+    background-repeat: no-repeat;
+    color: #B96643;
+    display: inline-block;
+    height: 17px;
+    line-height: 11px;
+    padding-left: 30px;
+    padding-top: 2px;
+    vertical-align: text-top;
+}
+.ddSelect .ddItem .flag-cn {
+    background-image: url("Image/flags_cn.jpg");
+    background-repeat: no-repeat;
+    color: #B96643;
+    display: inline-block;
+    height: 17px;
+    line-height: 11px;
+    padding-left: 30px;
+    padding-top: 2px;
+    vertical-align: text-top;
+}
+.ddSelect .ddItem .flag-kr {
+    background-image: url("Image/flags_kr.jpg");
+    background-repeat: no-repeat;
+    color: #B96643;
+    display: inline-block;
+    height: 17px;
+    line-height: 11px;
+    padding-left: 30px;
+    padding-top: 2px;
+    vertical-align: text-top;
+}
+.ddSelect .ddItem .flag-jp {
+    background-image: url("Image/flags_jp.jpg");
+    background-repeat: no-repeat;
+    color: #B96643;
+    display: inline-block;
+    height: 17px;
+    line-height: 11px;
+    padding-left: 30px;
+    padding-top: 2px;
+    vertical-align: text-top;
+}
+
+.ddSelect .ddItem .flag-th {
+    background-image: url("Image/flags_th.jpg");
+    background-repeat: no-repeat;
+    color: #B96643;
+    display: inline-block;
+    height: 17px;
+    line-height: 11px;
+    padding-left: 30px;
+    padding-top: 2px;
+    vertical-align: text-top;
+}
+
+.ddSelect .ddItem table {
+    width: 100%;
+}
+
+.ddSelect .ddItem .flag {
+    width: 24px;
+}
+
+.ddSelect .ddItem .alignleft {
+    text-align: left;
+}
+.ddSelect .ddItem .alignright {
+    text-align: right;
+}
+
+.ddSelect .caret {
+    display: inline-block;
+    background-image: url("Image/down.png");
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+}
+
+#divItemList {
+    border: 1px solid #B96643;
+    margin-left: -1px;
+}
+#lbLanguage {
+	color:#B96643;
+	font-size: 13px;
+}
+   

@@ -1,0 +1,143 @@
+﻿@model Fanex.Razorbill.Sphinx.Service.UserLogin.Models.LoginResult
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sign In</title>
+    <link href="~/Views/Login/Template/MidAutumn1/Styles/SignIn.css" rel="stylesheet"
+        type="text/css" />
+</head>
+<body>
+    <div id="table_main">
+        <center>
+        <div id="center">            
+            @using (Html.BeginForm())
+            {    
+            <div class="headerBg">
+                <center>
+                    <table class="mainBox" border="0" cellpadding="3" cellspacing="0">
+                        <tr>       
+                            <td>
+                                <div class="boxLanguage">
+                                    <div id="spnLanguage" class="language" style="display:none"></div>
+                                    <div id="imgCbo">
+                                        <div class="grpCombo" onclick="showHideBox()">
+                                            <div id="mainFlag" class="fEnUS"></div><div id="selLanguage">English</div><div id="imgDrop"></div>
+                                        </div>
+                                    </div> 
+                                    <div id="cboLang">
+                                            <div id="lanEnUS" onclick="SelectLanguage(0)">
+                                                <div id="imgEnUS"></div>
+                                                <div class="txtLang">English</div>
+                                            </div>
+                                            <div id="lanZhTW" onclick="SelectLanguage(1)">
+                                                <div id="imgZhTW"></div>
+                                                <div class="txtLang">繁體中文</div>
+                                            </div>
+                                            <div id="lanZhCN" onclick="SelectLanguage(4)">
+                                                <div id="imgZhCN"></div>
+                                                <div class="txtLang">简体中文</div>
+                                            </div>
+                                            <div id="lanJaJP" onclick="SelectLanguage(2)">
+                                                <div id="imgJaJP"></div>
+                                                <div class="txtLang">日本語</div>
+                                            </div>
+                                            <div id="lanThTH" onclick="SelectLanguage(3)">
+                                                <div id="imgThTH"></div>
+                                                <div class="txtLang">ภาษาไทย</div>
+                                            </div>
+                                            <div id="lanKoKR" onclick="SelectLanguage(5)">
+                                                <div id="imgKoKR"></div>
+                                                <div class="txtLang">한국어</div>
+                                            </div>
+                                        </div>
+                                    <input type="hidden" value="en-US" id="hidLanguage" name="hidLanguage" />
+                                </div>
+                            </td>      
+                            <td>                                    
+                                <span id="spnUserName" style="font-weight: bold;"></span>                                                                        
+                            </td>                                                                
+                            <td align="left" valign="middle">
+                                <input name="txtUserName" type="text" id="txtUserName" value="@Model.Username"/>
+                            </td>                                                                                                
+                            <td>
+                                <span id="spnPassWord" style="font-weight: bold;"></span>                                                                                                            
+                            </td>                                                                    
+                            <td height="25" align="left" valign="middle">                                   
+                                <div id="div1">
+                                    <input name="pass_temp" id="pass_temp" type="text" />
+                                </div>
+                                <div id="div2" style="display: none">
+                                    <input name="txtPassWord" id="txtPassWord" type="password" />
+                                </div>
+                            </td>
+                            <td class="alignCenter">
+                                <img id="refreshIcon" onclick="GetValidateImage()" alt="Refresh" src="~/Views/Login/Template/MidAutumn/Styles/Images/refresh-icon.png" />
+                            </td>
+                                <td align="left" valign="middle" onclick="GetValidateImage()">
+                                <img src="Login/GetNewCaptcha" id="imgCode" alt="" />
+                            </td>
+                            <td>                                    
+                                <span id="spnCaptcha" style="font-weight: bold;"></span>                                                                        
+                            </td>
+                            <td height="25" align="center" valign="middle">
+                                <input id="txtCaptcha" name="txtCaptcha" type="text" style="width: 70px;" maxlength="4"
+                                    autocomplete="off" onkeydown="DoEnter(event, 'DoLogin()')" />
+                            </td>
+                            <td align="right" valign="middle">
+                                <input id="btnLogin" type="button" class="buttonsite" value="Login" onclick="return DoLogin()" />
+                            </td>
+                        </tr>
+                    </table>    
+                    <div id="errmsg" class="errmsg">@Model.ErrMsg</div>
+                    <div id="welcomeText"></div>                    
+                    <table border="0" align="left" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td align="right" valign="middle">
+                            </td>
+                            <td align="right" valign="middle">                    
+                                <div id="divBrowser" class="text_brow">Recommended Browsers:</div>   
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center" valign="middle">
+                                {VersionMobile}
+                            </td>                    
+                        </tr>
+                    </table>
+                </center>  
+            </div>  
+            }           
+        </div>
+        </center>
+    </div>
+    <!--PopupMobileVersion-->
+    <div id="divPopupMobileVersion" style="">@if (Model.IsChangedPassword) {
+                                                 Model.ChangedPasswordTime.ToString();
+                                             }
+    </div>
+    <!--/PopupMobileVersion-->   
+</body>
+
+<script src="~/Scripts/Core.js?ver=@Fanex.Razorbill.Sphinx.Core.Configurations.WebSettings.AppVersion" type="text/javascript"></script>
+<script src="~/Views/Login/Template/MidAutumn/Js/SignIn.js??ver=@Fanex.Razorbill.Sphinx.Core.Configurations.WebSettings.AppVersion" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+    var _page = {
+        errCode: 0,
+        errMsg: '',
+        language: 0,
+        ip: '',
+        __utms: '',
+        domain: '',
+        captcha: ''
+    };
+
+    _page.errCode = @Model.ErrCode;
+    _page.errMsg = '@Model.ErrMsg';
+    _page.language = @Model.Language;
+    _page.ip = '@Model.Ip';
+    _page.__utms = '@Model.UTMS';
+    _page.domain = '@Model.Domain';
+    _page.captcha = '@Model.Captcha';
+
+</script>
+</html>

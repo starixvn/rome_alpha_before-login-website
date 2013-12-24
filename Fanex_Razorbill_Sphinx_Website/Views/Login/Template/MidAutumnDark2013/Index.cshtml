@@ -1,0 +1,80 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<center>
+
+    <div class="main">
+       
+        <div style="height:130px;"></div>
+        <div class="login">
+            <div style="height:100px; width: 100%"></div>
+            <div class="wrapper">
+                <div style="width:70px; height: 180px; float:left"></div>
+                <div class="content">
+                    <div class="inputContainer">
+                        <table>
+                            <tr>
+                                <td>
+                                    <div id="ddLanguage" class="language-select">
+                                                 
+                                    </div>
+                                    <input type="hidden" value="en-US" id="hidLanguage" name="hidLanguage" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" id="txtUserName" name="txtUserName" placeholder="Username" class="custom-textbox" tabindex="1" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" id="txtPassWord" name="txtPassWord" placeholder="Password" class="custom-textbox" tabindex="2" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="showPass">
+                                        <input type="checkbox" id="chbShowPass" class="checkShowPass" onclick="Sphinx.Login.showPassword(this)" />
+                                        <span id="lbShowPass">Show password</span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" id="txtCaptcha" name="txtCaptcha" class="inputText inputCaptcha" tabindex="3" />
+                                    <div class="codeCaptcha">
+                                        <img height="22" src="@Url.Content("~/Login/GetNewCaptcha")" id="imgCode" alt="" />
+                                    </div>
+                                    <div>
+                                        <i class="refreshCode"  onclick="return Sphinx.Login.getValidateImage();" ></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="button" class="btnLogin" id="btnLogin" value="Login" onclick="return Sphinx.Login.doLogin();" />
+                                    <i id="imgLoading" class="loading" style="display:none" ></i>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="errorMessage" errCode="@Model.ErrMsg" id="errmsg">@Model.ErrMsg
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="textTitle" class="textTitle_en">
+        </div>
+        
+    </div>
+
+
+ 
+    <div id="divPopupMobileVersion" style="color:#000; text-align: center">@(Model.IsChangedPassword ? @Model.ChangedPasswordTime : "")
+    </div>
+</center>
+
+
+

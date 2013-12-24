@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2148DA67-1203-49CA-9BB2-1AB098EDC740}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.Razorbill.Sphinx.Dependencies</RootNamespace>
+    <AssemblyName>Fanex.Razorbill.Sphinx.Dependencies</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CasinoLibrary">
+      <HintPath>..\_Dependencies\CasinoLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CasinoSetting">
+      <HintPath>..\_Dependencies\CasinoSetting.dll</HintPath>
+    </Reference>
+    <Reference Include="CasinoUtility">
+      <HintPath>..\_Dependencies\CasinoUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="DNAide">
+      <HintPath>..\_Dependencies\DNAide.dll</HintPath>
+    </Reference>
+    <Reference Include="dotless.Core">
+      <HintPath>..\_Dependencies\Web\dotless.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNet.Highcharts">
+      <HintPath>..\_Dependencies\DotNet.Highcharts.dll</HintPath>
+    </Reference>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\_Dependencies\Enyim.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Age.Business">
+      <HintPath>..\_Dependencies\Fanex.Age.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Age.Business.Interface">
+      <HintPath>..\_Dependencies\Fanex.Age.Business.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Age.DTO">
+      <HintPath>..\_Dependencies\Fanex.Age.DTO.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Age.Excel">
+      <HintPath>..\_Dependencies\Fanex.Age.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Age.UI">
+      <HintPath>..\_Dependencies\Fanex.Age.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Age.UI.Components">
+      <HintPath>..\_Dependencies\Fanex.Age.UI.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Age.UI.Forecast">
+      <HintPath>..\_Dependencies\Fanex.Age.UI.Forecast.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Age.UI.LiveCasino">
+      <HintPath>..\_Dependencies\Fanex.Age.UI.LiveCasino.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Age.UI.Reports">
+      <HintPath>..\_Dependencies\Fanex.Age.UI.Reports.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Age.UI.TotalBets">
+      <HintPath>..\_Dependencies\Fanex.Age.UI.TotalBets.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Age.Utility">
+      <HintPath>..\_Dependencies\Fanex.Age.Utility.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Caching">
+      <HintPath>..\_Dependencies\Fanex.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Common">
+      <HintPath>..\_Dependencies\Fanex.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Data">
+      <HintPath>..\_Dependencies\Fanex.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.LiveCasinoSetting">
+      <HintPath>..\_Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Logging">
+      <HintPath>..\_Dependencies\Fanex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.SessionPartition">
+      <HintPath>..\_Dependencies\Fanex.SessionPartition.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\_Dependencies\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation.resources">
+      <HintPath>..\_Dependencies\FluentValidation.resources.dll</HintPath>
+    </Reference>
+    <Reference Include="FPS.Client">
+      <HintPath>..\_Dependencies\FPS.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="GotDotNet.ApplicationBlocks.Data">
+      <HintPath>..\_Dependencies\GotDotNet.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="HandHistoryLibrary">
+      <HintPath>..\_Dependencies\HandHistoryLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="IBC.Agent.UI.PositionTaking.RaceBook">
+      <HintPath>..\_Dependencies\IBC.Agent.UI.PositionTaking.RaceBook.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCCrypt">
+      <HintPath>..\_Dependencies\IBCCrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCDBLibrary">
+      <HintPath>..\_Dependencies\IBCDBLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCDLL">
+      <HintPath>..\_Dependencies\IBCDLL.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCFile">
+      <HintPath>..\_Dependencies\IBCFile.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCMessage">
+      <HintPath>..\_Dependencies\IBCMessage.dll</HintPath>
+    </Reference>
+    <Reference Include="IBCUtils">
+      <HintPath>..\_Dependencies\IBCUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="ILogger">
+      <HintPath>..\_Dependencies\ILogger.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.QWQNG">
+      <HintPath>..\_Dependencies\Interop.QWQNG.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\_Dependencies\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCasinoLibrary">
+      <HintPath>..\_Dependencies\LiveCasinoLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="LoadBalancer">
+      <HintPath>..\_Dependencies\LoadBalancer.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\_Dependencies\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Membase">
+      <HintPath>..\_Dependencies\Membase.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data">
+      <HintPath>..\_Dependencies\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching">
+      <HintPath>..\_Dependencies\Microsoft.Practices.EnterpriseLibrary.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Dependencies\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data">
+      <HintPath>..\_Dependencies\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling">
+      <HintPath>..\_Dependencies\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging">
+      <HintPath>..\_Dependencies\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=4.1.0.0, Culture=neutral, PublicKeyToken=e44a2bc38ed2c13c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Dependencies\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging.Database">
+      <HintPath>..\_Dependencies\Microsoft.Practices.EnterpriseLibrary.Logging.Database.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder">
+      <HintPath>..\_Dependencies\Microsoft.Practices.ObjectBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder2, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Dependencies\Microsoft.Practices.ObjectBuilder2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\_Dependencies\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Dependencies\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\_Dependencies\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception">
+      <HintPath>..\_Dependencies\Microsoft.Practices.Unity.Interception.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
+      <HintPath>..\_Dependencies\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.StaticFactory">
+      <HintPath>..\_Dependencies\Microsoft.Practices.Unity.StaticFactory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Dependencies\Web\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="NetUtility">
+      <HintPath>..\_Dependencies\NetUtility.dll</HintPath>
+    </Reference>
+    <Reference Include="Nexcel.WebControls.UI">
+      <HintPath>..\_Dependencies\Nexcel.WebControls.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Nini">
+      <HintPath>..\_Dependencies\Nini.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\_Dependencies\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NotifyPropertyChanged">
+      <HintPath>..\_Dependencies\NotifyPropertyChanged.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\_Dependencies\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="RemotingRef">
+      <HintPath>..\_Dependencies\RemotingRef.dll</HintPath>
+    </Reference>
+    <Reference Include="RSACryptoPad">
+      <HintPath>..\_Dependencies\RSACryptoPad.dll</HintPath>
+    </Reference>
+    <Reference Include="SharedCache.WinServiceCommon">
+      <HintPath>..\_Dependencies\SharedCache.WinServiceCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Aop">
+      <HintPath>..\_Dependencies\Spring.Aop.dll</HintPath>
+    </Reference>
+    <Reference Include="Spring.Core">
+      <HintPath>..\_Dependencies\Spring.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="SPSRemoting">
+      <HintPath>..\_Dependencies\SPSRemoting.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Agent.Configurations">
+      <HintPath>..\_Dependencies\Sunplus.Agent.Configurations.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Agent.Model">
+      <HintPath>..\_Dependencies\Sunplus.Agent.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Agent.UI.BetList">
+      <HintPath>..\_Dependencies\Sunplus.Agent.UI.BetList.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Agent.UI.BetSlip">
+      <HintPath>..\_Dependencies\Sunplus.Agent.UI.BetSlip.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Agent.UI.PositionTaking.RaceBook">
+      <HintPath>..\_Dependencies\Sunplus.Agent.UI.PositionTaking.RaceBook.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Agent.UI.ScoreMap">
+      <HintPath>..\_Dependencies\Sunplus.Agent.UI.ScoreMap.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Agent.Utilities">
+      <HintPath>..\_Dependencies\Sunplus.Agent.Utilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Core">
+      <HintPath>..\_Dependencies\Sunplus.Bingo.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Data">
+      <HintPath>..\_Dependencies\Sunplus.Bingo.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Data.Entlib">
+      <HintPath>..\_Dependencies\Sunplus.Bingo.Data.Entlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Data.LinqToSql">
+      <HintPath>..\_Dependencies\Sunplus.Bingo.Data.LinqToSql.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.DataServices">
+      <HintPath>..\_Dependencies\Sunplus.Bingo.DataServices.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Entities">
+      <HintPath>..\_Dependencies\Sunplus.Bingo.Entities.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Bingo.Services">
+      <HintPath>..\_Dependencies\Sunplus.Bingo.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Core.CachingLib">
+      <HintPath>..\_Dependencies\Sunplus.Core.CachingLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Core.Common">
+      <HintPath>..\_Dependencies\Sunplus.Core.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Core.DbHelper">
+      <HintPath>..\_Dependencies\Sunplus.Core.DbHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Core.LoggingLib">
+      <HintPath>..\_Dependencies\Sunplus.Core.LoggingLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Libraries.AOP">
+      <HintPath>..\_Dependencies\Sunplus.Libraries.AOP.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Libraries.APILogger">
+      <HintPath>..\_Dependencies\Sunplus.Libraries.APILogger.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Libraries.ThirdPartyTestData">
+      <HintPath>..\_Dependencies\Sunplus.Libraries.ThirdPartyTestData.dll</HintPath>
+    </Reference>
+    <Reference Include="Sunplus.Shared.ViewLogLib">
+      <HintPath>..\_Dependencies\Sunplus.Shared.ViewLogLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\_Dependencies\Web\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\_Dependencies\Web\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\_Dependencies\Web\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\_Dependencies\Web\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\_Dependencies\Web\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\_Dependencies\Web\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\_Dependencies\Web\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\_Dependencies\Web\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\_Dependencies\Web\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

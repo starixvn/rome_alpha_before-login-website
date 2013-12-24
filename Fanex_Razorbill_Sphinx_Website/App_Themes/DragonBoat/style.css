@@ -1,0 +1,84 @@
+@charset "utf-8";
+/* CSS Document */
+
+body
+{ 
+background: #a8d836;
+}
+
+#main
+{ 	
+background:url(Images/duanwu3_revised.jpg) no-repeat;
+width:858px;
+height:624px;
+margin-top:-10px;
+margin-left:auto;
+margin-right:auto;
+padding-top:190px;
+padding-left:auto;
+padding-right:auto;   
+ 
+text-align: center;
+color: #FF0000;
+font-size: 12px;
+font-family:Tahoma, Geneva, sans-serif;  
+}
+
+.label-show-pass >*
+{
+	vertical-align:middle;
+}
+.checkbox
+{
+height:10px;
+width:15px;
+margin-top:5px;
+margin-left:488px;
+}
+
+
+.input2
+{ 
+height:22px;
+width:83px;
+text-align:center;
+}
+
+select
+{ 
+background:#525601;;
+border: 1px solid #859e26;
+color:#ebe893;
+font-size:12px;
+}
+
+.clear{clear:both;
+margin:0;
+padding:0;}
+
+
+.logintext
+{
+text-decoration:none; 
+font-size:12px; 
+padding-top:2px;
+font-family:Tahoma, Geneva, sans-serif;  
+color: #FFFFFF;
+}
+
+.logintext:link
+{
+    color:#FFF;
+}
+
+.logintext:hover
+{
+    color:#9F0;
+    cursor: pointer;
+}
+
+
+#imgCode:hover
+{
+    cursor: pointer;
+}

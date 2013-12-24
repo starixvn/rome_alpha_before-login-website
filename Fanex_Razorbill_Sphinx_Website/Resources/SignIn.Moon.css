@@ -1,0 +1,285 @@
+﻿html,body{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+body {
+	font: 12px/1.8 "Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+	background-color: #323B55;
+	text-align: center;
+	margin-top: 10px;
+	color: #ddd;
+}
+
+h1
+{
+    text-shadow: 0 1px 0 rgba(150, 150, 150, .9), 0px 2px 0 rgba(50, 50, 50, .9);
+    color: #aaa;
+    margin: 0 0 10px 0;
+    letter-spacing: 4px;
+    font: normal 26px/1 "Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+    position: relative;
+}#showPwdLabel
+{
+	font: 12px/1.8 "Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+	color: #ddd;
+}
+#clear{
+	clear: both;
+	height:5px;
+}
+#table_main
+{
+	width: 750px;
+	height: 135px;
+	position: absolute;
+	margin: 20px 0 0 -400px;
+	padding: 30px;
+	position: absolute;
+	top: 5%;
+	left: 50%;
+	text-align:left;
+	background: #424F71;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-moz-box-shadow: 0px 1px 3px 2px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0px 1px 3px 2px rgba(0,0,0,0.1);
+	box-shadow: 0px 1px 3px 2px rgba(0,0,0,0.1);
+}
+#center{
+	margin:0;
+	padding:0;
+}
+
+.errmsg
+{
+	color: #f44;
+	margin-left: 100px;
+	text-align: left;
+	display: block;
+	height: 15px;
+	font: 12px/1.8 "Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+}
+.text_brow{
+	color: #616161;
+	font: 12px/1.8 "Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+	padding-left:7px;
+	font-weight:normal;
+}
+#txtUserName, #txtPassWord, #txtCaptcha, #pass_temp 
+{
+	max-width: 150px;
+}
+
+#spnUserName
+{
+	display: none;	
+}
+
+#spnPassWord
+{
+	display:none;
+}
+
+#divBrowser
+{
+	display:none;
+}
+
+#spnCaptcha
+{
+	display:none;
+}
+.text_blue {
+ font-weight:bold;
+ color:#00F;
+}
+
+.text_white a:link, .text_white a:visited, .text_white{
+ text-decoration:none;
+ font-weight:bold;
+ color: #FFF;
+}
+
+.text_white a:active, .text_white a:hover{
+ font-weight:bold;
+ color: #FFF;
+}
+
+.language
+{
+	background: url(../GlobalResources/Images/flags.jpg) 0px 0px;
+	display: block;
+	width: 24px;
+	height: 19px;
+	
+	border: 1px solid rgba(150, 150, 150, .49);
+	
+	outline: none;
+	
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding-box;
+	background-clip: padding-box;
+	border-radius: 2px;
+
+	-webkit-box-shadow: inset 0px 2px 0px #d9d9d9;
+	box-shadow: inset 0px 2px 0px #d9d9d9;	
+}
+
+#center input[type="text"],#center input[type="password"] {
+	height: 20px;
+	positon: relative;
+	margin-top: 7px;
+	font: 12px/1.8 "Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+	color: #444;
+	outline: none;
+	border: 1px solid rgba(150, 150, 150, .49);
+	
+	padding-left: 10px;
+	
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding-box;
+	background-clip: padding-box;
+	border-radius: 6px;
+
+	background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
+	background-image: -moz-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
+	background-image: -o-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
+	background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
+	background-image: linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
+
+	-webkit-box-shadow: inset 0px 2px 0px #d9d9d9;
+	box-shadow: inset 0px 2px 0px #d9d9d9;
+
+	-webkit-transition: all .1s ease-in-out;
+	-moz-transition: all .1s ease-in-out;
+	-o-transition: all .1s ease-in-out;
+	-ms-transition: all .1s ease-in-out;
+	transition: all .1s ease-in-out;
+}
+
+#center select {
+	height: 25px;
+	positon: relative;
+	font: 12px/1.8 "Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+	color: #444;
+	outline: none;
+	border: 1px solid rgba(150, 150, 150, .49);
+
+	padding-left: 10px;
+	
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding-box;
+	background-clip: padding-box;
+	border-radius: 3px;
+
+	background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
+	background-image: -moz-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
+	background-image: -o-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
+	background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
+	background-image: linear-gradient(bottom, #FFFFFF 0%, #F2F2F2 100%);
+
+	-webkit-box-shadow: inset 0px 2px 0px #d9d9d9;
+	box-shadow: inset 0px 2px 0px #d9d9d9;
+
+	-webkit-transition: all .1s ease-in-out;
+	-moz-transition: all .1s ease-in-out;
+	-o-transition: all .1s ease-in-out;
+	-ms-transition: all .1s ease-in-out;
+	transition: all .1s ease-in-out;
+}
+
+#center img#imgCode {
+	width: 60px;
+	positon: relative;
+	font: 12px/1.8 "Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+	color: #444;
+	outline: none;
+	border: 1px solid rgba(150, 150, 150, .49);
+	
+	border-radius: 6px;
+
+	-webkit-box-shadow: inset 0px 2px 0px #d9d9d9;
+	box-shadow: inset 0px 2px 0px #d9d9d9;
+
+	-webkit-transition: all .1s ease-in-out;
+	-moz-transition: all .1s ease-in-out;
+	-o-transition: all .1s ease-in-out;
+	-ms-transition: all .1s ease-in-out;
+	transition: all .1s ease-in-out;
+	cursor: pointer;
+}
+
+#center input[type="text"]:focus,#center input[type="password"]:focus, #center select:focus {
+	-webkit-box-shadow: inset 0px 2px 0px #a7a7a7;
+	box-shadow: inset 0px 2px 0px #a7a7a7;
+}
+
+#center input:first-child {
+	margin-top: 0px;
+}
+
+#center input[type="button"] 
+{
+	width: 90px;
+	height: 30px;
+	color: #fff;
+	font: 14px/1.8 "Segoe UI", Verdana, Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-shadow: 0px -1px 0px #5b6ddc;
+	outline: none;
+	border: 1px solid rgba(50, 50, 50, .49);
+	
+	margin: 0px 0px 0px 5px;
+
+	-webkit-background-clip: padding-box;
+	-moz-background-clip: padding-box;
+	background-clip: padding-box;
+	border-radius: 6px;
+
+	background-color: #5466da;
+	background-image: -webkit-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
+	background-image: -moz-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
+	background-image: -o-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
+	background-image: -ms-linear-gradient(bottom, #5466da 0%, #768ee4 100%);
+	background-image: linear-gradient(bottom, #5466da 0%, #768ee4 100%);
+	
+	-webkit-box-shadow: inset 0px 1px 0px #9ab1ec;
+	box-shadow: inset 0px 1px 0px #9ab1ec;
+	
+	cursor: pointer;
+
+	-webkit-transition: all .1s ease-in-out;
+	-moz-transition: all .1s ease-in-out;
+	-o-transition: all .1s ease-in-out;
+	-ms-transition: all .1s ease-in-out;
+	transition: all .1s ease-in-out;
+}
+
+#center input[type="button"]:hover {
+	background-color: #5f73e9;
+	background-image: -webkit-linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
+	background-image: -moz-linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
+	background-image: -o-linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
+	background-image: -ms-linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
+	background-image: linear-gradient(bottom, #5f73e9 0%, #859bef 100%);
+
+	-webkit-box-shadow: inset 0px 1px 0px #aab9f4;
+	box-shadow: inset 0px 1px 0px #aab9f4;
+}
+
+#center input[type="button"]:active {
+	background-color: #7588e1;
+	background-image: -webkit-linear-gradient(bottom, #7588e1 0%, #7184df 100%);
+	background-image: -moz-linear-gradient(bottom, #7588e1 0%, #7184df 100%);
+	background-image: -o-linear-gradient(bottom, #7588e1 0%, #7184df 100%);
+	background-image: -ms-linear-gradient(bottom, #7588e1 0%, #7184df 100%);
+	background-image: linear-gradient(bottom, #7588e1 0%, #7184df 100%);
+
+	-webkit-box-shadow: inset 0px 1px 0px #93a9e9;
+	box-shadow: inset 0px 1px 0px #93a9e9;
+}

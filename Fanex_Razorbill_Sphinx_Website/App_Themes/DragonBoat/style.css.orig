@@ -1,0 +1,167 @@
+@charset "utf-8";
+/* CSS Document */
+
+body
+{ 
+background: #a8d836;
+}
+
+#main
+{ 	
+background:url(Images/duanwu3_revised.jpg) no-repeat;
+width:858px;
+height:624px;
+margin-top:-10px;
+margin-left:auto;
+margin-right:auto;
+padding-top:190px;
+padding-left:auto;
+padding-right:auto;   
+ 
+text-align: center;
+color: #FF0000;
+font-size: 12px;
+font-family:Tahoma, Geneva, sans-serif;  
+}
+
+<<<<<<< HEAD
+=======
+.box
+{
+background:url(Images/chinesebox.png) no-repeat;
+width:170px;
+heigh:23px;
+margin-top:3px;
+margin-left:415px;
+}
+
+>>>>>>> 7f4ea42ac0732f4ed991fd8db03c69dfd7a49567
+.label-show-pass >*
+{
+	vertical-align:middle;
+}
+.checkbox
+{
+height:10px;
+width:15px;
+margin-top:5px;
+margin-left:488px;
+}
+
+<<<<<<< HEAD
+
+.input2
+{ 
+height:22px;
+=======
+.verbox
+{
+background:url(Images/verbox.png);
+width:98px;
+heigh:17px;
+margin-top:6px;
+margin-left:415px;
+float:left;
+}
+
+.capcha
+{
+width:100px;
+height:20px;
+margin-top:2px;
+margin-left:520px;
+text-align: left;
+}
+
+input
+{ 
+background-color:transparent;
+border: 0px solid;
+height:22px;
+width:150px;
+padding-top:0px;
+outline:none;
+}
+
+.input2
+{ 
+height:17px;
+>>>>>>> 7f4ea42ac0732f4ed991fd8db03c69dfd7a49567
+width:83px;
+text-align:center;
+}
+
+select
+{ 
+background:#525601;;
+border: 1px solid #859e26;
+color:#ebe893;
+font-size:12px;
+}
+
+.clear{clear:both;
+margin:0;
+padding:0;}
+
+<<<<<<< HEAD
+=======
+.loginbox
+{
+background:url(Images/loginbox.png);
+width:75px;
+height:17px;
+margin-left:510px;
+margin-top:6px;
+padding:0;
+text-align:center;
+margin-bottom: 36px;
+}
+>>>>>>> 7f4ea42ac0732f4ed991fd8db03c69dfd7a49567
+
+.logintext
+{
+text-decoration:none; 
+font-size:12px; 
+padding-top:2px;
+font-family:Tahoma, Geneva, sans-serif;  
+color: #FFFFFF;
+}
+
+.logintext:link
+{
+    color:#FFF;
+}
+
+.logintext:hover
+{
+    color:#9F0;
+    cursor: pointer;
+}
+
+<<<<<<< HEAD
+=======
+.error
+{ 
+font-size:11px;
+color:#FF0;
+width: 348px;
+margin-left:240px;
+text-align:right;
+font-family:Tahoma, Geneva, sans-serif;  
+}
+
+
+.languageBox
+{
+width:170px;
+heigh:23px;
+margin-top:3px;
+margin-left:415px;
+text-align:right;
+}
+>>>>>>> 7f4ea42ac0732f4ed991fd8db03c69dfd7a49567
+
+#imgCode:hover
+{
+    cursor: pointer;
+}

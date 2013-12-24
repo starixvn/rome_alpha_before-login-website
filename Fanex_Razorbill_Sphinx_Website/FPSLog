@@ -1,0 +1,95 @@
+FPS called CheckTransaction at 12/19/2013 4:12:47 PM
+Result: DENY
+Params: 
+- account: testcs
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0###240:320:24:false###::1###a6251ce8880f263f99b5dcc81f4451ef54a2f054999294d50ad24cff5221f9dda860d1dac54c0312d994b771e1e9aec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165b407769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0f35cec8f1fb3ac2443189500d517c41e74672322b648906b160778c4a081d46596b580637034949889ced01bd75087bfce61f07eba1884843d246395ec10e2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102075380ab6cd5479dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 12/19/2013 4:13:53 PM
+Result: DENY
+Params: 
+- account: testcs
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:25.0) Gecko/20100101 Firefox/25.0###240:320:24:false###::1###a6251ce8880f263f99b5dcc81f4451ef54a2f054999294d50ad24cff5221f9dda860d1dac54c0312d994b771e1e9aec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165b407769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0f35cec8f1fb3ac2443189500d517c41e74672322b648906b160778c4a081d46596b580637034949889ced01bd75087bfce61f07eba1884843d246395ec10e2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102055380ab6cd5459dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 12/24/2013 9:59:39 AM
+Result: DENY
+Params: 
+- account: testcs
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0###240:320:24:false###::1###a6251ce8880f7032cbe688cb414901e85ff2a25fc496ce82098f19f85327aa8bf83782dc921a54118cc4ea2ae2eeaec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165b437769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0f36cec8f1fb3ac24f3b89500d517645e74672322b648906b61602f63d086f40291b2e7447034c4c889ced01bd75087c8a936570ebd38e3833a434495ec40b2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102075380ab6cd5479dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 12/24/2013 9:59:53 AM
+Result: DENY
+Params: 
+- account: testcs
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0###240:320:24:false###::1###a6251ce8880f7032cbe688cb414901e85ff2a25fc496ce82098f19f85327aa8bf83782dc921a54118cc4ea2ae2eeaec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165b437769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0f36cec8f1fb3ac24f3b89500d517645e74672322b648906b61602f63d086f40291b2e7447034c4c889ced01bd75087c8a936570ebd38e3833a434495ec40b2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102055380ab6cd5459dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 12/24/2013 10:03:51 AM
+Result: ALLOW
+Params: 
+- account: testcs
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0###240:320:24:false###::1###a6251ce8880f7032cbe688cb414901e85ff2a25fc496ce82098f19f85327aa8bf83782dc921a54118cc4ea2ae2eeaec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165b437769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0f36cec8f1fb3ac24f3b89500d517645e74672322b648906b61602f63d086f40291b2e7447034c4c889ced01bd75087c8a936570ebd38e3833a434495ec40b2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102055380ab6cd5459dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 12/24/2013 10:04:50 AM
+Result: DENY
+Params: 
+- account: testcs
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0###240:320:24:false###::1###a6251ce8880f7032cbe688cb414901e85ff2a25fc496ce82098f19f85327aa8bf83782dc921a54118cc4ea2ae2eeaec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165b437769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0f36cec8f1fb3ac24f3b89500d517645e74672322b648906b61602f63d086f40291b2e7447034c4c889ced01bd75087c8a936570ebd38e3833a434495ec40b2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102055380ab6cd5459dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 12/24/2013 10:08:32 AM
+Result: ALLOW
+Params: 
+- account: testcs
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0###240:320:24:false###::1###a6251ce8880f7032cbe688cb414901e85ff2a25fc496ce82098f19f85327aa8bf83782dc921a54118cc4ea2ae2eeaec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165b437769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0f36cec8f1fb3ac24f3b89500d517645e74672322b648906b61602f63d086f40291b2e7447034c4c889ced01bd75087c8a936570ebd38e3833a434495ec40b2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102055380ab6cd5459dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 12/24/2013 10:09:00 AM
+Result: 
+Params: 
+- account: testcds
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0###240:320:24:false###::1###a6251ce8880f7032cbe688cb414901e85ff2a25fc496ce82098f19f85327aa8bf83782dc921a54118cc4ea2ae2eeaec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165b437769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0f36cec8f1fb3ac24f3b89500d517645e74672322b648906b61602f63d086f40291b2e7447034c4c889ced01bd75087c8a936570ebd38e3833a434495ec40b2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102055380ab6cd5459dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: ::1
+Exception: System.Net.WebException: The operation has timed out
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at System.Web.Services.Protocols.SoapHttpClientProtocol.Invoke(String methodName, Object[] parameters)
+   at FPS.Client.ClientProxy.check_transaction(String account, String device, String action, String subscriber, String ip)
+   at FPS.Client.RequestDelegation.CheckTransactionDelegation.Invoke()
+
+FPS called CheckTransaction at 12/24/2013 10:09:07 AM
+Result: ALLOW
+Params: 
+- account: testcs
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:26.0) Gecko/20100101 Firefox/26.0###240:320:24:false###::1###a6251ce8880f7032cbe688cb414901e85ff2a25fc496ce82098f19f85327aa8bf83782dc921a54118cc4ea2ae2eeaec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165b437769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0f36cec8f1fb3ac24f3b89500d517645e74672322b648906b61602f63d086f40291b2e7447034c4c889ced01bd75087c8a936570ebd38e3833a434495ec40b2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102055380ab6cd5459dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: ::1
+Exception: 
+

@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Sign In</title>
+    <link href="Resources/SignIn.Moon.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="table_main">
+        <h1>Login</h1>
+        <div id="center">            
+            <form method="post" name="fLogin" action='{formAction}'>            
+          
+            <table border="0" align="left" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td height="25" align="right" style="color: #FF0000;">
+                        &nbsp;
+                    </td>
+                    <td height="25" align="right" style="color: #FF0000;">
+                        <table width="100%" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td width="5%" height="10" align="right" style="color: #FF0000;">
+                                    &nbsp;
+                                </td>
+                                <td width="95%" height="10" align="left" valign="top" style="color: #FF0000;">
+                                    <div id="errmsg" class="errmsg"></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="1" align="right" valign="middle">
+                    </td>
+                    <td height="25" align="left" valign="middle">
+                        <table width="100%" border="0" cellpadding="1" cellspacing="0">
+                            <tr>                              
+                                <td height="25" align="right" valign="middle">
+                                    <div id="spnLanguage" class="language"></div>
+                                </td>
+                                <td align="left" valign="middle">
+                                    <select id="selLanguage" onchange="SelectLanguage(this.value)">
+                                        <option value="0">English</option>
+                                        <option value="1">繁體中文</option>
+                                        <option value="4">简体中文</option>
+                                        <option value="2">日本語</option>
+                                        <option value="3">ภาษาไทย</option>
+                                        <option value="5">한국어</option>
+                                        <option value="6">Tiếng Việt</option>
+                                    </select>
+                                    <input type="hidden" value="en-US" id="hidLanguage" name="hidLanguage" />
+                                </td>                                
+                                <td>                                    
+                                    <span id="spnUserName" style="font-weight: bold;"></span>                                                                        
+                                </td>                                                                
+                                <td align="left" valign="middle">
+                                    <input name="txtUserName" type="text" id="txtUserName" value="{username_value}"/>
+                                </td>                                                                                                
+                                <td>
+                                    <span id="spnPassWord" style="font-weight: bold;"></span>                                                                                                            
+                                </td>                                                                    
+                                <td height="25" align="left" valign="middle">                                   
+                                    <div id="div1">
+                                        <input name="pass_temp" id="pass_temp" type="text" />
+                                    </div>
+                                    <div id="div2" style="display: none">
+                                        <input name="txtPassWord" id="txtPassWord" type="password" />
+                                    </div>
+
+                                </td>
+                                <td height="25" align="center" valign="middle">
+                                    <img src="GlobalResources/Images.Moon/dot.png" width="8" height="21" />
+                                </td>                               
+                                 <td align="left" valign="middle" onclick="GetValidateImage()">
+                                    <img src="Handlers/Captcha.ashx" id="imgCode" alt="" />
+                                </td>
+                                <td>                                    
+                                    <span id="spnCaptcha" style="font-weight: bold;"></span>                                                                        
+                                </td>
+                                <td height="25" align="center" valign="middle">
+                                    <input id="txtCaptcha" name="txtCaptcha" type="text" style="width: 85px;" maxlength="4" autocomplete="off" onkeydown="DoEnter(event, 'DoLogin()')" />
+                                </td>
+                                <td align="right" valign="middle">
+                                    <span>
+                                        <input id="btnLogin" type="button" class="buttonsite" value="Login" onclick="return DoLogin()" />
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" valign="middle">
+                    </td>
+                    <td align="right" valign="middle">                    
+                        <div id="divBrowser" class="text_brow">Recommended Browsers:</div>   
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center" valign="middle">
+                        {VersionMobile}
+                    </td>                    
+                </tr>
+            </table>
+            </form>
+            <p>
+                &nbsp;</p>
+        </div>
+    </div>
+    <!--PopupMobileVersion-->     
+    <!--/PopupMobileVersion-->    
+</body>
+
+<script src="../../GlobalResources/Js/Core.js" type="text/javascript"></script>
+
+    <script src="Resources/SignIn.Moon.js" type="text/javascript"></script>
+    
+
+</html>

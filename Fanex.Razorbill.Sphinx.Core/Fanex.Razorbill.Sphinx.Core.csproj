@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{84D582E4-FED7-4728-A2FC-68DCEE0ED1E2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.Razorbill.Sphinx.Core</RootNamespace>
+    <AssemblyName>Fanex.Razorbill.Sphinx.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Couchbase">
+      <HintPath>..\_Dependencies\_Cache\Couchbase.dll</HintPath>
+    </Reference>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\_Dependencies\_Cache\Enyim.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Caching">
+      <HintPath>..\_Dependencies\_FanexLib\Fanex.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Logging">
+      <HintPath>..\_Dependencies\_FanexLib\Fanex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UMControllerLibrary">
+      <HintPath>..\_Dependencies\UMControllerLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configurations\AppSession.cs" />
+    <Compile Include="Configurations\WebSettings.cs" />
+    <Compile Include="Constants\CommonConstants.cs" />
+    <Compile Include="Constants\ErrorContants.cs" />
+    <Compile Include="Extensions\CacheExtension.cs" />
+    <Compile Include="Extensions\LogExtension.cs" />
+    <Compile Include="Extensions\ResourceExtension.cs" />
+    <Compile Include="Extensions\SessionExtension.cs" />
+    <Compile Include="Models\Result.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

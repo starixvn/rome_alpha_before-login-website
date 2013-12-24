@@ -1,0 +1,297 @@
+﻿/* Variables */
+@font-size: 11px;
+@font-family: arial;
+@width-login: 442px;
+@text-color: #000;
+@dropdown-color: @text-color;
+
+
+body {
+    font-size: @font-size;
+    font-family: @font-family;
+    height: 100%;
+    padding:0;
+    margin:0;
+    background:url(Images/bg-login.jpg) #973721 top repeat-x;
+    width: 100%;
+    overflow: hidden;
+    zoom: 1;
+}
+
+.moonbg {
+    .top {
+        height: 97px;
+    }
+
+    .login {
+        width: @width-login; 
+        height: 355px;
+        background: url(Images/login.png) no-repeat;
+
+        .top-login {
+            height: 102px;
+            width: 328px;
+        }
+
+        td.row {
+            padding: 3px;
+        }
+
+        .wrapper{
+            height: 290px;
+            width: 175px;
+            float: right;
+            clear: both;
+
+            .inputContainer {
+                text-align: left;
+
+                table {
+                    width: 100%;
+                }
+
+                .top {
+                    height: 75px;
+                }
+            }
+
+            .language-select {
+                background: #fff;
+                border: 1px solid #999;
+                cursor: pointer;
+                float: left;
+                height: 23px;
+                width: 126px;
+                padding-right: 5px;
+                margin-right: 2px;
+                font-family: @font-family;
+                font-size: @font-size + 1;
+                color: @text-color;
+                line-height: 20px;
+                border: 1px solid #999;
+                background-color: #f9f9f9;
+                font-family: @font-family;
+
+                .en {
+                    background: url(Images/flags.jpg) no-repeat;
+                }
+
+                &.ddSelect {
+                    position: relative;
+                     z-index: 100;
+
+                    .caret {
+                        background: url(Images/icon-down.png) 12px 9px no-repeat;
+                        width: 25px;
+                        height: 22px;
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                    }
+
+                    #divItemList {
+                        z-index: 200;
+                    }
+
+                    #divSelectedItem .flag i {
+                        position: absolute;
+                        top: 2px;
+                    }
+
+                    .ddItem .flag i {
+                        padding-top: 0;
+                        height: 19px;
+                    }
+                }
+
+                #divItemList {
+                    border-color: #a9a8a4;
+                }
+
+                #lbLanguage {
+                    color: @dropdown-color;
+                    font-size: @font-size + 1;
+                }
+            }
+
+            #divSelectedItem {
+                background: none !important;
+            }
+
+            .custom-textbox {
+                height: 22px;
+                width: 120px;
+                padding: 0 5px;
+                font-style: italic;
+                font-size: @font-size;
+                border: 1px solid #999;
+                line-height: 20px;
+
+                &:focus {
+                    color: @text-color;
+                    font-style: normal;
+                }
+            }
+
+            .showPass {
+                height: 14px;
+                float:left;
+                display: block;
+                padding-left: 15px;
+                text-indent: -15px;
+                color: @text-color;
+                position: relative;
+                top: 0;
+                font-size: @font-size - 1;
+
+                .checkShowPass {
+                    width: 13px;
+                    height: 13px;
+                    padding: 0;
+                    vertical-align: bottom;
+                    position: relative;
+                    font-size: 11px;
+                    margin: 0 3px 2px 0;
+                }
+
+                span {
+                    margin-left: 2px;
+                    vertical-align: top;
+                }
+            }
+
+            .inputCaptcha {
+                width: 54px;
+                float: left;
+                height: 18px;
+                text-align: center;
+                margin: 2px 0 0 4px;
+                color: @text-color;
+                border: 1px solid #999;
+            }
+
+            .codeCaptcha {
+                float: left;
+                width: 46px;
+                height: 22px;
+                margin: 2px;
+            }
+        }
+
+        .btnLogin {
+            border: none;
+            width: 70px;
+            background: url(Images/btn-submit.png) no-repeat;
+            height: 20px;
+            cursor: pointer;
+            color: #FFF;
+            float: left;
+            font-size: @font-size;
+            padding-bottom: 3px;
+            margin-left: 2px;
+
+            &:hover {
+                background-position: 0 -25px;
+            }
+        }
+
+        .btnLoginDisable {
+            .btnLogin;
+            border: none;
+            background-position: 0 -50px;
+            color: #a1a1a1;
+
+            &:hover {
+                background-position: 0 -50px;
+            }
+        }
+
+        .refreshCode {
+            margin: 2px 0 6px;
+            float: left;
+            background: url(images/refresh.jpg) no-repeat;
+            width: 22px;
+            display: inline-block;
+            height: 22px;
+            cursor: pointer;
+
+            &:hover {
+                background: url(images/refresh-hover.jpg) no-repeat;
+            }
+        }
+
+        .errorMessage {
+            font-size: 13px;
+            color: #6ab10f;
+            margin-top: 15px;
+            width: 100%;
+            text-align: center;
+            float: left;
+        }
+
+        .loading {
+            background: url(images/loading.gif) no-repeat;
+            height: 28px;
+            margin-left:3px;
+            display: inline-block;
+            width: 40px;
+        }
+
+        .fullwidth {
+            width: 100%;
+        }
+        
+    }
+
+    .christmas-newyear {
+        background: url(images/christmas.png) top center no-repeat;
+        height: 385px;
+        width: 332px;
+        clear: both;
+        position: relative;
+    }
+
+    .list-browser {
+        background: url(images/Rec_sp.png) right center no-repeat;
+        width: 210px;
+        height: 21px;
+        line-height: 20px;
+        color: #fff;
+        font-size: @font-size - 2;
+        font-family: arial;
+        clear: both;
+        position: absolute;
+        left: 25%;
+        bottom: 0;
+        text-align: left;
+    }
+
+    .textTitle_en {
+        background: url(Images/text_en.png) center no-repeat;
+        width: 418px;
+        height: 35px;
+    }
+
+    .textTitle-cn {
+        background: url(Images/text_cn.png) no-repeat;
+        height: 45px;
+        width: 210px;
+    }
+
+    .textTitle-tw {
+        .textTitle-cn;
+        background: url(Images/text_tw.png) no-repeat;
+    }
+}
+
+/* Fix IE */
+.eq-ie9, .eq-ie8, .eq-ie7 {
+    .moonbg .login .right .wrapper .showPass {
+        top: 2px;
+    }
+}
+
+
+
+
+

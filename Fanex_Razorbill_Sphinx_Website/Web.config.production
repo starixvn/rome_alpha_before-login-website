@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+<configuration>
+  <configSections>
+    <section name="cachingConfiguration" type="Microsoft.Practices.EnterpriseLibrary.Caching.Configuration.CacheManagerSettings, Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"/>
+    <section name="IBCAgent" type="ConfigSection.IBCAccounting, __code"/>
+    <section name="nlog" type="NLog.Config.ConfigSectionHandler, NLog"/>
+    <section name="indexusNetSharedCache" type="SharedCache.WinServiceCommon.Configuration.Client.IndexusProviderSection, SharedCache.WinServiceCommon"/>
+    <section name="loggingConfiguration" type="Microsoft.Practices.EnterpriseLibrary.Logging.Configuration.LoggingSettings, Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"/>
+    <section name="unity" type="Microsoft.Practices.Unity.Configuration.UnityConfigurationSection, Microsoft.Practices.Unity.Configuration, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"/>
+    <section name="Sunplus.Bingo" type="Sunplus.Bingo.Core.Configuration.BingoConfigurationSection, Sunplus.Bingo.Core"/>
+    <section name="exceptionHandling" type="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Configuration.ExceptionHandlingSettings, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"/>
+    <section name="Fanex.Data.DbSettingProvider" type="Fanex.Data.Configuration.DbSettingProviderConfigurationSection, Fanex.Data"/>
+    <section name="Fanex.Logging" type="Fanex.Logging.Configuration.LoggingSettings, Fanex.Logging"/>
+  </configSections>
+  <Fanex.Data.DbSettingProvider default="XmlDbSettingProvider">
+    <providers>
+      <add name="XmlDbSettingProvider" type="Fanex.Data.Configuration.XmlDbSettingProvider, Fanex.Data" resourcePath="~/SpNames.xml" enableWatching="1"/>
+    </providers>
+  </Fanex.Data.DbSettingProvider>
+  <Fanex.Logging msmqPath="FormatName:DIRECT=TCP:10.40.40.79\private$\entlib" defaultCategory="Agency"/>
+  <Sunplus.Bingo>
+    <BingoGame EnabledMaxTransfer="true" CodeGameNo="01"/>
+    <NumberGame Enabled="false"/>
+  </Sunplus.Bingo>
+  <unity>
+    <typeAliases>
+      <!-- Lifetime manager types -->
+      <typeAlias alias="singleton" type="Microsoft.Practices.Unity.ContainerControlledLifetimeManager, Microsoft.Practices.Unity"/>
+      <typeAlias alias="external" type="Microsoft.Practices.Unity.ExternallyControlledLifetimeManager, Microsoft.Practices.Unity"/>
+      <!-- Custom object types -->
+      <typeAlias alias="ICustomerService" type="Sunplus.Bingo.Services.ICustomerService, Sunplus.Bingo.Services"/>
+      <typeAlias alias="CustomerService" type="Sunplus.Bingo.Services.CustomerService, Sunplus.Bingo.Services"/>
+      <typeAlias alias="IReportService" type="Sunplus.Bingo.Services.IReportService, Sunplus.Bingo.Services"/>
+      <typeAlias alias="ReportService" type="Sunplus.Bingo.Services.ReportService, Sunplus.Bingo.Services"/>
+      <typeAlias alias="ICustomerDAO" type="Sunplus.Bingo.Data.ICustomerDAO, Sunplus.Bingo.Data"/>
+      <typeAlias alias="EntlibCustomerDAO" type="Sunplus.Bingo.Data.Entlib.EntlibCustomerDAO, Sunplus.Bingo.Data.Entlib"/>
+      <typeAlias alias="IReportDAO" type="Sunplus.Bingo.Data.IReportDAO, Sunplus.Bingo.Data"/>
+      <typeAlias alias="LinqCustomerDAO" type="Sunplus.Bingo.Data.LinqToSql.LinqCustomerDAO, Sunplus.Bingo.Data.LinqToSql"/>
+      <typeAlias alias="LinqReportDAO" type="Sunplus.Bingo.Data.LinqToSql.LinqReportDAO, Sunplus.Bingo.Data.LinqToSql"/>
+      <typeAlias alias="ILogger" type="Sunplus.Core.LoggingLib.ILogger, Sunplus.Core.LoggingLib"/>
+      <typeAlias alias="EntLibLogger" type="Sunplus.Core.LoggingLib.EntLibLogger, Sunplus.Core.LoggingLib"/>
+    </typeAliases>
+    <containers>
+      <container name="BingoContainer">
+        <types>
+          <type type="ICustomerService" mapTo="CustomerService"/>
+          <type type="IReportService" mapTo="ReportService"/>
+          <type type="ICustomerDAO" mapTo="LinqCustomerDAO"/>
+          <type type="IReportDAO" mapTo="LinqReportDAO"/>
+          <type type="ILogger" mapTo="EntLibLogger"/>
+        </types>
+      </container>
+    </containers>
+  </unity>
+  <exceptionHandling>
+    <exceptionPolicies>
+      <add name="DataAccess">
+        <exceptionTypes>
+          <add name="All Exceptions" type="System.Exception, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" postHandlingAction="None">
+            <exceptionHandlers>
+              <add name="DataAccessExceptionHandler" type="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.LoggingExceptionHandler, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" logCategory="Accounting Error" eventId="100" severity="Error" title="Enterprise Library Exception Handling" formatterType="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.TextExceptionFormatter, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling" priority="0"/>
+            </exceptionHandlers>
+          </add>
+        </exceptionTypes>
+      </add>
+      <add name="Business">
+        <exceptionTypes>
+          <add name="All Exceptions" type="System.Exception, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" postHandlingAction="None">
+            <exceptionHandlers>
+              <add name="BusinessExceptionHandler" type="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.LoggingExceptionHandler, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" logCategory="Accounting Error" eventId="200" severity="Error" title="Enterprise Library Exception Handling" formatterType="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.TextExceptionFormatter, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling" priority="0"/>
+            </exceptionHandlers>
+          </add>
+        </exceptionTypes>
+      </add>
+      <add name="UI">
+        <exceptionTypes>
+          <add name="All Exceptions" type="System.Exception, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" postHandlingAction="None">
+            <exceptionHandlers>
+              <add name="UIExceptionHandler" type="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging.LoggingExceptionHandler, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Logging, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" logCategory="Accounting Error" eventId="300" severity="Error" title="Enterprise Library Exception Handling" formatterType="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.TextExceptionFormatter, Microsoft.Practices.EnterpriseLibrary.ExceptionHandling" priority="0"/>
+            </exceptionHandlers>
+          </add>
+        </exceptionTypes>
+      </add>
+    </exceptionPolicies>
+  </exceptionHandling>
+  <nlog autoReload="true" throwExceptions="true">
+    <targets async="true">
+      <target name="shared_cache_general" type="File" layout="${longdate}|${level:uppercase=true}|${aspnet-request:item=logSession}|${message}" filename="C:\temp\logs\client\${date:format=yyyy-MM-dd}_shared_cache_general_log.txt"/>
+      <target name="shared_cache_traffic" type="File" layout="${longdate}|${level:uppercase=true}|${aspnet-request:item=logSession}|${message}" filename="C:\temp\logs\client\${date:format=yyyy-MM-dd}_shared_cache_traffic_log.txt"/>
+      <target name="shared_cache_tracking" type="File" layout="${longdate}|${level:uppercase=true}|${aspnet-request:item=logSession}|${message}" filename="C:\temp\logs\client\${date:format=yyyy-MM-dd}_shared_cache_tracking_log.txt"/>
+      <target name="shared_cache_sync" type="File" layout="${longdate}|${level:uppercase=true}|${aspnet-request:item=logSession}|${message}" filename="C:\temp\logs\client\${date:format=yyyy-MM-dd}_shared_cache_sync_log.txt"/>
+    </targets>
+    <rules>
+      <logger name="General" minlevel="Debug" writeTo="shared_cache_general" final="true"/>
+      <logger name="Traffic" minlevel="Debug" writeTo="shared_cache_traffic" final="true"/>
+      <logger name="Tracking" minlevel="Debug" writeTo="shared_cache_tracking" final="true"/>
+      <logger name="Sync" minlevel="Debug" writeTo="shared_cache_sync" final="true"/>
+      <logger name="*" minlevel="Debug" writeTo="shared_cache_general"/>
+      <logger name="*" minlevel="Info" writeTo="shared_cache_general"/>
+    </rules>
+  </nlog>
+  <cachingConfiguration defaultCacheManager="Cache Manager">
+    <cacheManagers>
+      <add name="Cache Manager" type="Microsoft.Practices.EnterpriseLibrary.Caching.CacheManager, Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0" expirationPollFrequencyInSeconds="1000" maximumElementsInCacheBeforeScavenging="500" numberToRemoveWhenScavenging="10" backingStoreName="Null Storage"/>
+    </cacheManagers>
+    <backingStores>
+      <add encryptionProviderName="" type="Microsoft.Practices.EnterpriseLibrary.Caching.BackingStoreImplementations.NullBackingStore, Microsoft.Practices.EnterpriseLibrary.Caching, Version=5.0.414.0" name="Null Storage"/>
+    </backingStores>
+  </cachingConfiguration>
+  <appSettings>
+    <add key="SessionState_Connections" value="10.40.40.79:42424@L66-13"/>
+    <add key="SessionState_RecheckDownServerInterval" value="600"/>
+    <add key="SessionState_CounterCachedDuration" value="10"/>
+  </appSettings>
+  <connectionStrings>
+    <clear/>
+    <add name="main" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.17;Initial Catalog=bodb02;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="archive" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.94;Initial Catalog=bodb02;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="archive05" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.90;Initial Catalog=bodb02;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="archive052" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.95;Initial Catalog=bodb02;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="archive053" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.94;Initial Catalog=bodb02;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="archive06" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.100;Initial Catalog=bodb02;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="warehouse" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.100;Initial Catalog=bodb02;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="IPEntities" connectionString="metadata=res://*/IPs.DAL.Model.csdl|res://*/IPs.DAL.Model.ssdl|res://*/IPs.DAL.Model.msl;provider=System.Data.SqlClient;provider connection string=&quot;Data Source=10.40.40.17;Initial Catalog=IPDB;User ID=bodbDownlineNet;Password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk==&quot;" providerName="System.Data.EntityClient"/>
+    <add name="on_user" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.90;Initial Catalog=on_user;max pool size=1000;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="db03" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.90;Initial Catalog=bodb02;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="dblog" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.92;Initial Catalog=bodb_CustomerLog;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="CS_BackupDB" connectionString="Data Source=10.40.40.167;Initial Catalog=CasinoAdmin;User ID=Dot_Agent;Password=%$casinoag#@1;Connect Timeout=300" providerName="System.Data.SqlClient"/>
+    <add name="CS_ArchiveDB" connectionString="Data Source=10.40.40.167;Initial Catalog=Casino_Archive;User ID=Dot_Agent;Password=%$casinoag#@1;Connect Timeout=300" providerName="System.Data.SqlClient"/>
+    <add name="MessageDB" providerName="System.Data.SqlClient" connectionString="Data Source=10.40.40.110;Initial Catalog=bodb_message;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="CS_LiveBackupDB" connectionString="Data Source=10.40.40.187;Initial Catalog=BingoAdmin;Persist Security Info=True;User ID=Dot_Agent;Password=%$casinoag#@1" providerName="System.Data.SqlClient"/>
+    <add name="CS_LiveArchiveDB" connectionString="Data Source=10.40.40.187;Initial Catalog=BingoArchive;Persist Security Info=True;User ID=Dot_Agent;Password=%$casinoag#@1" providerName="System.Data.SqlClient"/>
+    <add name="CustomerLogEntities" connectionString="Data Source=10.40.40.92;Initial Catalog=bodb_CustomerLog;User ID=bodbDownlineNet;Password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk==" providerName="System.Data.SqlClient"/>
+    <add name="LiveCasinoAdmin" connectionString="Data Source=10.40.40.187;Initial Catalog=LiveCasinoAdmin;Persist Security Info=True;User ID=LVCasino_Agent;Password=%$casinoag#@1" providerName="System.Data.SqlClient"/>
+    <!-- New connection string -->
+    <add name="DBAGE.BODB02" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.94;Initial Catalog=bodb02;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="DBAGE.bodb_AGE" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.94;Initial Catalog=bodb_AGE;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="DBTXN.BODB02" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.17;Initial Catalog=bodb02;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+    <add name="DBARC.bodb_Archive" providerName="System.Data.SqlClient" connectionString="packet size=4096; Data Source=10.40.40.100;Initial Catalog=bodb02;integrated security=false; user id=bodbDownlineNet; password=TBAw8F+PqCx3u382anlnOVRxKIJYMsMwXVn1hJpeyKk=="/>
+  </connectionStrings>
+  <system.web>
+    <httpRuntime maxQueryStringLength="24000"/>
+    <compilation debug="false" targetFramework="4.0">
+      <assemblies>
+        <add assembly="System.Data.OracleClient, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+        <add assembly="System.Management, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+        <add assembly="System.Messaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+        <add assembly="System.Configuration.Install, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+        <add assembly="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+        <add assembly="System.Runtime.Remoting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+      </assemblies>
+    </compilation>
+    <authentication mode="Forms">
+      <forms loginUrl="~/" path="/" cookieless="UseDeviceProfile" name=".AGENTFORMSAUTH" protection="All"/>
+    </authentication>
+    <authorization>
+      <deny users="?"/>
+      <allow users="*"/>
+    </authorization>
+    <customErrors mode="Off" defaultRedirect="~/Error.aspx"/>
+    <!--sessionState mode="StateServer" timeout="5" partitionResolverType="Fanex.SessionPartition.PartitionResolver" sessionIDManagerType="Fanex.SessionPartition.SessionIdManager" cookieless="false" /-->
+    <sessionState mode="StateServer" timeout="5" stateConnectionString="tcpip=10.40.40.79:42424"/>
+    <globalization fileEncoding="utf-8" requestEncoding="utf-8" responseEncoding="utf-8"/>
+    <trace enabled="false" localOnly="false" traceMode="SortByTime"/>
+    <machineKey validationKey="3361826F7AD281FDE08DDDB9C177A32CC037C2CD92F4F40D6952D512E095E7AF5B441EC73F2B51C0D26381832F03CB4A365AF362D27518F946BFF095CF2B1EAC" decryptionKey="D29F7B7D25EA318A997A8EE8DAEB008439A7C68E86B5F5DC" validation="SHA1"/>
+    <pages controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID"/>
+  </system.web>
+  <location path="Handlers/CaptCha.ashx">
+    <system.web>
+      <authorization>
+        <allow users="*"/>
+      </authorization>
+    </system.web>
+  </location>
+  <location path="SignIn.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*"/>
+      </authorization>
+    </system.web>
+  </location>
+  <location path="Error.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*"/>
+      </authorization>
+    </system.web>
+  </location>
+  <location path="UnderMaintenance.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*"/>
+      </authorization>
+    </system.web>
+  </location>
+  <location path="Whoami.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*"/>
+      </authorization>
+    </system.web>
+  </location>
+  <location path="Ts.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*"/>
+      </authorization>
+    </system.web>
+  </location>
+  <location path="ClearSessionID.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*"/>
+      </authorization>
+    </system.web>
+  </location>
+  <location path="ClientIP.aspx">
+    <system.web>
+      <authorization>
+        <allow users="*"/>
+      </authorization>
+    </system.web>
+  </location>
+  <system.webServer>
+    <defaultDocument>
+      <files>
+        <add value="SignIn.aspx"/>
+      </files>
+    </defaultDocument>
+  </system.webServer>
+</configuration>

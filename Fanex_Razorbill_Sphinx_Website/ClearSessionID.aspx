@@ -1,0 +1,1 @@
+<%@ Page Language="C#" %><%    if (Request.Cookies["ASP.NET_SessionId"] != null)    {                Response.Cookies["ASP.NET_SessionId"].Value="";    }             %>     <h2>hihihi </h2>

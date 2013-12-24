@@ -1,0 +1,14 @@
+﻿@model Fanex.Razorbill.Sphinx.Service.UserLogin.Models.LoginResult
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sign In</title>
+        
+    </head>
+    <body>
+        Loading... please wait
+        @{
+            Response.Redirect(Model.AfterLoginUrl);
+        }
+    </body>
+</html>

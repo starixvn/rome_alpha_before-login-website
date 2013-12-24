@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" id="rootHtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Happy Dragon Boat Festival</title>
+    <link rel="stylesheet" type="text/css" href="App_Themes/DragonBoat/style.css">
+    <link rel="stylesheet" type="text/css" href="App_Themes/DragonBoat/Signin.DragonBoat2.css?ver=1000">
+</head>
+<body>
+    <form method="post" name="fLogin" action='{formAction}'>
+    <div id="main">
+        <table border="0" align="center" class="col380" cellspacing="0" cellpadding="1" style="margin-bottom: 20px;">
+            <tr>
+                <td colspan="2">
+                    <div id="errmsg" class="errmsg error">
+                        &nbsp;
+                    </div>
+                </td>
+                <td class="padding-right">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="padding-left">
+                    &nbsp;
+                </td>
+                <td class="float-right">
+                    <div class="languageBox">
+                        <span id="spnLanguage" class="language hidden"></span>
+                        <select id="selLanguage" onchange="SelectLanguage(this.value)">
+                            <option class="engLishLanguage" value="0">English</option>
+                            <option class="taiwanLanguage" value="1">繁體中文</option>
+                            <option class="chinaLanguage" value="4">简体中文</option>
+                            <option class="japanLanguage" value="2">日本語</option>
+                            <option class="thaiLanguage" value="3">ภาษาไทย</option>
+                            <option class="koreaLanguage" value="5">한국어</option>
+                            <option class="vietNamLanguage" value="6">Tiếng Việt</option>
+                        </select>
+                        <input type="hidden" value="en-US" id="hidLanguage" name="hidLanguage" />
+                    </div>
+                </td>
+                <td class="padding-right">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="padding-left">
+                    &nbsp; <span id="spnUserName" class="">Username</span>&nbsp;
+                </td>
+                <td class="">
+                    <div class="box">
+                        <input id="txtUserName" name="txtUserName" type="text" value="{username_value}" />
+                    </div>
+                </td>
+                <td class="padding-right">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="padding-left">
+                    &nbsp; <span id="spnPassWord" class="">Password</span>&nbsp;
+                </td>
+                <td class="">
+                    <div class="box">
+                        <input id="txtPassWord" class="tb placeholder" name="txtPassWord" type="password" />
+                    </div>
+                    <div id="boxShowPassword" style="padding: 2px;">
+                        <input id="showPwdChk" type="checkbox" />
+                        <label id="showPwdLabel" for="showPwdChk">
+                        </label>
+                    </div>
+                </td>
+                <td class="padding-right">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="padding-left">
+                    &nbsp;
+                </td>
+                <td>
+                    <table class="" cellspacing="0" cellpadding="0" style="width: 100%;">
+                        <tr>
+                            <td>
+                                <div class="verbox">
+                                    <input id="txtCaptcha" class="tb input2" name="txtCaptcha" type="text" maxlength="4"
+                                        autocomplete="off" onkeydown="DoEnter(event, 'DoLogin()')" class="txbCaptchcha" />&nbsp;
+                                </div>
+                            </td>
+                            <td>
+                                &nbsp;
+                            </td>
+                            <td>
+                                <div class="capcha" alt="">
+                                    <img id="imgCode" src="../../Handlers/Captcha.ashx" onclick="GetValidateImage()"
+                                        alt="Refresh" title="Refresh" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="padding-right">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr>
+                <td class="padding-left">
+                    &nbsp;
+                </td>
+                <td>
+                    <table style="width: 100%;">
+                        <tr>
+                            <td>
+                                <div class="loginbox float-right">
+                                    <a id="btnLogin" type="button" class="buttonsite logintext" onclick="return DoLogin()">
+                                        Login</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="padding-right">
+                    &nbsp;
+                </td>
+            </tr>
+            <tr class="display-none">
+                <td>
+                    <div id="divBrowser" class="text_brow">
+                        Recommended Browsers:</div>
+                </td>
+                <td colspan="2" align="center" valign="middle">
+                    {VersionMobile}
+                </td>
+            </tr>
+        </table>
+        <!--PopupMobileVersion-->
+        <div id='popupMobileVersion'>
+            <div>
+                {static:Resources.Lang.popupMobileVersion}</div>
+            <div style="padding-top: 10px">
+                <a href="javascript:GoToMobileSilte();" class='yes'>{static:Resources.Lang.lblYes}</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="javascript:HidePopUp();" class='no'>{static:Resources.Lang.lblNo}</a>
+            </div>
+        </div>
+        <!--/PopupMobileVersion-->
+    </div>
+    </form>
+</body>
+<script type="text/javascript" src="../../GlobalResources/Js/Core.js"></script>
+<script type="text/javascript" src="../../Resources/SignIn.DragonBoat.js"></script>
+<script type="text/javascript" src="../../Resources/SignIn.js"></script>
+</html>

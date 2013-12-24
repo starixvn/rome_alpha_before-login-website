@@ -1,0 +1,695 @@
+﻿/*
+ * Created 20100113@Don, Lee - Sign-in page
+ * Revision:
+ * ?@? - ...
+ *
+ */
+
+using Fanex.Agent.UI;
+
+namespace Sunplus.Age_BeforeLogin.UI
+{
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Web;
+    using Fanex.Age.UI;
+    using RSACryptoPad;
+    using Sunplus.Agent.Model.BL.Definitions;
+    using Sunplus.Agent.Model.DL.Authorization;
+    using Sunplus.Agent.Model.Services;
+    using Sunplus.Agent.Utilities;
+
+    public partial class SignIn_Page : System.Web.UI.Page
+    {
+        /// <summary>
+        /// Root namespace of json data returned.
+        /// </summary>
+        private const string JSDATA = "_page";
+        private const int KeySize = 1024;
+
+        // Under maintenance checking
+        static object _locker = new object();
+
+        static DateTime _lastCheckUM = DateTime.MinValue;
+        static bool _isUM = false;
+        private JSONData jsonData = new JSONData(10);
+        private string userName = null;
+        private string baseDomain = "ibc88.com";
+
+        private bool loginWithOldPwd = false;
+        private DateTime lastChangedPwd = DateTime.MinValue;
+        private bool loginFailed = true;
+        /// <summary>
+        /// Hard code for ssl domain list.
+        /// </summary>
+        protected bool IsSSLDomain
+        {
+            get
+            {
+                string hostName = HttpContext.Current.Request.Headers["Host"];
+                List<string> sslDomains = new List<string>(new string[]
+                {
+                    "ag.729972.com",
+                    "ag.729973.com",
+                    "ag.ibc88.com",
+                    "ag.ispo888.com",
+                    "ag.ispo888.net",
+                    "www.006660.com",
+                    "www.006660.net",
+                    "www.008880.com"
+                });
+
+                return sslDomains.Contains(hostName);
+            }
+        }
+
+        /// <summary>
+        /// 789y, IBCBET or Others, base on domain
+        /// </summary>
+        protected string SiteGroup
+        {
+            get
+            {
+                string host = HttpContext.Current.Request.Headers["Host"];
+
+                List<string> site789y = new List<string>(new string[]
+                {
+                    "rocksnake.net",
+                    "effox.net",
+                    "zeroheat.net",
+                    "www.rocksnake.net",
+                    "www.effox.net",
+                    "www.zeroheat.net",
+
+                    "logicyber.com",
+                    "rodelan.com",
+                    "joliebean.net",
+                    "silvernut.net",
+                    "223334.net",
+                    "logiatom.com",
+                    "wildele.com",
+                    "topofa.net",
+                    "elinkaa.com",
+                    "theasgard.net",
+
+                    "www.logicyber.com",
+                    "www.rodelan.com",
+                    "www.joliebean.net",
+                    "www.silvernut.net",
+                    "www.223334.net",
+                    "www.logiatom.com",
+                    "www.wildele.com",
+                    "www.topofa.net",
+                    "www.elinkaa.com",
+                    "www.theasgard.net"
+                });
+
+                List<string> siteIBCBET = new List<string>(new string[]
+                {
+                    "www.greysnow.com",
+                    "greysnow.com",
+                    "www.megaken.net",
+                    "megaken.net",
+                    "www.trifang.com",
+                    "trifang.com"                  
+                });
+
+                List<string> siteB8 = new List<string>(new string[]
+                {
+                    "b8ag.com",
+                    "b88ag.com",
+                    "www.b8ag.com",
+                    "www.b88ag.com"
+                });
+
+                if (site789y.Contains(host))
+                {
+                    return "789y";
+                }
+                if (siteIBCBET.Contains(host))
+                {
+                    return "IBCBET";
+                }
+                if (siteB8.Contains(host))
+                {
+                    return "789y";
+                }
+                
+                return "Others";
+                
+            }
+        }
+
+        protected new bool IsPostBack
+        {
+            get
+            {
+                return Request.Form.Count > 0;
+            }
+        }
+
+        protected string LoginUrl
+        {
+            get
+            {
+                return "SignIn.aspx";
+            }
+        }
+
+        #region Detecting a mobile browser
+
+        public bool IsMobileBrowser()
+        {
+            ////First try built in asp.net check
+            if (Request.Browser.IsMobileDevice)
+            {
+                return true;
+            }
+            ////Then try checking for the HTTP_X_WAP_PROFILE hear
+            if (Request.ServerVariables["HTTP_X_WAP_PROFILE"] != null)
+            {
+                return true;
+            }
+            ////Then try checking that HTTP_ACCEPT exists and WAP
+            if (Request.ServerVariables["HTTP_ACCEPT"] != null &&
+                Request.ServerVariables["HTTP_ACCEPT"].ToLower().Contains("wap"))
+            {
+                return true;
+            }
+            ////And finally check the HTTP_USER_AGENT
+            ////Hear variable for any one of the following
+            if (Request.ServerVariables["HTTP_USER_AGENT"] != null)
+            {
+                ////Create a list of all mobile types
+                string[] mobiles = new string[]
+                {
+                    "midp", "j2me", "avant", "docomo",
+                    "novarra", "palmos", "palmsource",
+                    "240x320", "opwv", "chtml",
+                    "pda", "windows ce", "mmp/",
+                    "blackberry", "mib/", "symbian",
+                    "wireless", "nokia", "hand", "mobi",
+                    "phone", "cdm", "up.b", "audio",
+                    "SIE-", "SEC-", "samsung", "HTC",
+                    "mot-", "mitsu", "sagem", "sony",
+                    "alcatel", "lg", "eric", "vx",
+                    "NEC", "philips", "mmm", "xx",
+                    "panasonic", "sharp", "wap", "sch",
+                    "rover", "pocket", "benq", "java",
+                    "pt", "pg", "vox", "amoi",
+                    "bird", "compal", "kg", "voda",
+                    "sany", "kdd", "dbt", "sendo",
+                    "sgh", "gradi", "jb", "dddi",
+                    "moto", "iphone"
+                };
+
+                ////Loop through each item in the list created above
+                ////and check if the header contains that text
+                foreach (string s in mobiles)
+                {
+                    if (Request.ServerVariables["HTTP_USER_AGENT"].ToLower().Contains(s.ToLower()))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        #endregion Detecting a mobile browser
+
+        /// <summary>
+        /// Register an object as JSON format. Access object in client site by _page.objName.
+        /// </summary>
+        /// <param name="name">Name of the object.</param>
+        /// <param name="value">Value of the object. It could be a JSONData object.</param>
+        public void RegisterJavascriptObject(object name, object value)
+        {
+            this.jsonData.Add(name, value);
+        }
+
+        /// <summary>
+        /// Register an error as JSON format.
+        /// </summary>
+        /// <param name="errCode"></param>
+        /// <param name="errMsg"></param>
+        public void RegisterJSONError(int errCode, string errMsg)
+        {
+            this.jsonData.Add(JSONError.ERROR_CODE, errCode);
+            this.jsonData.Add(JSONError.ERROR_MSG, errMsg);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            // Hot fix for Opera browser (IIS does sniffing user agent)
+            Response.ContentType = "text/html";
+            this.userName = (Request["txtUserName"] + string.Empty).Trim();
+            Response.Cache.SetNoStore();
+
+            string currentDomain = AppSettings.BeforeLoginUrl;
+            //// Not include dot
+            this.baseDomain = currentDomain.Remove(0, currentDomain.IndexOf('.') + 1);
+            this.baseDomain = this.baseDomain.Remove(this.baseDomain.Length - 1, 1);
+
+            bool ignoreUMCheck = this.baseDomain.Contains("suncacti") || this.baseDomain.Contains("metaljazz");
+
+            // Check UM Time
+            if (!ignoreUMCheck)
+            {
+                // Check under maintenance time
+                string startTime = string.Empty, endTime = string.Empty;
+                // Double check and lock
+                if (DateTime.Now.Subtract(_lastCheckUM) > TimeSpan.FromSeconds(5)) // Check down time each 5 seconds
+                {
+                    lock (_locker)
+                    {
+                        if (DateTime.Now.Subtract(_lastCheckUM) > TimeSpan.FromSeconds(5))
+                        {
+                            _isUM = MaintenanceService.GetDownTime(out startTime, out endTime);
+                            _lastCheckUM = DateTime.Now;
+                        }
+                    }
+                }
+
+                if (_isUM)
+                {
+                    Server.Transfer("~/UnderMaintenance.aspx");
+                    return;
+                }
+            }
+
+            int language = 0;
+            if (Request.Cookies["LANGUAGE"] != null)
+            {
+                int.TryParse(Request.Cookies["LANGUAGE"].Value, out language);
+            }
+
+            if (language > 5)
+            {
+                language = 0;
+            }
+
+            if (this.IsPostBack)
+            {
+                this.OnPostBack();
+                try
+                {
+                    FPS.Client.Service fps = new FPS.Client.Service();
+                    fps.CheckTransaction(userName, this.loginFailed ? "login-failed" : "login", "Agency", null);
+                }
+                catch
+                {
+                }
+                if (!this.loginFailed) return;
+            }
+
+            // Check cross cookie compatibility
+            Session["captcha3"] = Encryption.RandomNumberString(6);
+            string randomTicket = Encryption.CfsEnCode(Session["captcha3"].ToString());
+            try
+            {
+                // Set cookie with custid id
+                HttpCookie cookie = new HttpCookie("__utms", randomTicket);
+                cookie.Domain = this.baseDomain;
+                cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
+                Response.SetCookie(cookie);
+            }
+            catch
+            {
+                Logs.Write("Cannot set cookie for cross domain");
+            }
+
+            this.RegisterJavascriptObject("language", language);
+            this.RegisterJavascriptObject("ip", Sunplus.Agent.Model.Common.AgentIPFormat.GetClientIP());
+            this.RegisterJavascriptObject("__utms", randomTicket);
+            this.RegisterJavascriptObject("domain", this.baseDomain);
+
+            // Use for encrypt pwd
+            Session["captcha2"] = "1124";//Encryption.RandomNumberString(4);
+            this.RegisterJavascriptObject("captcha", Session["captcha2"].ToString());
+
+            TplCore.TplSettings.CurrentTheme = null;
+
+
+            //Get special event date from AppSetting.ini
+            var startEventDate = Convert.ToDateTime(Agent.Configurations.AppSettings.Configuration.Get("SpecialEventStart"));
+            var endEventDate = Convert.ToDateTime(Agent.Configurations.AppSettings.Configuration.Get("SpecialEventEnd"));
+            var currentDate = DateTime.Now;
+
+            //SignIn_Template tpl = new SignIn_Template();
+            //SignIn_Euro_Template tpl = new SignIn_Euro_Template();
+
+            var havingFestival = currentDate >= startEventDate && currentDate <= endEventDate;
+
+            if(havingFestival)
+                Response.Redirect("login/index");
+
+            dynamic tpl = new SignIn_Olempic_Template();
+
+            //tpl = new SignIn_Olempic_Template();
+            //SignIn_Moon_Template tpl = new SignIn_Moon_Template();
+            //SignIn_XMas_Template tpl = new SignIn_XMas_Template();            
+            //SignIn_MidAutumn_Template tpl = new SignIn_MidAutumn_Template();
+
+            tpl.username_value = this.userName;
+            tpl.formAction = this.IsSSLDomain ? (Sunplus.Agent.Model.BL.Definitions.AppSettings.BaseUrl.Replace("http://", "https://") + this.LoginUrl) : this.LoginUrl;
+            ////Mobile Device Browser
+            tpl.VersionMobile = string.Empty;
+            tpl.PopupMobileVersion.Visible = loginWithOldPwd;
+
+            // Temporary reuse PopupMobileVersion block
+            if (loginWithOldPwd)
+            {
+                tpl.PopupMobileVersion.SetValue(string.Format(Resources.Lang.lblPasswordChanged, lastChangedPwd));
+            }
+
+            Response.Write(tpl);
+           // Response.Redirect("Login/Index");
+        }
+
+        protected void OnPostBack()
+        {
+            ////Login Failed Count > 5
+            if (this._GetLoginFailedCount() > 15)
+            {
+                ////After 5'
+                if (this._GetLoginFailedTime().AddMinutes(15).CompareTo(DateTime.Now) > 0)
+                {
+                    this._SetLoginFailedTime();
+                    this.RegisterJSONError(1, Resources.Lang.invalidLogin);
+
+                    return;
+                }
+                else
+                {
+                    this._ResetLoginFailed();
+                }
+            }
+
+            this.CheckLogin();
+        }
+
+        #region Event check login
+
+        protected int _GetLoginFailedCount()
+        {
+            int count = 0;
+            try
+            {
+                if (Cache[Request.UserHostAddress + "_Count"] is int)
+                {
+                    count = (int)Cache[Request.UserHostAddress + "_Count"];
+                }
+            }
+            catch (Exception e)
+            {
+                Logs.Write(e);
+            }
+
+            return count;
+        }
+
+        protected void _IncreaseLoginFailedCount()
+        {
+            try
+            {
+                Cache[Request.UserHostAddress + "_Count"] = this._GetLoginFailedCount() + 1;
+            }
+            catch (Exception e)
+            {
+                Logs.Write(e);
+            }
+        }
+
+        protected void _ResetLoginFailed()
+        {
+            try
+            {
+                Cache.Remove(Request.UserHostAddress + "_Count");
+                Cache.Remove(Request.UserHostAddress + "_Date");
+            }
+            catch (Exception e)
+            {
+                Logs.Write(e);
+            }
+        }
+
+        protected DateTime _GetLoginFailedTime()
+        {
+            DateTime date = DateTime.MinValue;
+            try
+            {
+                if (Cache[Request.UserHostAddress + "_Date"] is DateTime)
+                {
+                    date = (DateTime)Cache[Request.UserHostAddress + "_Date"];
+                }
+            }
+            catch (Exception e)
+            {
+                Logs.Write(e);
+            }
+
+            return date;
+        }
+
+        protected void _SetLoginFailedTime()
+        {
+            try
+            {
+                Cache[Request.UserHostAddress + "_Date"] = DateTime.Now;
+            }
+            catch (Exception e)
+            {
+                Logs.Write(e);
+            }
+        }
+
+        #endregion Event check login
+
+        #region Prototype
+
+        protected override void Render(System.Web.UI.HtmlTextWriter writer)
+        {
+            this.WriteJavascriptObjects(writer);
+            base.Render(writer);
+        }
+
+        protected void WriteJavascriptObjects(System.Web.UI.HtmlTextWriter writer)
+        {
+            if (0 == this.jsonData.Count)
+            {
+                return;
+            }
+
+            writer.Write("\r\n<script type=\"text/javascript\">\r\n\tvar ");
+            writer.Write(JSDATA);
+            writer.Write(" = ");
+            writer.Write(JSON.Render(this.jsonData));
+            writer.Write(";\r\n</script>");
+        }
+
+        protected void SetLanguage(string language)
+        {
+            System.Globalization.CultureInfo def = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
+
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(language);
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture(language);
+
+            System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat = def.DateTimeFormat;
+        }
+
+        #endregion Prototype
+
+        private void CheckLogin()
+        {
+            // Checking username/password/code here
+            string password = Request["txtPassWord"];
+            string language = Request["hidLanguage"];
+
+            if (AppSessions.IsValidLanguage(language))
+            {
+                AppSessions.Language = language;
+                this.SetLanguage(language);
+            }
+            else
+            {
+                this._IncreaseLoginFailedCount();
+                this.RegisterJSONError(101, Resources.Lang.invalidLogin);
+
+                return;
+            }
+
+            string code = Request["txtCaptcha"];
+
+            if (code != AppSessions.CaptchaCode)
+            {
+                this._IncreaseLoginFailedCount();
+                this.RegisterJSONError(101, Resources.Lang.errInvalidCaptcha);
+
+                return;
+            }
+
+            // Create new code
+            AppSessions.CaptchaCode = Encryption.RandomNumberString(4).ToUpperInvariant();
+
+            int errCode = -1;
+            string errMsg = null;
+            int custId = 0, subAccId = 0;
+            bool isNickname = false;
+            string nickName = string.Empty;
+            DateTime loginTime = DateTime.Now;
+
+            if (Session["captcha2"] == null)
+            {
+                return;
+            }
+
+            try
+            {
+                password = Encryption.RC4(Session["captcha2"].ToString(), Encryption.HexDecode(password));
+            }
+            catch
+            {
+                return;
+            }
+
+            // Get Browser
+            Hashtable requestInfo = DeviceService.GetRequestInfo(Request);
+            requestInfo.Add("sitegroup", SiteGroup);
+
+            AuthorizationDAO au = new AuthorizationDAO();
+
+            try
+            {
+                au.Age_LoginVerifyDownline(
+                    this.userName,
+                    password,
+                    requestInfo,
+                    AppSessions.LangKey,
+                    out custId,
+                    out subAccId,
+                    out loginTime,
+                    out lastChangedPwd,
+                    out nickName,
+                    out isNickname,
+                    out errCode,
+                    out errMsg);
+            }
+            catch (Exception e)
+            {
+                errCode = 909;
+                errMsg = "Invalid login with code 909, please inform administrator!";
+                Logs.Write(e);
+            }
+
+            if (errCode == 0)
+            {
+                this._ResetLoginFailed();
+
+                bool noCrossCookie = Request.Cookies.Get("__utms") == null
+                    || Request.Cookies.Get("__utms").Value == Session["captcha3"].ToString();
+                string crossCookieValue = Encryption.CfsEnCode((custId + loginTime.Minute).ToString());
+
+                string parameter = string.Empty, path = string.Empty;
+                parameter = custId.ToString() + "&" ////0
+                + subAccId.ToString() + "&" ////1
+                + loginTime.Ticks + "&" ////2
+                + Encryption.HexEncode(Encryption.RC4(loginTime.Minute.ToString(), password)) + "&" ////3
+                + nickName + "&" ////4
+                + isNickname.ToString() + "&" ////5
+                + "__utms" + "&" ////6
+                + AppSessions.Language + "&"////7
+                + noCrossCookie; ////8
+
+                path = Server.MapPath("IbcKeys/ibcpkey.snk");
+                EncryptionThread encryption = new EncryptionThread();
+                parameter = encryption.EncryptString(parameter, KeySize, path);
+
+                string url = AppSettings.AfterLoginUrl;
+               /* if (Request.Cookies["ssl"] == null || Request.Cookies["ssl"].Value != "true")
+                {
+                    url = url.Replace("https://", "http://");
+                }*/
+
+                url += "_Authorization/Handlers/ProcessAfterLogin.ashx";
+
+                url += "?params=" + parameter;
+
+                try
+                {
+                    // Set cookie with custid id and seed
+                    HttpCookie cookie = new HttpCookie("__utms", crossCookieValue);
+                    cookie.Domain = this.baseDomain;
+                    cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
+                    Response.SetCookie(cookie);
+                }
+                catch
+                {
+                    Logs.Write("Cannot set cookie for cross domain");
+                }
+
+                string[] redirect = new string[]
+                {
+                    "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"><html xmlns=\"http://www.w3.org/1999/xhtml\">",
+                    "<head><title>",
+                    Request.ServerVariables["HTTP_HOST"],
+                    "</title>",
+                    "<script type=\"text/javascript\" src=\"/GlobalResources/Js/Core.js?",
+                    TplCore.TplSettings.UrlVersion,
+                    "\">",
+                    "</script>",
+                    "</head><body>Loading...please wait<script type=\"text/javascript\">",
+                    "try {setCookie2('__utms', '",
+                    crossCookieValue,
+                    "', 1, '/', '.' + '",
+                    this.baseDomain,
+                    "', '');} catch(exception){};",
+                    "top.window.location.href = '",
+                    url,
+                    "';</script></body></html>"
+                };
+
+                //enable login fail
+                this.loginFailed = false;
+
+                Response.ContentType = "text/html";
+                Response.Write(string.Join(null, redirect));
+                Response.Cache.SetNoStore();
+                //Response.End();
+            }
+            else
+            {
+                // Closed by wrong pwd 5 times, need to be synchronized to Casino DB
+                if (errCode == 108)
+                {
+                    try
+                    {
+                        CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();
+                        customer.UpdateCustClosedWrongPwd(custId, true, Sunplus.Agent.Model.Common.AgentIPFormat.GetClientIP());
+                    }
+                    catch
+                    {
+
+                    }
+                }
+
+                loginWithOldPwd = lastChangedPwd != DateTime.MinValue;
+
+                this._SetLoginFailedTime();
+                this._IncreaseLoginFailedCount();
+                if (this._GetLoginFailedCount() > 15)
+                {
+                    this.RegisterJSONError(1, Resources.Lang.invalidLogin);
+                    return;
+                }
+                else
+                {
+                    // Return error
+                    this.RegisterJSONError(errCode, errMsg);
+                }
+            }
+        }
+    }
+}

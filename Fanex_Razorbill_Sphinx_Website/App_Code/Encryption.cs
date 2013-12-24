@@ -1,0 +1,54 @@
+﻿using System;
+using System.Data;
+using System.Configuration;
+using System.Web;
+using System.Web.Security;
+
+
+// Wrap DNAide.Utils.Encryption for future removal
+public class Encryption
+{
+	public Encryption()
+	{
+
+	}
+
+    public static string CfsEnCode(string text)
+    {
+        return DNAide.Utils.Encryption.CfsEnCode(text);
+    }
+
+    public static string CfsDeCrypt(string text)
+    {
+        return DNAide.Utils.Encryption.CfsDeCrypt(text);
+    }
+
+    public static string CfsEnCrypt(string text)
+    {
+        return DNAide.Utils.Encryption.CfsEnCrypt(text);
+    }
+
+    public static string GetDeCryptConnectionString(string text)
+    {
+        return DNAide.Utils.Encryption.GetDeCryptConnectionString(text);
+    }
+    public static string RandomNumberString(int length)
+    {
+        return DNAide.Utils.Encryption.RandomNumberString(length);
+    }
+
+    public static string RandomString(int length)
+    {
+        return DNAide.Utils.Encryption.RandomString(length);
+    }
+
+    public static string RandomString(int length, bool noZeroO)
+    {
+        return DNAide.Utils.Encryption.RandomString(length, noZeroO);
+    }
+
+    public static string RemoveSpecialChars(string text)
+    {
+        return DNAide.Utils.Encryption.RemoveSpecialChars(text);
+    }
+}

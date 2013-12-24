@@ -1,0 +1,219 @@
+﻿html{
+	margin: 0 auto;
+}
+body {
+	font-family:arial,tahoma,verdana,helvetica,sans-serif;
+	font-size:11px;
+	text-align:center;
+	line-height:20px;
+	color:#000000;
+	font-weight:bold;
+	background: #466684 url(../GlobalResources/Images.Olempic/bg.jpg) top  center repeat;
+	margin:0;
+}
+#clear{
+	clear: both;
+	height:5px;
+}
+#table_main{
+	margin: 0 auto;
+	margin-top: -10px;
+	text-align:left;
+    background: url(../GlobalResources/Images.Olempic/glow.png) 0px 0px;
+	display: block;
+	width: 997px;
+	height: 476px;	
+}
+#center{
+	margin:0;
+	padding:0;
+	height:200px;
+}
+
+.buttonsite{
+	text-align:center;
+	font-size:12px;
+	font-weight:bold;
+	color:#FFF;
+	height:30px;
+	width: 100px;
+	background:url(../GlobalResources/Images.Olempic/bg_buttonsite.png) no-repeat top;
+	cursor:pointer;
+	border:0px solid #000000;
+	padding-bottom:3px;
+}
+.buttonsite:hover{
+	background:url(../GlobalResources/Images.Olempic/bg_buttonsiteOV.png) no-repeat top;
+}
+.errmsg
+{
+	color: #f00;
+	text-align: left;
+	font-weight: bold;
+	display: block;
+}
+.text_brow{
+	color: #616161;
+	font-size:11px;
+	padding-left:7px;
+	font-weight:normal;
+}
+#txtUserName, #txtPassWord, #txtCaptcha, #selLanguage, #pass_temp, .tb
+{    
+	border:1px #FFF solid;
+	padding:3px;
+	color:#444;
+	background-color:#FFF;
+	font-size:11pt;
+	-moz-border-radius: 3px; /* Firefox */
+	-webkit-border-radius: 3px; /* Safari and Chrome */
+	border-radius: 3px; /* Opera 10.5+, future browsers, and now also Internet Explorer 6+ using IE-CSS3 */
+	font-family:sans-serif;
+	height: 24px;
+	width: 350px;
+}
+
+#spnUserName
+{
+	color:#fff; font-weight: bold; font-size:9pt; line-height:10px; font-family:Trebuchet MS; text-transform:uppercase;
+}
+
+#spnPassWord
+{
+	color:#fff; font-weight: bold; font-size:9pt; line-height:10px; padding-top:25px; font-family:Trebuchet MS; text-transform:uppercase;
+}
+
+#divBrowser
+{
+	display:none;
+}
+
+#spnCaptcha
+{
+	display:none;
+}
+.text_blue {
+ font-size:11px;
+ font-weight:bold;
+ color:#00F;
+}
+
+.text_white a:link, .text_white a:visited, .text_white{
+ font-size:11px;
+ text-decoration:none;
+ font-weight:bold;
+ color: #FFF;
+}
+
+.text_white a:active, .text_white a:hover{
+ font-size:11px;
+ font-weight:bold;
+ color: #FFF;
+}
+
+.language
+{
+	background: url(../GlobalResources/Images/flags.jpg) 0px 0px;
+	display: block;
+	width: 24px;
+	height: 19px;
+}
+
+.line {border-top:1px solid #245187; box-shadow: 1px 1px 1px #407fad;}
+
+.imgSignIn
+{
+	background: url(../GlobalResources/Images.Olempic/sign_in_icon.png) 0px 0px;
+	display: block;
+	width: 261px;
+	height: 261px;
+	margin-top: 18px;
+}
+
+.imgGlow
+{
+	background: url(../GlobalResources/Images.Olempic/glow.png) 0px 0px;
+	display: block;
+	width: 806px;
+	height: 418px;
+	margin-top: 250px;
+}
+
+#lanEnUS
+{
+	background: url(../GlobalResources/Images/flags.jpg) 0px 0px;
+	display: block;
+	width: 24px;
+	height: 19px;
+	float: left;
+	margin-left: 0px;
+	cursor: pointer;
+}
+#lanZhCN
+{
+	background: url(../GlobalResources/Images/flags.jpg) 144px 0px;
+	display: block;
+	width: 24px;
+	height: 19px;
+	float: left;
+	margin-left: 2px;
+	cursor: pointer;
+}
+#lanZhTW
+{
+	background: url(../GlobalResources/Images/flags.jpg) 120px 0px;
+	display: block;
+	width: 24px;
+	height: 19px;
+	float: left;
+	margin-left: 2px;
+	cursor: pointer;
+}
+#lanJaJP
+{
+	background: url(../GlobalResources/Images/flags.jpg) 96px 0px;
+	display: block;
+	width: 24px;
+	height: 19px;
+	float: left;
+	margin-left: 2px;
+	cursor: pointer;
+}
+#lanThTH
+{
+	background: url(../GlobalResources/Images/flags.jpg) 72px 0px;
+	display: block;
+	width: 24px;
+	height: 19px;
+	float: left;
+	margin-left: 2px;
+	cursor: pointer;
+}
+#lanKoKR
+{
+	background: url(../GlobalResources/Images/flags.jpg) 48px 0px;
+	display: block;
+	width: 24px;
+	height: 19px;
+	float: left;
+	margin-left: 2px;
+	cursor: pointer;
+}
+#lanViVN
+{
+	background: url(../GlobalResources/Images/flags.jpg) 24px 0px;
+	display: block;
+	width: 24px;
+	height: 19px;
+	float: left;
+	margin-left: 2px;
+	cursor: pointer;
+}
+.mainBox{margin: 30px 12px 0 0;}
+.mainErrMsg{width:340px; color: #FF0000;}
+.mainFlag{width: 180px;}
+#selLang {color: #FFF; padding-right: 5px; text-align: right;}
+.td .pt25{padding-top: 25px;}	
+
+#refreshIcon {cursor:pointer;}
+#imgCode {cursor:pointer;}
