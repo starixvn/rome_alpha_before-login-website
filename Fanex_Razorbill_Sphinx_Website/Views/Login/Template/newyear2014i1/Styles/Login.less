@@ -1,0 +1,341 @@
+﻿/* Variables */
+@font-size: 11px;
+@font-family: "times new roman", arial;
+@width-login: 988px;
+@text-color: #a50505;
+@dropdown-color: #320909;
+
+
+body {
+    font-size: @font-size;
+    font-family: @font-family;
+    height: 100%;
+    padding:0;
+    margin:0;
+    background:url(Images/bg-login.jpg) #dd631a top repeat-x;
+    width: 100%;
+    overflow: hidden;
+    zoom: 1;
+    color: @text-color;
+}
+
+.moonbg {
+    .login {
+        width: @width-login; 
+        height: 675px;
+        background: url(Images/login.png) no-repeat;
+
+        .top-login {
+            height: 102px;
+            width: 328px;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        td.row {
+            padding: 2px 3px;
+        }
+
+        .wrapper{
+            height: 508px;
+            width: @width-login;
+            float: left;
+            clear: both;
+            position: relative;
+
+            .inputContainer {
+                text-align: left;
+                width: 344px;
+                height: 403px;
+                margin-left: 3px;
+
+                table {
+                    width: 100%;
+                }
+
+                .top {
+                   height: 200px;
+                }
+            }
+
+            .language-select {
+                background: url(Images/language_bg.png) no-repeat;
+                border: none;
+                cursor: pointer;
+                float: left;
+                height: 24px;
+                width: 120px;
+                margin: 0 0 0 176px;
+                font-family: @font-family;
+                font-size: @font-size + 1;
+                color: @text-color;
+                font-family: @font-family;
+
+                .en {
+                    background: url(Images/flags.jpg) no-repeat;
+                }
+
+                &.ddSelect {
+                    position: relative;
+                     z-index: 100;
+
+                    .caret {
+                        background: url(Images/icon-down.png) 9px 9px no-repeat;
+                        width: 25px;
+                        height: 22px;
+                        position: absolute;
+                        right: 0;
+                        top: 0;
+                    }
+
+                    #divItemList {
+                        z-index: 200;
+                        margin-left: 1px;
+                        width: 116px !important;
+                    }
+
+                    #divSelectedItem {
+                        height: 10px !important;
+
+                        .flag i {
+                            position: absolute;
+                            top: 2px;
+                            left: 3px;
+                        }
+
+                         #lbLanguage {
+                             margin-left: 4px;
+                        }
+                    }
+
+                    .ddItem .flag i {
+                        padding-top: 0;
+                        height: 19px;
+                    }
+                }
+
+                #divItemList {
+                    border-color: #a9a8a4;
+                }
+
+                #lbLanguage {
+                    color: @dropdown-color !important;
+                    font-size: @font-size + 1;
+                }
+            }
+
+            #divSelectedItem {
+                background: none !important;
+            }
+
+            .custom-textbox {
+                width: 302px;
+                padding: 0 5px;
+                font-style: italic;
+                font-size: @font-size + 1;
+                line-height: 30px;
+                padding: 0 0 0 33px;
+                height: 30px;
+                border: none;
+                background: url(Images/input_bg.png) 0 -5px no-repeat;
+                color: #A9A9A9;
+                font-family: @font-family;
+
+                &:focus {
+                    color: #a50505;
+                    font-style: normal;
+                    outline: none;
+                }
+
+                &.username {
+                    &:focus {
+                        background-position: 0 -38px;
+                    }
+                }
+
+                &.password {
+                    background-position: 0 -71px;
+
+                    &:focus {
+                        background-position: 0 -104px;
+                    }
+                }
+            }
+
+            .showPass {
+                height: 14px;
+                float:left;
+                display: block;
+                padding-left: 15px;
+                text-indent: -15px;
+                color: #aa7c2d;
+                position: relative;
+                top: 4px;
+                margin-left: 14px;
+                margin-bottom: 8px;
+
+                .checkShowPass {
+                    width: 13px;
+                    height: 13px;
+                    padding: 0;
+                    vertical-align: bottom;
+                    position: relative;
+                    margin: 0 3px 1px 0;
+                }
+
+                span {
+                    margin-left: 2px;
+                    vertical-align: top;
+                    font-size: @font-size + 1 ;
+                }
+            }
+
+            .inputCaptcha {
+                width: 203px;
+                height: 30px !important;
+                float: left;
+                text-align: center;
+                margin: -1px 0 0 0px;
+                color: @text-color;
+                background: url(Images/input-cap_bg.png) -4px 0px no-repeat;
+                border: none;
+                line-height: 30px;
+                padding: 0;
+                position:relative;
+
+                &:focus {
+                    background-position: -5px -29px;
+                    outline: none;
+                }
+            }
+
+            .codeCaptcha {
+                float: left;
+                width: 66px;
+                height: 24px;
+                margin: 2px 0 0 8px;
+            }
+        }
+
+        .btnLogin {
+            border: none;
+            width: 79px;
+            background: url(Images/btn-submit.png) no-repeat;
+            height: 25px;
+            cursor: pointer;
+            color: #FFF;
+            float: left;
+            font-size: @font-size + 1;
+            margin: 5px 0 0 217px;
+            font-family: @font-family;
+
+            &:hover {
+                background-position: 0 -25px;
+            }
+        }
+
+        .btnLoginDisable {
+            .btnLogin;
+            border: none;
+            background-position: 0 -50px;
+
+            &:hover {
+                background-position: 0 -50px;
+            }
+        }
+
+        .refreshCode {
+            margin: 6px 2px 2px 4px;
+            float: left;
+            background: url(images/refresh.png) 0 0 no-repeat;
+            width: 16px;
+            display: inline-block;
+            height: 15px !important;
+            cursor: pointer;
+            padding: 0;
+
+            &:hover {
+                background-position: 0 -18px;
+            }
+        }
+
+        .errorMessage {
+            font-size: 13px;
+            color: #DC2D1A;
+            width: 350px;
+            text-align: center;
+            float: left;
+            height: 20px;
+            margin-left: 302px;
+        }
+
+        .loading {
+            background: url(images/loading.gif) no-repeat;
+            height: 28px;
+            margin-left:3px;
+            display: inline-block;
+            width: 40px;
+        }
+
+        .fullwidth {
+            width: 100%;
+        }
+        
+    }
+
+    .list-browser {
+        background: url(images/Rec_sp.png) right 2px no-repeat;
+        width: 151px;
+        height: 21px;
+        line-height: 20px;
+        color: #fac09d;
+        font-size: @font-size;
+        font-family: arial;
+        clear: both;
+        margin: 52px 403px 0;
+        text-align: left;
+        float: left;
+    }
+
+    .txt-new-year-en {
+        background: url(images/text_en.png) right center no-repeat;
+        width: 648px;
+        height: 99px;
+        margin-left: 152px;
+        float: left;
+    }
+
+    .textTitle_en {
+        background: url(Images/text_en.png) center no-repeat;
+        width: 418px;
+        height: 35px;
+    }
+
+    .textTitle-cn {
+        background: url(Images/text_cn.png) no-repeat;
+        height: 45px;
+        width: 210px;
+    }
+
+    .textTitle-tw {
+        .textTitle-cn;
+        background: url(Images/text_tw.png) no-repeat;
+    }
+}
+
+/* Fix IE */
+.eq-ie9, .eq-ie8, .eq-ie7 {
+    .moonbg .login .wrapper .showPass {
+        .checkShowPass {
+            margin-top: 2px;
+        }
+    }
+
+}
+
+
+
+
+
