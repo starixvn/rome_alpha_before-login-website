@@ -116,7 +116,7 @@ Sphinx.Login = {
         $('#lbShowPass').html(resource.ShowPassword);
 
         $('#textTitle').removeClass();
-        $('#textTitle').addClass("span6 " + resource.AutumnTitle); 
+        $('#textTitle').addClass(resource.AutumnTitle); 
         $('.btnLogin').val(resource.Login);
 
         Sphinx.Core.setCookie('LANGUAGE', languageCode, 30);

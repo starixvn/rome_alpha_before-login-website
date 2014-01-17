@@ -39,12 +39,12 @@
                             <tr>
                                 <td>
                                     <div class="codeCaptcha">
-                                        <img width="66" height="24" src="@Url.Content("~/Login/GetNewCaptcha")" id="imgCode" alt="" />
+                                        <img width="66" height="24" src="@Url.Content("~/Login/GetNewCaptcha")" id="imgCode" style="cursor:pointer" alt="" onclick="return Sphinx.Login.getValidateImage();"/>
                                     </div>
                                     <div>
                                         <i class="refreshCode" onclick="return Sphinx.Login.getValidateImage();"></i>
                                     </div>
-                                    <input type="text" id="txtCaptcha" name="txtCaptcha" class="inputText inputCaptcha"
+                                    <input type="text" id="txtCaptcha" name="txtCaptcha" class="inputText inputCaptcha" maxlength="4"
                                         tabindex="3" />
                                 </td>
                             </tr>
@@ -66,7 +66,7 @@
                         Best view in
                     </div>
                 </div>
-                <div class="txt-new-year-en"></div>
+                <div id="textTitle" class="textTitle_en"></div>
             </div>
         </center>
     </div>
