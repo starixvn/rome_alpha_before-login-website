@@ -60,8 +60,8 @@
         //  Code that runs on application shutdown
 
     }
-        
-    void Application_Error(object sender, EventArgs e) 
+
+    void Application_Error(object sender, EventArgs e)
     {
         Fanex.SessionPartition.SessionIdManager.HandleUnconnectedSession();
         // Code that runs when an unhandled error occurs
@@ -76,13 +76,30 @@
         {
             return;
         }
-        
+
+        HttpRequest request = HttpContext.Current.Request;
+        // hide sensitive information in POST or GET parameters
+        string formString = string.Empty, queryString = string.Empty;
+        if (request.Form.Count > 0)
+        {
+            formString = request.Form.ToString();
+            formString = Fanex.Razorbill.Sphinx.Core.Extensions.LogExtension.ReplaceSensitiveInformation(
+                formString, Fanex.Razorbill.Sphinx.Core.Configurations.WebSettings.SensitiveParameters);
+        }
+
+        if (request.QueryString.Count > 0)
+        {
+            queryString = request.QueryString.ToString();
+            queryString = Fanex.Razorbill.Sphinx.Core.Extensions.LogExtension.ReplaceSensitiveInformation(
+                queryString, Fanex.Razorbill.Sphinx.Core.Configurations.WebSettings.SensitiveParameters);
+        }
+
         string message = ex.Message +
                         "\r\nSOURCE: " + ex.Source +
-                        "\r\nDOMAIN: " + HttpContext.Current.Request.Headers["Host"] +
-                        "\r\nREFERRER: " + HttpContext.Current.Request.UrlReferrer +
-                        "\r\nFORM: " + Request.Form.ToString() +
-                        "\r\nQUERYSTRING: " + Request.QueryString.ToString() +
+                        "\r\nDOMAIN: " + request.Headers["Host"] +
+                        "\r\nREFERRER: " + request.UrlReferrer +
+                        "\r\nFORM: " + formString +
+                        "\r\nQUERYSTRING: " + queryString +
                         "\r\nTARGETSITE: " + ex.TargetSite +
                         "\r\nSTACKTRACE: " + ex.StackTrace;
 
