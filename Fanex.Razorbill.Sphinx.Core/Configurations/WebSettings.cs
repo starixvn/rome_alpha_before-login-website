@@ -7,6 +7,7 @@
 
 namespace Fanex.Razorbill.Sphinx.Core.Configurations
 {
+    using System;
     using System.Configuration;
     using System.Diagnostics.CodeAnalysis;
     using Fanex.Razorbill.Sphinx.Core.Constants;
@@ -17,8 +18,16 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class WebSettings
     {
-        private static string[] languages = new string[] { "en-US", "th-TH", "zh-CN", "zh-TW", "ja-JP", "ko-KR", "vi-VN" };
+        static WebSettings()
+	    {
+            string value = ConfigurationManager.AppSettings["SensitiveParameters"];
+            if (!string.IsNullOrEmpty(value))
+            {
+                SensitiveParameters = value.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
+            }
+	    }
 
+        private static string[] languages = new string[] { "en-US", "th-TH", "zh-CN", "zh-TW", "ja-JP", "ko-KR", "vi-VN" };
 
         public static string DefaultLanguage
         {
@@ -117,5 +126,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
 
             return false;
         }
+
+        public readonly static string[] SensitiveParameters;
     }
 }
