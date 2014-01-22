@@ -22,15 +22,15 @@
                             <tr>
                                 <td class="row">
                                     <input type="text" id="txtUserName" name="txtUserName" class="custom-textbox username"
-                                        placeholder="Username" tabindex="1" />
+                                        placeholder="Username" tabindex="1"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="row">
                                     <input type="text" id="txtPassWord" name="txtPassWord" class="custom-textbox password"
-                                        placeholder="Password" tabindex="2" />
+                                        placeholder="Password" tabindex = "2" />
                                     <label class="showPass">
-                                        <input type="checkbox" id="chbShowPass" class="checkShowPass" onclick="Sphinx.Login.showPassword(this)" /><span
+                                        <input type="checkbox" id="chbShowPass" class="checkShowPass" onclick="Sphinx.Login.showPassword(this)"  tabindex="3"/><span
                                             id="lbShowPass">Show password</span>
                                     </label>
                                     <div class="clear"></div>
@@ -44,13 +44,12 @@
                                     <div>
                                         <i class="refreshCode" onclick="return Sphinx.Login.getValidateImage();"></i>
                                     </div>
-                                    <input type="text" id="txtCaptcha" name="txtCaptcha" class="inputText inputCaptcha" maxlength="4"
-                                        tabindex="3" />
+                                    <input type="text" id="txtCaptcha" name="txtCaptcha" class="inputText inputCaptcha" maxlength="4" tabindex="4"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
-                                    <input type="button" class="btnLogin" id="btnLogin" value="Login" onclick="return Sphinx.Login.doLogin();" />
+                                    <input type="button" class="btnLogin" id="btnLogin" value="Login" onclick="return Sphinx.Login.doLogin();"  tabindex="5"/>
                                 </td>
                             </tr>
                             <tr>
