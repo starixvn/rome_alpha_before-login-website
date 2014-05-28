@@ -22,7 +22,7 @@ Sphinx.Component.DropDownbox = new function () {
     this.toggle = function () {
 
     };
-    
+
     this.create = function (containerId, arrayItem, selectedItem, selectItemCallback) {
 
         if (document.getElementById(containerId) == null) {
@@ -36,7 +36,7 @@ Sphinx.Component.DropDownbox = new function () {
         container.append(dropdownTemplate(listItem, chosenItem, containerWidth, selectItemCallback));
 
         if (!browserStandardMode()) {
-            container.width(containerWidth);            
+            container.width(containerWidth);
         }
         $('#selectedItemContainer').bind('click', function (event) {
             toggle();
@@ -71,7 +71,7 @@ Sphinx.Component.DropDownbox = new function () {
         selectedItemContainer.append(itemTemplate(value, img, text, true));
 
     };
-    
+
     var dropdownTemplate = function (listItem, chosenItem, containerWidth, selectedCallback) {
         var htmlContent = $('<div></div>');
 
@@ -93,6 +93,7 @@ Sphinx.Component.DropDownbox = new function () {
         divItemList.width(containerWidth);
         divItemList.css('z-index', 10);
         divItemList.css('position', 'absolute');
+        divItemList.css('top', '24px');
         htmlContent.append(divItemList);
         return htmlContent;
     };
@@ -104,7 +105,7 @@ Sphinx.Component.DropDownbox = new function () {
         // var onclick = selected ? '' : 'onclick=""';
         var height = selected ? 'height: 15px;' : '';
 
-        var template = $('<div ' + selectedId + ' value="' + value + '" img="' + img + '" text="' + text + '" class="ddItem" style="' + height + ' background-color: #fff"> \
+        var template = $('<div ' + selectedId + ' value="' + value + '" img="' + img + '" text="' + text + '" class="ddItem" style="' + height + ' background-color: #8e8a31"> \
                                     <table>\
                                         <tr>\
                                             <td class="flag"><i class="' + img + '" id="flag"></i></td>\
