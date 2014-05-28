@@ -148,3 +148,13 @@ Params:
 - ip: 127.0.0.1
 Exception: 
 
+FPS called CheckTransaction at 5/28/2014 3:28:45 PM
+Result: ALLOW
+Params: 
+- account: agent01
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0###240:320:24:false###127.0.0.1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: 127.0.0.1
+Exception: 
+
