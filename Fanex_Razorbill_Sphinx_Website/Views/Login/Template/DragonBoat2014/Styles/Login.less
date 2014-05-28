@@ -1,7 +1,7 @@
 ﻿/* Variables */
 @font-size: 12px;
 @font-family: Segoe UI;
-@width-login: 570px;
+@width-login: 550px;
 @text-color: #fff;
 @dropdown-color: @text-color;
 
@@ -234,6 +234,7 @@ body {
 			float: left;
 			font-size: @font-size;
 			margin: 5px 0 0 2px;
+			padding-bottom: 4px;
 			&:hover {
 				background-position: 0 -23px;
 			}
@@ -330,10 +331,12 @@ body {
 
 /* Fix IE */
 .eq-ie9, .eq-ie8, .eq-ie7 {
-	.moonbg .login .wrapper .showPass {
-		.checkShowPass {
+	.content .login .wrapper .showPass .checkShowPass {
 			margin-top: 2px;
 		}
+	
+	.content .login .btnLogin {
+		padding-bottom: 0;
 	}
 
 }
