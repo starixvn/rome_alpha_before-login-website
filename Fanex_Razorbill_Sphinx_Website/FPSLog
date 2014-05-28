@@ -93,3 +93,68 @@ Params:
 - ip: ::1
 Exception: 
 
+FPS called CheckTransaction at 5/28/2014 3:10:10 PM
+Result: ALLOW
+Params: 
+- account: agent01
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0###240:320:24:false###127.0.0.1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: 127.0.0.1
+Exception: 
+
+FPS called CheckTransaction at 5/28/2014 3:16:05 PM
+Result: 
+Params: 
+- account: agent01
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0###240:320:24:false###127.0.0.1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: 127.0.0.1
+Exception: System.Net.WebException: The operation has timed out
+   at System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   at System.Net.HttpWebRequest.GetRequestStream()
+   at System.Web.Services.Protocols.SoapHttpClientProtocol.Invoke(String methodName, Object[] parameters)
+   at FPS.Client.ClientProxy.check_transaction(String account, String device, String action, String subscriber, String ip)
+   at FPS.Client.RequestDelegation.CheckTransactionDelegation.Invoke()
+
+FPS called CheckTransaction at 5/28/2014 3:16:35 PM
+Result: ALLOW
+Params: 
+- account: agent01
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0###240:320:24:false###127.0.0.1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: 127.0.0.1
+Exception: 
+
+FPS called CheckTransaction at 5/28/2014 3:17:08 PM
+Result: ALLOW
+Params: 
+- account: agent01
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0###240:320:24:false###127.0.0.1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: 127.0.0.1
+Exception: 
+
+FPS called CheckTransaction at 5/28/2014 3:17:36 PM
+Result: ALLOW
+Params: 
+- account: agent01
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0###240:320:24:false###127.0.0.1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: 127.0.0.1
+Exception: 
+
+FPS called CheckTransaction at 5/28/2014 3:28:45 PM
+Result: ALLOW
+Params: 
+- account: agent01
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20100101 Firefox/29.0###240:320:24:false###127.0.0.1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: 127.0.0.1
+Exception: 
+
