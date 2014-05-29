@@ -11,7 +11,6 @@ using Fanex.Razorbill.Sphinx.Resources.Resources;
 
 namespace Fanex.Razorbill.Sphinx.Service.UserLogin
 {
-
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -317,7 +316,6 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
                     this.IncreaseLoginFailedCount();
                     if (this.GetLoginFailedCount() > 15)
                     {
-
                         loginResult.ErrCode = 1;
                         loginResult.ErrMsg = Language.invalidLogin;
                     }

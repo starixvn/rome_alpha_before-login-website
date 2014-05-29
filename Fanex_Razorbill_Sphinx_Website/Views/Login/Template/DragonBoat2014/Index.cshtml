@@ -1,6 +1,7 @@
 ﻿@{
     Layout="~/Views/Shared/_Layout.cshtml";
 }
+@model Fanex.Razorbill.Sphinx.Service.UserLogin.Models.LoginResult
 <div class="main">
     <div class="header">
     </div>
@@ -40,7 +41,7 @@
                                     <div class="codeCaptcha">
                                         <img width="66" height="25" src="@Url.Content("~/Login/GetNewCaptcha")" id="imgCode" style="cursor:pointer" alt="" onclick="return Sphinx.Login.getValidateImage();"/>
                                     </div>
-                                    <div>
+                                    <div class="refreshCont">
                                         <i class="refreshCode" onclick="return Sphinx.Login.getValidateImage();"></i>
                                     </div>
                                 </td>
