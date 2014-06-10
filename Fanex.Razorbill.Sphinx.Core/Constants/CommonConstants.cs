@@ -28,6 +28,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Constants
         public const string EVENT_LOGIN_TEMPLATE = "EventLoginTemplate";
         public const string SITE_IBC_GROUP = "IBCGroup";
         public const string SITE_SPECIAL_GROUP = "SpecialGroup";
+        public const string SITE_INDIA_GROUP = "IndiaGroup";
         public const string AFTER_LOGIN_PAGE = "AfterLoginPage";
     }
 }

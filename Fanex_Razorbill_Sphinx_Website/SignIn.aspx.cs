@@ -72,7 +72,7 @@ namespace Sunplus.Age_BeforeLogin.UI
             get
             {
                 string host = HttpContext.Current.Request.Headers["Host"];
-
+                #region 789y
                 List<string> site789y = new List<string>(new string[]
                 {
                     "rocksnake.net",
@@ -104,7 +104,9 @@ namespace Sunplus.Age_BeforeLogin.UI
                     "www.elinkaa.com",
                     "www.theasgard.net"
                 });
+                #endregion
 
+                #region IBC
                 List<string> siteIBCBET = new List<string>(new string[]
                 {
                     "www.greysnow.com",
@@ -114,7 +116,9 @@ namespace Sunplus.Age_BeforeLogin.UI
                     "www.trifang.com",
                     "trifang.com"                  
                 });
+                #endregion
 
+                #region B8
                 List<string> siteB8 = new List<string>(new string[]
                 {
                     "b8ag.com",
@@ -122,6 +126,14 @@ namespace Sunplus.Age_BeforeLogin.UI
                     "www.b8ag.com",
                     "www.b88ag.com"
                 });
+                #endregion
+
+                #region India
+                List<string> siteIndia = new List<string>(new string[]
+                {
+                    "b8ag.com"
+                });
+                #endregion
 
                 if (site789y.Contains(host))
                 {
@@ -134,6 +146,10 @@ namespace Sunplus.Age_BeforeLogin.UI
                 if (siteB8.Contains(host))
                 {
                     return "789y";
+                }
+                if (siteIndia.Contains(host))
+                {
+                    return "IIBC";
                 }
                 
                 return "Others";

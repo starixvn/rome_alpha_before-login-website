@@ -105,6 +105,14 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
             }
         }
 
+        public static string SiteIndiaGroup
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CommonConstants.SITE_INDIA_GROUP];
+            }
+        }
+
         public static string AfterLoginPage
         {
             get

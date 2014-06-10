@@ -465,6 +465,7 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
                 var site789y = new List<string>(WebSettings.Site789yGroup.Split(','));
                 var siteIBCBET = new List<string>(WebSettings.SiteIBCGroup.Split(','));
                 var siteB8 = new List<string>(WebSettings.B8Group.Split(','));
+                var siteIndia = new List<string>(WebSettings.SiteIndiaGroup.Split(','));
                     
                 if (site789y.Contains(host))
                 {
@@ -477,6 +478,10 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
                 if (siteB8.Contains(host))
                 {
                     return "789y";
+                }
+                if (siteIndia.Contains(host))
+                {
+                    return "IIBC";
                 }
 
                 return "Others";
