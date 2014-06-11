@@ -251,6 +251,7 @@
     <None Include="Content\Bootstrap\less\utilities.less" />
     <None Include="Content\Bootstrap\less\variables.less" />
     <None Include="Content\Bootstrap\less\wells.less" />
+    <Content Include="Web.Configuration\DomainGroupSection.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.Razorbill.Sphinx.Core\Fanex.Razorbill.Sphinx.Core.csproj">

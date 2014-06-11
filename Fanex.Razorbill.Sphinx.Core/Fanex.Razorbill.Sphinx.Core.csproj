@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configurations\AppSession.cs" />
+    <Compile Include="Configurations\DomainGroupSection.cs" />
     <Compile Include="Configurations\WebSettings.cs" />
     <Compile Include="Constants\CommonConstants.cs" />
     <Compile Include="Constants\ErrorContants.cs" />

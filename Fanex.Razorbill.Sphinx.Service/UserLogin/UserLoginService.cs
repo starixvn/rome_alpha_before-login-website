@@ -27,6 +27,7 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
     using Sunplus.Agent.Model.DL.Authorization;
     using Sunplus.Agent.Model.Services;
     using Sunplus.Agent.Utilities;
+    using System.Linq;
 
     /// <summary>
     /// TODO: Update summary.
@@ -461,31 +462,40 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
             get
             {
                 string host = System.Web.HttpContext.Current.Request.Headers["Host"];
+                var domainGroupSection = DomainGroupSection.Instance.DomainGroup;
+                var defaultGroup = "Others";
 
-                var site789y = new List<string>(WebSettings.Site789yGroup.Split(','));
-                var siteIBCBET = new List<string>(WebSettings.SiteIBCGroup.Split(','));
-                var siteB8 = new List<string>(WebSettings.B8Group.Split(','));
-                var siteIndia = new List<string>(WebSettings.SiteIndiaGroup.Split(','));
-                    
-                if (site789y.Contains(host))
+                if (domainGroupSection == null || domainGroupSection.Count == 0)
                 {
-                    return "789y";
-                }
-                if (siteIBCBET.Contains(host))
-                {
-                    return "IBCBET";
-                }
-                if (siteB8.Contains(host))
-                {
-                    return "789y";
-                }
-                if (siteIndia.Contains(host))
-                {
-                    return "IIBC";
+                    return defaultGroup;
                 }
 
-                return "Others";
+                var getDomainGroupActive = (from m in
+                                                domainGroupSection.Cast<DomainGroupElement>().Where(
+                                                m => m.Active)
+                                        select m);
 
+                if (!getDomainGroupActive.Any())
+                {
+                    return defaultGroup;
+                }
+
+                foreach (DomainGroupElement domainGroupElement in getDomainGroupActive)
+                {
+                    if (string.IsNullOrWhiteSpace(domainGroupElement.Domains))
+                    {
+                        return defaultGroup;
+                    }
+
+                    var domainList = new List<string>(domainGroupElement.Domains.Split(','));
+
+                    if (domainList.Contains(host))
+                    {
+                        return domainGroupElement.Name;
+                    }
+                }
+
+                return defaultGroup;
             }
         }
         #endregion

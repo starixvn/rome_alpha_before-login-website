@@ -131,7 +131,8 @@ namespace Sunplus.Age_BeforeLogin.UI
                 #region India
                 List<string> siteIndia = new List<string>(new string[]
                 {
-                    "b8ag.com"
+                    "ag699.com",
+                    "www.ag699.com"
                 });
                 #endregion
 

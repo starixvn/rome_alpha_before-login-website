@@ -79,39 +79,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
             {
                 return ConfigurationManager.AppSettings[CommonConstants.EVENT_LOGIN_TEMPLATE];
             }
-        }
-
-        public static string SiteIBCGroup
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings[CommonConstants.SITE_IBC_GROUP];
-            }
-        }
-
-        public static string B8Group
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings["B8Group"];
-            }
-        }
-
-        public static string Site789yGroup
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings[CommonConstants.SITE_SPECIAL_GROUP];
-            }
-        }
-
-        public static string SiteIndiaGroup
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings[CommonConstants.SITE_INDIA_GROUP];
-            }
-        }
+        }               
 
         public static string AfterLoginPage
         {
