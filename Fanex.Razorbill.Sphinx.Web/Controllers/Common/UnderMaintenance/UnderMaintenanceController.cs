@@ -1,25 +1,34 @@
-﻿
+﻿// -----------------------------------------------------------------------
+// <copyright file="UnderMaintenanceController.cs" company="Nexcel Solution">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace Fanex.Razorbill.Sphinx.Web.Controllers.Common.UnderMaintenance
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
     using Fanex.Razorbill.Sphinx.Service.Common.UnderMaintenance;
-    using System.Web.Security;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Under maintenance controller.
+    /// </summary>
     public class UnderMaintenanceController : Controller
     {        
+        /// <summary>
+        /// Index page.
+        /// </summary>
+        /// <returns>Return view.</returns>
         public ActionResult Index()
         {
-            var underMaintenanceService = new UnderMaintenanceService();
-            var umInfo = underMaintenanceService.CheckUM();
-            if (!umInfo.IsUM)
+            var mainternanceInfo = new UnderMaintenanceService().CheckUM();
+            if (!mainternanceInfo.IsUM)
             {
                 return RedirectToAction("Index", "Login");
             }
             
-            ViewBag.UMFrom = umInfo.From;
-            ViewBag.UMTo = umInfo.To;
+            ViewBag.UMFrom = mainternanceInfo.From;
+            ViewBag.UMTo = mainternanceInfo.To;
             return PartialView("~/Views/Common/UnderMaintenance/Index.cshtml");
         }
 

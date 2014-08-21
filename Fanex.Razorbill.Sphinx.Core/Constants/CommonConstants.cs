@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="CommonConstants.cs" company="">
+// <copyright file="CommonConstants.cs" company="Nexcel Solution">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -11,24 +11,23 @@ namespace Fanex.Razorbill.Sphinx.Core.Constants
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class CommonConstants
     {
-        public const string CAPTCHA_2 = "Fanex.Razorbill.Sphinx.Core.Constants.captcha2";
-        public const string CAPTCHA_3 = "Fanex.Razorbill.Sphinx.Core.Constants.captcha3";
-        public const string CAPTCHA_CODE = "Fanex.Razorbill.Sphinx.Core.Constants.captchacode";
+        public const string CAPTCHA2 = "Fanex.Razorbill.Sphinx.Core.Constants.captcha2";
+        public const string CAPTCHA3 = "Fanex.Razorbill.Sphinx.Core.Constants.captcha3";
+        public const string CAPTCHACODE = "Fanex.Razorbill.Sphinx.Core.Constants.captchacode";
         public const string USERNAME = "Fanex.Razorbill.Sphinx.Core.Constants.username";
         public const string LANGUAGE = "Fanex.Razorbill.Sphinx.Core.Constants.language";
         public const string LOGINFAILEDCOUNT = "Fanex.Razorbill.Sphinx.Core.Constants.loginfailedcount.{0}";
         public const string LOGINFAILEDTIME = "Fanex.Razorbill.Sphinx.Core.Constants.loginfailedtime.{0}";
 
-        public const string DOMAINS_EXCLUDE_DOWNTIME = "DomainsExcludeDowntime";
-        public const string BASE_DOMAIN = "BaseDomain";
-        public const string DEFAULT_LOGIN_TEMPLATE = "DefaultLoginTemplate";
-        public const string EVENT_LOGIN_TEMPLATE = "EventLoginTemplate";
-        public const string SITE_IBC_GROUP = "IBCGroup";
-        public const string SITE_SPECIAL_GROUP = "SpecialGroup";
-        public const string SITE_INDIA_GROUP = "IndiaGroup";
-        public const string AFTER_LOGIN_PAGE = "AfterLoginPage";
+        public const string DOMAINSEXCLUDEDOWNTIME = "DomainsExcludeDowntime";
+        public const string BASEDOMAIN = "BaseDomain";
+        public const string DEFAULTLOGINTEMPLATE = "DefaultLoginTemplate";
+        public const string EVENTLOGINTEMPLATE = "EventLoginTemplate";
+        public const string SITEIBCGROUP = "IBCGroup";
+        public const string SITESPECIALGROUP = "SpecialGroup";
+        public const string SITEINDIAGROUP = "IndiaGroup";
+        public const string AFTERLOGINPAGE = "AfterLoginPage";
     }
 }

@@ -7,12 +7,23 @@
 namespace Fanex.Razorbill.Sphinx.Core.Configurations
 {
     using System.Configuration;
+    using System.Diagnostics.CodeAnalysis;
 
     /// <summary>
     /// Domain group section.
     /// </summary>
     public class DomainGroupSection : ConfigurationSection
     {
+        public static DomainGroupSection Instance
+        {
+            get
+            {
+                var domainGroupSection =
+                 ConfigurationManager.GetSection("DomainGroupSection") as DomainGroupSection;
+                return domainGroupSection;
+            }
+        }
+
         [ConfigurationProperty("DomainGroup", IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(DomainGroupCollection),
             AddItemName = "add",
@@ -27,18 +38,14 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
                 return domainGroupCollection;
             }
         }
-
-        public static DomainGroupSection Instance
-        {
-            get
-            {
-                var domainGroupSection =
-                 ConfigurationManager.GetSection("DomainGroupSection") as DomainGroupSection;
-                return domainGroupSection;
-            }
-        }
     }
 
+    /// <summary>
+    /// Domain Group Collection.
+    /// </summary>
+    [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", 
+        "SA1402:FileMayOnlyContainASingleClass", 
+        Justification = "its ok here")]
     public class DomainGroupCollection : ConfigurationElementCollection
     {
         public override ConfigurationElementCollectionType CollectionType
@@ -48,21 +55,48 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
                 return ConfigurationElementCollectionType.AddRemoveClearMap;
             }
         }
-
-        public void Add(DomainGroupElement DomainGroupElement)
+        
+        public DomainGroupElement this[int index]
         {
-            BaseAdd(DomainGroupElement);
+            get
+            {
+                return (DomainGroupElement)BaseGet(index);
+            }
+
+            set
+            {
+                if (BaseGet(index) != null)
+                {
+                    BaseRemoveAt(index);
+                }
+
+                BaseAdd(index, value);
+            }
         }
 
-        protected override void BaseAdd(ConfigurationElement element)
+        public new DomainGroupElement this[string name]
         {
-            BaseAdd(element, false);
+            get
+            {
+                return (DomainGroupElement)BaseGet(name);
+            }
         }
 
-        public void Remove(DomainGroupElement DomainGroupElement)
+        public void Add(DomainGroupElement domainGroupElement)
         {
-            if (BaseIndexOf(DomainGroupElement) >= 0)
-                BaseRemove(DomainGroupElement.Name);
+            BaseAdd(domainGroupElement);
+        }
+        
+        /// <summary>
+        /// Remove element.
+        /// </summary>
+        /// <param name="domainGroupElement">Domain Group Element.</param>
+        public void Remove(DomainGroupElement domainGroupElement)
+        {
+            if (BaseIndexOf(domainGroupElement) >= 0)
+            {
+                BaseRemove(domainGroupElement.Name);
+            }
         }
 
         public void RemoveAt(int index)
@@ -80,33 +114,14 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
             BaseClear();
         }
 
-        public DomainGroupElement this[int index]
+        /// <summary>
+        /// Get Index of.
+        /// </summary>
+        /// <param name="domainGroupElement">Domain Group Element.</param>
+        /// <returns>Return index.</returns>
+        public int IndexOf(DomainGroupElement domainGroupElement)
         {
-            get
-            {
-                return (DomainGroupElement)BaseGet(index);
-            }
-            set
-            {
-                if (BaseGet(index) != null)
-                {
-                    BaseRemoveAt(index);
-                }
-                BaseAdd(index, value);
-            }
-        }
-
-        public new DomainGroupElement this[string name]
-        {
-            get
-            {
-                return (DomainGroupElement)BaseGet(name);
-            }
-        }
-
-        public int IndexOf(DomainGroupElement DomainGroupElement)
-        {
-            return BaseIndexOf(DomainGroupElement);
+            return BaseIndexOf(domainGroupElement);
         }
 
         protected override sealed ConfigurationElement CreateNewElement()
@@ -118,8 +133,16 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
         {
             return ((DomainGroupElement)element).Id;
         }
+        
+        protected override void BaseAdd(ConfigurationElement element)
+        {
+            BaseAdd(element, false);
+        }
     }
 
+    /// <summary>
+    /// Domain Group Element.
+    /// </summary>
     public class DomainGroupElement : ConfigurationElement
     {
         [ConfigurationProperty("id", DefaultValue = "NA", IsRequired = true, IsKey = true)]
@@ -143,6 +166,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
             {
                 return (bool)this["active"];
             }
+
             set
             {
                 this["active"] = value;
@@ -157,6 +181,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
                 var domains = (string)this["domains"];
                 return string.IsNullOrWhiteSpace(domains) ? string.Empty : domains.Trim();
             }
+
             set
             {
                 this["domains"] = value;
@@ -171,6 +196,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
                 var description = (string)this["description"];
                 return string.IsNullOrWhiteSpace(description) ? string.Empty : description.Trim();
             }
+
             set
             {
                 this["description"] = value;

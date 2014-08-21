@@ -4,19 +4,22 @@
 // </copyright>
 // --------------------------------------------------------------------------
 
-
 namespace Fanex.Razorbill.Sphinx.Web
-
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using System.Web.Security;
     using Fanex.NAP.Core.Web.Auth;
     using Fanex.NAP.Core.Web.Session;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// TODO: Authentication config.
+    /// </summary>
     public class AuthConfig
     {
+        /// <summary>
+        /// Register Authentication.
+        /// </summary>
+        /// <param name="context">HTTP Context.</param>
         public static void RegisterAuth(HttpContext context)
         {
             var user = HttpContext.Current.User;

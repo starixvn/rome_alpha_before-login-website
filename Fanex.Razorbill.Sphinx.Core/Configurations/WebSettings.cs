@@ -1,9 +1,8 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="AppSettings.cs" company="">
+// <copyright file="WebSettings.cs" company="Nexcel solution">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-
 
 namespace Fanex.Razorbill.Sphinx.Core.Configurations
 {
@@ -15,19 +14,19 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class WebSettings
     {
+        public static readonly string[] SensitiveParameters;
+        private static string[] languages = new string[] { "en-US", "th-TH", "zh-CN", "zh-TW", "ja-JP", "ko-KR", "vi-VN" };
+
         static WebSettings()
-	    {
+        {
             string value = ConfigurationManager.AppSettings["SensitiveParameters"];
             if (!string.IsNullOrEmpty(value))
             {
                 SensitiveParameters = value.Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
             }
-	    }
-
-        private static string[] languages = new string[] { "en-US", "th-TH", "zh-CN", "zh-TW", "ja-JP", "ko-KR", "vi-VN" };
+        }
 
         public static string DefaultLanguage
         {
@@ -53,7 +52,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
         {
             get
             {                
-                return ConfigurationManager.AppSettings[CommonConstants.DOMAINS_EXCLUDE_DOWNTIME];
+                return ConfigurationManager.AppSettings[CommonConstants.DOMAINSEXCLUDEDOWNTIME];
             }
         }
 
@@ -61,7 +60,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
         {
             get
             {
-                return ConfigurationManager.AppSettings[CommonConstants.BASE_DOMAIN];
+                return ConfigurationManager.AppSettings[CommonConstants.BASEDOMAIN];
             }
         }
 
@@ -69,7 +68,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
         {
             get
             {
-                return ConfigurationManager.AppSettings[CommonConstants.DEFAULT_LOGIN_TEMPLATE];
+                return ConfigurationManager.AppSettings[CommonConstants.DEFAULTLOGINTEMPLATE];
             }
         }
 
@@ -77,7 +76,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
         {
             get
             {
-                return ConfigurationManager.AppSettings[CommonConstants.EVENT_LOGIN_TEMPLATE];
+                return ConfigurationManager.AppSettings[CommonConstants.EVENTLOGINTEMPLATE];
             }
         }               
 
@@ -85,10 +84,15 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
         {
             get
             {
-                return ConfigurationManager.AppSettings[CommonConstants.AFTER_LOGIN_PAGE];
+                return ConfigurationManager.AppSettings[CommonConstants.AFTERLOGINPAGE];
             }
         }
 
+        /// <summary>
+        /// Check is valid language.
+        /// </summary>
+        /// <param name="culture">User culture.</param>
+        /// <returns>Return result.</returns>
         public static bool IsValidLanguage(string culture)
         {
             int c = languages.Length;
@@ -102,7 +106,5 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
 
             return false;
         }
-
-        public readonly static string[] SensitiveParameters;
     }
 }

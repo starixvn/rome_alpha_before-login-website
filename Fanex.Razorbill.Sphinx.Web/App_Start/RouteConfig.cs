@@ -1,8 +1,16 @@
-﻿using System.Web.Mvc;
-using System.Web.Routing;
+﻿// -----------------------------------------------------------------------
+// <copyright file="RouteConfig.cs" company="Nexcel Solution">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace Fanex.Razorbill.Sphinx.Web
 {
+    using System.Web.Routing;
+
+    /// <summary>
+    /// Route config.
+    /// </summary>
     public class RouteConfig
     {
         public static void RegisterRoutes(RouteCollection routes)

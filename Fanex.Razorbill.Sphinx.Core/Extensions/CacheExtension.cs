@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="CacheExtension.cs" company="">
+// <copyright file="CacheExtension.cs" company="Nexcel Solution">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -11,37 +11,40 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
     using Fanex.Caching;
 
     /// <summary>
-    /// TODO: Update summary.
+    /// TODO: Cache extension.
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class CacheExtension
     {
-        private static readonly ICache _cache;
+        private static readonly ICache _Cache;
 
         static CacheExtension()
         {
-            _cache = Caching.CacheService.CreateInstance(CacheType.MemCache);
+            _Cache = Caching.CacheService.CreateInstance(CacheType.MemCache);
         }
 
+        /// <summary>
+        /// Get caching.
+        /// </summary>
+        /// <param name="key">Cache key.</param>
+        /// <returns>Return cache value.</returns>
         public static object Get(string key)
         {
             try
             {
-                return _cache.Get<object>(key);
+                return _Cache.Get<object>(key);
             }
             catch (Exception exception)
             {
                 LogExtension.ExceptionHandler(exception);
                 return null;
             }
-
         }
 
         public static void Set(string key, object value)
         {
             try
             {
-                _cache.Set(key, value);
+                _Cache.Set(key, value);
             }
             catch (Exception exception)
             {
@@ -51,14 +54,14 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
 
         public static T Get<T>(string key)
         {
-            return _cache.Get<T>(key);
+            return _Cache.Get<T>(key);
         }
 
         public static void Set<T>(string key, T value)
         {
             try
             {
-                _cache.Set<T>(key, value);
+                _Cache.Set<T>(key, value);
             }
             catch (Exception exception)
             {
@@ -70,7 +73,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
         {
             try
             {
-                _cache.Set(key, value, expire);
+                _Cache.Set(key, value, expire);
             }
             catch (Exception exception)
             {
@@ -80,12 +83,12 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
 
         public static void Set<T>(string key, T value, TimeSpan expire)
         {
-            _cache.Set<T>(key, value, expire);
+            _Cache.Set<T>(key, value, expire);
         }
 
         public static void Delete(string key)
         {
-            _cache.Clear();
+            _Cache.Clear();
         }
     }
 }

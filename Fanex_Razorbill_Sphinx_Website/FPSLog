@@ -158,3 +158,123 @@ Params:
 - ip: 127.0.0.1
 Exception: 
 
+FPS called CheckTransaction at 8/21/2014 5:34:25 PM
+Result: DENY
+Params: 
+- account: agent01sub00
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/SignIn.aspx
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 8/21/2014 5:35:45 PM
+Result: DENY
+Params: 
+- account: agent01sub00
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/SignIn.aspx
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 8/21/2014 5:36:03 PM
+Result: DENY
+Params: 
+- account: agent01sub00
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/SignIn.aspx
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 8/21/2014 5:36:24 PM
+Result: DENY
+Params: 
+- account: agent01sub00
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/SignIn.aspx
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 8/21/2014 5:40:37 PM
+Result: DENY
+Params: 
+- account: agent01sub00
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/SignIn.aspx
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 8/21/2014 5:41:21 PM
+Result: DENY
+Params: 
+- account: agent01sub00
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/SignIn.aspx
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 8/21/2014 5:43:17 PM
+Result: ALLOW
+Params: 
+- account: agent01sub00
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1###a6251ce8880f2161cbb689ce4a1b53ed5ea6f355c1c194845cdc15fb572afad2f56081d3c618011c8ac5b175e7baaec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165a447769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0e31cec8f1fb3ac2443189500d517c41e74672322b648906b61703f53a751c3c291b5972300c4e3a889ced01bd75087c8b92667796a0f23833d3323e51c67d2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102075380ab6cd5479dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 8/21/2014 5:43:25 PM
+Result: ALLOW
+Params: 
+- account: agent01sub00
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1###a6251ce8880f7561c7e6829a4b4901b85df6aa089993c9865e881afc5c20aeddf96485dfc41a0510dec1e771b5e8aec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165a447769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0e31cec8f1fb3ac2443189500d517c41e74672322b648906b61703f53a751c3c291b5972300c4e3a889ced01bd75087c8b92667796a0f23833d3323e51c67d2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102055380ab6cd5459dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 8/21/2014 5:43:34 PM
+Result: ALLOW
+Params: 
+- account: agent01sub00
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1###a6251ce8880f7561c7e6829a4b4901b85df6aa089993c9865e881afc5c20aeddf96485dfc41a0510dec1e771b5e8aec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165a447769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0e31cec8f1fb3ac2443189500d517c41e74672322b648906b61703f53a751c3c291b5972300c4e3a889ced01bd75087c8b92667796a0f23833d3323e51c67d2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102055380ab6cd5459dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 8/21/2014 5:44:50 PM
+Result: ALLOW
+Params: 
+- account: agent01sub00
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1###a6251ce8880f7561c7e6829a4b4901b85df6aa089993c9865e881afc5c20aeddf96485dfc41a0510dec1e771b5e8aec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165a447769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0e31cec8f1fb3ac2443189500d517c41e74672322b648906b61703f53a751c3c291b5972300c4e3a889ced01bd75087c8b92667796a0f23833d3323e51c67d2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102055380ab6cd5459dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 8/21/2014 5:45:14 PM
+Result: ALLOW
+Params: 
+- account: agent01sub00
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1###a6251ce8880f7561c7e6829a4b4901b85df6aa089993c9865e881afc5c20aeddf96485dfc41a0510dec1e771b5e8aec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165a447769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0e31cec8f1fb3ac2443189500d517c41e74672322b648906b61703f53a751c3c291b5972300c4e3a889ced01bd75087c8b92667796a0f23833d3323e51c67d2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102055380ab6cd5459dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 8/21/2014 5:45:35 PM
+Result: DENY
+Params: 
+- account: agent01sub00
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1###a6251ce8880f7561c7e6829a4b4901b85df6aa089993c9865e881afc5c20aeddf96485dfc41a0510dec1e771b5e8aec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165a447769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0e31cec8f1fb3ac2443189500d517c41e74672322b648906b61703f53a751c3c291b5972300c4e3a889ced01bd75087c8b92667796a0f23833d3323e51c67d2f4723823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102055380ab6cd5459dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+

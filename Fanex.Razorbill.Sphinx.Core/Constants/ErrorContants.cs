@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="ErrorContants.cs" company="">
+// <copyright file="ErrorContants.cs" company="Nexcel solution">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -11,7 +11,6 @@ namespace Fanex.Razorbill.Sphinx.Core.Constants
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public static class ErrorContants
     {
         public const int ErrorInvalidLogin = 101;

@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="InfoMember.aspx.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="AppSessions.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -10,15 +10,13 @@
 using System;
 using System.Web;
 
+/// <summary>
+/// TODO: App sessions.
+/// </summary>
 public static class AppSessions
 {
     private static string[] languages = new string[] { "en-US", "th-TH", "zh-CN", "zh-TW", "ja-JP", "ko-KR", "vi-VN" };
 
-    /// <summary>
-    /// Check is valid language string.
-    /// </summary>
-    /// <param name="culture"></param>
-    /// <returns></returns>
     public static string Language
     {
         get
@@ -113,6 +111,11 @@ public static class AppSessions
         }
     }
 
+    /// <summary>
+    /// Check is valid language.
+    /// </summary>
+    /// <param name="culture">Country parameter.</param>
+    /// <returns>Return result.</returns>
     public static bool IsValidLanguage(string culture)
     {
         int c = languages.Length;

@@ -86,19 +86,19 @@
       <HintPath>..\_Dependencies\Fanex.Age.Utility.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Caching">
-      <HintPath>..\_Dependencies\Fanex.Caching.dll</HintPath>
+      <HintPath>..\_Dependencies\_FanexLib\Fanex.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common">
-      <HintPath>..\_Dependencies\Fanex.Common.dll</HintPath>
+      <HintPath>..\_Dependencies\_FanexLib\Fanex.Common.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data">
-      <HintPath>..\_Dependencies\Fanex.Data.dll</HintPath>
+      <HintPath>..\_Dependencies\_FanexLib\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.LiveCasinoSetting">
       <HintPath>..\_Dependencies\Fanex.LiveCasinoSetting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Logging">
-      <HintPath>..\_Dependencies\Fanex.Logging.dll</HintPath>
+      <HintPath>..\_Dependencies\_FanexLib\Fanex.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.SessionPartition">
       <HintPath>..\_Dependencies\Fanex.SessionPartition.dll</HintPath>

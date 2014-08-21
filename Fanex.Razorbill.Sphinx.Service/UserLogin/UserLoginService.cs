@@ -1,115 +1,140 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="UserLoginService.cs" company="">
+// <copyright file="UserLoginService.cs" company="Nexcel Solution">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
-
-using System.Configuration;
-using System.Globalization;
-using Fanex.Razorbill.Sphinx.Resources;
-using Fanex.Razorbill.Sphinx.Resources.Resources;
 
 namespace Fanex.Razorbill.Sphinx.Service.UserLogin
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Configuration;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
+    using System.Globalization;
+    using System.Linq;
     using System.Web;
     using Fanex.Age.Utility.CaptchaUtil;
     using Fanex.Razorbill.Sphinx.Core.Configurations;
     using Fanex.Razorbill.Sphinx.Core.Constants;
     using Fanex.Razorbill.Sphinx.Core.Extensions;
-    
+    using Fanex.Razorbill.Sphinx.Resources.Resources;
     using Fanex.Razorbill.Sphinx.Service.UserLogin.Models;
     using RSACryptoPad;
     using Sunplus.Agent.Model.BL.Definitions;
     using Sunplus.Agent.Model.DL.Authorization;
     using Sunplus.Agent.Model.Services;
     using Sunplus.Agent.Utilities;
-    using System.Linq;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class UserLoginService
     {
-        private string baseDomain = string.Empty;
-        private string loginTheme = string.Empty;
+        private string _baseDomain = string.Empty;
+        private string _loginTheme = string.Empty;
 
         public UserLoginService()
         {
-            #region setting base domain
-            this.baseDomain = WebSettings.BaseDomain;
+            ////setting base domain
+            this._baseDomain = WebSettings.BaseDomain;
             string currentDomain = AppSettings.BeforeLoginUrl;
             //// Not include dot
-            this.baseDomain = currentDomain.Remove(0, currentDomain.IndexOf('.') + 1);
-            this.baseDomain = this.baseDomain.Remove(this.baseDomain.Length - 1, 1);
-            #endregion            
+            this._baseDomain = currentDomain.Remove(0, currentDomain.IndexOf('.') + 1);
+            this._baseDomain = this._baseDomain.Remove(this._baseDomain.Length - 1, 1);       
 
-            #region setting login template
-            this.loginTheme = WebSettings.DefaultLoginTemplate;
+            //// setting login template
+            this._loginTheme = WebSettings.DefaultLoginTemplate;
             var startEventDate = Convert.ToDateTime(ConfigurationManager.AppSettings["SpecialEventStart"]);
             var endEventDate = Convert.ToDateTime(ConfigurationManager.AppSettings["SpecialEventEnd"]);
             var currentDate = DateTime.Now;
 
             if (currentDate >= startEventDate && currentDate <= endEventDate)
             {
-                this.loginTheme = WebSettings.EventLoginTemplate;
+                this._loginTheme = WebSettings.EventLoginTemplate;
             }
-            #endregion
         }
-        
+
+        protected string SiteGroup
+        {
+            get
+            {
+                string host = System.Web.HttpContext.Current.Request.Headers["Host"];
+                var domainGroupSection = DomainGroupSection.Instance.DomainGroup;
+                var defaultGroup = "Others";
+
+                if (domainGroupSection == null || domainGroupSection.Count == 0)
+                {
+                    return defaultGroup;
+                }
+
+                var getDomainGroupActive = from m in domainGroupSection.Cast<DomainGroupElement>().Where(m => m.Active) select m;
+
+                if (!getDomainGroupActive.Any())
+                {
+                    return defaultGroup;
+                }
+
+                foreach (DomainGroupElement domainGroupElement in getDomainGroupActive)
+                {
+                    if (string.IsNullOrWhiteSpace(domainGroupElement.Domains))
+                    {
+                        return defaultGroup;
+                    }
+
+                    var domainList = new List<string>(domainGroupElement.Domains.Split(','));
+
+                    if (domainList.Contains(host))
+                    {
+                        return domainGroupElement.Name;
+                    }
+                }
+
+                return defaultGroup;
+            }
+        }
+
+        /// <summary>
+        /// Sign in progress.
+        /// </summary>
+        /// <returns>Return result.</returns>
         public LoginResult SignIn()
-        {           
-
-            #region set language
-            var language = 0;
-            if (System.Web.HttpContext.Current.Request.Cookies["LANGUAGE"] != null)
+        {
+            var language = CheckingLanguageFromCookie();
+            var loginResult = new LoginResult()
             {
-                int.TryParse(System.Web.HttpContext.Current.Request.Cookies["LANGUAGE"].Value, out language);
-            }
-
-            if (language > 5)
-            {
-                language = 0;
-            }
-            #endregion
-
-            var loginResult = new LoginResult(){
-                LoginTemplate = loginTheme,
+                LoginTemplate = _loginTheme,
                 Username = string.Empty
             };
+
             try
             {
-                #region Check cross cookie compatibility
+                //// Check cross cookie compatibility
                 AppSession.Captcha3 = Encryption.RandomNumberString(6);
                 string randomTicket = Encryption.CfsEnCode(AppSession.Captcha3);
 
                 try
                 {
-                    // Set cookie with custid id
+                    //// Set cookie with custid id
                     HttpCookie cookie = new HttpCookie("__utms", randomTicket);
-                    cookie.Domain = this.baseDomain;
+                    cookie.Domain = this._baseDomain;
                     cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
                     System.Web.HttpContext.Current.Response.SetCookie(cookie);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     LogExtension.ExceptionHandler(ex);
                 }
-                #endregion
 
                 loginResult.Language = language;
                 loginResult.Ip = Sunplus.Agent.Model.Common.AgentIPFormat.GetClientIP();
                 loginResult.UTMS = randomTicket;
-                loginResult.Domain = this.baseDomain;
+                loginResult.Domain = this._baseDomain;
 
-                #region Use for encrypt pwd
+                //// Use for encrypt pwd
                 AppSession.Captcha2 = Encryption.RandomNumberString(4);
                 loginResult.Captcha = AppSession.Captcha2;
-                #endregion
-                
             }
             catch (Exception ex)
             {
@@ -117,22 +142,34 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
                 loginResult.ErrMsg = Language.HttpError_Default;
                 LogExtension.ExceptionHandler(ex);
             }
+
             return loginResult;
         }
 
+        /// <summary>
+        /// Sign in page.
+        /// </summary>
+        /// <param name="username">User name.</param>
+        /// <param name="password">User password.</param>
+        /// <param name="language">User language.</param>
+        /// <param name="captcha">Captcha value.</param>
+        /// <param name="code">Encrypt code.</param>
+        /// <returns>Return result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
         public LoginResult SignIn(string username, string password, string language, string captcha, string code)
         {
             var loginResult = new LoginResult()
             {
                 Ip = Sunplus.Agent.Model.Common.AgentIPFormat.GetClientIP(),
-                LoginTemplate = loginTheme,
+                LoginTemplate = _loginTheme,
                 Username = username
             };
+
             try
             {
-
                 AppSession.Captcha2 = code;
-
                 ////Login Failed Count > 5
                 if (this.GetLoginFailedCount() > 15)
                 {
@@ -153,16 +190,14 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
 
                 if (WebSettings.IsValidLanguage(language))
                 {
-                    AppSession.Language = language;
-                    
+                    AppSession.Language = language;                    
                 }
                 else
                 {
                     AppSession.Language = WebSettings.DefaultLanguage;
                 }
 
-                this.SetLanguage(AppSession.Language);
-                
+                this.SetLanguage(AppSession.Language);                
 
                 if (AppSession.Captcha2 == null)
                 {
@@ -203,7 +238,6 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
                 catch (Exception ex)
                 {
                     LogExtension.ExceptionHandler(ex);
-
                     loginResult.ErrCode = ErrorContants.ErrorDefault;
                     loginResult.ErrMsg = string.Empty;
 
@@ -213,118 +247,26 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
                 // Get Browser
                 Hashtable requestInfo = DeviceService.GetRequestInfo(System.Web.HttpContext.Current.Request);
                 requestInfo.Add("sitegroup", SiteGroup);
-
-                var au = new AuthorizationDAO();
-
-                try
-                {
-                    au.Age_LoginVerifyDownline(
-                        username.Trim(),
-                        password,
-                        requestInfo,
-                        AppSession.LangKey,
-                        out custId,
-                        out subAccId,
-                        out loginTime,
-                        out lastChangedPwd,
-                        out nickName,
-                        out isNickname,
-                        out errCode,
-                        out errMsg);
-                }
-                catch (Exception ex)
-                {
-                    errCode = ErrorContants.ErrorInvalidCode909;
-                    errMsg = Language.invalidLogin909;
-                    LogExtension.ExceptionHandler(ex);
-                }
+                VerifyDownlineLogin(
+                    username, 
+                    password, 
+                    ref errCode, 
+                    ref errMsg, 
+                    ref custId, 
+                    ref subAccId, 
+                    ref isNickname, 
+                    ref nickName, 
+                    ref loginTime, 
+                    ref lastChangedPwd, 
+                    requestInfo);
 
                 if (errCode == 0)
                 {
-                    this.ResetLoginFailed();
-
-                    bool noCrossCookie = System.Web.HttpContext.Current.Request.Cookies.Get("__utms") == null
-                        || System.Web.HttpContext.Current.Request.Cookies.Get("__utms").Value == AppSession.Captcha3;
-                    string crossCookieValue = Encryption.CfsEnCode((custId + loginTime.Minute).ToString());
-                    int keySize = 1024;
-
-                    string parameter = string.Empty, path = string.Empty;
-                    parameter = custId.ToString() + "&" ////0
-                                + subAccId.ToString() + "&" ////1
-                                + loginTime.Ticks + "&" ////2
-                                + Encryption.HexEncode(Encryption.RC4(loginTime.Minute.ToString(), password)) + "&" ////3
-                                + nickName + "&" ////4
-                                + isNickname.ToString() + "&" ////5
-                                + "__utms" + "&" ////6
-                                + AppSession.Language + "&"////7
-                                + noCrossCookie; ////8
-
-                    path = System.Web.HttpContext.Current.Server.MapPath("~/IbcKeys/ibcpkey.snk");
-                    EncryptionThread encryption = new EncryptionThread();
-                    parameter = encryption.EncryptString(parameter, keySize, path);
-
-                    string url = AppSettings.AfterLoginUrl;
-                    /*if (System.Web.HttpContext.Current.Request.Cookies["ssl"] == null || System.Web.HttpContext.Current.Request.Cookies["ssl"].Value != "true")
-                    {
-                        url = url.Replace("https://", "http://");
-                    }*/
-
-                    url += WebSettings.AfterLoginPage;
-
-                    url += "?params=" + parameter;
-
-                    loginResult.ErrMsg = Language.lblLoginSuccessful;
-                    loginResult.AfterLoginUrl = url;
-                    loginResult.UTMS = crossCookieValue;
-                    loginResult.Domain = this.baseDomain;
-                    loginResult.ErrCode = -1;
-                    try
-                    {
-                        // Set cookie with custid id and seed
-                        HttpCookie cookie = new HttpCookie("__utms", crossCookieValue);
-                        cookie.Domain = this.baseDomain;
-                        cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
-                        System.Web.HttpContext.Current.Response.SetCookie(cookie);
-                    }
-                    catch(Exception ex)
-                    {
-                        LogExtension.ExceptionHandler(ex);
-                    }
+                    UpdateResultAfterLoginSuccessfully(password, loginResult, custId, subAccId, isNickname, nickName, loginTime);
                 }
                 else
                 {
-                    // Closed by wrong pwd 5 times, need to be synchronized to Casino DB
-                    if (errCode == ErrorContants.Error180)
-                    {
-                        try
-                        {
-                            CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();
-                            customer.UpdateCustClosedWrongPwd(custId, true, Sunplus.Agent.Model.Common.AgentIPFormat.GetClientIP());
-                        }
-                        catch(Exception ex)
-                        {
-                            LogExtension.ExceptionHandler(ex);
-                        }
-                    }
-
-                    loginResult.IsChangedPassword = lastChangedPwd != DateTime.MinValue;
-                    if (loginResult.IsChangedPassword)
-                    {
-                        loginResult.ChangedPasswordTime = string.Format(Language.lblPasswordChanged, lastChangedPwd);
-                    }
-
-                    this.SetLoginFailedTime();
-                    this.IncreaseLoginFailedCount();
-                    if (this.GetLoginFailedCount() > 15)
-                    {
-                        loginResult.ErrCode = 1;
-                        loginResult.ErrMsg = Language.invalidLogin;
-                    }
-                    else
-                    {
-                        loginResult.ErrCode = errCode;
-                        loginResult.ErrMsg = errMsg;
-                    }
+                    UpdateResultAfterLoginFail(loginResult, errCode, errMsg, custId, lastChangedPwd);
                 }
             }
             catch (Exception ex)
@@ -336,7 +278,11 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
 
             return loginResult;
         }
-
+        
+        /// <summary>
+        /// Get new captcha.
+        /// </summary>
+        /// <returns>Return result.</returns>
         public Graphics GetNewCaptcha() 
         {
             Graphics graphic = null;
@@ -351,16 +297,16 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
                 var value = string.Empty;
                 Image bitmap = captchaUtil.Generate(out code, out value);
                 AppSession.CaptchaCode = value;
-                //AppSessions.CaptchaType = captchaUtil.Choice;
+                ////AppSessions.CaptchaType = captchaUtil.Choice;
 
-                // Set the image.
-                // Change the response headers to output a JPEG image.
+                //// Set the image.
+                //// Change the response headers to output a JPEG image.
                 System.Web.HttpContext.Current.Response.Clear();
 
-                // Write the image to the response stream in JPEG format.
+                //// Write the image to the response stream in JPEG format.
                 bitmap.Save(System.Web.HttpContext.Current.Response.OutputStream, System.Drawing.Imaging.ImageFormat.Jpeg);
 
-                //Create new image
+                ////Create new image
                 graphic = Graphics.FromImage(bitmap);
             }
             catch (Exception ex)
@@ -375,15 +321,13 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
         protected void SetLanguage(string language)
         {
             System.Globalization.CultureInfo def = System.Globalization.CultureInfo.CreateSpecificCulture("en-US");
-
-            /*System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(language);
-            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.CreateSpecificCulture(language);*/
-
-            //System.Threading.Thread.CurrentThread.CurrentCulture.DateTimeFormat = def.DateTimeFormat;
-
             Language.Culture = new CultureInfo(language);
         }
 
+        /// <summary>
+        /// Get login totally failed.
+        /// </summary>
+        /// <returns>Return result.</returns>
         protected int GetLoginFailedCount()
         {
             int count = 0;
@@ -414,6 +358,9 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
             }
         }
 
+        /// <summary>
+        /// Reset login failed.
+        /// </summary>
         protected void ResetLoginFailed()
         {
             try
@@ -439,6 +386,10 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
             }
         }
 
+        /// <summary>
+        /// Get login failed time.
+        /// </summary>
+        /// <returns>Return result.</returns>
         protected DateTime GetLoginFailedTime()
         {
             DateTime date = DateTime.MinValue;
@@ -456,46 +407,191 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
 
             return date;
         }
-
-        protected string SiteGroup
+        
+        /// <summary>
+        /// Checking language from cookie.
+        /// </summary>
+        /// <returns>Return result.</returns>
+        private static int CheckingLanguageFromCookie()
         {
-            get
+            var language = 0;
+            if (System.Web.HttpContext.Current.Request.Cookies["LANGUAGE"] != null)
             {
-                string host = System.Web.HttpContext.Current.Request.Headers["Host"];
-                var domainGroupSection = DomainGroupSection.Instance.DomainGroup;
-                var defaultGroup = "Others";
+                int.TryParse(System.Web.HttpContext.Current.Request.Cookies["LANGUAGE"].Value, out language);
+            }
 
-                if (domainGroupSection == null || domainGroupSection.Count == 0)
+            if (language > 5)
+            {
+                language = 0;
+            }
+
+            return language;
+        }
+        
+        /// <summary>
+        /// Verify down-line login.
+        /// </summary>
+        /// <param name="username">User name.</param>
+        /// <param name="password">User password.</param>
+        /// <param name="errCode">Error code.</param>
+        /// <param name="errMsg">Error message.</param>
+        /// <param name="custId">Customer ID.</param>
+        /// <param name="subAccId">Sub account ID.</param>
+        /// <param name="isNickname">Is nick-name.</param>
+        /// <param name="nickName">Nick name.</param>
+        /// <param name="loginTime">Login time.</param>
+        /// <param name="lastChangedPwd">Last change password.</param>
+        /// <param name="requestInfo">Request information.</param>
+        private static void VerifyDownlineLogin(
+            string username,
+            string password,
+            ref int errCode,
+            ref string errMsg,
+            ref int custId,
+            ref int subAccId,
+            ref bool isNickname,
+            ref string nickName,
+            ref DateTime loginTime,
+            ref DateTime lastChangedPwd,
+            Hashtable requestInfo)
+        {
+            try
+            {
+                new AuthorizationDAO().Age_LoginVerifyDownline(
+                    username.Trim(),
+                    password,
+                    requestInfo,
+                    AppSession.LangKey,
+                    out custId,
+                    out subAccId,
+                    out loginTime,
+                    out lastChangedPwd,
+                    out nickName,
+                    out isNickname,
+                    out errCode,
+                    out errMsg);
+            }
+            catch (Exception ex)
+            {
+                errCode = ErrorContants.ErrorInvalidCode909;
+                errMsg = Language.invalidLogin909;
+                LogExtension.ExceptionHandler(ex);
+            }
+        }
+
+        /// <summary>
+        /// Update result login after login Fail.
+        /// </summary>
+        /// <param name="loginResult">Login result.</param>
+        /// <param name="errCode">Error code.</param>
+        /// <param name="errMsg">Error message.</param>
+        /// <param name="custId">Customer ID.</param>
+        /// <param name="lastChangedPwd">Last change password.</param>
+        private void UpdateResultAfterLoginFail(LoginResult loginResult, int errCode, string errMsg, int custId, DateTime lastChangedPwd)
+        {
+            // Closed by wrong pwd 5 times, need to be synchronized to Casino DB
+            if (errCode == ErrorContants.Error180)
+            {
+                try
                 {
-                    return defaultGroup;
+                    CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();
+                    customer.UpdateCustClosedWrongPwd(custId, true, Sunplus.Agent.Model.Common.AgentIPFormat.GetClientIP());
                 }
-
-                var getDomainGroupActive = (from m in
-                                                domainGroupSection.Cast<DomainGroupElement>().Where(
-                                                m => m.Active)
-                                        select m);
-
-                if (!getDomainGroupActive.Any())
+                catch (Exception ex)
                 {
-                    return defaultGroup;
+                    LogExtension.ExceptionHandler(ex);
                 }
+            }
 
-                foreach (DomainGroupElement domainGroupElement in getDomainGroupActive)
-                {
-                    if (string.IsNullOrWhiteSpace(domainGroupElement.Domains))
-                    {
-                        return defaultGroup;
-                    }
+            loginResult.IsChangedPassword = lastChangedPwd != DateTime.MinValue;
+            if (loginResult.IsChangedPassword)
+            {
+                loginResult.ChangedPasswordTime = string.Format(Language.lblPasswordChanged, lastChangedPwd);
+            }
 
-                    var domainList = new List<string>(domainGroupElement.Domains.Split(','));
+            this.SetLoginFailedTime();
+            this.IncreaseLoginFailedCount();
+            if (this.GetLoginFailedCount() > 15)
+            {
+                loginResult.ErrCode = 1;
+                loginResult.ErrMsg = Language.invalidLogin;
+            }
+            else
+            {
+                loginResult.ErrCode = errCode;
+                loginResult.ErrMsg = errMsg;
+            }
+        }
 
-                    if (domainList.Contains(host))
-                    {
-                        return domainGroupElement.Name;
-                    }
-                }
+        /// <summary>
+        /// Update result login after login successfully.
+        /// </summary>
+        /// <param name="password">User password.</param>
+        /// <param name="loginResult">Login result.</param>
+        /// <param name="custId">Customer ID.</param>
+        /// <param name="subAccId">Sub account ID.</param>
+        /// <param name="isNickname">Is nick name.</param>
+        /// <param name="nickName">Nick name.</param>
+        /// <param name="loginTime">Login time.</param>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        private void UpdateResultAfterLoginSuccessfully(
+            string password, 
+            LoginResult loginResult, 
+            int custId, 
+            int subAccId, 
+            bool isNickname, 
+            string nickName, 
+            DateTime loginTime)
+        {
+            this.ResetLoginFailed();
 
-                return defaultGroup;
+            bool numberCrossCookie = System.Web.HttpContext.Current.Request.Cookies.Get("__utms") == null
+                || System.Web.HttpContext.Current.Request.Cookies.Get("__utms").Value == AppSession.Captcha3;
+            string crossCookieValue = Encryption.CfsEnCode((custId + loginTime.Minute).ToString());
+            int keySize = 1024;
+
+            string parameter = string.Empty, path = string.Empty;
+            parameter = custId.ToString() + "&" ////0
+                        + subAccId.ToString() + "&" ////1
+                        + loginTime.Ticks + "&" ////2
+                        + Encryption.HexEncode(Encryption.RC4(loginTime.Minute.ToString(), password)) + "&" ////3
+                        + nickName + "&" ////4
+                        + isNickname.ToString() + "&" ////5
+                        + "__utms" + "&" ////6
+                        + AppSession.Language + "&"////7
+                        + numberCrossCookie; ////8
+
+            path = System.Web.HttpContext.Current.Server.MapPath("~/IbcKeys/ibcpkey.snk");
+            EncryptionThread encryption = new EncryptionThread();
+            parameter = encryption.EncryptString(parameter, keySize, path);
+
+            string url = AppSettings.AfterLoginUrl;
+            /*if (System.Web.HttpContext.Current.Request.Cookies["ssl"] == null || System.Web.HttpContext.Current.Request.Cookies["ssl"].Value != "true")
+            {
+                url = url.Replace("https://", "http://");
+            }*/
+
+            url += WebSettings.AfterLoginPage;
+            url += "?params=" + parameter;
+
+            loginResult.ErrMsg = Language.lblLoginSuccessful;
+            loginResult.AfterLoginUrl = url;
+            loginResult.UTMS = crossCookieValue;
+            loginResult.Domain = this._baseDomain;
+            loginResult.ErrCode = -1;
+            try
+            {
+                // Set cookie with custid id and seed
+                HttpCookie cookie = new HttpCookie("__utms", crossCookieValue);
+                cookie.Domain = this._baseDomain;
+                cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
+                System.Web.HttpContext.Current.Response.SetCookie(cookie);
+            }
+            catch (Exception ex)
+            {
+                LogExtension.ExceptionHandler(ex);
             }
         }
         #endregion

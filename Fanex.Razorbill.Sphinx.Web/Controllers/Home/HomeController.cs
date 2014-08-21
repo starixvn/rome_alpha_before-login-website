@@ -1,10 +1,16 @@
-﻿
+﻿// -----------------------------------------------------------------------
+// <copyright file="HomeController.cs" company="Nexcel Solution">
+// TODO: Update copyright text.
+// </copyright>
+// -----------------------------------------------------------------------
+
 namespace Fanex.Razorbill.Sphinx.Web.Controllers.Home
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
 
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
+    /// <summary>
+    /// Home Controller.
+    /// </summary>
     public class HomeController : BaseController
     {
         public HomeController()
@@ -15,6 +21,5 @@ namespace Fanex.Razorbill.Sphinx.Web.Controllers.Home
         {
             return RedirectToAction("Index", "Login");
         }
-
     }
 }

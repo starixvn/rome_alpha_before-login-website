@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="AppSession.cs" company="">
+// <copyright file="AppSession.cs" company="Nexcel Solution">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -13,19 +13,18 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class AppSession
     {
         public static string Captcha2
         {
             get
             {
-                return SessionExtension.Get<string>(CommonConstants.CAPTCHA_2);
+                return SessionExtension.Get<string>(CommonConstants.CAPTCHA2);
             }
 
             set
             {
-                SessionExtension.Set<string>(CommonConstants.CAPTCHA_2, value);
+                SessionExtension.Set<string>(CommonConstants.CAPTCHA2, value);
             }
         }
 
@@ -33,12 +32,12 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
         {
             get
             {
-                return SessionExtension.Get<string>(CommonConstants.CAPTCHA_3);
+                return SessionExtension.Get<string>(CommonConstants.CAPTCHA3);
             }
 
             set
             {
-                SessionExtension.Set<string>(CommonConstants.CAPTCHA_3, value);
+                SessionExtension.Set<string>(CommonConstants.CAPTCHA3, value);
             }
         }
 
@@ -59,12 +58,12 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
         {
             get
             {
-                return SessionExtension.Get<string>(CommonConstants.CAPTCHA_CODE);
+                return SessionExtension.Get<string>(CommonConstants.CAPTCHACODE);
             }
 
             set
             {
-                SessionExtension.Set<string>(CommonConstants.CAPTCHA_CODE, value);
+                SessionExtension.Set<string>(CommonConstants.CAPTCHACODE, value);
             }
         }
 

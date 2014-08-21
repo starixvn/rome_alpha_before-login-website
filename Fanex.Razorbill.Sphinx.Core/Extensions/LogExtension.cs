@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="LogExtension.cs" company="">
+// <copyright file="LogExtension.cs" company="Nexcel Solution">
 // TODO: Update copyright text.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -7,16 +7,18 @@
 namespace Fanex.Razorbill.Sphinx.Core.Extensions
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Web;
     using Fanex.Razorbill.Sphinx.Core.Configurations;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1600:ElementsMustBeDocumented")]
     public class LogExtension
     {
+        /// <summary>
+        /// Exception Handler.
+        /// </summary>
+        /// <param name="ex">Exception info.</param>
         public static void ExceptionHandler(Exception ex)
         {
             if (ex is HttpException)
@@ -25,7 +27,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
             }
 
             HttpRequest request = HttpContext.Current.Request;
-            // hide sensitive information in POST or GET parameters
+            ////hide sensitive information in POST or GET parameters
             string formString = string.Empty, queryString = string.Empty;
             if (request.Form.Count > 0)
             {
@@ -50,6 +52,12 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
             Fanex.Logging.Logger.Log.Error(message);
         }
 
+        /// <summary>
+        /// Replace Sensitive Information.
+        /// </summary>
+        /// <param name="parameterString">Parameter String.</param>
+        /// <param name="sensitiveString">Sensitive String.</param>
+        /// <returns>Return result.</returns>
         public static string ReplaceSensitiveInformation(string parameterString, params string[] sensitiveString)
         {
             if (string.IsNullOrEmpty(parameterString) || sensitiveString == null || sensitiveString.Length == 0)

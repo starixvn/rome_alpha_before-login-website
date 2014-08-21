@@ -40,36 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Resources\Language.ja-JP.Designer.cs">
-      <DependentUpon>Language.ja-JP.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\Language.ko-KR.Designer.cs">
-      <DependentUpon>Language.ko-KR.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\Language.th-TH.Designer.cs">
-      <DependentUpon>Language.th-TH.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\Language.vi-VN.Designer.cs">
-      <DependentUpon>Language.vi-VN.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\Language.zh-CN.Designer.cs">
-      <DependentUpon>Language.zh-CN.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\Language.zh-TW.Designer.cs">
-      <DependentUpon>Language.zh-TW.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Resources\Language1.Designer.cs">
       <DependentUpon>Language.resx</DependentUpon>
       <AutoGen>True</AutoGen>

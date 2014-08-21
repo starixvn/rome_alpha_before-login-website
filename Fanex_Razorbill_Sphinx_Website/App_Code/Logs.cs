@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="InfoMember.aspx.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="Logs.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
@@ -11,6 +11,9 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Web;
 
+/// <summary>
+/// TODO: Log exception.
+/// </summary>
 public static class Logs
 {
     private static bool enableLogginService;
@@ -30,6 +33,11 @@ public static class Logs
         Write(msg, ILogger.LoggingType.Error);
     }
 
+    /// <summary>
+    /// Write log function.
+    /// </summary>
+    /// <param name="msg">Error message.</param>
+    /// <param name="type">Logging type.</param>
     public static void Write(string msg, ILogger.LoggingType type)
     {
         if (!enableLogginService)
@@ -45,7 +53,11 @@ public static class Logs
         {
             if (HttpContext.Current != null)
             {
-                eventLog = "SERVER: " + HttpContext.Current.Server.MachineName + "[" + HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath + "] -- [" + s.GetMethod().ToString() + "] -- ";
+                eventLog = string.Format(
+                    "SERVER: {0}[{1}] -- [{2}] --",
+                    HttpContext.Current.Server.MachineName,
+                    HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath,
+                    s.GetMethod());
             }
         }
         catch
@@ -56,6 +68,11 @@ public static class Logs
         ILogger.Service.WriteLog(eventLog + "\r\n" + msg, type);
     }
 
+    /// <summary>
+    /// Write log function.
+    /// </summary>
+    /// <param name="msg">Error message.</param>
+    /// <param name="type">Logging type.</param>
     public static void Write(object msg, ILogger.LoggingType type)
     {
         if (!enableLogginService)
@@ -70,7 +87,11 @@ public static class Logs
         {
             if (HttpContext.Current != null)
             {
-                eventLog = "SERVER: " + HttpContext.Current.Server.MachineName + "[" + HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath + "] -- [" + s.GetMethod().ToString() + "] -- ";
+                eventLog = string.Format(
+                    "SERVER: {0}[{1}] -- [{2}] --",
+                    HttpContext.Current.Server.MachineName,
+                    HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath,
+                    s.GetMethod());
             }
         }
         catch
