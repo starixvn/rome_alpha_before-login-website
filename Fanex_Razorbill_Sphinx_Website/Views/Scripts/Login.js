@@ -62,10 +62,11 @@ Sphinx.Login = {
             $('#lbLanguage').css('color', '#B96643');
             $('#lbLanguage').css('font-size', '13px');
             $('.showPass').css('top', '1px');
+            $('.refreshCont').css('width', '50px');
         }
+        if ($.browser.webkit && !(/chrome/.test(navigator.userAgent.toLowerCase()))) {
+            $(".inputContainer").css('padding-left', '80px');
 
-        if ($.browser.msie) {
-            $('#chbShowPass').css('top', '-2px');
         }
 
 
@@ -112,11 +113,11 @@ Sphinx.Login = {
         $('#lbLanguage').html(resource.Language);
 
         $('#hidLanguage').val(languageCode);
-
+        $('#txtCaptcha').attr('placeholder', resource.Captcha)
         $('#lbShowPass').html(resource.ShowPassword);
 
         $('#textTitle').removeClass();
-        $('#textTitle').addClass(resource.AutumnTitle); 
+        $('#textTitle').addClass(resource.AutumnTitle);
         $('.btnLogin').val(resource.Login);
 
         Sphinx.Core.setCookie('LANGUAGE', languageCode, 30);
@@ -184,18 +185,21 @@ Sphinx.Login = {
             $("#errmsg").html(language.errUserName);
             $('#txtUserName').focus();
             $('#errmsg').attr('errCode', Sphinx.Error.InvalidUserAndPass);
+            $('.errorMessage').css('display', 'block');
             return false;
         }
         if ($('#txtPassWord').val() == "" || $('#txtPassWord').val() == language.Password) {
             $("#errmsg").html(language.errUserName);
             $('#txtPassWord').focus();
             $('#errmsg').attr('errCode', Sphinx.Error.InvalidUserAndPass);
+            $('.errorMessage').css('display', 'block');
             return false;
         }
         if ($('#txtCaptcha').val() == "") {
             $("#errmsg").html(language.errValidCode);
             $('#txtCaptcha').focus();
             $('#errmsg').attr('errCode', Sphinx.Error.InvalidCaptcha);
+            $('.errorMessage').css('display', 'block');
             return false;
         }
         return true;

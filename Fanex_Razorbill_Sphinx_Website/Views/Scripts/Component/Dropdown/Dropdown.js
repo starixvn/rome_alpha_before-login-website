@@ -105,7 +105,7 @@ Sphinx.Component.DropDownbox = new function () {
         // var onclick = selected ? '' : 'onclick=""';
         var height = selected ? 'height: 15px;' : '';
 
-        var template = $('<div ' + selectedId + ' value="' + value + '" img="' + img + '" text="' + text + '" class="ddItem" style="' + height + ' background-color: #8e8a31"> \
+        var template = $('<div ' + selectedId + ' value="' + value + '" img="' + img + '" text="' + text + '" class="ddItem" style="' + height + ' background-color: #fff"> \
                                     <table>\
                                         <tr>\
                                             <td class="flag"><i class="' + img + '" id="flag"></i></td>\

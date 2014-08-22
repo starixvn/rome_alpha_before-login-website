@@ -278,3 +278,23 @@ Params:
 - ip: ::1
 Exception: 
 
+FPS called CheckTransaction at 8/22/2014 2:09:07 PM
+Result: ALLOW
+Params: 
+- account: Supertest1
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1###a6251ce8880f7731c6b8d99e181857bb5aa3a05ec3c79d810adc18ab0022ad88ab3781dfc449514688cbe721b2edaec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165a447769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0e31cec8f1fb3ac2443189500d517c41e74672322b648906b61705813e056f305d1b2b7d400c3e3d889fed01bd75087c8b941273e6d3fe4c33a13d4e51b67a2f4423823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102075380ab6cd5479dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 8/22/2014 2:09:52 PM
+Result: ALLOW
+Params: 
+- account: Supertest1
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:31.0) Gecko/20100101 Firefox/31.0###240:320:24:false###::1###a6251ce8880f7731c6b8d99e181857bb5aa3a05ec3c79d810adc18ab0022ad88ab3781dfc449514688cbe721b2edaec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165a447769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0e31cec8f1fb3ac2443189500d517c41e74672322b648906b61705813e056f305d1b2b7d400c3e3d889fed01bd75087c8b941273e6d3fe4c33a13d4e51b67a2f4423823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102075380ab6cd5479dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: ::1
+Exception: 
+

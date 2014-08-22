@@ -1,0 +1,422 @@
+﻿@import "Variables.less";
+
+html, body, div, span, applet, object, iframe, 
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, 
+abbr, acronym, address, big, cite, code, del, 
+dfn, em, font, img, ins, kbd, q, s, samp, small, 
+strike, strong, sub, sup, tt, var, b, u, i, center,
+ ol, ul, li, fieldset, form, label, legend, table, 
+ caption, tbody, tfoot, thead, tr, th, td {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    line-height: 21px;
+    margin: 0;
+    outline: medium none;
+    padding: 0;
+    vertical-align: baseline;
+}
+@font-face {
+	font-family: 'HELVETICANEUE';
+	src: url(font/HELVETICANEUE-ROMAN.OTF);
+}
+@font-size: 13px;
+@font-family: 'Arial';
+@width-login: 542px;
+@text-color: #625f5f;
+@dropdown-color: #000;
+@border-color: #a32b20;
+@shadow-color: #cda070;
+html,body {
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+}
+body{
+	padding:0;
+	margin:0;
+	font-family: @font-family;
+	background: url(Images/background1.jpg) #edd194 no-repeat center top;
+}
+	.left {
+		position: fixed;
+		top: 0;
+		left: 0;
+		background: url(Images/left-side.png) no-repeat;
+		height: 100%;
+		width: 714px;
+		z-index: -99;
+		min-height: 738px;
+	}
+	.right {
+		position: fixed;
+		top: 0;
+		right: 0;
+		background: url(Images/right-side.png) no-repeat;
+		height: 100%;
+		width: 714px;
+		z-index: -100;
+		min-height: 738px;
+	}
+	.content {
+		.wrapper {
+			background: url(Images/Loginbox.png) no-repeat;
+			width: 764px;
+			height: 466px;
+			margin-top: 10px;
+			position: relative;
+			.inputContainer {
+				text-align: left;
+				width: 315px;
+				padding: 100px 30px 0 90px;
+				table {
+					width: 100%;
+					.row {
+						padding-bottom: 10px;
+					}
+				}
+
+			}
+
+			.language-select {
+				background: #fff;
+				border: 1px solid @border-color;
+				cursor: pointer;
+				float: left;
+				height: 24px;
+				width: 117px;
+				margin: 0 2px 0 0px;
+				font-size: @font-size;
+				color: #000;
+				font-family: @font-family;
+				border-radius: 2px;
+				box-shadow: inset 1px 1px 3px 1px @shadow-color;
+				.en {
+					background: url(Images/flags.jpg) no-repeat;
+				}
+
+				&.ddSelect {
+					position: relative;
+					 z-index: 100;
+
+					.caret {
+						background: url(Images/caret.png) 0px 0px no-repeat;
+						width: 25px;
+						height: 22px;
+						position: absolute;
+						right: -7px;
+						top: 8px;
+					}
+
+					#divItemList {
+						z-index: 200;
+						margin-left: 1px;
+						width: 114px !important;
+					}
+
+					#divSelectedItem {
+						.flag i {
+							position: absolute;
+							top: 2px;
+							left: 6px;
+						}
+
+						 #lbLanguage {
+							 margin-left: 8px;
+						}
+					}
+
+					.ddItem .flag i {
+						height: 19px;
+					}
+				}
+
+				#divItemList {
+					border-color: @border-color;
+				}
+
+				#lbLanguage {
+					font-size: @font-size;
+				}
+			}
+
+			#divSelectedItem {
+				background: none !important;
+				color: #794d28;
+			}
+
+			.custom-textbox {
+				width: 212px;
+				padding: 0 5px;
+				font-size: @font-size;
+				line-height: 35px;
+				padding: 0 0 0 5px;
+				height: 27px;
+				border: none;
+				color: @text-color;
+				line-height: 25px !important;
+				border-radius: 2px;
+				font-style: italic;
+				border: 1px solid @border-color;
+				box-shadow: inset 1px 1px 3px 1px @shadow-color;
+				&:focus {
+					font-style: normal;
+					height: 27px;
+					border: none;
+					outline: none;
+					border: 1px solid @border-color;
+				}
+				
+			}			
+		
+			
+
+			.showPass {
+				height: 14px;
+				float:left;
+				display: block;
+				padding-left: 9px;
+				text-indent: -15px;
+				color: #512100;
+				position: relative;
+				top: -4px;
+				margin-left: 10px;
+				padding-bottom: 5px;
+				font-weight: bold;
+				font-style: italic;
+				.checkShowPass {
+					width: 13px;
+					height: 13px;
+					padding: 0;
+					position: relative;
+					margin: 0 3px 2px 0;
+					background: #516e05;
+					
+				}
+				.chbShowpass {
+					width: 11px;
+					height: 11px;
+					padding: 0;
+					vertical-align: bottom;
+					position: relative;
+					margin: 0 3px 2px 0;
+					background: #516e05;
+					display: inline-block;
+				}
+				
+				span {
+					margin-left: 2px;
+					vertical-align: top;
+					font-size: @font-size - 1 ;					
+				}
+			}
+
+			.inputCaptcha {
+				width: 115px;
+				height: 25px !important;
+				float: left;
+				text-align: center;
+				margin: 2px 0 0 2px;
+				color: @text-color;
+				border: none;
+				line-height: 27px;
+				padding: 0;
+				position:relative;
+				border-radius: 2px;
+				font-style: italic;
+				border: 1px solid @border-color;
+				box-shadow: inset 1px 1px 3px 1px @shadow-color;
+				&:focus {
+					background-position: -8px -43px;
+					outline: none;
+					font-style: normal; 
+				}
+			}
+
+			.codeCaptcha {
+				float: left;
+				width: 66px;
+				height: 27px;
+				margin: 2px 2px 2px 4px;
+				#imgCode {
+				}
+			}
+		}
+		.btnLogin {
+			background: url(Images/bt_bg.png) 0 -5px no-repeat;
+			width: 105px;
+			border: none;			
+			height: 31px;
+			cursor: pointer;
+			color: #fff;
+			float: left;
+			font-size: @font-size + 1;
+			font-family: 'OpenSans Bold';
+			margin: 5px 0 0 2px;
+			padding-bottom: 1px;
+			font-family: 'HELVETICANEUE';
+			&:hover {
+				background-position: 0 -37px;
+			}
+		}
+		.space {
+			background: transparent;
+			width: 108px;
+			height: 29px;
+			float: left;
+		}
+		.btnLoginDisable {
+			.btnLogin;
+			border: none;
+			background-position: 0 -69px;
+		}
+
+        .refreshCont {
+            float: left;
+			width: 120px;
+        }
+		.verification {
+			width: 100%;
+		}
+		.refreshCode {
+			margin: 4px 2px 2px 3px;
+			background: url(images/refresh.png) 0px 0px no-repeat;
+			width: 19px;
+			float: left;
+			height: 19px !important;
+			cursor: pointer;
+			padding: 0;
+			&:hover {
+				background: url(images/refresh.png) 0px -17px no-repeat;
+			}
+		}
+		.errorMessage {
+			background: url(Images/warning.png) transparent left center no-repeat;
+			font-size: 12px;
+			color: #fff;
+			float: left;
+			width: 275px;
+			text-align: left;
+			padding : 3px 0 0 5px;
+			color: #512100;
+		}
+
+		.loading {
+			background: url(images/loading.gif) no-repeat;
+			height: 28px;
+			margin-left:3px;
+			display: inline-block;
+			width: 40px;
+		}
+		.list-browser {
+		background: url(images/Rec_sp.png) right center no-repeat;
+		width: 135px;
+		height: 21px;
+		color: #371d03;
+		font-size: @font-size - 2;
+		font-family: arial;
+		clear: both;
+		margin-left: 15px;
+		text-align: left;
+	}
+
+	.bestview {
+        line-height: 20px;
+        color: #000;
+        font-size: @font-size - 2;
+        font-family: arial;
+        clear: both;
+        margin: 0 0 23px -8px;
+        text-align: left;
+		padding-right: 65px;
+		position: absolute;
+		bottom: 21px;
+		left: 285px;
+		.browser {
+			background: url(images/Rec_sp.png) right center no-repeat;
+			width: 143px;
+			height: 21px;
+			display: inline-block;
+			position: relative;
+			top: 6px;
+		}
+	}
+	.textTitle_en {
+		background: url(Images/en.png) center no-repeat;
+		width: 314px;
+		height: 111px;
+		margin: 179px 0 0 25px;
+	}
+	.textTitle-cn {
+		width: 380px;
+		height: 111px;
+		margin: 179px 0 0 25px;
+		background: url(Images/cn_simplified_text.png) center no-repeat;
+	}
+
+	.textTitle-tw {
+		width: 380px;
+		height: 111px;
+		margin: 179px 0 0 25px;
+		background: url(Images/cn_traditional_text.png) center no-repeat;
+
+	}
+	}
+
+.eq-ie8, .eq-ie7
+{	
+	overflow: hidden;
+	border:0 none;
+	.container .login-panel .login-panel-inner .language-select
+	{
+		min-height: 26px;
+		margin-top: 0;
+	}
+	.container .login-panel .login-panel-inner .custom-textbox
+	{
+		height: 18px;
+	}
+}
+.eq-ie7
+{
+	.container .login-panel .login-panel-inner .language-select a
+	{
+		padding-bottom: 5px;
+		i
+		{
+			margin-top: 3px;
+		}
+		.caret
+		{
+			margin-top: -15px;
+		}
+		#lbLanguage
+		{
+			position: relative;
+			top: 3px;
+		}
+	}
+	.container .login-panel .login-panel-inner label .checkShowPass
+	{
+		position: relative;
+		top: -1px;
+	}
+	.container .login-panel .login-panel-inner .row-fluid [class*="span"] .captimg
+	{
+		margin-left: 11px;
+	} 
+}
+
+ .eq-ie7 {
+    .container .content .wrapper .showPass {
+        top: -2px;
+		.checkShowPass {
+			top: -5px;
+		}
+    }
+	.container .content .bestview {
+		bottom: 23px;
+		.browser {
+			top: 3px;
+		}
+	}
+}
