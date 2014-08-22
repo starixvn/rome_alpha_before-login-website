@@ -33,18 +33,20 @@ strike, strong, sub, sup, tt, var, b, u, i, center,
     vertical-align: baseline;
 }
 html,body { 
-		height: 100%; margin: 0px; padding: 0px; 
+		height: 99.95%; margin: 0px; padding: 0px; 
 		background:url(Images/patern.jpg) repeat;
 		border: 0 none;
 		font-family: @font-family;
 	}
-.container {
+	#mainholder {
+		min-height: 100%;
+		position: relative;
+	}
 	.header {
 		top: 0;
 		background: url(Images/top.png) no-repeat;		
 		width: 516px;
 		height: 113px;
-		position: fixed !important;
 		position: absolute;
 		left: 50%;
 		margin-left: -258px;
@@ -54,12 +56,12 @@ html,body {
 		background: url(Images/bottom.png) no-repeat;		
 		width: 522px;
 		height: 111px;
-		position: fixed !important;
 		position: absolute;
 		left: 50%;
 		margin-left: -261px;
 	}
 	.content {
+		padding-bottom: 111px;
 		padding: 156px 0;
 		position: relative;
 		z-index: 100;
@@ -355,7 +357,6 @@ html,body {
 
 	}
 	}
-}
  .eq-ie7 {
     .container .content .wrapper .showPass {
         top: -2px;
