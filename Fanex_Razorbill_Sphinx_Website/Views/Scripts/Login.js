@@ -108,12 +108,18 @@ Sphinx.Login = {
             strPassword.val(resource.Password);
         }
 
+        var strCaptcha = $('#txtCaptcha');
+        var currentCaptcha = strCaptcha.attr('placeholder');
+        strCaptcha.attr('placeholder', resource.Captcha);
+        if ($.browser.msie && strCaptcha.val() == currentCaptcha) {
+            strCaptcha.val(resource.Captcha);
+        }
+
         flag.removeClass();
         flag.addClass(resource.Flag);
         $('#lbLanguage').html(resource.Language);
 
         $('#hidLanguage').val(languageCode);
-        $('#txtCaptcha').attr('placeholder', resource.Captcha)
         $('#lbShowPass').html(resource.ShowPassword);
 
         $('#textTitle').removeClass();
