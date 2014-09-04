@@ -687,9 +687,9 @@ namespace Sunplus.Age_BeforeLogin.UI
                         CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();
                         customer.UpdateCustClosedWrongPwd(custId, true, Sunplus.Agent.Model.Common.AgentIPFormat.GetClientIP());
                     }
-                    catch
+                    catch (Exception ex)
                     {
-
+                        Fanex.Razorbill.Sphinx.Core.Extensions.LogExtension.ExceptionHandler(ex);
                     }
                 }
 
