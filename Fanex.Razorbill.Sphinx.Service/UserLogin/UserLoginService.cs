@@ -266,7 +266,7 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
                 }
                 else
                 {
-                    UpdateResultAfterLoginFail(loginResult, errCode, errMsg, custId, lastChangedPwd);
+                    UpdateResultAfterLoginFail(loginResult, errCode, errMsg, custId, subAccId, lastChangedPwd);
                 }
             }
             catch (Exception ex)
@@ -486,11 +486,18 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
         /// <param name="errCode">Error code.</param>
         /// <param name="errMsg">Error message.</param>
         /// <param name="custId">Customer ID.</param>
+        /// <param name="subAccId">Sub account ID.</param>
         /// <param name="lastChangedPwd">Last change password.</param>
-        private void UpdateResultAfterLoginFail(LoginResult loginResult, int errCode, string errMsg, int custId, DateTime lastChangedPwd)
+        private void UpdateResultAfterLoginFail(
+            LoginResult loginResult, 
+            int errCode, 
+            string errMsg, 
+            int custId,
+            int subAccId,
+            DateTime lastChangedPwd)
         {
             // Closed by wrong pwd 5 times, need to be synchronized to Casino DB
-            if (errCode == ErrorContants.Error180)
+            if (errCode == ErrorContants.Error180 && subAccId == 0)
             {
                 try
                 {
