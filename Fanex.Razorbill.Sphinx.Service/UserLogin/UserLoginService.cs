@@ -497,7 +497,7 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
             DateTime lastChangedPwd)
         {
             // Closed by wrong pwd 5 times, need to be synchronized to Casino DB
-            if (errCode == ErrorContants.Error180 && subAccId == 0)
+            if (errCode == ErrorContants.Error109 && subAccId == 0)
             {
                 try
                 {

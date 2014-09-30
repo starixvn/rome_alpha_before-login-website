@@ -680,7 +680,7 @@ namespace Sunplus.Age_BeforeLogin.UI
             else
             {
                 // Closed by wrong pwd 5 times, need to be synchronized to Casino DB
-                if (errCode == 108 && subAccId == 0)
+                if (errCode == 109 && subAccId == 0)
                 {
                     try
                     {
