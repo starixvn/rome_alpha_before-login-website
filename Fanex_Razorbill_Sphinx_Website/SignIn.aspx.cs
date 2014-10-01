@@ -361,29 +361,38 @@ namespace Sunplus.Age_BeforeLogin.UI
 
             var havingFestival = currentDate >= startEventDate && currentDate <= endEventDate;
 
-            if(havingFestival)
+            if (havingFestival)
+            {
                 Response.Redirect("login/index");
+            }
 
-            dynamic tpl = new SignIn_Olempic_Template();
+            dynamic tplLogin = null;
+            if(SiteGroup.Equals("789y")){//789Y template
+                tplLogin = new SignIn_Moon_Template();
+            }
+            else{//I1 template
+                tplLogin = new SignIn_Olempic_Template();
+            } 
+            
+            //dynamic tpl = new SignIn_Moon_Template();
 
-            //tpl = new SignIn_Olempic_Template();
             //SignIn_Moon_Template tpl = new SignIn_Moon_Template();
             //SignIn_XMas_Template tpl = new SignIn_XMas_Template();            
             //SignIn_MidAutumn_Template tpl = new SignIn_MidAutumn_Template();
 
-            tpl.username_value = this.userName;
-            tpl.formAction = this.IsSSLDomain ? (Sunplus.Agent.Model.BL.Definitions.AppSettings.BaseUrl.Replace("http://", "https://") + this.LoginUrl) : this.LoginUrl;
+            tplLogin.username_value = this.userName;
+            tplLogin.formAction = this.IsSSLDomain ? (Sunplus.Agent.Model.BL.Definitions.AppSettings.BaseUrl.Replace("http://", "https://") + this.LoginUrl) : this.LoginUrl;
             ////Mobile Device Browser
-            tpl.VersionMobile = string.Empty;
-            tpl.PopupMobileVersion.Visible = loginWithOldPwd;
+            tplLogin.VersionMobile = string.Empty;
+            tplLogin.PopupMobileVersion.Visible = loginWithOldPwd;
 
             // Temporary reuse PopupMobileVersion block
             if (loginWithOldPwd)
             {
-                tpl.PopupMobileVersion.SetValue(string.Format(Resources.Lang.lblPasswordChanged, lastChangedPwd));
+                tplLogin.PopupMobileVersion.SetValue(string.Format(Resources.Lang.lblPasswordChanged, lastChangedPwd));
             }
 
-            Response.Write(tpl);
+            Response.Write(tplLogin);
            // Response.Redirect("Login/Index");
         }
 
