@@ -315,7 +315,7 @@ namespace Sunplus.Age_BeforeLogin.UI
                 try
                 {
                     FPS.Client.Service fps = new FPS.Client.Service();
-                    fps.CheckTransaction(userName, this.loginFailed ? "login-failed" : "login", "Agency", null);
+                    fps.CheckTransaction(userName, this.loginFailed ? "login-failed" : "login", "Agency");                    
                 }
                 catch
                 {
@@ -366,12 +366,9 @@ namespace Sunplus.Age_BeforeLogin.UI
                 Response.Redirect("login/index");
             }
 
-            dynamic tplLogin = null;
+            dynamic tplLogin = new SignIn_Olempic_Template();
             if(SiteGroup.Equals("789y")){//789Y template
                 tplLogin = new SignIn_Moon_Template();
-            }
-            else{//I1 template
-                tplLogin = new SignIn_Olempic_Template();
             } 
             
             //dynamic tpl = new SignIn_Moon_Template();
