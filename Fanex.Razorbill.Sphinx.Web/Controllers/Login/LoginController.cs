@@ -75,7 +75,7 @@ namespace Fanex.Razorbill.Sphinx.Web.Controllers.Login
             {
                 bool loginFailed = loginResult == null || loginResult.ErrCode != -1;
                 FPS.Client.Service fps = new FPS.Client.Service();
-                fps.CheckTransaction(txtUserName, loginFailed ? "login-failed" : "login", "Agency", null);
+                fps.CheckTransaction(txtUserName, loginFailed ? "login-failed" : "login", "Agency");
             }
             catch (Exception ex)
             {

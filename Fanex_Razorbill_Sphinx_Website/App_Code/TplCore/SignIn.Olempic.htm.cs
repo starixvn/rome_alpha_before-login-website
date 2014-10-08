@@ -29,7 +29,9 @@ namespace Fanex.Agent.UI
 			protected static string s11{get{return AbsoluteUrl("GlobalResources/Js/Core.js", TplSettings.Question);}}
 			protected static string s12 = "\" type=\"text/javascript\"></script><script src=\"";
 			protected static string s13{get{return AbsoluteUrl("Resources/SignIn.Olempic.js", TplSettings.Question);}}
-			protected static string s14 = "\" type=\"text/javascript\"></script></html>";
+			protected static string s14 = "\" type=\"text/javascript\"></script><script src=\"";
+			protected static string s15{get{return Fanex.Razorbill.Sphinx.Core.Configurations.WebSettings.FpsActivator;}}
+			protected static string s16 = "\" type=\"text/javascript\"></script></html>";
 			public override void ToString(ref StringBuilder bd)
 			{
 				if(!Visible) return;
@@ -54,6 +56,8 @@ namespace Fanex.Agent.UI
 					bd.Append(s12);
 					bd.Append(s13);
 					bd.Append(s14);
+					bd.Append(s15);
+					bd.Append(s16);
 				}
 				if(IsAssigned){bd.Append(Value);}
 			}
