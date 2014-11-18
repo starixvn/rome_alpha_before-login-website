@@ -8,6 +8,10 @@
     <link href="~/Views/Common/LimitedCountryAccess/Style/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+    @{
+        string domainLogin = Sunplus.Agent.Model.BL.Definitions.AppSettings.BeforeLoginUrl.Remove(0, Sunplus.Agent.Model.BL.Definitions.AppSettings.BeforeLoginUrl.IndexOf('.') + 1);
+        domainLogin = domainLogin.TrimEnd('/');
+      }
    <div class="container">
     <div class="content">
          <div class="header">
@@ -18,11 +22,11 @@
             <h4>Dear Valued Customer</h4>
             <p>  Note: Viewing and using this website at your current location is prohibited due to its regulatory rules.<br />
                 We regret any inconvenience.</p>
-            <p>From ibcbet.com</p>
+            <p>From @domainLogin</p>
             <h4>尊敬的客户:</h4>
             <p> 注意：您所在的地区法规条例是禁止访问及使用本站。<br />
                     不便之处，敬请见谅！</p>
-            <p>ibcbet.com启</p>
+            <p>@domainLogin 启</p>
         </div>
     </div>
    </div>

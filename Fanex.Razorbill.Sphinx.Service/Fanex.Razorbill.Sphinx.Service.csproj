@@ -40,6 +40,12 @@
     <Reference Include="Fanex.Age.Utility">
       <HintPath>..\_Dependencies\Fanex.Age.Utility.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Common">
+      <HintPath>..\_Dependencies\_FanexLib\Fanex.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Data">
+      <HintPath>..\_Dependencies\_FanexLib\Fanex.Data.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_Dependencies\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
@@ -85,6 +91,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\LimitedCountryAccess\LimitedCountryAccessService.cs" />
     <Compile Include="Common\Models\UnderMaintenanceModel.cs" />
     <Compile Include="Common\UnderMaintenance\UnderMaintenanceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,7 +108,9 @@
       <Name>Fanex.Razorbill.Sphinx.Resources</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

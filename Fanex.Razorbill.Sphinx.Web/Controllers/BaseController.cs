@@ -8,6 +8,7 @@ namespace Fanex.Razorbill.Sphinx.Web.Controllers
 {
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Fanex.Razorbill.Sphinx.Service.Common.LimitedCountryAccess;
     using Fanex.Razorbill.Sphinx.Service.Common.UnderMaintenance;
 
     /// <summary>
@@ -26,6 +27,15 @@ namespace Fanex.Razorbill.Sphinx.Web.Controllers
         /// <param name="filterContext">Filter context.</param>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            if (new LimitedCountryAccessService().LimitedAccess())
+            {
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                {
+                    controller = "LimitedCountryAccess",
+                    action = "Index"
+                }));
+            }
+
             if (new UnderMaintenanceService().CheckUM().IsUM)
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new

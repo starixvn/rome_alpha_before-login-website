@@ -128,7 +128,7 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
                 }
 
                 loginResult.Language = language;
-                loginResult.Ip = Sunplus.Agent.Model.Common.AgentIPFormat.GetClientIP();
+                loginResult.Ip = IPExtension.CustomerIp();
                 loginResult.UTMS = randomTicket;
                 loginResult.Domain = this._baseDomain;
 
@@ -162,7 +162,7 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
         {
             var loginResult = new LoginResult()
             {
-                Ip = Sunplus.Agent.Model.Common.AgentIPFormat.GetClientIP(),
+                Ip = IPExtension.CustomerIp(),
                 LoginTemplate = _loginTheme,
                 Username = username
             };
@@ -291,8 +291,7 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
                 System.Web.HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
                 System.Web.HttpContext.Current.Response.Cache.SetNoStore();
 
-                var ip = System.Web.HttpContext.Current.Request.UserHostAddress;
-                var captchaUtil = new CaptchaImage(ip, AppSession.Username, CaptchaType.Text);
+                var captchaUtil = new CaptchaImage(IPExtension.CustomerIp(), AppSession.Username, CaptchaType.Text);
                 var code = string.Empty;
                 var value = string.Empty;
                 Image bitmap = captchaUtil.Generate(out code, out value);
@@ -502,7 +501,7 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
                 try
                 {
                     CasinoLibrary.SBAgent.Customer customer = new CasinoLibrary.SBAgent.Customer();
-                    customer.UpdateCustClosedWrongPwd(custId, true, Sunplus.Agent.Model.Common.AgentIPFormat.GetClientIP());
+                    customer.UpdateCustClosedWrongPwd(custId, true, IPExtension.CustomerIp());
                 }
                 catch (Exception ex)
                 {

@@ -280,6 +280,23 @@ namespace Sunplus.Age_BeforeLogin.UI
 
         protected override void OnLoad(EventArgs e)
         {
+            //// checking limited country access
+            if (new Fanex.Razorbill.Sphinx.Service.Common.LimitedCountryAccess.LimitedCountryAccessService().LimitedAccess())
+            {
+                Response.Redirect("LimitedCountryAccess/index");
+            }
+
+            //Get special event date from AppSetting.ini
+            var startEventDate = Convert.ToDateTime(Agent.Configurations.AppSettings.Configuration.Get("SpecialEventStart"));
+            var endEventDate = Convert.ToDateTime(Agent.Configurations.AppSettings.Configuration.Get("SpecialEventEnd"));
+            var currentDate = DateTime.Now;
+            var havingFestival = currentDate >= startEventDate && currentDate <= endEventDate;
+
+            if (havingFestival)
+            {
+                Response.Redirect("login/index");
+            }
+
             // Hot fix for Opera browser (IIS does sniffing user agent)
             Response.ContentType = "text/html";
             this.userName = (Request["txtUserName"] + string.Empty).Trim();
@@ -364,35 +381,16 @@ namespace Sunplus.Age_BeforeLogin.UI
             this.RegisterJavascriptObject("domain", this.baseDomain);
 
             // Use for encrypt pwd
-            Session["captcha2"] = "1124";//Encryption.RandomNumberString(4);
+            Session["captcha2"] = Encryption.RandomNumberString(4);
             this.RegisterJavascriptObject("captcha", Session["captcha2"].ToString());
 
             TplCore.TplSettings.CurrentTheme = null;
-
-
-            //Get special event date from AppSetting.ini
-            var startEventDate = Convert.ToDateTime(Agent.Configurations.AppSettings.Configuration.Get("SpecialEventStart"));
-            var endEventDate = Convert.ToDateTime(Agent.Configurations.AppSettings.Configuration.Get("SpecialEventEnd"));
-            var currentDate = DateTime.Now;
-
-            //SignIn_Template tpl = new SignIn_Template();
-            //SignIn_Euro_Template tpl = new SignIn_Euro_Template();
-
-            var havingFestival = currentDate >= startEventDate && currentDate <= endEventDate;
-
-            if (havingFestival)
-                Response.Redirect("login/index");
-
+                        
             dynamic tpl = new SignIn_Olempic_Template();
             if (SiteGroup.Equals("789y"))
             {//789Y template
                 tpl = new SignIn_Moon_Template();
             }
-
-            //tpl = new SignIn_Olempic_Template();
-            //SignIn_Moon_Template tpl = new SignIn_Moon_Template();
-            //SignIn_XMas_Template tpl = new SignIn_XMas_Template();            
-            //SignIn_MidAutumn_Template tpl = new SignIn_MidAutumn_Template();
 
             tpl.username_value = this.userName;
             tpl.formAction = this.IsSSLDomain ? (Sunplus.Agent.Model.BL.Definitions.AppSettings.BaseUrl.Replace("http://", "https://") + this.LoginUrl) : this.LoginUrl;
@@ -407,7 +405,6 @@ namespace Sunplus.Age_BeforeLogin.UI
             }
 
             Response.Write(tpl);
-            // Response.Redirect("Login/Index");
         }
 
         protected void OnPostBack()
