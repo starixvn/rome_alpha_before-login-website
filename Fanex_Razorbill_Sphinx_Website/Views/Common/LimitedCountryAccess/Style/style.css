@@ -9,10 +9,10 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background: -webkit-gradient(0%, 0%, 0% 100%, from(#9AB4CB) to(#deeaf5)) no-repeat;
-    background: -webkit-linear-gradient(bottom, #9AB4CB, #deeaf5) no-repeat;
+    background: -webkit-gradient(0%, 0%, 0% 100%, from(#caddef) to(#ffffff)) no-repeat;
+    background: -webkit-linear-gradient(bottom, #caddef, #ffffff) no-repeat;
     background: -moz-linear-gradient(bottom, #caddef, #ffffff) no-repeat;
-    background: -ms-linear-gradient(bottom, #9AB4CB, #deeaf5) no-repeat;
+    background: -ms-linear-gradient(bottom, #caddef, #ffffff) no-repeat;
     font-family: Tahoma;
 }
  .content {
