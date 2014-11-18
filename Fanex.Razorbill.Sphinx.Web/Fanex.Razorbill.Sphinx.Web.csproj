@@ -121,6 +121,7 @@
     <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Common\Error\ErrorController.cs" />
+    <Compile Include="Controllers\Common\LimitedCountryAccess\LimitedCountryAccessController.cs" />
     <Compile Include="Controllers\Common\UnderMaintenance\UnderMaintenanceController.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Login\LoginController.cs" />
