@@ -8,6 +8,9 @@ namespace Fanex.Razorbill.Sphinx.Web.Controllers.Common
 {
     using System.Web.Mvc;
 
+    /// <summary>
+    /// Limited Country Access.
+    /// </summary>
     public class LimitedCountryAccessController : Controller
     {
         /// <summary>
