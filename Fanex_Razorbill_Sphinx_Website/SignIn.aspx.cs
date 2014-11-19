@@ -20,6 +20,8 @@ namespace Sunplus.Age_BeforeLogin.UI
     using Sunplus.Agent.Model.DL.Authorization;
     using Sunplus.Agent.Model.Services;
     using Sunplus.Agent.Utilities;
+    using Fanex.Razorbill.Sphinx.Core.Configurations;
+    using System.Linq;
 
     public partial class SignIn_Page : System.Web.UI.Page
     {
@@ -72,109 +74,38 @@ namespace Sunplus.Age_BeforeLogin.UI
         {
             get
             {
-                string host = HttpContext.Current.Request.Headers["Host"];
+                string host = System.Web.HttpContext.Current.Request.Headers["Host"];
+                var domainGroupSection = DomainGroupSection.Instance.DomainGroup;
+                var defaultGroup = "Others";
 
-                List<string> site789y = new List<string>(new string[]
+                if (domainGroupSection == null || domainGroupSection.Count == 0)
                 {
-                    "rocksnake.net",
-                    "effox.net",
-                    "zeroheat.net",
-                    "www.rocksnake.net",
-                    "www.effox.net",
-                    "www.zeroheat.net",
-
-                    "logicyber.com",
-                    "rodelan.com",
-                    "joliebean.net",
-                    "silvernut.net",
-                    "223334.net",
-                    "logiatom.com",
-                    "wildele.com",
-                    "topofa.net",
-                    "elinkaa.com",
-                    "theasgard.net",
-
-                    "www.logicyber.com",
-                    "www.rodelan.com",
-                    "www.joliebean.net",
-                    "www.silvernut.net",
-                    "www.223334.net",
-                    "www.logiatom.com",
-                    "www.wildele.com",
-                    "www.topofa.net",
-                    "www.elinkaa.com",
-                    "www.theasgard.net"
-                });
-
-                List<string> siteIBCBET = new List<string>(new string[]
-                {
-                    "www.greysnow.com",
-                    "greysnow.com",
-                    "www.megaken.net",
-                    "megaken.net",
-                    "www.trifang.com",
-                    "trifang.com",
-                    "www.limo168.com",
-                    "limo168.com",
-                    "www.lazzang.com",
-                    "lazzang.com",
-                    "www.ricozz.com",
-                    "ricozz.com",
-                    "www.superboer.com",
-                    "superboer.com",
-                    "www.maxdol.com",
-                    "maxdol.com",
-                    "www.goldenbite.com",
-                    "goldenbite.net"
-                });
-
-                List<string> siteB8 = new List<string>(new string[]
-                {
-                    "b8ag.com",
-                    "b88ag.com",
-                    "www.b8ag.com",
-                    "www.b88ag.com",
-                    "b88agent.com",
-                    "www.b88agent.com",
-                    "agbong88.com",
-                    "www.agbong88.com",
-                    "bong88ag.com",
-                    "www.bong88ag.com",
-                    "myb8b.com",
-                    "www.myb8b.com",
-                    "bbmgr.com",
-                    "www.bbmgr.com",
-                    "boluna.com",
-                    "www.boluna.net"                  
-                });
-
-                #region India
-                List<string> siteIndia = new List<string>(new string[]
-                {
-                    "ag699.com",
-                    "www.ag699.com"
-                });
-                #endregion
-
-                if (site789y.Contains(host))
-                {
-                    return "789y";
-                }
-                if (siteIBCBET.Contains(host))
-                {
-                    return "IBCBET";
-                }
-                if (siteB8.Contains(host))
-                {
-                    return "789y";
-                }
-                if (siteIndia.Contains(host))
-                {
-                    return "IIBC";
+                    return defaultGroup;
                 }
 
-                return "Others";
+                var getDomainGroupActive = from m in domainGroupSection.Cast<DomainGroupElement>().Where(m => m.Active) select m;
 
+                if (!getDomainGroupActive.Any())
+                {
+                    return defaultGroup;
+                }
+
+                foreach (DomainGroupElement domainGroupElement in getDomainGroupActive)
+                {
+                    if (string.IsNullOrWhiteSpace(domainGroupElement.Domains))
+                    {
+                        return defaultGroup;
+                    }
+
+                    var domainList = new List<string>(domainGroupElement.Domains.Split(','));
+
+                    if (domainList.Contains(host))
+                    {
+                        return domainGroupElement.Name;
+                    }
+                }
+
+                return defaultGroup;
             }
         }
 
