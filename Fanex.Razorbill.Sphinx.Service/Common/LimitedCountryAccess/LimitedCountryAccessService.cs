@@ -43,7 +43,7 @@ namespace Fanex.Razorbill.Sphinx.Service.Common.LimitedCountryAccess
             }
 
             var customerCountryCode = from m in limitedCountriesActive 
-                                      where m.Name.ToUpper().Equals(CountryCodeByIp().ToUpper()) && m.AffectedDate >= DateTime.Now 
+                                      where m.Name.ToUpper().Equals(CountryCodeByIp().ToUpper()) && DateTime.Now >= m.AffectedDate
                                       select m;
             if (customerCountryCode.Any())
             {
