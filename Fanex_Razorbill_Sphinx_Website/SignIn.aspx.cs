@@ -211,6 +211,11 @@ namespace Sunplus.Age_BeforeLogin.UI
 
         protected override void OnLoad(EventArgs e)
         {
+            // Hot fix for Opera browser (IIS does sniffing user agent)
+            Response.ContentType = "text/html";
+            this.userName = (Request["txtUserName"] + string.Empty).Trim();
+            Response.Cache.SetNoStore();
+
             //// checking limited country access
             if (new Fanex.Razorbill.Sphinx.Service.Common.LimitedCountryAccess.LimitedCountryAccessService().LimitedAccess())
             {
@@ -227,11 +232,6 @@ namespace Sunplus.Age_BeforeLogin.UI
             {
                 Response.Redirect("login/index");
             }
-
-            // Hot fix for Opera browser (IIS does sniffing user agent)
-            Response.ContentType = "text/html";
-            this.userName = (Request["txtUserName"] + string.Empty).Trim();
-            Response.Cache.SetNoStore();
 
             string currentDomain = AppSettings.BeforeLoginUrl;
             //// Not include dot
