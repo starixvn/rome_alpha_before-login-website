@@ -198,5 +198,34 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
                 this["description"] = value;
             }
         }
+
+        [ConfigurationProperty("istesting", DefaultValue = false, IsRequired = false, IsKey = false)]
+        public bool IsTesting
+        {
+            get
+            {
+                return (bool)this["istesting"];
+            }
+
+            set
+            {
+                this["istesting"] = value;
+            }
+        }
+
+        [ConfigurationProperty("testingip", DefaultValue = "", IsKey = false)]
+        public string TestingIp
+        {
+            get
+            {
+                var iptesting = (string)this["testingip"];
+                return string.IsNullOrWhiteSpace(iptesting) ? string.Empty : iptesting.Trim();
+            }
+
+            set
+            {
+                this["testingip"] = value;
+            }
+        }
     }
 }

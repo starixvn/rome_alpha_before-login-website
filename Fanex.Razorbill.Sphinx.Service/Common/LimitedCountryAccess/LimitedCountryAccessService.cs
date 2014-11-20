@@ -43,8 +43,11 @@ namespace Fanex.Razorbill.Sphinx.Service.Common.LimitedCountryAccess
             }
 
             var customerCountryCode = from m in limitedCountriesActive 
-                                      where m.Name.ToUpper().Equals(CountryCodeByIp().ToUpper()) && DateTime.Now >= m.AffectedDate
+                                      where ((m.Name.ToUpper().Equals(CountryCodeByIp().ToUpper()) && DateTime.Now >= m.AffectedDate) || //// real blocking country ip
+                                            (m.TestingIp.Split(',').Contains(Fanex.Razorbill.Sphinx.Core.Extensions.IPExtension.CustomerIp()) && //// testing ip
+                                                m.IsTesting == true && DateTime.Now >= m.AffectedDate)) 
                                       select m;
+
             if (customerCountryCode.Any())
             {
                 return true;
