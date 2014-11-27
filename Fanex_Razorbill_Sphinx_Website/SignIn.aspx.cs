@@ -20,6 +20,8 @@ namespace Sunplus.Age_BeforeLogin.UI
     using Sunplus.Agent.Model.DL.Authorization;
     using Sunplus.Agent.Model.Services;
     using Sunplus.Agent.Utilities;
+    using Fanex.Razorbill.Sphinx.Core.Configurations;
+    using System.Linq;
 
     public partial class SignIn_Page : System.Web.UI.Page
     {
@@ -73,108 +75,37 @@ namespace Sunplus.Age_BeforeLogin.UI
             get
             {
                 string host = HttpContext.Current.Request.Headers["Host"];
+                var domainGroupSection = DomainGroupSection.Instance.DomainGroup;
+                var defaultGroup = "Others";
 
-                List<string> site789y = new List<string>(new string[]
+                if (domainGroupSection == null || domainGroupSection.Count == 0)
                 {
-                    "rocksnake.net",
-                    "effox.net",
-                    "zeroheat.net",
-                    "www.rocksnake.net",
-                    "www.effox.net",
-                    "www.zeroheat.net",
-
-                    "logicyber.com",
-                    "rodelan.com",
-                    "joliebean.net",
-                    "silvernut.net",
-                    "223334.net",
-                    "logiatom.com",
-                    "wildele.com",
-                    "topofa.net",
-                    "elinkaa.com",
-                    "theasgard.net",
-
-                    "www.logicyber.com",
-                    "www.rodelan.com",
-                    "www.joliebean.net",
-                    "www.silvernut.net",
-                    "www.223334.net",
-                    "www.logiatom.com",
-                    "www.wildele.com",
-                    "www.topofa.net",
-                    "www.elinkaa.com",
-                    "www.theasgard.net"
-                });
-
-                List<string> siteIBCBET = new List<string>(new string[]
-                {
-                    "www.greysnow.com",
-                    "greysnow.com",
-                    "www.megaken.net",
-                    "megaken.net",
-                    "www.trifang.com",
-                    "trifang.com",
-                    "www.limo168.com",
-                    "limo168.com",
-                    "www.lazzang.com",
-                    "lazzang.com",
-                    "www.ricozz.com",
-                    "ricozz.com",
-                    "www.superboer.com",
-                    "superboer.com",
-                    "www.maxdol.com",
-                    "maxdol.com",
-                    "www.goldenbite.com",
-                    "goldenbite.net"
-                });
-
-                List<string> siteB8 = new List<string>(new string[]
-                {
-                    "b8ag.com",
-                    "b88ag.com",
-                    "www.b8ag.com",
-                    "www.b88ag.com",
-                    "b88agent.com",
-                    "www.b88agent.com",
-                    "agbong88.com",
-                    "www.agbong88.com",
-                    "bong88ag.com",
-                    "www.bong88ag.com",
-                    "myb8b.com",
-                    "www.myb8b.com",
-                    "bbmgr.com",
-                    "www.bbmgr.com",
-                    "boluna.com",
-                    "www.boluna.net"                  
-                });
-
-                #region India
-                List<string> siteIndia = new List<string>(new string[]
-                {
-                    "ag699.com",
-                    "www.ag699.com"
-                });
-                #endregion
-
-                if (site789y.Contains(host))
-                {
-                    return "789y";
-                }
-                if (siteIBCBET.Contains(host))
-                {
-                    return "IBCBET";
-                }
-                if (siteB8.Contains(host))
-                {
-                    return "789y";
-                }
-                if (siteIndia.Contains(host))
-                {
-                    return "IIBC";
+                    return defaultGroup;
                 }
 
-                return "Others";
+                var getDomainGroupActive = from m in domainGroupSection.Cast<DomainGroupElement>().Where(m => m.Active) select m;
 
+                if (!getDomainGroupActive.Any())
+                {
+                    return defaultGroup;
+                }
+
+                foreach (DomainGroupElement domainGroupElement in getDomainGroupActive)
+                {
+                    if (string.IsNullOrWhiteSpace(domainGroupElement.Domains))
+                    {
+                        return defaultGroup;
+                    }
+
+                    var domainList = new List<string>(domainGroupElement.Domains.Split(','));
+
+                    if (domainList.Contains(host))
+                    {
+                        return domainGroupElement.Name;
+                    }
+                }
+
+                return defaultGroup;
             }
         }
 
@@ -285,6 +216,23 @@ namespace Sunplus.Age_BeforeLogin.UI
             this.userName = (Request["txtUserName"] + string.Empty).Trim();
             Response.Cache.SetNoStore();
 
+            //// checking limited country access
+            if (new Fanex.Razorbill.Sphinx.Service.Common.LimitedCountryAccess.LimitedCountryAccessService().LimitedAccess())
+            {
+                Response.Redirect("LimitedCountryAccess/index");
+            }
+
+            //Get special event date from AppSetting.ini
+            var startEventDate = Convert.ToDateTime(Agent.Configurations.AppSettings.Configuration.Get("SpecialEventStart"));
+            var endEventDate = Convert.ToDateTime(Agent.Configurations.AppSettings.Configuration.Get("SpecialEventEnd"));
+            var currentDate = DateTime.Now;
+            var havingFestival = currentDate >= startEventDate && currentDate <= endEventDate;
+
+            if (havingFestival)
+            {
+                Response.Redirect("login/index");
+            }
+
             string currentDomain = AppSettings.BeforeLoginUrl;
             //// Not include dot
             this.baseDomain = currentDomain.Remove(0, currentDomain.IndexOf('.') + 1);
@@ -368,31 +316,12 @@ namespace Sunplus.Age_BeforeLogin.UI
             this.RegisterJavascriptObject("captcha", Session["captcha2"].ToString());
 
             TplCore.TplSettings.CurrentTheme = null;
-
-
-            //Get special event date from AppSetting.ini
-            var startEventDate = Convert.ToDateTime(Agent.Configurations.AppSettings.Configuration.Get("SpecialEventStart"));
-            var endEventDate = Convert.ToDateTime(Agent.Configurations.AppSettings.Configuration.Get("SpecialEventEnd"));
-            var currentDate = DateTime.Now;
-
-            //SignIn_Template tpl = new SignIn_Template();
-            //SignIn_Euro_Template tpl = new SignIn_Euro_Template();
-
-            var havingFestival = currentDate >= startEventDate && currentDate <= endEventDate;
-
-            if (havingFestival)
-                Response.Redirect("login/index");
-
+                        
             dynamic tpl = new SignIn_Olempic_Template();
             if (SiteGroup.Equals("789y"))
             {//789Y template
                 tpl = new SignIn_Moon_Template();
             }
-
-            //tpl = new SignIn_Olempic_Template();
-            //SignIn_Moon_Template tpl = new SignIn_Moon_Template();
-            //SignIn_XMas_Template tpl = new SignIn_XMas_Template();            
-            //SignIn_MidAutumn_Template tpl = new SignIn_MidAutumn_Template();
 
             tpl.username_value = this.userName;
             tpl.formAction = this.IsSSLDomain ? (Sunplus.Agent.Model.BL.Definitions.AppSettings.BaseUrl.Replace("http://", "https://") + this.LoginUrl) : this.LoginUrl;
@@ -407,7 +336,6 @@ namespace Sunplus.Age_BeforeLogin.UI
             }
 
             Response.Write(tpl);
-            // Response.Redirect("Login/Index");
         }
 
         protected void OnPostBack()
