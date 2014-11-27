@@ -74,7 +74,7 @@ namespace Sunplus.Age_BeforeLogin.UI
         {
             get
             {
-                string host = System.Web.HttpContext.Current.Request.Headers["Host"];
+                string host = HttpContext.Current.Request.Headers["Host"];
                 var domainGroupSection = DomainGroupSection.Instance.DomainGroup;
                 var defaultGroup = "Others";
 
@@ -312,7 +312,7 @@ namespace Sunplus.Age_BeforeLogin.UI
             this.RegisterJavascriptObject("domain", this.baseDomain);
 
             // Use for encrypt pwd
-            Session["captcha2"] = Encryption.RandomNumberString(4);
+            Session["captcha2"] = "1124";//Encryption.RandomNumberString(4);
             this.RegisterJavascriptObject("captcha", Session["captcha2"].ToString());
 
             TplCore.TplSettings.CurrentTheme = null;
