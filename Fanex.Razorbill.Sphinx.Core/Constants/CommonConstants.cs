@@ -29,5 +29,6 @@ namespace Fanex.Razorbill.Sphinx.Core.Constants
         public const string SITESPECIALGROUP = "SpecialGroup";
         public const string SITEINDIAGROUP = "IndiaGroup";
         public const string AFTERLOGINPAGE = "AfterLoginPage";
+        public const string ISUMTESTING = "IsUMTesting";
     }
 }

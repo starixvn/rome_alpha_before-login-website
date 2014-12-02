@@ -6,8 +6,8 @@
 
 namespace Fanex.Razorbill.Sphinx.Web.Controllers.Common.UnderMaintenance
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Web.Mvc;
+    using Fanex.Razorbill.Sphinx.Core.Configurations;
     using Fanex.Razorbill.Sphinx.Service.Common.UnderMaintenance;
 
     /// <summary>
@@ -22,7 +22,7 @@ namespace Fanex.Razorbill.Sphinx.Web.Controllers.Common.UnderMaintenance
         public ActionResult Index()
         {
             var mainternanceInfo = new UnderMaintenanceService().CheckUM();
-            if (!mainternanceInfo.IsUM)
+            if (!mainternanceInfo.IsUM && !WebSettings.IsUMTesting)
             {
                 return RedirectToAction("Index", "Login");
             }
