@@ -368,3 +368,43 @@ Params:
 - ip: ::1
 Exception: 
 
+FPS called CheckTransaction at 12/4/2014 10:51:40 AM
+Result: ALLOW
+Params: 
+- account: thien01
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0###240:320:24:false###::1###a6251ce8880f243fc9e3dbc8414a57ea5fa5a05b9595c9d50bdd1afc0225a589f564df89c5495812d8c1ea2be4e8aec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165a467769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0e33cec8f1fb3ac2443189500d517c41e74672322b648906b61773f739766c37286d51064009493c88eaed01bd75087c8be2647495d0f93945db464e54c17b2f3123823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102075380ab6cd5479dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 12/4/2014 10:52:20 AM
+Result: ALLOW
+Params: 
+- account: thien01
+- device: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8###Unknown###-420###Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20100101 Firefox/33.0###240:320:24:false###::1###a6251ce8880f243fc9e3dbc8414a57ea5fa5a05b9595c9d50bdd1afc0225a589f564df89c5495812d8c1ea2be4e8aec1bd1dea15418a065454b130bbddb74cb626524fc927d7d217cf5e1315a8fbd4717ed6ca2cfa364af4ef20cb036231224647da46cb17476631fbd3d8209646165a467769c32a559f47d32dcacd5d30799d7ede6e9bc7a3f07096097fbb0e33cec8f1fb3ac2443189500d517c41e74672322b648906b61773f739766c37286d51064009493c88eaed01bd75087c8be2647495d0f93945db464e54c17b2f3123823859fb0ea32d2e1018fb361c0804c8c85d196db7a8877a7cee310bd2671f3fc7e1434f24c3f97a48efd21db7e8758b76a402bf40f1102075380ab6cd5479dd545c3a###http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 12/4/2014 10:58:33 AM
+Result: ALLOW
+Params: 
+- account: thien01
+- device: application/x-ms-application,image/jpeg,application/xaml+xml,image/gif,image/pjpeg,application/x-ms-xbap,*/*###Unknown###-420###Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Win64; x64; Trident/5.0; .NET CLR 2.0.50727; SLCC2; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)###240:320:24:false###::1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login-failed
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
+FPS called CheckTransaction at 12/4/2014 11:03:29 AM
+Result: ALLOW
+Params: 
+- account: thien01
+- device: application/x-ms-application,image/jpeg,application/xaml+xml,image/gif,image/pjpeg,application/x-ms-xbap,*/*###Unknown###-420###Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Win64; x64; Trident/5.0; .NET CLR 2.0.50727; SLCC2; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E)###240:320:24:false###::1######http://localhost:48733/Fanex_Razorbill_Sphinx_Website/Login/Index
+- action: login
+- subscriber: Agency
+- ip: ::1
+Exception: 
+
