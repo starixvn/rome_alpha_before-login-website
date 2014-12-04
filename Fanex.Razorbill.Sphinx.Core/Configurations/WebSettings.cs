@@ -88,6 +88,14 @@ namespace Fanex.Razorbill.Sphinx.Core.Configurations
             }
         }
 
+        public static bool IsUMTesting
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CommonConstants.ISUMTESTING].Equals("1");
+            }
+        }
+
         /// <summary>
         /// Check is valid language.
         /// </summary>

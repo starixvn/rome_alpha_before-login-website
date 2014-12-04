@@ -13,15 +13,15 @@ namespace Sunplus.Age_BeforeLogin.UI
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web;
     using Fanex.Age.UI;
+    using Fanex.Razorbill.Sphinx.Core.Configurations;
     using RSACryptoPad;
     using Sunplus.Agent.Model.BL.Definitions;
     using Sunplus.Agent.Model.DL.Authorization;
     using Sunplus.Agent.Model.Services;
     using Sunplus.Agent.Utilities;
-    using Fanex.Razorbill.Sphinx.Core.Configurations;
-    using System.Linq;
 
     public partial class SignIn_Page : System.Web.UI.Page
     {
@@ -216,12 +216,6 @@ namespace Sunplus.Age_BeforeLogin.UI
             this.userName = (Request["txtUserName"] + string.Empty).Trim();
             Response.Cache.SetNoStore();
 
-            //// checking limited country access
-            if (new Fanex.Razorbill.Sphinx.Service.Common.LimitedCountryAccess.LimitedCountryAccessService().LimitedAccess())
-            {
-                Response.Redirect("LimitedCountryAccess/index");
-            }
-
             //Get special event date from AppSetting.ini
             var startEventDate = Convert.ToDateTime(Agent.Configurations.AppSettings.Configuration.Get("SpecialEventStart"));
             var endEventDate = Convert.ToDateTime(Agent.Configurations.AppSettings.Configuration.Get("SpecialEventEnd"));
@@ -240,7 +234,7 @@ namespace Sunplus.Age_BeforeLogin.UI
 
             bool ignoreUMCheck = this.baseDomain.Contains("suncacti") || this.baseDomain.Contains("metaljazz");
 
-            // Check UM Time
+            //// Check UM Time
             if (!ignoreUMCheck)
             {
                 // Check under maintenance time
@@ -258,11 +252,16 @@ namespace Sunplus.Age_BeforeLogin.UI
                     }
                 }
 
-                if (_isUM)
+                if (_isUM || WebSettings.IsUMTesting)
                 {
                     Server.Transfer("~/UnderMaintenance.aspx");
                     return;
                 }
+            }
+            //// checking limited country access
+            else if (new Fanex.Razorbill.Sphinx.Service.Common.LimitedCountryAccess.LimitedCountryAccessService().LimitedAccess())
+            {
+                Response.Redirect("LimitedCountryAccess/index");
             }
 
             int language = 0;
