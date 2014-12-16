@@ -62,7 +62,17 @@ Sphinx.Login = {
             $('#lbLanguage').css('color', '#B96643');
             $('#lbLanguage').css('font-size', '13px');
             $('.showPass').css('top', '1px');
-            $('.refreshCont').css('width', '50px');
+            var content = $('.content.quirkmode');
+            content.css('position', 'relative');
+            content.css('width', '877px');
+            content.css('height', '889px');
+            $('.inputText.inputCaptcha').css('width', '100px');
+            $('.btnLogin').css('position', 'absolute');
+            $('.btnLogin').css('right', '0');
+            $('.showpass-box label.showPass').css('position', 'absolute');
+            $('.showpass-box label.showPass').css('right', '0');
+            $('.showpass-box').css('height', '20px');
+            $('.btn-box').css('height', '26px');
         }
         if ($.browser.webkit && !(/chrome/.test(navigator.userAgent.toLowerCase()))) {
             $(".inputContainer").css('padding-left', '80px');

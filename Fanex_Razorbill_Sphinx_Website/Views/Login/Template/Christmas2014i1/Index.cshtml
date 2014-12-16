@@ -4,7 +4,7 @@
 @model Fanex.Razorbill.Sphinx.Service.UserLogin.Models.LoginResult
 
     <center>
-        <div class="content">
+        <div class="content quirkmode">
             <div class="wrapper">
                 <div class="inputContainer">
                     <table>
@@ -31,7 +31,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="row">
+                            <td class="row showpass-box">
                                 <label class="showPass">
                                     <span id="lbShowPass">Show password</span>
                                     <input type="checkbox" id="chbShowPass" class="checkShowPass" onclick="Sphinx.Login.showPassword(this)" tabindex="3" />
@@ -50,7 +50,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="row">
+                            <td class="row btn-box">
                                 <input type="button" class="btnLogin" id="btnLogin" value="Login" onclick="return Sphinx.Login.doLogin();" tabindex="5" />
                             </td>
                         </tr>
