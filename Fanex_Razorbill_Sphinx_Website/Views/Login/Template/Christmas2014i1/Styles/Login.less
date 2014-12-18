@@ -1,0 +1,310 @@
+﻿
+html, body, div, span, applet, object, iframe, 
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, 
+abbr, acronym, address, big, cite, code, del, 
+dfn, em, font, img, ins, kbd, q, s, samp, small, 
+strike, strong, sub, sup, tt, var, b, u, i, center,
+ ol, ul, li, fieldset, form, label, legend, table, 
+ caption, tbody, tfoot, thead, tr, th, td {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    line-height: 21px;
+    margin: 0;
+    outline: medium none;
+    padding: 0;
+    vertical-align: baseline;
+}
+@font-size: 13px;
+@font-family: 'Arial';
+@width-login: 542px;
+@text-color: #625f5f;
+@dropdown-color: #000;
+@border-color: #a32b20;
+html,body {
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+}
+body{
+	padding:0;
+	margin:0;
+	font-family: @font-family;
+	background: url(Images/bg.jpg) #fff repeat-x;
+}
+.content {
+	background: url(Images/panel.jpg) center top no-repeat;
+	min-width: 877px;
+	min-height: 889px;
+	left: 0;
+	buttom: 0;
+	right: 0;
+	position: absolute;
+}
+.wrapper {
+	background: url(Images/box.png) center no-repeat;
+	width: 462px;
+	height: 312px;
+	margin-top: 100px;
+}
+	.inputContainer {
+		text-align: left;
+		width: 214px;
+		padding: 20px 30px 0 165px;
+		.signIn-text {
+			background: url(Images/SignIn.png) right no-repeat;
+			width: 166px;
+			height: 50px;
+		}
+		table {
+			width: 100%;
+			.row {
+				padding-bottom: 3px;
+				float: right;
+				text-align: right;
+				position: relative;
+			}
+		}
+		.language-select {
+			background: #fff;
+			border: 1px solid @border-color;
+			cursor: pointer;
+			float: left;
+			height: 24px;
+			width: 117px;
+			font-size: @font-size;
+			color: #000;
+			border-radius: 2px;
+
+			.en {
+				background: url(Images/flags.jpg) no-repeat;
+			}
+
+			&.ddSelect {
+				position: relative;
+					z-index: 100;
+					float: right;
+				.caret {
+					background: url(Images/caret.png) 0px 0px no-repeat;
+					width: 25px;
+					height: 22px;
+					position: absolute;
+					right: -7px;
+					top: 8px;
+				}
+
+				#divItemList {
+					z-index: 200;
+					margin-left: 1px;
+					width: 114px !important;
+				}
+
+				#divSelectedItem {
+					.flag i {
+						position: absolute;
+						top: 2px;
+						left: 6px;
+					}
+
+						#lbLanguage {
+							margin-left: 8px;
+							position: relative;
+							top: -1px;
+					}
+				}
+
+				.ddItem .flag i {
+					height: 19px;
+				}
+			}
+
+			#divItemList {
+				border-color: @border-color;
+			}
+
+			#lbLanguage {
+				font-size: @font-size;
+			}
+		}
+		#divSelectedItem {
+			background: none !important;
+			color: #794d28;
+		}
+		.custom-textbox {
+			width: 200px;
+			padding: 0 5px;
+			font-size: @font-size;
+			padding: 0 0 0 5px;
+			height: 25px;
+			border: none;
+			color: @text-color;
+			line-height: 25px !important;
+			border-radius: 2px;
+			font-style: italic;
+			border: 1px solid @border-color;
+
+			&:focus {
+				font-style: normal;
+				height: 25px;
+				border: none;
+				outline: none;
+				border: 1px solid @border-color;
+			}
+				
+		}			
+		.showPass {
+			height: 14px;
+			float:left;
+			display: block;
+			padding-left: 9px;
+			color: #512100;
+			position: relative;
+			top: -4px;
+			margin-left: 10px;
+			font-weight: bold;
+			font-style: italic;
+			.checkShowPass {
+				width: 13px;
+				height: 13px;
+				padding: 0;
+				position: relative;
+				margin: 0 0 2px 0;
+				background: #516e05;
+					
+			}
+			.chbShowpass {
+				width: 11px;
+				height: 11px;
+				padding: 0;
+				vertical-align: bottom;
+				position: relative;
+				margin: 0 3px 2px 0;
+				background: #516e05;
+				display: inline-block;
+			}
+				
+			span {
+				margin-left: 2px;
+				vertical-align: top;
+				font-size: @font-size - 1 ;					
+			}
+		}
+		.inputCaptcha {
+			width: 110px;
+			height: 25px !important;
+			float: left;
+			text-align: center;
+			margin: 2px 0 0 2px;
+			color: @text-color;
+			border: none;
+			line-height: 27px;
+			padding: 0;
+			position:relative;
+			border-radius: 2px;
+			font-style: italic;
+			border: 1px solid @border-color;
+
+			&:focus {
+				background-position: -8px -43px;
+				outline: none;
+				font-style: normal; 
+			}
+		}
+		.codeCaptcha {
+			float: left;
+			width: 66px;
+			height: 27px;
+			margin: 2px 2px 2px 4px;
+			#imgCode {
+			}
+		}
+		.btnLogin {
+			background: url(Images/btnLogin.jpg) no-repeat;
+			background-position: 0 0;
+			width: 69px;
+			border: none;			
+			height: 27px;
+			cursor: pointer;
+			color: #fff;
+			float: left;
+			font-size: @font-size;
+			font-family: 'OpenSans Bold';
+			&:hover {
+				background-position: 0 -27px;
+			}
+			
+		}
+		.btnLoginDisable {
+			.btnLogin;
+			background-position: 0 -54px;
+		}
+		.refreshCont {
+			float: left;
+		}
+		.refreshCode {
+			margin: 6px 2px 2px 3px;
+			background: url(images/refresh.png) 0px -17px no-repeat;
+			width: 19px;
+			float: left;
+			height: 19px !important;
+			cursor: pointer;
+			padding: 0;
+			&:hover {
+				background: url(images/refresh.png) 0px 0px no-repeat;
+			}
+		}
+	}
+
+	.bestview {
+        color: #000;
+        font-size: @font-size - 2;
+        font-family: arial;
+		margin-top: -5px;
+		.browser {
+			background: url(images/Rec_sp.png) right center no-repeat;
+			width: 143px;
+			height: 21px;
+			display: inline-block;
+			position: relative;
+			top: 7px;
+			left: 5px;
+		}
+	}
+	.event-text {
+		background: url(Images/event-text.png) no-repeat;
+		width: 249px;
+		height: 94px;
+		margin-top: 15px;
+	}
+	.errorMessage {
+		font-size: 12px;
+		color: #fff;
+		text-align: center;
+		color: #e02923;
+		padding: 0 20px;
+	}
+
+.eq-ie8 {
+	.btnLogin {
+		font-size: 12px;
+		text-indent: -3px;
+	}
+}
+
+ .eq-ie7 {
+	#divItemList {
+		left: 0;
+	}
+	.btnLogin {
+		font-size: 12px;
+		margin-left: 140px;
+	}
+	.showPass {
+		margin-left: 97px; 
+		text-indent: -15px;
+		top: -2px;
+		.checkShowPass {
+			top: -5px;
+		}
+	}
+}
+
