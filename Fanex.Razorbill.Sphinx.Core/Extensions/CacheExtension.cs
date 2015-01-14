@@ -15,11 +15,11 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
     /// </summary>
     public class CacheExtension
     {
-        private static readonly ICache _Cache;
+        private static ICache _Cache;
 
         static CacheExtension()
         {
-            _Cache = Caching.CacheService.CreateInstance(CacheType.MemCache);
+            _Cache = Caching.CacheService.CreateInstance(CacheType.MemoryCache);
         }
 
         /// <summary>

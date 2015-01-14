@@ -2847,4 +2847,8 @@ Please consult other reliable sources for the current and accurate information.<
   <data name="lblPasswordChanged" xml:space="preserve">
     <value>Mật khẩu đã được thay đổi  vào ngày {0}. Vui lòng liên hệ  với bộ phận CSD ngay lập tức nếu bạn vẫn không thể đăng nhập.</value>
   </data>
+  <data name="iploginfailedmultipletimeserror" xml:space="preserve">
+    <value>Your IP exceeded the maximum number ({0} times) of attempts to authenticate with your credentials.
+For security reasons, this feature has been locked for {1} minutes</value>
+  </data>
 </root>

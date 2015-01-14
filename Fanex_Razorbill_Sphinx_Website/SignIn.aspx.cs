@@ -6,8 +6,6 @@
  *
  */
 
-using Fanex.Agent.UI;
-
 namespace Sunplus.Age_BeforeLogin.UI
 {
     using System;
@@ -16,9 +14,12 @@ namespace Sunplus.Age_BeforeLogin.UI
     using System.Linq;
     using System.Web;
     using Fanex.Age.UI;
+    using Fanex.Agent.UI;
     using Fanex.Razorbill.Sphinx.Core.Configurations;
+    using Fanex.Razorbill.Sphinx.Core.Constants;
     using RSACryptoPad;
     using Sunplus.Agent.Model.BL.Definitions;
+    using Sunplus.Agent.Model.Common;
     using Sunplus.Agent.Model.DL.Authorization;
     using Sunplus.Agent.Model.Services;
     using Sunplus.Agent.Utilities;
@@ -29,20 +30,22 @@ namespace Sunplus.Age_BeforeLogin.UI
         /// Root namespace of json data returned.
         /// </summary>
         private const string JSDATA = "_page";
-        private const int KeySize = 1024;
-
+        private const int KeySize = 1024;     
+        private const int MAXTIMESTOALLOWLOGINFAIL = 15;
+        private const int BLOCKLOGINMINUTE = 15;
         // Under maintenance checking
         static object _locker = new object();
-
         static DateTime _lastCheckUM = DateTime.MinValue;
         static bool _isUM = false;
         private JSONData jsonData = new JSONData(10);
         private string userName = null;
         private string baseDomain = "ibc88.com";
-
         private bool loginWithOldPwd = false;
         private DateTime lastChangedPwd = DateTime.MinValue;
         private bool loginFailed = true;
+        private string TOTALLOGINFAILSESSIONKEY = string.Format(CommonConstants.LOGINFAILEDCOUNT, AgentIPFormat.GetClientIP());
+        private string LATESTLOGINFAILSESSIONKEY = string.Format(CommonConstants.LOGINFAILEDTIME, AgentIPFormat.GetClientIP());
+        
         /// <summary>
         /// Hard code for ssl domain list.
         /// </summary>
@@ -340,13 +343,15 @@ namespace Sunplus.Age_BeforeLogin.UI
         protected void OnPostBack()
         {
             ////Login Failed Count > 5
-            if (this._GetLoginFailedCount() > 15)
+            if (this._GetLoginFailedCount() > MAXTIMESTOALLOWLOGINFAIL)
             {
                 ////After 5'
-                if (this._GetLoginFailedTime().AddMinutes(15).CompareTo(DateTime.Now) > 0)
+                if (this._GetLoginFailedTime().AddMinutes(BLOCKLOGINMINUTE).CompareTo(DateTime.Now) > 0)
                 {
+                    var ipLockedError = string.Format(Resources.Lang.iploginfailedmultipletimeserror, MAXTIMESTOALLOWLOGINFAIL, BLOCKLOGINMINUTE);
                     this._SetLoginFailedTime();
-                    this.RegisterJSONError(1, Resources.Lang.invalidLogin);
+                    
+                    this.RegisterJSONError(1, ipLockedError);
 
                     return;
                 }
@@ -366,9 +371,9 @@ namespace Sunplus.Age_BeforeLogin.UI
             int count = 0;
             try
             {
-                if (Cache[Request.UserHostAddress + "_Count"] is int)
+                if (Cache[TOTALLOGINFAILSESSIONKEY] is int)
                 {
-                    count = (int)Cache[Request.UserHostAddress + "_Count"];
+                    count = (int)Cache[TOTALLOGINFAILSESSIONKEY];
                 }
             }
             catch (Exception e)
@@ -383,7 +388,7 @@ namespace Sunplus.Age_BeforeLogin.UI
         {
             try
             {
-                Cache[Request.UserHostAddress + "_Count"] = this._GetLoginFailedCount() + 1;
+                Cache[TOTALLOGINFAILSESSIONKEY] = this._GetLoginFailedCount() + 1;
             }
             catch (Exception e)
             {
@@ -395,8 +400,8 @@ namespace Sunplus.Age_BeforeLogin.UI
         {
             try
             {
-                Cache.Remove(Request.UserHostAddress + "_Count");
-                Cache.Remove(Request.UserHostAddress + "_Date");
+                Cache.Remove(TOTALLOGINFAILSESSIONKEY);
+                Cache.Remove(LATESTLOGINFAILSESSIONKEY);
             }
             catch (Exception e)
             {
@@ -409,9 +414,9 @@ namespace Sunplus.Age_BeforeLogin.UI
             DateTime date = DateTime.MinValue;
             try
             {
-                if (Cache[Request.UserHostAddress + "_Date"] is DateTime)
+                if (Cache[LATESTLOGINFAILSESSIONKEY] is DateTime)
                 {
-                    date = (DateTime)Cache[Request.UserHostAddress + "_Date"];
+                    date = (DateTime)Cache[LATESTLOGINFAILSESSIONKEY];
                 }
             }
             catch (Exception e)
@@ -426,7 +431,7 @@ namespace Sunplus.Age_BeforeLogin.UI
         {
             try
             {
-                Cache[Request.UserHostAddress + "_Date"] = DateTime.Now;
+                Cache[LATESTLOGINFAILSESSIONKEY] = DateTime.Now;
             }
             catch (Exception e)
             {
@@ -647,9 +652,10 @@ namespace Sunplus.Age_BeforeLogin.UI
 
                 this._SetLoginFailedTime();
                 this._IncreaseLoginFailedCount();
-                if (this._GetLoginFailedCount() > 15)
+                if (this._GetLoginFailedCount() > MAXTIMESTOALLOWLOGINFAIL)
                 {
-                    this.RegisterJSONError(1, Resources.Lang.invalidLogin);
+                    var ipLockedError = string.Format(Resources.Lang.iploginfailedmultipletimeserror, MAXTIMESTOALLOWLOGINFAIL, BLOCKLOGINMINUTE);
+                    this.RegisterJSONError(1, ipLockedError);
                     return;
                 }
                 else
