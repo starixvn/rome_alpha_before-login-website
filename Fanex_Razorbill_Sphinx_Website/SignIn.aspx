@@ -1,1 +1,0 @@
-﻿<%@ Page Language="C#" AutoEventWireup="false" ValidateRequest="false" CodeFile="SignIn.aspx.cs" Inherits="Sunplus.Age_BeforeLogin.UI.SignIn_Page" %>
