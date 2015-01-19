@@ -15,11 +15,11 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
     /// </summary>
     public class CacheExtension
     {
-        private static readonly ICache _Cache;
+        private static ICache _cache;
 
         static CacheExtension()
         {
-            _Cache = Caching.CacheService.CreateInstance(CacheType.MemCache);
+            _cache = Caching.CacheService.CreateInstance(CacheType.MemoryCache);
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
         {
             try
             {
-                return _Cache.Get<object>(key);
+                return _cache.Get<object>(key);
             }
             catch (Exception exception)
             {
@@ -44,7 +44,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
         {
             try
             {
-                _Cache.Set(key, value);
+                _cache.Set(key, value);
             }
             catch (Exception exception)
             {
@@ -54,14 +54,14 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
 
         public static T Get<T>(string key)
         {
-            return _Cache.Get<T>(key);
+            return _cache.Get<T>(key);
         }
 
         public static void Set<T>(string key, T value)
         {
             try
             {
-                _Cache.Set<T>(key, value);
+                _cache.Set<T>(key, value);
             }
             catch (Exception exception)
             {
@@ -73,7 +73,7 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
         {
             try
             {
-                _Cache.Set(key, value, expire);
+                _cache.Set(key, value, expire);
             }
             catch (Exception exception)
             {
@@ -83,12 +83,12 @@ namespace Fanex.Razorbill.Sphinx.Core.Extensions
 
         public static void Set<T>(string key, T value, TimeSpan expire)
         {
-            _Cache.Set<T>(key, value, expire);
+            _cache.Set<T>(key, value, expire);
         }
 
         public static void Delete(string key)
         {
-            _Cache.Clear();
+            _cache.Clear();
         }
     }
 }

@@ -32,8 +32,12 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
     /// </summary>
     public class UserLoginService
     {
+        private const int MAXTIMESTOALLOWLOGINFAIL = 15;
+        private const int BLOCKLOGINMINUTE = 15;
         private string _baseDomain = string.Empty;
         private string _loginTheme = string.Empty;
+        private string _totalLoginFailedSessionKey = string.Format(CommonConstants.LOGINFAILEDCOUNT, IPExtension.CustomerIp());
+        private string _latestLoginFailSessionKey = string.Format(CommonConstants.LOGINFAILEDTIME, IPExtension.CustomerIp());
 
         public UserLoginService()
         {
@@ -170,15 +174,17 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
             try
             {
                 AppSession.Captcha2 = code;
-                ////Login Failed Count > 5
-                if (this.GetLoginFailedCount() > 15)
+                ////Login Failed Count > 15
+                if (this.GetLoginFailedCount() > MAXTIMESTOALLOWLOGINFAIL)
                 {
-                    ////After 5'
-                    if (this.GetLoginFailedTime().AddMinutes(15).CompareTo(DateTime.Now) > 0)
+                    ////After 15'
+                    if (this.GetLoginFailedTime().AddMinutes(BLOCKLOGINMINUTE).CompareTo(DateTime.Now) > 0)
                     {
                         this.SetLoginFailedTime();
+                        var ipLockedError = string.Format(Language.iploginfailedmultipletimeserror, MAXTIMESTOALLOWLOGINFAIL, BLOCKLOGINMINUTE);
+
                         loginResult.ErrCode = ErrorContants.ErrorInvalidLogin;
-                        loginResult.ErrMsg = Language.invalidLogin;
+                        loginResult.ErrMsg = ipLockedError;
 
                         return loginResult;
                     }
@@ -190,14 +196,14 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
 
                 if (WebSettings.IsValidLanguage(language))
                 {
-                    AppSession.Language = language;                    
+                    AppSession.Language = language;
                 }
                 else
                 {
                     AppSession.Language = WebSettings.DefaultLanguage;
                 }
 
-                this.SetLanguage(AppSession.Language);                
+                this.SetLanguage(AppSession.Language);
 
                 if (AppSession.Captcha2 == null)
                 {
@@ -248,16 +254,16 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
                 Hashtable requestInfo = DeviceService.GetRequestInfo(System.Web.HttpContext.Current.Request);
                 requestInfo.Add("sitegroup", SiteGroup);
                 VerifyDownlineLogin(
-                    username, 
-                    password, 
-                    ref errCode, 
-                    ref errMsg, 
-                    ref custId, 
-                    ref subAccId, 
-                    ref isNickname, 
-                    ref nickName, 
-                    ref loginTime, 
-                    ref lastChangedPwd, 
+                    username,
+                    password,
+                    ref errCode,
+                    ref errMsg,
+                    ref custId,
+                    ref subAccId,
+                    ref isNickname,
+                    ref nickName,
+                    ref loginTime,
+                    ref lastChangedPwd,
                     requestInfo);
 
                 if (errCode == 0)
@@ -332,9 +338,9 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
             int count = 0;
             try
             {
-                if (CacheExtension.Get(string.Format(CommonConstants.LOGINFAILEDCOUNT, System.Web.HttpContext.Current.Request.UserHostAddress)) is int)
+                if (CacheExtension.Get(_totalLoginFailedSessionKey) is int)
                 {
-                    count = (int)CacheExtension.Get(string.Format(CommonConstants.LOGINFAILEDCOUNT, System.Web.HttpContext.Current.Request.UserHostAddress));
+                    count = (int)CacheExtension.Get(_totalLoginFailedSessionKey);
                 }
             }
             catch (Exception e)
@@ -349,7 +355,7 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
         {
             try
             {
-                CacheExtension.Set(string.Format(CommonConstants.LOGINFAILEDCOUNT, System.Web.HttpContext.Current.Request.UserHostAddress), this.GetLoginFailedCount() + 1);
+                CacheExtension.Set(_totalLoginFailedSessionKey, this.GetLoginFailedCount() + 1);
             }
             catch (Exception e)
             {
@@ -364,8 +370,8 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
         {
             try
             {
-                CacheExtension.Delete(string.Format(CommonConstants.LOGINFAILEDCOUNT, System.Web.HttpContext.Current.Request.UserHostAddress));
-                CacheExtension.Delete(string.Format(CommonConstants.LOGINFAILEDTIME, System.Web.HttpContext.Current.Request.UserHostAddress));
+                CacheExtension.Delete(_totalLoginFailedSessionKey);
+                CacheExtension.Delete(_latestLoginFailSessionKey);
             }
             catch (Exception e)
             {
@@ -377,7 +383,7 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
         {
             try
             {
-                CacheExtension.Set(string.Format(CommonConstants.LOGINFAILEDTIME, System.Web.HttpContext.Current.Request.UserHostAddress), DateTime.Now);
+                CacheExtension.Set(_latestLoginFailSessionKey, DateTime.Now);
             }
             catch (Exception e)
             {
@@ -394,9 +400,9 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
             DateTime date = DateTime.MinValue;
             try
             {
-                if (CacheExtension.Get(string.Format(CommonConstants.LOGINFAILEDTIME, System.Web.HttpContext.Current.Request.UserHostAddress)) is DateTime)
+                if (CacheExtension.Get(_latestLoginFailSessionKey) is DateTime)
                 {
-                    date = (DateTime)CacheExtension.Get(string.Format(CommonConstants.LOGINFAILEDTIME, System.Web.HttpContext.Current.Request.UserHostAddress));
+                    date = (DateTime)CacheExtension.Get(_latestLoginFailSessionKey);
                 }
             }
             catch (Exception e)
@@ -517,10 +523,12 @@ namespace Fanex.Razorbill.Sphinx.Service.UserLogin
 
             this.SetLoginFailedTime();
             this.IncreaseLoginFailedCount();
-            if (this.GetLoginFailedCount() > 15)
+            if (this.GetLoginFailedCount() > MAXTIMESTOALLOWLOGINFAIL)
             {
+                var ipLockedError = string.Format(Language.iploginfailedmultipletimeserror, MAXTIMESTOALLOWLOGINFAIL, BLOCKLOGINMINUTE);
+
                 loginResult.ErrCode = 1;
-                loginResult.ErrMsg = Language.invalidLogin;
+                loginResult.ErrMsg = ipLockedError;
             }
             else
             {
