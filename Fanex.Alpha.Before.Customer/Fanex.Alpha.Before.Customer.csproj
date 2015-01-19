@@ -116,6 +116,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Configurations\AutomationTestingSection.cs" />
     <Compile Include="Configurations\CustomerAppSetting.cs" />
     <Compile Include="Configurations\LoginThemeSection.cs" />
     <Compile Include="Constants\SignInErrorContants.cs" />
@@ -129,6 +130,36 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Labels.ja-JP.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.ja-JP.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Labels.ko-KR.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.ko-KR.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Labels.th-TH.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.th-TH.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Labels.vi-VN.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.vi-VN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Labels.zh-CN.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.zh-CN.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Labels.zh-TW.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Labels.zh-TW.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\SignIn\ISignInService.cs" />
     <Compile Include="Services\SignIn\SignInService.cs" />
