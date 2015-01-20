@@ -9,6 +9,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using System;
     using System.IO;
     using System.Web.Mvc;
+    using System.Web.Security;
     using Fanex.Alpha.Before.Common.Controllers;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
     using Fanex.Alpha.Before.Infrastructure.Extensions;
@@ -79,6 +80,18 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
             MemoryStream ms = new MemoryStream();
             return new FileStreamResult(ms, "image/Jpeg");
+        }
+
+        public RedirectResult AutomationTest(string username, string password, string captcha)
+        {
+            var loginResult = _signInService.AutomationTest(username, password, captcha);
+
+            if (loginResult.ErrCode == -1)
+            {
+                return Redirect(loginResult.AfterLoginUrl);
+            }
+
+            return Redirect("~/Customer/SignIn");
         }
     }
 }

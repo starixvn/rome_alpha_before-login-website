@@ -10,6 +10,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using System.Collections;
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
+    using System.Linq;
     using System.Web;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Constants;
@@ -194,6 +195,79 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
+                //// Get Browser
+                Hashtable requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request);
+                requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
+                var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
+
+                if (verifySignInResult.ErrorCode == 0)
+                {
+                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult);
+                }
+                else
+                {
+                    UpdateResultAfterLoginFail(signInResult, verifySignInResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                signInResult.ErrCode = ErrorCodeConstants.ServerError;
+                signInResult.ErrMsg = InfrastructureLanguages.Labels.Error_Server;
+                LogExtension.ExceptionHandler(ex);
+            }
+
+            return signInResult;
+        }
+
+        /// <summary>
+        /// Support for automation test tool.
+        /// </summary>
+        /// <param name="username">Username login.</param>
+        /// <param name="password">User's password.</param>
+        /// <param name="captcha">Captcha value.</param>
+        /// <returns>Return result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        public SignInResult AutomationTest(string username, string password, string captcha)
+        {
+            var signInResult = new SignInResult()
+            {
+                Ip = IPHelper.ClientIP(),
+                LoginTemplate = _loginTheme,
+                Username = username
+            };
+
+            try
+            {
+                var automationTestSettings = AutomationTestSettings.Instance;
+                if (automationTestSettings == null)
+                {
+                    return signInResult;
+                }
+
+                var allowCaptcha = automationTestSettings.Captcha;
+                var allowIps = automationTestSettings.AllowsIPsToAccess;
+                var allowUsernameContainWords = automationTestSettings.AllowUsernameContainWords;
+
+                if (string.IsNullOrEmpty(allowCaptcha) ||
+                    string.IsNullOrEmpty(allowIps) ||
+                    string.IsNullOrEmpty(allowUsernameContainWords) ||
+                    string.IsNullOrEmpty(username) ||
+                    string.IsNullOrEmpty(password) ||
+                    string.IsNullOrEmpty(captcha))
+                {
+                    return signInResult;
+                }
+
+                var allowWords = allowUsernameContainWords.ToUpper().Split(',');
+                if (!allowIps.Split(',').Contains(IPHelper.ClientIP()) ||
+                    !allowCaptcha.Equals(captcha) ||
+                    !allowWords.All(s => username.ToUpper().Contains(s)))
+                {
+                    return signInResult;
+                }         
+                                
                 //// Get Browser
                 Hashtable requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request);
                 requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);

@@ -19,5 +19,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         SignInResult SignIn(string username, string password, string language, string captcha, string code);
 
         Graphics NewCaptcha();
+
+        SignInResult AutomationTest(string username, string password, string captcha);
     }
 }

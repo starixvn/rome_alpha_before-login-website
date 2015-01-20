@@ -116,7 +116,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Configurations\AutomationTestingSection.cs" />
+    <Compile Include="Configurations\AutomationTestSettings.cs" />
     <Compile Include="Configurations\CustomerAppSetting.cs" />
     <Compile Include="Configurations\LoginThemeSection.cs" />
     <Compile Include="Constants\SignInErrorContants.cs" />

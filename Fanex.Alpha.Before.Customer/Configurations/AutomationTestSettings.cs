@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="AutomationTestingSection.cs" company="Nexcel Solutions Vietnam">
+// <copyright file="AutomationTestSettings.cs" company="Nexcel Solutions Vietnam">
 // Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -12,9 +12,9 @@ namespace Fanex.Alpha.Before.Customer.Configurations
     /// <summary>
     /// Automation Testing Section.
     /// </summary>
-    public class AutomationTestingSection : ConfigurationSection
+    public class AutomationTestSettings : ConfigurationSection
     {
-        private static AutomationTestingSection _instance;
+        private static AutomationTestSettings _instance;
 
         /// <summary>
         /// Gets the instance.
@@ -22,8 +22,9 @@ namespace Fanex.Alpha.Before.Customer.Configurations
         /// <value>
         /// The instance.
         /// </value>
-        /// <exception cref="System.Configuration.ConfigurationErrorsException">Error when parsing configuration section AlphaSetting - AutomationTestingSection.</exception>
-        public static AutomationTestingSection Instance
+        /// <exception cref="System.Configuration.ConfigurationErrorsException">
+        /// Error when parsing configuration section AlphaSetting - AutomationTestSettings.</exception>
+        public static AutomationTestSettings Instance
         {
             get
             {
@@ -31,11 +32,11 @@ namespace Fanex.Alpha.Before.Customer.Configurations
                 {
                     try
                     {
-                        _instance = (AutomationTestingSection)ConfigurationManager.GetSection("AlphaSetting/AutomationTestingSection");
+                        _instance = (AutomationTestSettings)ConfigurationManager.GetSection("AlphaSetting/AutomationTestSettings");
                     }
                     catch (Exception e)
                     {
-                        throw new ConfigurationErrorsException("Error when parsing configuration section AlphaSetting - AutomationTestingSection", e);
+                        throw new ConfigurationErrorsException("Error when parsing configuration section AlphaSetting - AutomationTestSettings", e);
                     }
                 }
 
@@ -43,8 +44,8 @@ namespace Fanex.Alpha.Before.Customer.Configurations
             }
         }
 
-        [ConfigurationProperty("allowedIPs", IsRequired = true, DefaultValue = "")]
-        public string AllowedIPs
+        [ConfigurationProperty("allowedIPs", IsRequired = false, DefaultValue = "127.0.0.1")]
+        public string AllowsIPsToAccess
         {
             get
             {
@@ -61,12 +62,12 @@ namespace Fanex.Alpha.Before.Customer.Configurations
             }
         }
 
-        [ConfigurationProperty("usernameContainSpecialCharacters", IsRequired = false, DefaultValue = "test")]
-        public string UsernameContainSpecialCharacters
+        [ConfigurationProperty("allowusernamecontainwords", IsRequired = false, DefaultValue = "")]
+        public string AllowUsernameContainWords
         {
             get
             {
-                return (string)base["usernameContainSpecialCharacters"];
+                return (string)base["allowusernamecontainwords"];
             }
         }
     }
