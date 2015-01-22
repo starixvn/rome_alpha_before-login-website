@@ -134,6 +134,8 @@ Sphinx.Login = {
         $('#textTitle').addClass(resource.AutumnTitle);
         $('.btnLogin').val(resource.Login);
 
+        $('#divTitle').html(resource.Login);
+
         Sphinx.Core.setCookie('LANGUAGE', languageCode, 30);
         Sphinx.Login.currentLanguageCode = languageCode;
     },
