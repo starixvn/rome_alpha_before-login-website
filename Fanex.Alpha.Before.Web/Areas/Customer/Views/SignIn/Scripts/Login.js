@@ -73,6 +73,7 @@ Sphinx.Login = {
             $('#lbLanguage').css('font-size', '13px');
             $('.showPass').css('top', '1px');
             $('.refreshCont').css('width', '50px');
+            $('.header .title').css('float', 'left');
         }
         if ($.browser.webkit && !(/chrome/.test(navigator.userAgent.toLowerCase()))) {
             $(".inputContainer").css('padding-left', '80px');
