@@ -1,4 +1,4 @@
-﻿
+
 html, body, div, span, applet, object, iframe, 
 h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, 
 abbr, acronym, address, big, cite, code, del, 
@@ -8,7 +8,6 @@ strike, strong, sub, sup, tt, var, b, u, i, center,
  caption, tbody, tfoot, thead, tr, th, td {
     background: none repeat scroll 0 0 transparent;
     border: 0 none;
-    line-height: 21px;
     margin: 0;
     outline: medium none;
     padding: 0;
@@ -17,9 +16,21 @@ strike, strong, sub, sup, tt, var, b, u, i, center,
 @font-size: 12px;
 @font-family: 'Arial';
 @width-login: 542px;
-@text-color: #625f5f;
+@text-color: #999999;
 @dropdown-color: #000;
-@border-color: #a32b20;
+@border-color: #d2dbe3;
+@font-face {
+	font-family: "Roboto";
+	src: url(Font/Roboto/Roboto-Regular.ttf);
+}
+@font-face {
+	font-family: "Roboto light";
+	src: url(Font/Roboto/Roboto-Light.ttf);
+}
+@font-face {
+	font-family: "Roboto medium";
+	src: url(Font/Roboto/Roboto-Medium.ttf);
+}
 html,body {
 	min-height: 100%;
 	margin: 0;
@@ -29,41 +40,66 @@ body{
 	padding:0;
 	margin:0;
 	font-family: @font-family;
-	background: url(Images/bg.jpg) repeat;
+	background: url(Images/seamless_pattern.png) repeat;
 }
 
 .wrapper {
-	background: url(Images/panel.png) center top no-repeat;
-	width: 427px;
-	height: 421px;
+	width: 432px;
 	margin: auto;
+	position: relative;
+}
+.shadow {
+	background: url(Images/shadow.png) no-repeat center;
+	bottom: -9px;
+    height: 14px;
+    position: absolute;
+    width: 432px;
+	left: 0;
+}
+.header {
+	background: url(Images/header.png) no-repeat;
+	width: 432px;
+	height: 58px;
+	margin-bottom: 20px;
+	font-family: 'Roboto light';
+	font-size: 24px;
+	color: #fff;
+	line-height: 58px !important;
+	.title {
+		margin-left: 30px;
+		display: inline-block;
+		float: left;
+	}
+	.language-box {
+		float: right;
+		margin-top: 17px;
+	}
 }
 	.inputContainer {
-		text-align: left;
-		width: 320px;
-		padding: 180px 30px 0 32px;
+		border-radius: 4px;
+		background: #fff;
+		margin-top: 150px;
 		.signIn-text {
 			background: url(Images/SignIn.png) right no-repeat;
 			width: 166px;
 			height: 50px;
 		}
 		table {
-			width: 100%;
+			width: 90%;
+			margin: auto;
 			.row {
-				padding-bottom: 3px;
+				padding-bottom: 15px;
+				&.custom-row {
+					padding-bottom: 8px;
+				}
 			}
 		}
 		.language-select {
-			background: #fff;
-			border: 1px solid @border-color;
 			cursor: pointer;
 			float: left;
 			height: 24px;
-			width: 117px;
 			font-size: @font-size;
-			color: #000;
-			border-radius: 2px;
-
+			width: 130px;
 			.en {
 				background: url(Images/flags.jpg) no-repeat;
 			}
@@ -76,32 +112,44 @@ body{
 					width: 25px;
 					height: 22px;
 					position: absolute;
-					right: -7px;
-					top: 9px;
+					right: 10px;
+					top: 7px;
 				}
 
 				#divItemList {
 					z-index: 200;
 					margin-left: 1px;
 					width: 114px !important;
+					right: 24px;
+					#lbLanguage {
+						color: #4c4c4c;
+					}
 				}
 
 				#divSelectedItem {
+					background-color: transparent !important;
 					.flag i {
 						position: absolute;
 						top: 2px;
 						left: 6px;
 					}
 
-						#lbLanguage {
-							margin-left: 8px;
-							position: relative;
-							top: -1px;
+					#lbLanguage {
+						margin-left: 8px;
+						position: relative;
+						top: -1px;
+						color: #fff;
 					}
 				}
 
 				.ddItem .flag i {
 					height: 19px;
+				}
+				.ddItem {
+					line-height: 21px;
+					&:hover {
+						background-color: #f2f2f2 !important;
+					}
 				}
 			}
 
@@ -113,29 +161,29 @@ body{
 				font-size: @font-size;
 			}
 		}
-		#divSelectedItem {
-			background: none !important;
-			color: #794d28;
-		}
 		.custom-textbox {
-			width: 307px;
+			width: 98%;
 			padding: 0 5px;
 			font-size: @font-size;
 			padding: 0 0 0 5px;
-			height: 24px;
+			height: 26px;
 			border: none;
 			color: @text-color;
-			line-height: 25px !important;
-			border-radius: 3px;
-			font-style: italic;
+			line-height: 26px !important;
 			border: 1px solid @border-color;
-
+			background: #f5f5f7;
 			&:focus {
 				font-style: normal;
-				height: 24px;
+				height: 26px;
 				border: none;
 				outline: none;
 				border: 1px solid @border-color;
+			}
+			&.username {
+				background: url(Images/user.png) no-repeat right center #f5f5f7;
+			}
+			&.password {
+				background: url(Images/key.png) no-repeat right center #f5f5f7;
 			}
 				
 		}			
@@ -143,34 +191,26 @@ body{
 			height: 14px;
 			float:left;
 			display: block;
-			color: #fff;
+			color: @text-color;
 			position: relative;
 			top: -2px;
-			font-weight: bold;
-			font-style: italic;
 			margin-left: 3px;
+			font-size: @font-size - 1;
+			width: 100%;
 			.checkShowPass {
 				width: 13px;
 				height: 13px;
 				padding: 0;
-				position: relative;
 				margin: 0 0 2px 0;
 					
-			}
-			.chbShowpass {
-				width: 11px;
-				height: 11px;
-				padding: 0;
-				vertical-align: bottom;
-				position: relative;
-				margin: 0 3px 2px 0;
-				display: inline-block;
 			}
 				
 			span {
 				margin-left: 2px;
 				vertical-align: top;
-				font-size: @font-size - 1 ;					
+				position: relative;
+				top: 0px;
+								
 			}
 		}
 		.inputCaptcha {
@@ -181,11 +221,9 @@ body{
 			margin: 2px 0 0 2px;
 			color: @text-color;
 			border: none;
-			line-height: 27px;
 			padding: 0;
 			position:relative;
 			border-radius: 3px;
-			font-style: italic;
 			border: 1px solid @border-color;
 
 			&:focus {
@@ -201,40 +239,39 @@ body{
 			margin: 2px 2px 2px 4px;
 		}
 		.btnLogin {
-			background: url(Images/btnLogin1.png) 0 0 no-repeat;
-			background-position: 0 0;
+			background-color: #8d1d25;
 			width: 90px;
 			border: none;			
 			height: 26px;
 			cursor: pointer;
-			color: #fff;
+			color: #d1a5a8;
 			float: left;
-			font-size: @font-size + 2;
-			font-family: 'OpenSans Bold';
+			font-size: @font-size + 1;
+			font-family: 'Roboto medium';
 			margin-left: 3px;
+			float: right;
 			&:hover {
-				background: url(Images/btnLogin1.png) 0 -50px no-repeat;
-				width: 90px;
+				color: #fff;
 			}
 			
 		}
 		.btnLoginDisable {
 			.btnLogin;
-			background: url(Images/btnLogin1.png) 0 -25px no-repeat;
+			background-color: #ccc;
 		}
 		.refreshCont {
 			float: left;
 		}
 		.refreshCode {
 			margin: 8px 2px 2px 3px;
-			background: url(images/refresh.png) 0px 0px no-repeat;
+			background: url(images/sprites.png) -38px 0px no-repeat;
 			width: 19px;
 			float: left;
 			height: 18px !important;
 			cursor: pointer;
 			padding: 0;
 			&:hover {
-				background: url(images/refresh.png) 0px -18px no-repeat;
+				background: url(images/sprites.png) -59px 0px no-repeat;
 			}
 		}
 	}
@@ -243,7 +280,8 @@ body{
         color: #000;
         font-size: @font-size - 2;
         font-family: arial;
-		margin-top: -5px;
+		margin-top: 8px;
+		text-align: center;
 		.browser {
 			background: url(images/Rec_sp.png) right center no-repeat;
 			width: 143px;
@@ -262,30 +300,32 @@ body{
 	}
 	.errorMessage {
 		font-size: 12px;
-		color: #fff;
-		text-align: center;
 		padding: 0 20px;
+		color: #cc0000;
+		padding: 0 25px 10px;
+		border-radius: 5px;
+		font-family: 'Roboto';
+		.icon-note {
+			width: 22px;
+			height: 22px;
+			display: inline-block;
+			background: url(Images/sprites.png) no-repeat -78px 0;
+		}
 	}
 
-.eq-ie8 {
-	.btnLogin {
-		font-size: 12px;
-		text-indent: -3px;
-	}
-}
 
  .eq-ie7 {
-	#divItemList {
-		left: 0;
-	}
-	.btnLogin {
-		font-size: 12px;
-	}
 	.showPass {
-		top: -2px;
+		top: -1px;
 		.checkShowPass {
 			top: -5px;
 		}
+	}
+	.browser {
+		top: 4px;
+	}
+	.header .title {
+		float: left;
 	}
 }
 
