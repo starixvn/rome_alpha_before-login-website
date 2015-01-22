@@ -1,0 +1,332 @@
+
+html, body, div, span, applet, object, iframe, 
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, 
+abbr, acronym, address, big, cite, code, del, 
+dfn, em, font, img, ins, kbd, q, s, samp, small, 
+strike, strong, sub, sup, tt, var, b, u, i, center,
+ ol, ul, li, fieldset, form, label, legend, table, 
+ caption, tbody, tfoot, thead, tr, th, td {
+    background: none repeat scroll 0 0 transparent;
+    border: 0 none;
+    margin: 0;
+    outline: medium none;
+    padding: 0;
+    vertical-align: baseline;
+}
+@font-size: 12px;
+@font-family: 'Arial';
+@width-login: 542px;
+@text-color: #999999;
+@dropdown-color: #000;
+@border-color: #d2dbe3;
+@font-face {
+	font-family: "Roboto";
+	src: url(Font/Roboto/Roboto-Regular.ttf);
+}
+@font-face {
+	font-family: "Roboto light";
+	src: url(Font/Roboto/Roboto-Light.ttf);
+}
+@font-face {
+	font-family: "Roboto medium";
+	src: url(Font/Roboto/Roboto-Medium.ttf);
+}
+html,body {
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+}
+body{
+	padding:0;
+	margin:0;
+	font-family: @font-family;
+	background: url(Images/seamless_pattern.png) repeat;
+}
+
+.wrapper {
+	width: 432px;
+	margin: auto;
+	position: relative;
+}
+.shadow {
+	background: url(Images/shadow.png) no-repeat center;
+	bottom: -9px;
+    height: 14px;
+    position: absolute;
+    width: 432px;
+	left: 0;
+}
+.header {
+	background: url(Images/header.png) no-repeat;
+	width: 432px;
+	height: 58px;
+	margin-bottom: 20px;
+	font-family: 'Roboto light';
+	font-size: 24px;
+	color: #fff;
+	line-height: 58px !important;
+	.title {
+		margin-left: 30px;
+		display: inline-block;
+	}
+	.language-box {
+		float: right;
+		margin-top: 17px;
+	}
+}
+	.inputContainer {
+		text-align: left;
+		border-radius: 4px;
+		background: #fff;
+		margin-top: 150px;
+		.signIn-text {
+			background: url(Images/SignIn.png) right no-repeat;
+			width: 166px;
+			height: 50px;
+		}
+		table {
+			width: 90%;
+			margin: auto;
+			.row {
+				padding-bottom: 15px;
+				&.custom-row {
+					padding-bottom: 8px;
+				}
+			}
+		}
+		.language-select {
+			cursor: pointer;
+			float: left;
+			height: 24px;
+			font-size: @font-size;
+			width: 130px;
+			.en {
+				background: url(Images/flags.jpg) no-repeat;
+			}
+
+			&.ddSelect {
+				position: relative;
+					z-index: 100;
+				.caret {
+					background: url(Images/caret.png) 0px 0px no-repeat;
+					width: 25px;
+					height: 22px;
+					position: absolute;
+					right: 10px;
+					top: 7px;
+				}
+
+				#divItemList {
+					z-index: 200;
+					margin-left: 1px;
+					width: 114px !important;
+					right: 24px;
+					#lbLanguage {
+						color: #4c4c4c;
+					}
+				}
+
+				#divSelectedItem {
+					background-color: transparent !important;
+					.flag i {
+						position: absolute;
+						top: 2px;
+						left: 6px;
+					}
+
+					#lbLanguage {
+						margin-left: 8px;
+						position: relative;
+						top: -1px;
+						color: #fff;
+					}
+				}
+
+				.ddItem .flag i {
+					height: 19px;
+				}
+				.ddItem {
+					line-height: 21px;
+					&:hover {
+						background-color: #f2f2f2 !important;
+					}
+				}
+			}
+
+			#divItemList {
+				border-color: @border-color;
+			}
+
+			#lbLanguage {
+				font-size: @font-size;
+			}
+		}
+		.custom-textbox {
+			width: 98%;
+			padding: 0 5px;
+			font-size: @font-size;
+			padding: 0 0 0 5px;
+			height: 26px;
+			border: none;
+			color: @text-color;
+			line-height: 26px !important;
+			border: 1px solid @border-color;
+			background: #f5f5f7;
+			&:focus {
+				font-style: normal;
+				height: 26px;
+				border: none;
+				outline: none;
+				border: 1px solid @border-color;
+			}
+			&.username {
+				background: url(Images/user.png) no-repeat right center #f5f5f7;
+			}
+			&.password {
+				background: url(Images/key.png) no-repeat right center #f5f5f7;
+			}
+				
+		}			
+		.showPass {
+			height: 14px;
+			float:left;
+			display: block;
+			color: @text-color;
+			position: relative;
+			top: -2px;
+			margin-left: 3px;
+			font-size: @font-size - 1;
+			width: 100%;
+			.checkShowPass {
+				width: 13px;
+				height: 13px;
+				padding: 0;
+				margin: 0 0 2px 0;
+					
+			}
+				
+			span {
+				margin-left: 2px;
+				vertical-align: top;
+				position: relative;
+				top: 0px;
+								
+			}
+		}
+		.inputCaptcha {
+			width: 110px;
+			height: 24px !important;
+			float: left;
+			text-align: center;
+			margin: 2px 0 0 2px;
+			color: @text-color;
+			border: none;
+			padding: 0;
+			position:relative;
+			border-radius: 3px;
+			border: 1px solid @border-color;
+
+			&:focus {
+				background-position: -8px -43px;
+				outline: none;
+				font-style: normal; 
+			}
+		}
+		.codeCaptcha {
+			float: left;
+			width: 66px;
+			height: 27px;
+			margin: 2px 2px 2px 4px;
+		}
+		.btnLogin {
+			background-color: #8d1d25;
+			width: 90px;
+			border: none;			
+			height: 26px;
+			cursor: pointer;
+			color: #d1a5a8;
+			float: left;
+			font-size: @font-size + 1;
+			font-family: 'Roboto medium';
+			margin-left: 3px;
+			float: right;
+			&:hover {
+				color: #fff;
+			}
+			
+		}
+		.btnLoginDisable {
+			.btnLogin;
+			background-color: #ccc;
+		}
+		.refreshCont {
+			float: left;
+		}
+		.refreshCode {
+			margin: 8px 2px 2px 3px;
+			background: url(images/sprites.png) -38px 0px no-repeat;
+			width: 19px;
+			float: left;
+			height: 18px !important;
+			cursor: pointer;
+			padding: 0;
+			&:hover {
+				background: url(images/sprites.png) -59px 0px no-repeat;
+			}
+		}
+	}
+
+	.bestview {
+        color: #000;
+        font-size: @font-size - 2;
+        font-family: arial;
+		margin-top: 8px;
+		text-align: center;
+		.browser {
+			background: url(images/Rec_sp.png) right center no-repeat;
+			width: 143px;
+			height: 21px;
+			display: inline-block;
+			position: relative;
+			top: 7px;
+			left: 5px;
+		}
+	}
+	.event-text {
+		background: url(Images/event-text.png) no-repeat;
+		width: 307px;
+		height: 111px;
+		margin-top: 15px;
+	}
+	.errorMessage {
+		font-size: 12px;
+		padding: 0 20px;
+		width: 432px;
+		color: #cc0000;
+		padding: 0 25px 10px;
+		border-radius: 5px;
+		font-family: 'Roboto';
+		.icon-note {
+			width: 22px;
+			height: 22px;
+			display: inline-block;
+			background: url(Images/sprites.png) no-repeat -78px 0;
+		}
+	}
+
+
+ .eq-ie7 {
+	.showPass {
+		top: -1px;
+		.checkShowPass {
+			top: -5px;
+		}
+	}
+	.browser {
+		top: 4px;
+	}
+	.header .title {
+		float: left;
+	}
+}
+

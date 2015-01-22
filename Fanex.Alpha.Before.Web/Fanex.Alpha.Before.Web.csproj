@@ -116,6 +116,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\LICENSE.txt" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Images\caret.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Images\header.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Images\icon-note.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Images\key.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Images\Rec_sp.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Images\seamless_pattern.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Images\shadow.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Images\sprites.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Images\user.png" />
     <Content Include="Scripts\Component\Dropdown\Dropdown.js" />
     <Content Include="Scripts\Component\Dropdown\DropdownStyle.css" />
     <Content Include="Scripts\Component\Dropdown\Image\down.png" />
@@ -226,6 +236,20 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.Web.config" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\NewUI\Index.cshtml" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\Roboto-Black.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\Roboto-BlackItalic.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\Roboto-Bold.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\Roboto-BoldItalic.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\Roboto-Italic.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\Roboto-Light.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\Roboto-LightItalic.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\Roboto-Medium.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\Roboto-MediumItalic.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\Roboto-Regular.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\Roboto-Thin.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Font\Roboto\Roboto-ThinItalic.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\NewUI\Styles\Login.less" />
     <None Include="Views\Common\LimitedCountryAccess\Style\LimitedCountryAccess.less" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.LimtedCountryAccessSection.config" />
     <Content Include="LimtedCountryAccessSection.config" />
