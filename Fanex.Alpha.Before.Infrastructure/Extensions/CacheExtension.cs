@@ -14,15 +14,11 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
     /// </summary>
     public class CacheExtension
     {
-        private static ICache cache = null;
+        private static ICache cache = Caching.CacheService.CreateInstance(CacheType.MemoryCache);
 
-        public CacheExtension() : this(null)
+        public CacheExtension(CacheType catcheType)
         {
-        }
-
-        public CacheExtension(string catcheType)
-        {
-            cache = Caching.CacheService.CreateInstance(!string.IsNullOrEmpty(catcheType) ? catcheType : CacheType.MemoryCache.ToString());
+            cache = Caching.CacheService.CreateInstance(catcheType);        
         }
 
         /// <summary>
