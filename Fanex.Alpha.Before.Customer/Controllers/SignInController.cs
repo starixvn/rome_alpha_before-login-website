@@ -54,7 +54,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// <param name="code">Encrypt code.</param>
         /// <param name="__di">FPS validate code.</param>
         /// <returns>Return result.</returns>
-        [HttpPost]
+        [AcceptVerbs(HttpVerbs.Post)]
+        [ValidateInput(false)]
         public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string txtCaptcha, string code, string __di)
         {
             var loginResult = _signInService.SignIn(txtUserName, txtPassWord, hidLanguage, txtCaptcha, code);
