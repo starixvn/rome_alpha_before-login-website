@@ -477,7 +477,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             if (this.TotallyLoginFailed() > MAXTIMESTOALLOWLOGINFAIL)
             {
                 var ipLockedError = string.Format(LoginLanguages.Labels.iploginfailedmultipletimeserror, MAXTIMESTOALLOWLOGINFAIL, BLOCKLOGINMINUTE);
-                signInResult.ErrCode = 1;
+                signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
                 signInResult.ErrMsg = ipLockedError;
             }
             else
