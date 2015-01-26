@@ -11,6 +11,7 @@ namespace Fanex.Alpha.Before.Common.Helpers
     using System.Web;
     using Fanex.Alpha.Before.Common.Configurations.Domain;
     using Fanex.Alpha.Before.Common.Models;
+    using Fanex.Alpha.Before.Customer.Configurations;
 
     /// <summary>
     /// URL helper.
@@ -28,9 +29,10 @@ namespace Fanex.Alpha.Before.Common.Helpers
                 var host = System.Web.HttpContext.Current.Request.Headers["Host"];
                 var domainGroupSection = DomainGroupSection.Instance.DomainGroup;
                 var baseUrl = GetBaseUrl();
+                var defaultGroup = "Others";
                 var siteGroup = new SiteGroupModel()
                 {
-                    SiteGroup = "Others",
+                    SiteGroup = defaultGroup,
                     BeforeUrl = baseUrl,
                     AfterUrl = baseUrl
                 };
@@ -68,6 +70,13 @@ namespace Fanex.Alpha.Before.Common.Helpers
                             siteGroup.SiteGroup = domainGroupElement.Name;
                             siteGroup.BeforeUrl = domainSetting.BeforeUrl;
                             siteGroup.AfterUrl = domainSetting.AfterUrl;
+                            
+                            if (AlphaCommonSection.Instance != null &&
+                               !string.IsNullOrEmpty(AlphaCommonSection.Instance.OfficeIPs) &&
+                                AlphaCommonSection.Instance.OfficeIPs.Split(',').Contains(IPHelper.ClientIP()))
+                            {
+                                siteGroup.SiteGroup = defaultGroup;
+                            }
 
                             return siteGroup;
                         }

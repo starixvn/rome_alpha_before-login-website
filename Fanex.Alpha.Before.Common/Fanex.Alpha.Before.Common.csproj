@@ -141,6 +141,7 @@
     <Compile Include="Configurations\LimtedCountryAccess\LimitedCountriesCollection.cs" />
     <Compile Include="Configurations\LimtedCountryAccess\LimitedCountriesElement.cs" />
     <Compile Include="Configurations\LimtedCountryAccess\LimtedCountryAccessSection.cs" />
+    <Compile Include="Configurations\AlphaCommonSection.cs" />
     <Compile Include="Configurations\UMSection.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\LimitedCountryAccessController.cs" />
