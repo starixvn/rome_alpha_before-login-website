@@ -65,7 +65,6 @@ Sphinx.Login = {
             Sphinx.Login.doEnter(evt, 'Sphinx.Login.doLogin()');
         });
 
-
         //Adjust component for Quirk mode
         if (!Sphinx.Helper.browserStandardMode()) {
             $('#txtCaptcha').height('22.5px');
@@ -75,12 +74,17 @@ Sphinx.Login = {
             $('.refreshCont').css('width', '50px');
             $('.header .title').css('float', 'left');
         }
+
+        Sphinx.Login.getValidateImage();
     },
 
     getValidateImage: function () {
         var objDate = new Date();
         $("#imgCode").attr('src', Sphinx.rootUrl + 'Customer/SignIn/NewCaptcha?code=' + objDate.getMilliseconds());
-        setTimeout(Sphinx.Login.getValidateImage, 120000);
+
+        setTimeout(function () {
+            Sphinx.Login.getValidateImage();
+        }, 120000);
     },
 
     setLanguague: function (languageCode, firstLoad) {
