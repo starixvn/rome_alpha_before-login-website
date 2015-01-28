@@ -9,7 +9,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using System;
     using System.IO;
     using System.Web.Mvc;
-    using System.Web.Security;
     using Fanex.Alpha.Before.Common.Controllers;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
     using Fanex.Alpha.Before.Infrastructure.Extensions;

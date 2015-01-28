@@ -6,101 +6,39 @@
 
 namespace Fanex.Alpha.Before.Infrastructure.Extensions
 {
-    using System;
-    using Fanex.Caching;
+    using Couchbase;
+    using Enyim.Caching.Memcached;
 
     /// <summary>
     /// Caching service.
     /// </summary>
     public class CacheExtension
     {
-        private static ICache cache = Caching.CacheService.CreateInstance(CacheType.MemoryCache);
+        private CouchbaseClient _client;
 
-        public CacheExtension(CacheType catcheType)
+        public CacheExtension()
         {
-            cache = Caching.CacheService.CreateInstance(catcheType);        
+            this._client = new CouchbaseClient();
         }
 
-        /// <summary>
-        /// Getting cache value.
-        /// </summary>
-        /// <param name="key">Cache key.</param>
-        /// <returns>Return value.</returns>
-        public static object Get(string key)
+        public object Get(string key)
         {
-            return cache.Get<object>(key);
+            return _client.Get(key);
         }
 
-        /// <summary>
-        /// Setting cache value.
-        /// </summary>
-        /// <param name="key">Cache key.</param>
-        /// <param name="value">The value that saving to cache.</param>
-        public static void Set(string key, object value)
+        public T Get<T>(string key)
         {
-            cache.Set(key, value);
+            return _client.Get<T>(key);
         }
 
-        /// <summary>
-        /// Getting cache value.
-        /// </summary>
-        /// <typeparam name="T">Parameter type.</typeparam>
-        /// <param name="key">Cache key.</param>
-        /// <returns>Return value.</returns>
-        public static T Get<T>(string key)
+        public void Set(string key, object value)
         {
-            return cache.Get<T>(key);
+            _client.ExecuteStore(StoreMode.Set, key, value);
         }
 
-        /// <summary>
-        /// Setting cache value.
-        /// </summary>
-        /// <typeparam name="T">Parameter type.</typeparam>
-        /// <param name="key">Cache key.</param>
-        /// <param name="value">Return value.</param>
-        public static void Set<T>(string key, T value)
+        public void Remove(string key)
         {
-            cache.Set<T>(key, value);
-        }
-
-        /// <summary>
-        /// Setting cache value.
-        /// </summary>
-        /// <param name="key">Cache key.</param>
-        /// <param name="value">The value that saving to cache.</param>
-        /// <param name="expire">Expire time.</param>
-        public static void Set(string key, object value, TimeSpan expire)
-        {
-            cache.Set(key, value, expire);
-        }
-
-        /// <summary>
-        /// Setting cache value.
-        /// </summary>
-        /// <typeparam name="T">Parameter type.</typeparam>
-        /// <param name="key">Cache key.</param>
-        /// <param name="value">The value that saving to cache.</param>
-        /// <param name="expire">Expire time.</param>
-        public static void Set<T>(string key, T value, TimeSpan expire)
-        {
-            cache.Set<T>(key, value, expire);
-        }
-
-        /// <summary>
-        /// Removing the cache.
-        /// </summary>
-        public static void Delete()
-        {
-            cache.Clear();
-        }
-
-        /// <summary>
-        /// Deletes the specified key.
-        /// </summary>
-        /// <param name="key">The key to remove.</param>
-        public static void Delete(string key)
-        {
-            cache.Remove(key);
+            _client.Remove(key);
         }
     }
 }

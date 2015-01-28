@@ -51,5 +51,23 @@ namespace Fanex.Alpha.Before.Customer.Configurations
                 return (string)base["OfficeIPs"];
             }
         }
+
+        [ConfigurationProperty("MaxTimesToAllowLoginFail", IsRequired = false)]
+        public int MaxTimesToAllowLoginFail
+        {
+            get
+            {
+                return (int)base["MaxTimesToAllowLoginFail"];
+            }
+        }
+
+        [ConfigurationProperty("BlockLoginMinutes", IsRequired = false)]
+        public int BlockLoginMinutes
+        {
+            get
+            {
+                return (int)base["BlockLoginMinutes"];
+            }
+        }
     }
 }

@@ -33,15 +33,16 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     /// </summary>
     public class SignInService : ISignInService
     {
-        private const int MAXTIMESTOALLOWLOGINFAIL = 15;
-        private const int BLOCKLOGINMINUTE = 15;
+        private int _maxTimesToAllowLogInFail = 0;
+        private int _blockLoginMinute = 0;
         private string _baseDomain = string.Empty;
         private string _loginTheme = string.Empty;
         private LoginThemeSection _loginThemeSection;
         private ISignInRepository _signInRepository;
         private string _totalLoginFailedSessionKey = string.Format(SessionConstants.LOGINFAILEDCOUNT, IPHelper.ClientIP());
         private string _latestLoginFailSessionKey = string.Format(SessionConstants.LOGINFAILEDTIME, IPHelper.ClientIP());
-        
+        private CacheExtension _cache;
+
         public SignInService() :
             this(null)
         {            
@@ -62,6 +63,13 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             var currentLoginUrl = UrlHelper.SiteGroupSetting.BeforeUrl;
             this._baseDomain = currentLoginUrl.Remove(0, currentLoginUrl.IndexOf('.') + 1);
             this._baseDomain = this._baseDomain.Remove(this._baseDomain.Length - 1, 1);
+            var alphaCommonSettings = AlphaCommonSection.Instance;
+            if (alphaCommonSettings != null)
+            {
+                this._maxTimesToAllowLogInFail = alphaCommonSettings.MaxTimesToAllowLoginFail;
+                this._blockLoginMinute = alphaCommonSettings.BlockLoginMinutes;
+            }
+            _cache = new CacheExtension();
         }
 
         /// <summary>
@@ -139,12 +147,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 AppSession.EncryptCode = code;
                 //// Login Failed Count > 15
-                if (this.TotallyLoginFailed() > MAXTIMESTOALLOWLOGINFAIL)
+                if (this.TotallyLoginFailed() > _maxTimesToAllowLogInFail)
                 { //// After 15'
-                    if (this.LoginFailedTime().AddMinutes(BLOCKLOGINMINUTE).CompareTo(DateTime.Now) > 0)
+                    if (this.LoginFailedTime().AddMinutes(_blockLoginMinute).CompareTo(DateTime.Now) > 0)
                     {
                         this.SetLoginFailedTime();
-                        var ipLockedError = string.Format(LoginLanguages.Labels.iploginfailedmultipletimeserror, MAXTIMESTOALLOWLOGINFAIL, BLOCKLOGINMINUTE);
+                        var ipLockedError = string.Format(LoginLanguages.Labels.iploginfailedmultipletimeserror, _maxTimesToAllowLogInFail, _blockLoginMinute);
                         signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
                         signInResult.ErrMsg = ipLockedError;
 
@@ -357,10 +365,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             int count = 0;
             try
             {
-                if (CacheExtension.Get(_totalLoginFailedSessionKey) is int)
-                {
-                    count = (int)CacheExtension.Get(_totalLoginFailedSessionKey);
-                }
+                count = _cache.Get<int>(_totalLoginFailedSessionKey);
             }
             catch (Exception ex)
             {
@@ -379,9 +384,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             DateTime date = DateTime.MinValue;
             try
             {
-                if (CacheExtension.Get(_latestLoginFailSessionKey) is DateTime)
+                if (_cache.Get(_latestLoginFailSessionKey) != null)
                 {
-                    date = (DateTime)CacheExtension.Get(_latestLoginFailSessionKey);
+                    date = Converter.ToDateTime(_cache.Get(_latestLoginFailSessionKey));
                 }
             }
             catch (Exception ex)
@@ -396,7 +401,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         {
             try
             {
-                CacheExtension.Set(_latestLoginFailSessionKey, DateTime.Now);
+                _cache.Set(_latestLoginFailSessionKey, DateTime.Now);
             }
             catch (Exception ex)
             {
@@ -411,8 +416,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         {
             try
             {
-                CacheExtension.Delete(_totalLoginFailedSessionKey);
-                CacheExtension.Delete(_latestLoginFailSessionKey);
+                _cache.Remove(_totalLoginFailedSessionKey);
+                _cache.Remove(_latestLoginFailSessionKey);
             }
             catch (Exception ex)
             {
@@ -420,11 +425,15 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
         }
 
+        /// <summary>
+        /// Increase Login Failed Count.
+        /// </summary>
         private void IncreaseLoginFailedCount()
         {
             try
             {
-                CacheExtension.Set(_totalLoginFailedSessionKey, this.TotallyLoginFailed() + 1);
+                var loginFailCount = TotallyLoginFailed() + 1;
+                _cache.Set(_totalLoginFailedSessionKey, loginFailCount);
             }
             catch (Exception ex)
             {
@@ -474,16 +483,16 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             this.SetLoginFailedTime();
             this.IncreaseLoginFailedCount();
 
-            if (this.TotallyLoginFailed() > MAXTIMESTOALLOWLOGINFAIL)
+            if (this.TotallyLoginFailed() > _maxTimesToAllowLogInFail)
             {
-                var ipLockedError = string.Format(LoginLanguages.Labels.iploginfailedmultipletimeserror, MAXTIMESTOALLOWLOGINFAIL, BLOCKLOGINMINUTE);
+                var ipLockedError = string.Format(LoginLanguages.Labels.iploginfailedmultipletimeserror, _maxTimesToAllowLogInFail, _blockLoginMinute);
                 signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
                 signInResult.ErrMsg = ipLockedError;
             }
             else
             {
                 signInResult.ErrCode = verifySignInResult.ErrorCode;
-                signInResult.ErrMsg = verifySignInResult.ErrorMessage;
+                signInResult.ErrMsg = signInResult.ErrMsg = verifySignInResult.ErrorMessage;
             }
         }
 

@@ -237,6 +237,7 @@ Sphinx.Login = {
     },
 
     doLogin: function () {
+
         if (!Sphinx.Login.validateInput()) {
             return false;
         }
