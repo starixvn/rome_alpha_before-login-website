@@ -5,29 +5,24 @@
 <html lang="en">
 <head>
     <title>Location Forbidden</title>
-    <link href="~/Views/Common/LimitedCountryAccess/Style/LimitedCountryAccess.less" rel="stylesheet" type="text/css" />
+    <link href="~/Views/Common/LimitedCountryAccess/Style/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    @{
-        var beforeUrl = Fanex.Alpha.Before.Common.Helpers.UrlHelper.SiteGroupSetting.BeforeUrl;
-        string domainLogin = beforeUrl.Remove(0, beforeUrl.IndexOf('.') + 1);
-        domainLogin = domainLogin.TrimEnd('/');
-      }
    <div class="container">
     <div class="content">
          <div class="header">
             <span class="icon_note"></span>
-            Note/注意
+            <span class="header-text">Notification Message</span>
         </div>
         <div class="body-content">
-            <h4>Dear Valued Customers</h4>
-            <p>  Note: Viewing and using this website at your current location is prohibited due to its regulatory rules.<br />
+           <div class="title">Dear Valued Customers:</div>
+            <p>  Note: Viewing and using this website at your current location is prohibited due to its regulatory rules.
                 We regret any inconvenience.</p>
-            <p>From @domainLogin</p>
-            <h4>尊敬的客户:</h4>
+            
+            <div class="title second-text">尊敬的客户:</div>
             <p> 注意：您所在的地区法规条例是禁止访问及使用本站。<br />
                     不便之处，敬请见谅！</p>
-            <p>@domainLogin 启</p>
+           
         </div>
     </div>
    </div>

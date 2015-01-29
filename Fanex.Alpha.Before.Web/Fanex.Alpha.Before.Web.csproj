@@ -217,6 +217,8 @@
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\less-1.4.1.min.js" />
     <Content Include="Views\Common\ErrorPage\404Error.htm" />
+    <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\LICENSE.txt" />
+    <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon-notify.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon_note.png" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.ConnectionStrings.config" />
@@ -238,6 +240,9 @@
     <None Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Font\Roboto\Roboto-Thin.ttf" />
     <None Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Font\Roboto\Roboto-ThinItalic.ttf" />
     <None Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Login.less" />
+    <None Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Bold.ttf" />
+    <None Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Medium.ttf" />
+    <None Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Regular.ttf" />
     <None Include="Views\Common\LimitedCountryAccess\Style\LimitedCountryAccess.less" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.LimtedCountryAccessSection.config" />
     <Content Include="LimtedCountryAccessSection.config" />
@@ -305,6 +310,8 @@
     <Content Include="Views\Common\LimitedCountryAccess\Index.cshtml" />
     <None Include="Views\Common\ErrorPage\Style\Error.less" />
     <Content Include="Views\Common\ErrorPage\Style\Images\error2.png" />
+    <Content Include="Views\Common\LimitedCountryAccess\Style\Images\seamless_pattern.png" />
+    <Content Include="Views\Common\LimitedCountryAccess\Style\style.css" />
     <Content Include="Views\Common\UnderMaintenance\Style\UnderMaintenance.less" />
     <Content Include="Views\Common\UnderMaintenance\Style\Images\UnderMaintenance.gif" />
     <Content Include="Web.config">
