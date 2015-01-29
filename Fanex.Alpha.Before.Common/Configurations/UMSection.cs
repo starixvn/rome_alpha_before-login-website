@@ -84,7 +84,7 @@ namespace Fanex.Alpha.Before.Common.Configurations
         {
             get
             {
-                return (string)base["EnableCheckUM"];
+                return (string)base["UMEndTesting"];
             }
         }
     }

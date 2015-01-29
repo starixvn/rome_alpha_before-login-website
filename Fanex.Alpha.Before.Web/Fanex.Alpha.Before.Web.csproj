@@ -312,7 +312,7 @@
     <Content Include="Views\Common\ErrorPage\Style\Images\error2.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\seamless_pattern.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\style.css" />
-    <Content Include="Views\Common\UnderMaintenance\Style\UnderMaintenance.less" />
+    <None Include="Views\Common\UnderMaintenance\Style\UnderMaintenance.less" />
     <Content Include="Views\Common\UnderMaintenance\Style\Images\UnderMaintenance.gif" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

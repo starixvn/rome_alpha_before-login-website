@@ -43,7 +43,6 @@ namespace Fanex.Alpha.Before.Common.Configurations.UnderMainternance
                 {
                     result.IsUM = new UMBusiness().isUnderMaintainence(Sites.Agency, alphaUMSetting.UMAddress, ref startTime, ref endTime);                
                 }
-
                 result.From = startTime;
                 result.To = endTime;
             }
