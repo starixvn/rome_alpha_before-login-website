@@ -61,7 +61,7 @@ namespace Fanex.Alpha.Before.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You inputed an invalid code..
+        ///   Looks up a localized string similar to You input an invalid code..
         /// </summary>
         public static string errInvalidCaptcha {
             get {
