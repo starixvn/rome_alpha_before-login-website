@@ -128,15 +128,15 @@
     <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Images\user.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\bg.jpg" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\caret.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\cn_simplified_text.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\cn_traditional_text.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\error_icon.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\key.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\panel.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\Rec_sp.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\refresh.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\sprites.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\text_en.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\user.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\validation.png" />
     <Content Include="Scripts\Component\Dropdown\Dropdown.js" />
     <Content Include="Scripts\Component\Dropdown\DropdownStyle.css" />
     <Content Include="Scripts\Component\Dropdown\Image\down.png" />

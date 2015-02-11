@@ -29,19 +29,19 @@ body{
 	padding:0;
 	margin:0;
 	font-family: @font-family;
-	background: url(Images/bg.jpg) repeat;
+	background: url(Images/bg.jpg) repeat-x #eecf7f;
 }
 
 .wrapper {
 	background: url(Images/panel.png) center top no-repeat;
-	width: 559px;
-	height: 497px;
-	margin: auto;
+	width: 449px;
+	margin: 110px auto 0;
+	height: 305px;
 }
 	.inputContainer {
 		text-align: left;
-		width: 220px;
-		padding: 180px 30px 0 32px;
+		width: 60%;
+		padding: 55px 30px 0 32px;
 		.signIn-text {
 			background: url(Images/SignIn.png) right no-repeat;
 			width: 166px;
@@ -50,7 +50,7 @@ body{
 		table {
 			width: 100%;
 			.row {
-				padding-bottom: 10px;
+				padding-bottom: 5px;
 			}
 		}
 		.language-select {
@@ -77,7 +77,7 @@ body{
 					height: 22px;
 					position: absolute;
 					right: -7px;
-					top: 9px;
+					top: 6px;
 				}
 
 				#divItemList {
@@ -118,8 +118,8 @@ body{
 			color: #794d28;
 		}
 		.custom-textbox {
-			width: 88%;
-			padding: 0 5px 0 28px;
+			width: 93%;
+			padding: 0 8px ;
 			font-size: @font-size - 1;
 			height: 26px;
 			border: none;
@@ -128,10 +128,10 @@ body{
 			line-height: 29px !important;
 			font-style: italic;
 			&.username {
-				background: url(Images/user.png) 8px center no-repeat #fff;
+				background: url(Images/user.png) 98% center no-repeat #fff;
 			}
 			&.password {
-				background: url(Images/key.png) 8px center no-repeat #fff;
+				background: url(Images/key.png) 98% center no-repeat #fff;
 			}
 
 			&:focus {
@@ -173,12 +173,12 @@ body{
 			span {
 				margin-left: 2px;
 				vertical-align: top;
-				font-size: @font-size - 1 ;					
+				font-size: @font-size - 2 ;					
 			}
 		}
 		.inputCaptcha {
 			width: 110px;
-			height: 26px !important;
+			height: 24px !important;
 			float: left;
 			text-align: center;
 			margin: 2px 0 0 2px;
@@ -191,7 +191,7 @@ body{
 			font-style: italic;
 			font-size: @font-size - 1;
 			border: 1px solid @border-color;
-			background: url(Images/validation.png) 8px center no-repeat #fff;
+			background: #fff;
 			&:focus {
 				outline: none;
 				font-style: normal; 
@@ -204,43 +204,42 @@ body{
 			margin: 2px 2px 2px 4px;
 		}
 		.btnLogin {
-			background: #e74c3c;
-			width: 100%;
+			background-image: url(Images/sprites.png);
+			background-position: 0 0;
+			background-repeat: no-repeat;
 			border: none;
-			border-bottom: 3px solid #98281c;		
-			border-radius: 3px;	
-			height: 28px;
+			width: 88px;
+			height: 25px;
 			cursor: pointer;
 			color: #fff;
-			font-size: @font-size + 2;
+			font-size: @font-size;
 			text-align: center;
-			text-transform: uppercase;
 			font-family: Arial;
-			font-weight: bold;
-			font-size: 12px;
 			margin-left: 3px;
 			&:hover {
-				background: #e75c3c;
+				background-position: 0 -27px;
 			}
 			
 		}
 		.btnLoginDisable {
 			.btnLogin;
-			background: #9c9d9d;
+			background-position: 0 -54px;
 		}
 		.refreshCont {
 			float: left;
 		}
 		.refreshCode {
 			margin: 6px 2px 2px 3px;
-			background: url(images/refresh.png) 0px 0px no-repeat;
+			background-image: url(images/sprites.png);
+			background-repeat: no-repeat;
+			background-position: -94px -7px;
 			width: 19px;
 			float: left;
 			height: 18px !important;
 			cursor: pointer;
 			padding: 0;
 			&:hover {
-				background: url(images/refresh.png) -20px 1px no-repeat;
+				background-position: -94px -33px; 
 			}
 		}
 	}
@@ -260,19 +259,35 @@ body{
 			left: 5px;
 		}
 	}
-	.event-text {
-		background: url(Images/text_en.png) no-repeat;
-		width: 276px;
-		height: 28px;
-		position: relative;
-		top: -38px;
-		left: -23px;
+
+	
+	.textTitle_en {
+		background: url(Images/text_en.png) center no-repeat;
+		width: 393px;
+		height: 89px;
+		margin-top: 30px;
+	}
+	.textTitle-cn {
+		width: 257px;
+		height: 138px;
+		background: url(Images/cn_simplified_text.png) center no-repeat;
+		margin-top: 30px;
+	}
+
+	.textTitle-tw {
+		width: 250px;
+		height: 138px;
+		background: url(Images/cn_traditional_text.png) center no-repeat;
+		margin-top: 30px;
+
 	}
 	.errorMessage {
-		font-size: 12px;
-		color: #98281c;
+		color: #c44648;
+		font-size: 13px;
 		text-align: center;
-		margin-top: -8px;
+		line-height: 18px;
+		margin-top: -3px;
+		width: 70%;
 	}
 
 .eq-ie8 {
@@ -296,4 +311,5 @@ body{
 		}
 	}
 }
+
 

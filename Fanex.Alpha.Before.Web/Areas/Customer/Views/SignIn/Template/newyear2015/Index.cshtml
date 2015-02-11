@@ -7,7 +7,6 @@
         <div class="content">
             <div class="wrapper">
                 <div class="inputContainer">
-                    <div class="event-text"></div>
                     <table>
                         <tr>
                             <td class="row">
@@ -38,10 +37,10 @@
                         </tr>
                         <tr>
                             <td class="row">
-                                <input type="text" id="txtCaptcha" name="txtCaptcha" class="inputCaptcha" maxlength="4" placeholder="Validation"
+                                <input type="text" id="txtCaptcha" name="txtCaptcha" class="custom-textbox inputCaptcha" maxlength="4" placeholder="Validation"
                                     tabindex="4" />
                                 <div class="codeCaptcha">
-                                    <img width="66" height="27" src="" id="imgCode" style="cursor:pointer" alt="" onclick="return Sphinx.Login.getValidateImage();"/>                                    
+                                    <img width="66" height="27" src="" id="imgCode" style="cursor:pointer" alt="" onclick="return Sphinx.Login.getValidateImage();"/>
                                 </div>
                                 <div class="refreshCont"><span class="refreshCode" onclick="return Sphinx.Login.getValidateImage();"></span></div>
                             </td>
@@ -52,10 +51,13 @@
                             </td>
                         </tr>
                     </table>
-                    <div class="errorMessage" errCode="@Model.ErrMsg" id="errmsg">@Model.ErrMsg</div>
+                    
                 </div>
                 
+                <div class="errorMessage" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
+                
             </div>
+            <div id="textTitle" class="titleText"></div>
             <div id="divPopupMobileVersion" style="color:#000; font-size: 14px; padding-top: 20px;">@(Model.IsChangedPassword ? @Model.ChangedPasswordTime : "")
             </div>
         </div>        
