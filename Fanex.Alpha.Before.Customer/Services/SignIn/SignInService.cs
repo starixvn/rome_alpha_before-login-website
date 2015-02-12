@@ -69,6 +69,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 this._maxTimesToAllowLogInFail = alphaCommonSettings.MaxTimesToAllowLoginFail;
                 this._blockLoginMinute = alphaCommonSettings.BlockLoginMinutes;
             }
+
             _cache = new CacheExtension();
         }
 

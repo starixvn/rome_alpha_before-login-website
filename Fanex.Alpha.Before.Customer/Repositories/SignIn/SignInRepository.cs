@@ -42,6 +42,7 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
                 parameters.Add("nickname", string.Empty);                
                 parameters.Add("errcode", 0);
                 parameters.Add("errmsg", string.Empty);
+                parameters.Add("lastchangedpwddate", null);
                 InsertRequestInfo(requestInfo, parameters);
 
                 objectDB.AssignParamValues(parameters);
