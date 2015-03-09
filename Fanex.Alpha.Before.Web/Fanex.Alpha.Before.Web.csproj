@@ -160,7 +160,9 @@
     <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\Rec_sp.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\refresh.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\SignIn.png" />
-    <Content Include="Configurations\Dev.StoreProcedure\DBTXN.CustDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\Dev.StoreProcedure\DBTXN.CustDB.BODBDownlineNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\Local.StoreProcedure\DBTXN.CustDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\Master.StoreProcedure\DBTXN.CustDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\DBTXN.CustDB.BODBDownlineNet.xml" />
