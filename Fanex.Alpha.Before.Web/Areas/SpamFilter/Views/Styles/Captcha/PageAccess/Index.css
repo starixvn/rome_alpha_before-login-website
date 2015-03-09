@@ -1,0 +1,305 @@
+﻿@font-face {
+    font-family: Roboto;
+    src: url(../../../../../../App_Themes/Fonts/Roboto/Roboto-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Roboto Light";
+    src: url(../../../../../../App_Themes/Fonts/Roboto/Roboto-Light.ttf);
+}
+
+@font-face {
+    font-family: "Roboto Bold";
+    src: url(../../../../../../App_Themes/Fonts/Roboto/Roboto-Bold.ttf);
+}
+
+@font-face {
+    font-family: "Roboto Medium";
+    src: url(../../../../../../App_Themes/Fonts/Roboto/Roboto-Medium.ttf);
+}
+
+
+body
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+#popup
+{
+    background: url("Images/pbg.jpg") repeat-x scroll 0 0 transparent;
+    border: 1px solid #FFFFFF;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 2px 2px 5px rgba(50, 50, 50, 0.3);
+    height: 265px;
+    width: 375px;
+    position: fixed;
+    z-index: 1001;
+    margin-top: 20%;
+    margin-left: 30%;
+}
+
+.ptitle
+{
+    background: url("Images/ptitlebg.jpg") repeat-x scroll 0 0 transparent;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #FFFFFF;
+    font-family: "Roboto",Verdana,Geneva,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    height: 22px;
+    line-height: 14px;
+    padding-left: 10px;
+    padding-top: 5px;
+    text-indent: 5px;
+    width: 365px;
+}
+
+.atticon
+{
+    background: url("Images/atticon.png") no-repeat scroll 0 0 transparent;
+    float: left;
+    height: 16px;
+    width: 16px;
+}
+
+.pcon
+{
+    font-family: "Roboto",Verdana,Geneva,sans-serif;
+    font-size: 11px;
+    padding: 10px 30px 30px;
+}
+
+.pbutton
+{
+    background: url("Images/bt_bg.png") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    float: right;
+    font-family: "Roboto",Verdana,Geneva,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    height: 22px;
+    line-height: 22px;
+    margin-top: 10px;
+    width: 92px;
+    border-style: none;
+}
+.recaptchatable td img {
+    display: block;
+}
+.recaptchatable .recaptcha_r1_c1 {
+    background: url("Images/sprite.gif") no-repeat scroll 0 -63px transparent;
+    height: 9px;
+    width: 318px;
+    background-color: none;
+}
+.recaptchatable .recaptcha_r2_c1 {
+    background: url("Images/sprite.gif") no-repeat scroll -18px 0 transparent;
+    height: 57px;
+    width: 9px;
+    background-color: none;
+}
+.recaptchatable .recaptcha_r2_c2 {
+    background: url("Images/sprite.gif") no-repeat scroll -27px 0 transparent;
+    height: 57px;
+    width: 9px;
+    background-color: none;
+}
+.recaptchatable .recaptcha_r3_c1 {
+    background: url("Images/sprite.gif") no-repeat scroll 0 0 transparent;
+    height: 63px;
+    width: 9px;
+    background-color: none;
+}
+.recaptchatable .recaptcha_r3_c2 {
+    background: url("Images/sprite.gif") no-repeat scroll -14px -57px #DBDBDB;
+    height: 6px;
+    width: 300px;
+    background-color: none;
+}
+.recaptchatable .recaptcha_r3_c3 {
+    background: url("Images/sprite.gif") no-repeat scroll -9px 0 transparent;
+    height: 63px;
+    width: 9px;
+    background-color: none;
+}
+.recaptchatable .recaptcha_r4_c1 {
+    background: url("Images/sprite.gif") no-repeat scroll -43px 0 transparent;
+    height: 49px;
+    width: 171px;
+    background-color: none;
+}
+.recaptchatable .recaptcha_r4_c2 {
+    background: url("Images/sprite.gif") no-repeat scroll -36px 0 transparent;
+    height: 57px;
+    width: 7px;
+    background-color: none;
+}
+.recaptchatable .recaptcha_r4_c4 {
+    background: url("Images/sprite.gif") no-repeat scroll -214px 0 transparent;
+    height: 57px;
+    width: 97px;
+    background-color: none;
+}
+.recaptchatable .recaptcha_r7_c1 {
+    background: url("Images/sprite.gif") no-repeat scroll -43px -49px transparent;
+    height: 8px;
+    width: 171px;
+    background-color: none;
+    
+}
+.recaptchatable .recaptcha_r8_c1 {
+    background: url("Images/sprite.gif") no-repeat scroll -43px -49px transparent;
+    height: 8px;
+    width: 25px;
+    background-color: none;
+     <!--[if IE]>
+    background: url("Images/sprite.gif") no-repeat scroll -43px -51px transparent;
+    <![endif]-->
+}
+.recaptchatable .recaptcha_image_cell center img {
+    height: 57px;
+}
+.recaptchatable .recaptcha_image_cell center {
+    height: 57px;
+}
+.recaptchatable .recaptcha_image_cell {
+    background-color: white;
+    height: 57px;
+}
+#recaptcha_area, #recaptcha_table {
+    width: 318px !important;
+}
+.recaptchatable, #recaptcha_area tr, #recaptcha_area td, #recaptcha_area th {
+    border: 0 none !important;
+    border-collapse: collapse !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    vertical-align: middle !important;
+}
+.recaptchatable * {
+    border: 0 none;
+    bottom: auto;
+    color: black;
+    font-family: "Roboto",helvetica,sans-serif;
+    font-size: 8pt;
+    left: auto;
+    margin: 0;
+    padding: 0;
+    position: static;
+    right: auto;
+    top: auto;
+}
+.recaptchatable #recaptcha_image {
+    margin: auto;
+}
+.recaptchatable img {
+    border: 0 none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.recaptchatable a, .recaptchatable a:hover {
+    background: none repeat scroll 0 0 transparent !important;
+    border: 0 none !important;
+    color: blue;
+    cursor: pointer;
+    font-weight: normal;
+    outline: medium none;
+    padding: 0 !important;
+    text-decoration: none;
+}
+.recaptcha_input_area {
+    background: none repeat scroll 0 0 transparent !important;
+    height: 45px !important;
+    margin-left: 7px !important;
+    margin-right: 7px !important;
+    position: relative !important;
+    width: 153px !important;
+}
+.recaptchatable label.recaptcha_input_area_text {
+    background: none repeat scroll 0 0 transparent !important;
+    bottom: auto !important;
+    height: auto !important;
+    left: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: static !important;
+    right: auto !important;
+    top: auto !important;
+    width: auto !important;
+}
+.recaptcha_theme_red label.recaptcha_input_area_text, .recaptcha_theme_white label.recaptcha_input_area_text {
+    color: black !important;
+}
+.recaptcha_theme_blackglass label.recaptcha_input_area_text {
+    color: white !important;
+}
+.recaptchatable #recaptcha_response_field {
+    bottom: 7px !important;
+    font-size: 10pt;
+    margin: 15px 15px 0 !important;
+    padding: 0 !important;
+    position: relative !important;
+    width: 142px !important;
+}
+.recaptcha_theme_blackglass #recaptcha_response_field, .recaptcha_theme_white #recaptcha_response_field {
+    border: 1px solid gray;
+}
+.recaptcha_theme_red #recaptcha_response_field {
+    border: 1px solid #CCA940;
+}
+.recaptcha_audio_cant_hear_link {
+    color: black;
+    font-size: 7pt;
+}
+#recaptcha_instructions_error {
+    color: red !important;
+}
+.recaptcha_only_if_privacy {
+    float: right;
+    text-align: right;
+}
+.recaptcha_is_showing_audio .recaptcha_only_if_image, .recaptcha_isnot_showing_audio .recaptcha_only_if_audio, .recaptcha_had_incorrect_sol .recaptcha_only_if_no_incorrect_sol, .recaptcha_nothad_incorrect_sol .recaptcha_only_if_incorrect_sol {
+    display: none !important;
+}
+#recaptcha_switch_audio
+{
+    background: url("Images/sprite.gif") no-repeat scroll -31px -39px transparent;
+    height: 16px;
+    width: 25px;
+    background-color: none;
+}
+.recaptchatable .recaptcha_r7_c1_ie {
+    background: url("Images/sprite.gif") no-repeat scroll -43px -52px transparent;
+    height: 8px;
+    width: 171px;
+    background-color: none;
+    
+}
+.recaptchatable .recaptcha_r8_c1_ie {
+    background: url("Images/sprite.gif") no-repeat scroll -43px -52px transparent;
+    height: 8px;
+    width: 25px;
+    background-color: none;
+}
+
+.recaptcha_response_field_label
+{
+    margin-left: 15px;
+}
+
+#recaptcha_image
+{
+    width: 300px; height: 57px;
+}
+
+.message-error
+{
+    color: Red;
+}
+
+.recaptcha_btn_image
+{
+    background-color: #DCDCDC;
+}

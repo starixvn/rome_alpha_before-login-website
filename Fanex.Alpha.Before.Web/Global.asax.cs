@@ -8,6 +8,12 @@ namespace Fanex.Alpha.Before.Web.View
 {
     using System.Web.Mvc;
     using System.Web.Routing;
+    using CaptchaMvc.Infrastructure;
+    using System.Collections.Generic;
+    using CaptchaMvc.Interface;
+    using System.Web.SessionState;
+    using System.Collections.Concurrent;
+    using System.Web;
 
     /// <summary>
     /// MVC Application.
@@ -52,6 +58,26 @@ namespace Fanex.Alpha.Before.Web.View
             RegisterRoutes(RouteTable.Routes);
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
+            //CaptchaUtils.CaptchaManager.StorageProvider = new CookieStorageProvider();
+            var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
+            defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
+            defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
+        }
+
+
+        private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
+        {
+            return urlHelper.Action("Refresh", "DefaultCaptcha", new { area = "" });
+        }
+
+        private string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
+        {
+            return urlHelper.Action("Generate", "DefaultCaptcha",
+                                    new RouteValueDictionary
+                                {
+                                    {"area", ""},
+                                    {captchaManager.TokenParameterName, keyValuePair.Key}
+                                });
         }
     }
 }

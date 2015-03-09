@@ -1,0 +1,93 @@
+﻿@using Couchbase;
+@model IEnumerable<IViewRow>
+@{
+    ViewBag.Title = "Index";
+}
+<style type="text/css">
+table
+{
+    border-collapse: collapse;
+    width: 900px;
+}
+
+table td, table th
+{
+    border: 1px solid black;
+    padding : 5px;
+}
+</style>
+<h2>
+    Index</h2>
+<table>
+    <thead>
+        <tr>
+            <th>
+                Doc ID
+            </th>
+            <th>
+                Value
+            </th>
+        </tr>
+    </thead>
+    @if (Model.Any())
+    {
+        foreach (var item in Model)
+        {
+
+        <tr>
+            <td>
+                @item.ItemId
+            </td>
+            <td>
+                @Convert.ToString(item.GetItem())
+            </td>
+        </tr>
+        }
+    }
+</table>
+@*<table>
+    <thead>
+        <tr>
+            <th>
+                Type
+            </th>
+            <th>
+                User Name
+            </th>
+            <th>
+                Create Date
+            </th>
+            <th>
+                Role
+            </th>
+        </tr>
+    </thead>
+    @if (Model.Any())
+    {
+        foreach (var item in Model)
+        {
+
+        <tr>
+            <td>
+                @item.Type
+            </td>
+            <td>
+                @item.UserName
+            </td>
+            <td>
+                @item.CreateDate.ToString("dd MMM yyyy")
+            </td>
+            <td>
+                @item.Role
+            </td>
+        </tr>
+        }
+    }
+    <tr>
+        <td colspan="4">
+            @Html.ActionLink("List", "Index", new { pagesize = 10 }) @Html.ActionLink("< Previous", "Index", new { startKey = Request["previousKey"], pagesize = Request["pagesize"] ?? "10" })
+            @Html.ActionLink("Next >", "Index",
+                new { startKey = ViewBag.NextStartKey, previousKey = ViewBag.StartKey, pagesize = Request["pagesize"] ?? "10" })
+        </td>
+    </tr>
+</table>*@

@@ -35,12 +35,17 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     {
         private int _maxTimesToAllowLogInFail = 0;
         private int _blockLoginMinute = 0;
+        private int _loginFailTimeToStartUsingCaptcha = 0;
+        private int _passwordMaxFailTimeForOneUser = 0;
+        private int _noInteractionTimeInMinutes = 0;
         private string _baseDomain = string.Empty;
         private string _loginTheme = string.Empty;
         private LoginThemeSection _loginThemeSection;
         private ISignInRepository _signInRepository;
-        private string _totalLoginFailedSessionKey = string.Format(SessionConstants.LOGINFAILEDCOUNT, IPHelper.ClientIP());
+        private string _totalLoginFailedSessionKey = string.Format(SessionConstants.TOTALLOGINFAILEDCOUNT, IPHelper.ClientIP());
+        private string _currentLoginFailedSessionKey = string.Format(SessionConstants.CURRENTLOGINFAILEDCOUNT, IPHelper.ClientIP());
         private string _latestLoginFailSessionKey = string.Format(SessionConstants.LOGINFAILEDTIME, IPHelper.ClientIP());
+        private string _lastLoginUserNameSessionKey = string.Format(SessionConstants.LASTLOGINUSERNAME, IPHelper.ClientIP());
         private CacheExtension _cache;
 
         public SignInService() :
@@ -68,6 +73,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 this._maxTimesToAllowLogInFail = alphaCommonSettings.MaxTimesToAllowLoginFail;
                 this._blockLoginMinute = alphaCommonSettings.BlockLoginMinutes;
+                this._loginFailTimeToStartUsingCaptcha = alphaCommonSettings.LoginFailTimeToStartUsingCaptcha;
             }
 
             _cache = new CacheExtension();
@@ -229,6 +235,98 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         }
 
         /// <summary>
+        /// Sign In method.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">User's password.</param>
+        /// <param name="language">Current language.</param>
+        /// <param name="captcha">The captcha.</param>
+        /// <param name="code">The encrypt code.</param>
+        /// <returns>Return login result.</returns>
+        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
+            "SP2101:MethodMustNotContainMoreLinesThan",
+            Justification = "Reviewed. Suppression is OK here.")]
+        public SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha)
+        {
+            var signInResult = new SignInResult()
+            {
+                Ip = IPHelper.ClientIP(),
+                LoginTemplate = _loginTheme,
+                Username = username
+            };
+
+            try
+            {
+                //// Login Failed Count > 15
+                if (this.TotallyLoginFailed() > _maxTimesToAllowLogInFail)
+                { //// After 15'
+                    if (this.LoginFailedTime().AddMinutes(_blockLoginMinute).CompareTo(DateTime.Now) > 0)
+                    {
+                        this.SetLoginFailedTime();
+                        var ipLockedError = string.Format(LoginLanguages.Labels.iploginfailedmultipletimeserror, _maxTimesToAllowLogInFail, _blockLoginMinute);
+                        signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
+                        signInResult.ErrMsg = ipLockedError;
+                        return signInResult;
+                    }
+                    else
+                    {
+                        this.ResetLoginFailed();
+                    }
+                }
+
+                AssignSettingLanguage(language);
+
+                if (this.CurrentLoginFailed() > _loginFailTimeToStartUsingCaptcha  && !isValidCaptcha)
+                {
+                    this.IncreaseLoginFailedCount();
+                    signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
+                    signInResult.ErrMsg = LoginLanguages.Labels.errInvalidCaptcha;
+                    return signInResult;
+                }
+
+                if (this.LoginFailedTime().AddMinutes(_noInteractionTimeInMinutes).CompareTo(DateTime.Now) > 0)
+                {
+                    ResetCurrentLoginFailed();
+                }
+
+                try
+                {
+                    password = EncryptExtension.RC4(AppSession.EncryptCode, EncryptExtension.HexDecode(password));
+                }
+                catch (Exception ex)
+                {
+                    LogExtension.ExceptionHandler(ex);
+                    signInResult.ErrCode = ErrorCodeConstants.ServerError;
+                    signInResult.ErrMsg = string.Empty;
+                    return signInResult;
+                }
+
+                //// Get Browser
+                Hashtable requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request);
+                requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
+                var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
+
+                if (verifySignInResult.ErrorCode == 0)
+                {
+                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult);
+                }
+                else
+                {
+                    UpdateResultAfterLoginFail(signInResult, verifySignInResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                signInResult.ErrCode = ErrorCodeConstants.ServerError;
+                signInResult.ErrMsg = InfrastructureLanguages.Labels.Error_Server;
+                LogExtension.ExceptionHandler(ex);
+            }
+
+            _cache.Set(this._lastLoginUserNameSessionKey, username);
+            return signInResult;
+        }
+
+        /// <summary>
         /// Support for automation test tool.
         /// </summary>
         /// <param name="username">Username login.</param>
@@ -336,6 +434,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             return graphic;
         }
+
+        public bool IsShowReCaptcha()
+        {
+            return _cache.Get<int>(this._currentLoginFailedSessionKey) > this._loginFailTimeToStartUsingCaptcha;
+        }
         
         /// <summary>
         /// Close RNG Account.
@@ -367,6 +470,24 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             try
             {
                 count = _cache.Get<int>(_totalLoginFailedSessionKey);
+            }
+            catch (Exception ex)
+            {
+                LogExtension.ExceptionHandler(ex);
+            }
+
+            return count;
+        }
+        /// <summary>
+        /// Get login current failed.
+        /// </summary>
+        /// <returns>Return result.</returns>
+        private int CurrentLoginFailed()
+        {
+            int count = 0;
+            try
+            {
+                count = _cache.Get<int>(_currentLoginFailedSessionKey);
             }
             catch (Exception ex)
             {
@@ -418,7 +539,20 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             try
             {
                 _cache.Remove(_totalLoginFailedSessionKey);
+                _cache.Remove(_currentLoginFailedSessionKey);
                 _cache.Remove(_latestLoginFailSessionKey);
+            }
+            catch (Exception ex)
+            {
+                LogExtension.ExceptionHandler(ex);
+            }
+        }
+
+        private void ResetCurrentLoginFailed()
+        {
+            try
+            {
+                _cache.Remove(_currentLoginFailedSessionKey);
             }
             catch (Exception ex)
             {
@@ -435,6 +569,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 var loginFailCount = TotallyLoginFailed() + 1;
                 _cache.Set(_totalLoginFailedSessionKey, loginFailCount);
+                var currentLoginFailCount = CurrentLoginFailed() + 1;
+                _cache.Set(_currentLoginFailedSessionKey, currentLoginFailCount);
             }
             catch (Exception ex)
             {

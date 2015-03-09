@@ -1,0 +1,93 @@
+﻿@using Resources;
+@model CaptchaMvc.Models.DefaultBuildInfoModel
+@{
+    string id = Guid.NewGuid().ToString("N");
+    string functionName = string.Format("______{0}________()", Guid.NewGuid().ToString("N"));
+    <script type="text/javascript">
+        $(function () {
+            $('#@id').show();
+        });
+
+        function @functionName {
+                //$('#@id').hide();
+            $.post("@Model.RefreshUrl", { @Model.TokenParameterName: $('#@Model.TokenElementId').val() }, 
+                function () {
+                    $('#@id').show();
+                });
+            return false;
+        }
+    </script>
+}
+<div id="captchaWrapper">
+        <div class="pcon">
+    <div id="recaptcha_widget">
+        <table style="border-collapse: collapse" border="1px" class="recaptchatable recaptcha_theme_white" id="recaptcha_table">
+            <tbody>
+                <tr>
+                    <td class="recaptcha_r1_c1" colspan="6">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="recaptcha_r2_c1">
+                    </td>
+                    <td class="recaptcha_image_cell" colspan="4">
+                        <img id="@Model.ImageElementId" src="@Model.ImageUrl" style="width:300px; height: 57px" />
+                        @Html.Hidden(Model.TokenElementId, Model.TokenValue)
+                    </td>
+                    <td class="recaptcha_r2_c2">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="recaptcha_r3_c1" rowspan="6">
+                    </td>
+                    <td class="recaptcha_r3_c2" colspan="4">
+                    </td>
+                    <td class="recaptcha_r3_c3" rowspan="6">
+                    </td>
+                </tr>
+                <tr>
+                    <td height="49" class="recaptcha_r4_c1" rowspan="3" style="position: fixed;">
+                        <span class="recaptcha_response_field_label">@Security.typetheword</span> @*<input type="text" id="recaptcha_response_field" 
+                            name="recaptcha_response_field" />*@
+                        @if (Model.IsRequired)
+                        {
+                            @Html.TextBox(Model.InputElementId, null, new Dictionary<string, object>
+                                                  {
+                                                      {"data-val", "true"},
+                                                      {"data-val-required", Model.RequiredMessage},
+                                                      {"id", "recaptcha_response_field"}
+                                                  })
+                        }
+                        else
+                        {
+                            @Html.TextBox(Model.InputElementId, null, new { @id = "recaptcha_response_field" })
+                        }
+                    </td>
+                    <td class="recaptcha_r4_c2" rowspan="4">
+                    </td>
+                    <td class="recaptcha_btn_image">
+                        <a id="@id" title="Get a new challenge" href="#@Model.ImageElementId">
+                            <img width="25" height="25" id="recaptcha_reload" onclick="@functionName"  src="@Url.Content("~/Areas/SpamFilter/Views/Styles/Captcha/PageAccess/Images/Reload-icon.png")" alt="Get a new challenge">
+                        </a>
+                    </td>
+                    <td class="recaptcha_r4_c4" rowspan="4">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="recaptcha_r7_c1">
+                    </td>
+                    <td class="recaptcha_r8_c1">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div></div>
+</div>
