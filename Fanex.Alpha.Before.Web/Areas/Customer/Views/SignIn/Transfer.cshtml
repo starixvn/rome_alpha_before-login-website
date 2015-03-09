@@ -1,0 +1,14 @@
+﻿@model Fanex.Alpha.Before.Customer.Models.SignInResult
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Redirecting...</title>
+        
+    </head>
+    <body>
+        Loading... please wait
+        @{
+            Response.Redirect(Model.AfterLoginUrl);
+        }
+    </body>
+</html>

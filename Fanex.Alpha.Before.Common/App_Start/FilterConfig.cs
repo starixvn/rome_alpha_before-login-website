@@ -1,0 +1,21 @@
+// --------------------------------------------------------------------------
+// <copyright file="FilterConfig.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+
+namespace Fanex.Alpha.Before.Common.App_Start
+{
+    using System.Web.Mvc;
+
+    /// <summary>
+    /// Filter Config.
+    /// </summary>
+    public class FilterConfig
+    {
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        {
+            filters.Add(new HandleErrorAttribute());
+        }
+    }
+}

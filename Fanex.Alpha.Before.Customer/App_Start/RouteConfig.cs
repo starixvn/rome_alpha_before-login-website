@@ -1,0 +1,27 @@
+// --------------------------------------------------------------------------
+// <copyright file="RouteConfig.cs" company="Nexcel Solutions Vietnam">
+// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// </copyright>
+// --------------------------------------------------------------------------
+
+namespace Fanex.Alpha.Before.Customer.App_Start
+{
+    using System.Reflection;
+    using System.Web.Mvc;
+
+    /// <summary>
+    /// Route config class.
+    /// </summary>
+    public class RouteConfig
+    {
+        public static void RegisterRoutes(string areaName, AreaRegistrationContext context)
+        {
+            var controllerName = Assembly.GetExecutingAssembly().GetName().Name + ".Controllers";
+            context.MapRoute(
+                areaName + "_Default",
+                areaName + "/{controller}/{action}/{id}",
+                new { action = "Index", id = UrlParameter.Optional },
+                new[] { controllerName });
+        }
+    }
+}
