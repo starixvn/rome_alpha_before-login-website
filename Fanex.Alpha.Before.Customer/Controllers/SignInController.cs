@@ -82,13 +82,13 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// <param name="txtUserName">User name.</param>
         /// <param name="txtPassWord">User password.</param>
         /// <param name="hidLanguage">Hidden language.</param>
-        /// <param name="txtCaptcha">Captcha value.</param>
-        /// <param name="code">Encrypt code.</param>
         /// <param name="__di">FPS validate code.</param>
-        /// <returns>Return result.</returns>
+        /// <returns>
+        /// Return result.
+        /// </returns>
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateInput(false)]
-        public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage)
+        public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string __di)
         {
             bool validCaptcha = false;
             try

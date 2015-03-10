@@ -20,7 +20,7 @@
                     <tr>
                         <td class="row">
                             <input type="text" id="txtUserName" name="txtUserName" class="custom-textbox username"
-                                placeholder="Username" tabindex="1" autocomplete="off" />
+                                placeholder="Username" tabindex="1" autocomplete="off" maxlength="50" />
                         </td>
                     </tr>
                     <tr>
@@ -48,8 +48,6 @@
                             <div class="refreshCont"><span class="refreshCode" onclick="return Sphinx.Login.getValidateImage();"></span></div>*@
                             @if (ViewBag.ShowReCaptcha == true)
                             {
-                                <link href="@Url.Content("~/Areas/Captcha/Views/SylouCaptcha/Styles/Index.css")"
-                                    rel="stylesheet" type="text/css" />
                                 using (Html.BeginForm("CheckCaptcha", "SylouCaptcha", FormMethod.Post, new { @id = "CaptchaMVCForm" }))
                                 {
                                     @Html.Captcha(5, "~/Areas/Captcha/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)

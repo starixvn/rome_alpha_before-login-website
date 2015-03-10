@@ -74,6 +74,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 this._maxTimesToAllowLogInFail = alphaCommonSettings.MaxTimesToAllowLoginFail;
                 this._blockLoginMinute = alphaCommonSettings.BlockLoginMinutes;
                 this._loginFailTimeToStartUsingCaptcha = alphaCommonSettings.LoginFailTimeToStartUsingCaptcha;
+                this._noInteractionTimeInMinutes = alphaCommonSettings.NoInteractionTimeInMinutes;
+                this._passwordMaxFailTimeForOneUser = alphaCommonSettings.PasswordMaxFailTimeForOneUser;
+
             }
 
             _cache = new CacheExtension();
@@ -274,7 +277,16 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     }
                 }
 
+                if (this.LoginFailedTime().AddMinutes(_noInteractionTimeInMinutes).CompareTo(DateTime.Now) < 0)
+                {
+                    ResetCurrentLoginFailed();
+                }
+
                 AssignSettingLanguage(language);
+                if (this.LastLoginUserName() != username)
+                {
+                    ResetCurrentLoginFailed();
+                }
 
                 if (this.CurrentLoginFailed() > _loginFailTimeToStartUsingCaptcha  && !isValidCaptcha)
                 {
@@ -282,11 +294,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
                     signInResult.ErrMsg = LoginLanguages.Labels.errInvalidCaptcha;
                     return signInResult;
-                }
-
-                if (this.LoginFailedTime().AddMinutes(_noInteractionTimeInMinutes).CompareTo(DateTime.Now) > 0)
-                {
-                    ResetCurrentLoginFailed();
                 }
 
                 try
@@ -437,7 +444,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
         public bool IsShowReCaptcha()
         {
-            return _cache.Get<int>(this._currentLoginFailedSessionKey) > this._loginFailTimeToStartUsingCaptcha;
+            return _cache.Get<int>(this._currentLoginFailedSessionKey) >= this._loginFailTimeToStartUsingCaptcha;
         }
         
         /// <summary>
@@ -478,6 +485,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             return count;
         }
+
         /// <summary>
         /// Get login current failed.
         /// </summary>
@@ -576,6 +584,20 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 LogExtension.ExceptionHandler(ex);
             }
+        }
+
+        private string LastLoginUserName()
+        {
+            try
+            {
+                return _cache.Get<string>(this._lastLoginUserNameSessionKey);
+            }
+            catch (Exception ex)
+            {
+                LogExtension.ExceptionHandler(ex);
+            }
+
+            return string.Empty;
         }
         
         /// <summary>
