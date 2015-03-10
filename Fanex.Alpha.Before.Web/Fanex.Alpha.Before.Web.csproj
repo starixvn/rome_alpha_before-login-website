@@ -114,11 +114,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_GlobalResources\Security.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Security.resx</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -371,6 +366,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_GlobalResources\" />
     <Folder Include="App_Start\" />
   </ItemGroup>
   <ItemGroup>
@@ -400,36 +396,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_GlobalResources\Security.ja-JP.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Security.ja-JP1.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Security.ko-KR.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Security.ko-KR1.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Security.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Security.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Security.th-TH.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Security.th-TH1.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Security.vi-VN.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Security.vi-VN1.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Security.zh-CN.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Security.zh-CN1.designer.cs</LastGenOutput>
-    </Content>
-    <Content Include="App_GlobalResources\Security.zh-TW.resx">
-      <Generator>GlobalResourceProxyGenerator</Generator>
-      <LastGenOutput>Security.zh-TW1.designer.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

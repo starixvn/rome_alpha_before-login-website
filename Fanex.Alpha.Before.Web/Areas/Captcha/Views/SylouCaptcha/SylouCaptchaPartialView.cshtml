@@ -35,7 +35,7 @@ else
 }
 
 <div class="codeCaptcha">
-    <img alt="" id="@Model.ImageElementId" src="@Model.ImageUrl" width="70px" height="27px" />
+    <img alt="" id="@Model.ImageElementId" src="@Model.ImageUrl" width="70px" height="27px" onclick="return @functionName" />
     @Html.Hidden(Model.TokenElementId, Model.TokenValue)
 </div>
 

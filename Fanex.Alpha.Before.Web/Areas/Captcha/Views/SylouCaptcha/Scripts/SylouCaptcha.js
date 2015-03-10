@@ -1,16 +1,6 @@
-﻿var syloucaptcha
-jQuery(document).ready(function () {
-    syloucaptcha = new Syloucaptcha();
-    syloucaptcha.Init();
-    if (jQuery('#ValidateSuccess').val() == "True") {
-        syloucaptcha.ClosePopup();
-    }
-    else {
-        syloucaptcha.ShowPopup();
-    }
-});
+﻿"use strict";
 
-
+var syloucaptcha;
 
 var Syloucaptcha = function () {
     var self = this;
@@ -20,7 +10,7 @@ var Syloucaptcha = function () {
         txtPageName: null
     };
 
-    self.Init = function() {
+    self.Init = function () {
         _elements.maskedWindow = jQuery('#frCaptcha', window.parent.document);
     };
 
@@ -30,10 +20,21 @@ var Syloucaptcha = function () {
 
     self.ClosePopup = function () {
         try {
-           _elements.maskedWindow.remove();
+            _elements.maskedWindow.remove();
         } catch (e) {
 
         }
 
     };
-}
+};
+
+jQuery(document).ready(function () {
+    syloucaptcha = new Syloucaptcha();
+    syloucaptcha.Init();
+    if (jQuery('#ValidateSuccess').val() === "True") {
+        syloucaptcha.ClosePopup();
+    }
+    else {
+        syloucaptcha.ShowPopup();
+    }
+});
