@@ -56,25 +56,25 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         ///// <param name="code">Encrypt code.</param>
         ///// <param name="__di">FPS validate code.</param>
         ///// <returns>Return result.</returns>
-        //[AcceptVerbs(HttpVerbs.Post)]
-        //[ValidateInput(false)]
-        //public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string txtCaptcha, string code, string __di)
-        //{
-        //    var loginResult = _signInService.SignIn(txtUserName, txtPassWord, hidLanguage, txtCaptcha, code);
-        //    try
-        //    {
-        //        new FPS.Client.Service().CheckTransaction(
-        //            txtUserName, 
-        //            (loginResult == null || loginResult.ErrCode != -1) ? "login-failed" : "login", 
-        //            "Agency");                
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        LogExtension.ExceptionHandler(ex);
-        //    }
+        ////[AcceptVerbs(HttpVerbs.Post)]
+        ////[ValidateInput(false)]
+        ////public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string txtCaptcha, string code, string __di)
+        ////{
+        ////    var loginResult = _signInService.SignIn(txtUserName, txtPassWord, hidLanguage, txtCaptcha, code);
+        ////    try
+        ////    {
+        ////        new FPS.Client.Service().CheckTransaction(
+        ////            txtUserName, 
+        ////            (loginResult == null || loginResult.ErrCode != -1) ? "login-failed" : "login", 
+        ////            "Agency");                
+        ////    }
+        ////    catch (Exception ex)
+        ////    {
+        ////        LogExtension.ExceptionHandler(ex);
+        ////    }
 
-        //    return PartialView(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
-        //}
+        ////    return PartialView(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
+        ////}
 
         /// <summary>
         /// Index page.

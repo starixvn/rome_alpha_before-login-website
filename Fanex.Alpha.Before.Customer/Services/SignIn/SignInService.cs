@@ -37,7 +37,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private int _blockLoginMinute = 0;
         private int _loginFailTimeToStartUsingCaptcha = 0;
         private int _passwordMaxFailTimeForOneUser = 0;
-        private int _noInteractionTimeInMinutes = 0;
+        private int _notInteractionTimeInMinutes = 0;
         private string _baseDomain = string.Empty;
         private string _loginTheme = string.Empty;
         private LoginThemeSection _loginThemeSection;
@@ -74,9 +74,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 this._maxTimesToAllowLogInFail = alphaCommonSettings.MaxTimesToAllowLoginFail;
                 this._blockLoginMinute = alphaCommonSettings.BlockLoginMinutes;
                 this._loginFailTimeToStartUsingCaptcha = alphaCommonSettings.LoginFailTimeToStartUsingCaptcha;
-                this._noInteractionTimeInMinutes = alphaCommonSettings.NoInteractionTimeInMinutes;
+                this._notInteractionTimeInMinutes = alphaCommonSettings.NoInteractionTimeInMinutes;
                 this._passwordMaxFailTimeForOneUser = alphaCommonSettings.PasswordMaxFailTimeForOneUser;
-
             }
 
             _cache = new CacheExtension();
@@ -276,7 +275,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     }
                 }
 
-                if (this.LoginFailedTime().AddMinutes(_noInteractionTimeInMinutes).CompareTo(DateTime.Now) < 0)
+                if (this.LoginFailedTime().AddMinutes(_notInteractionTimeInMinutes).CompareTo(DateTime.Now) < 0)
                 {
                     ResetCurrentLoginFailed();
                 }
@@ -585,6 +584,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
         }
 
+        /// <summary>
+        /// Last Login Username.
+        /// </summary>
+        /// <returns>Return result.</returns>
         private string LastLoginUserName()
         {
             try

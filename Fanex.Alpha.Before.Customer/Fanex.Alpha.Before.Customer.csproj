@@ -180,7 +180,9 @@
       <DependentUpon>Labels.zh-TW.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\SignIn\ISignInService.cs" />
-    <Compile Include="Services\SignIn\SignInService.cs" />
+    <Compile Include="Services\SignIn\SignInService.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Criteria\" />
