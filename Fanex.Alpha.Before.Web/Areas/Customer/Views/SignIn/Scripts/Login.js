@@ -54,14 +54,13 @@ Sphinx.Login = {
                 return;
             }
             Sphinx.Login.setPassword($(this));
-
         });
 
         $('#txtPassWord').blur(function () {
             Sphinx.Login.resetPassword($(this));
         });
 
-        $('#txtCaptcha').keydown(function (evt) {
+        $(document).keypress(function (evt) {
             Sphinx.Login.doEnter(evt, 'Sphinx.Login.doLogin()');
         });
 
