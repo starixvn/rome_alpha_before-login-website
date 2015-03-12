@@ -6,14 +6,11 @@
 
 namespace Fanex.Alpha.Before.Web.View
 {
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
-    using System.Collections.Generic;
     using CaptchaMvc.Interface;
-    using System.Web.SessionState;
-    using System.Collections.Concurrent;
-    using System.Web;
 
     /// <summary>
     /// MVC Application.
@@ -58,25 +55,37 @@ namespace Fanex.Alpha.Before.Web.View
             RegisterRoutes(RouteTable.Routes);
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
-            //CaptchaUtils.CaptchaManager.StorageProvider = new CookieStorageProvider();
+            
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
             defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
         }
 
-
         private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
         {
-            return urlHelper.Action("Refresh", "DefaultCaptcha", new { area = "" });
+            return urlHelper.Action("Refresh", "DefaultCaptcha", new { area = string.Empty });
         }
 
+        /// <summary>
+        /// Image URL Factory.
+        /// </summary>
+        /// <param name="captchaManager">Captcha Manager.</param>
+        /// <param name="urlHelper">URL Helper.</param>
+        /// <param name="keyValuePair">Key Value pair.</param>
+        /// <returns>Return Result.</returns>
         private string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
         {
-            return urlHelper.Action("Generate", "DefaultCaptcha",
-                                    new RouteValueDictionary
+            return urlHelper.Action(
+                "Generate", 
+                "DefaultCaptcha",
+                new RouteValueDictionary
                                 {
-                                    {"area", ""},
-                                    {captchaManager.TokenParameterName, keyValuePair.Key}
+                                    {
+                                        "area", string.Empty
+                                    },
+                                    {
+                                        captchaManager.TokenParameterName, keyValuePair.Key
+                                    }
                                 });
         }
     }

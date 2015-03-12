@@ -28,12 +28,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         SignInResult SignIn(string username, string password, string language, string captcha, string code);
 
         /// <summary>
-        /// Signs the in with recaptcha.
+        /// Signs the in with re-captcha.
         /// </summary>
         /// <param name="username">The username string.</param>
         /// <param name="password">The password string.</param>
         /// <param name="language">The language string.</param>
-        /// <param name="code">The code string.</param>
         /// <param name="isValidCaptcha">If set to <c>true</c> [is valid captcha].</param>
         /// <returns>Sign In result.</returns>
         SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha);

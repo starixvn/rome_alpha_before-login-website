@@ -243,8 +243,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         /// <param name="username">The username.</param>
         /// <param name="password">User's password.</param>
         /// <param name="language">Current language.</param>
-        /// <param name="captcha">The captcha.</param>
-        /// <param name="code">The encrypt code.</param>
+        /// <param name="isValidCaptcha">The captcha.</param>
         /// <returns>Return login result.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
             "SP2101:MethodMustNotContainMoreLinesThan",
