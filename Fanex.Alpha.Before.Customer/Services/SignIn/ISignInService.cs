@@ -38,8 +38,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         /// <returns>Sign In result.</returns>
         SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha, string code);
 
-        Graphics NewCaptcha();
-
         SignInResult AutomationTest(string username, string password, string captcha);
 
         bool IsShowReCaptcha();

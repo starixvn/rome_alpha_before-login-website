@@ -7,12 +7,10 @@
 namespace Fanex.Alpha.Before.Customer.Controllers
 {
     using System;
-    using System.IO;
-    using System.Web;
     using System.Web.Mvc;
-    using System.Web.Routing;
     using CaptchaMvc.HtmlHelpers;
     using Fanex.Alpha.Before.Common.Controllers;
+    using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
     using Fanex.Alpha.Before.Infrastructure.Extensions;
 
@@ -45,7 +43,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
             return View(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
         }
-        
+
         /// <summary>
         /// Index page.
         /// </summary>
@@ -76,29 +74,11 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code);
-            
-            try
-            {
-                new FPS.Client.Service().CheckTransaction(
-                    txtUserName,
-                    (loginResult == null || loginResult.ErrCode != -1) ? "login-failed" : "login",
-                    "Agency");
-            }
-            catch (Exception ex)
-            {
-                LogExtension.ExceptionHandler(ex);
-            }
+
+            FPSTracking(txtUserName, loginResult);
 
             ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
             return PartialView(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
-        }
-
-        public ActionResult NewCaptcha()
-        {
-            var graphic = _signInService.NewCaptcha();
-
-            MemoryStream ms = new MemoryStream();
-            return new FileStreamResult(ms, "image/Jpeg");
         }
 
         public RedirectResult AutomationTest(string username, string password, string captcha)
@@ -111,6 +91,37 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             return Redirect("~/Customer/SignIn");
+        }
+
+        /// <summary>
+        /// Function to send login status to FPS.
+        /// </summary>
+        /// <param name="username">The Username.</param>
+        /// <param name="loginResult">Login result.</param>
+        private static void FPSTracking(string username, SignInResult loginResult)
+        {
+            try
+            {
+                var errorMessage = "login->successfully";
+
+                if (loginResult == null)
+                {
+                    errorMessage = "login->failed";
+                }
+                else if (loginResult.ErrCode != -1)
+                {
+                    errorMessage = string.Format("login->{0}", loginResult.ErrMsg);
+                }
+
+                new FPS.Client.Service().CheckTransaction(
+                    username,
+                    errorMessage,
+                    "Agency");
+            }
+            catch (Exception ex)
+            {
+                LogExtension.ExceptionHandler(ex);
+            }
         }
     }
 }

@@ -9,14 +9,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using System;
     using System.Collections;
     using System.Diagnostics.CodeAnalysis;
-    using System.Drawing;
     using System.Linq;
     using System.Web;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Constants;
     using Fanex.Alpha.Before.Common.Extensions;
     using Fanex.Alpha.Before.Common.Helpers;
-    using Fanex.Alpha.Before.Common.Utility.CaptchaUtility;
     using Fanex.Alpha.Before.Customer.Configurations;
     using Fanex.Alpha.Before.Customer.Constants;
     using Fanex.Alpha.Before.Customer.Models;
@@ -418,43 +416,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             return signInResult;
         }
-
-        /// <summary>
-        /// Get new captcha.
-        /// </summary>
-        /// <returns>Return result.</returns>
-        public Graphics NewCaptcha()
-        {
-            Graphics graphic = null;
-            try
-            {
-                System.Web.HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                System.Web.HttpContext.Current.Response.Cache.SetNoStore();
-
-                var captchaUtil = new CaptchaImage(IPHelper.ClientIP(), AppSession.Username, CaptchaType.Text);
-                var code = string.Empty;
-                var value = string.Empty;
-                Image bitmap = captchaUtil.Generate(out code, out value);
-                AppSession.CaptchaCode = value;
-
-                //// Set the image.
-                //// Change the response headers to output a JPEG image.
-                System.Web.HttpContext.Current.Response.Clear();
-
-                //// Write the image to the response stream in JPEG format.
-                bitmap.Save(System.Web.HttpContext.Current.Response.OutputStream, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-                //// Create new image
-                graphic = Graphics.FromImage(bitmap);
-            }
-            catch (Exception ex)
-            {
-                LogExtension.ExceptionHandler(ex);
-            }
-
-            return graphic;
-        }
-
+        
         public bool IsShowReCaptcha()
         {
             return _cache.Get<int>(this._currentLoginFailedSessionKey) >= this._loginFailTimeToStartUsingCaptcha;
