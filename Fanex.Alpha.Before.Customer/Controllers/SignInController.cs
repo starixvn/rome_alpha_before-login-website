@@ -45,62 +45,37 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
             return View(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
         }
-
-        ///// <summary>
-        ///// Index page.
-        ///// </summary>
-        ///// <param name="txtUserName">User name.</param>
-        ///// <param name="txtPassWord">User password.</param>
-        ///// <param name="hidLanguage">Hidden language.</param>
-        ///// <param name="txtCaptcha">Captcha value.</param>
-        ///// <param name="code">Encrypt code.</param>
-        ///// <param name="__di">FPS validate code.</param>
-        ///// <returns>Return result.</returns>
-        ////[AcceptVerbs(HttpVerbs.Post)]
-        ////[ValidateInput(false)]
-        ////public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string txtCaptcha, string code, string __di)
-        ////{
-        ////    var loginResult = _signInService.SignIn(txtUserName, txtPassWord, hidLanguage, txtCaptcha, code);
-        ////    try
-        ////    {
-        ////        new FPS.Client.Service().CheckTransaction(
-        ////            txtUserName, 
-        ////            (loginResult == null || loginResult.ErrCode != -1) ? "login-failed" : "login", 
-        ////            "Agency");                
-        ////    }
-        ////    catch (Exception ex)
-        ////    {
-        ////        LogExtension.ExceptionHandler(ex);
-        ////    }
-
-        ////    return PartialView(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
-        ////}
-
+        
         /// <summary>
         /// Index page.
         /// </summary>
         /// <param name="txtUserName">User name.</param>
         /// <param name="txtPassWord">User password.</param>
         /// <param name="hidLanguage">Hidden language.</param>
+        /// <param name="code">Encrypt code.</param>
         /// <param name="__di">FPS validate code.</param>
         /// <returns>
         /// Return result.
         /// </returns>
         [AcceptVerbs(HttpVerbs.Post)]
         [ValidateInput(false)]
-        public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string __di)
+        public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string code, string __di)
         {
             bool validCaptcha = false;
-            try
+
+            if (_signInService.IsShowReCaptcha())
             {
-                validCaptcha = this.IsCaptchaValid(null);
-            }
-            catch
-            {
-                validCaptcha = false;
+                try
+                {
+                    validCaptcha = this.IsCaptchaValid(null);
+                }
+                catch
+                {
+                    validCaptcha = false;
+                }
             }
 
-            var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha);
+            var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code);
             
             try
             {

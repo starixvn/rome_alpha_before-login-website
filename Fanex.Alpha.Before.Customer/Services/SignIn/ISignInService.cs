@@ -34,8 +34,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         /// <param name="password">The password string.</param>
         /// <param name="language">The language string.</param>
         /// <param name="isValidCaptcha">If set to <c>true</c> [is valid captcha].</param>
+        /// <param name="code">The code string.</param>
         /// <returns>Sign In result.</returns>
-        SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha);
+        SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha, string code);
 
         Graphics NewCaptcha();
 

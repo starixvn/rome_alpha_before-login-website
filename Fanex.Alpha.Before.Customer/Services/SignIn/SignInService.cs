@@ -243,11 +243,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         /// <param name="password">User's password.</param>
         /// <param name="language">Current language.</param>
         /// <param name="isValidCaptcha">The captcha.</param>
+        /// <param name="code">The code string.</param>
         /// <returns>Return login result.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
-        public SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha)
+        public SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha, string code)
         {
             var signInResult = new SignInResult()
             {
@@ -258,6 +259,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             try
             {
+                AppSession.EncryptCode = code;
+
                 //// Login Failed Count > 15
                 if (this.TotallyLoginFailed() > _maxTimesToAllowLogInFail)
                 { //// After 15'
@@ -281,6 +284,18 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 }
 
                 AssignSettingLanguage(language);
+                if (string.IsNullOrEmpty(AppSession.EncryptCode))
+                {
+                    signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
+                    signInResult.ErrMsg = LoginLanguages.Labels.errInvalidCaptcha;
+
+                    return signInResult;
+                }
+                else
+                {
+                    signInResult.Captcha = AppSession.EncryptCode;
+                }
+
                 if (this.LastLoginUserName() != username)
                 {
                     ResetCurrentLoginFailed();
