@@ -299,7 +299,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     ResetCurrentLoginFailed();
                 }
 
-                if (this.CurrentLoginFailed() > _loginFailTimeToStartUsingCaptcha  && !isValidCaptcha)
+                if (IsShowReCaptcha() && !isValidCaptcha)
                 {
                     this.IncreaseLoginFailedCount();
                     signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
