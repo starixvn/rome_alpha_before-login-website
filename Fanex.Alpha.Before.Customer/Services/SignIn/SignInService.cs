@@ -294,8 +294,18 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     signInResult.Captcha = AppSession.EncryptCode;
                 }
 
-                if (this.LastLoginUserName() != username)
+                if (!string.IsNullOrEmpty(this.LastLoginUserName()) && 
+                    !this.LastLoginUserName().Equals(username, StringComparison.OrdinalIgnoreCase))
                 {
+                    if (IsShowReCaptcha() && !isValidCaptcha)
+                    {
+                        ResetCurrentLoginFailed();
+                        _cache.Set(this._lastLoginUserNameSessionKey, username);
+                        signInResult.ErrCode = -2; ////no need to write log in fps and redirect to login page.
+                        
+                        return signInResult;
+                    }
+
                     ResetCurrentLoginFailed();
                 }
 

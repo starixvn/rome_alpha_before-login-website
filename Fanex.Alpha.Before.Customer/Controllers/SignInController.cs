@@ -55,7 +55,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// <returns>
         /// Return result.
         /// </returns>
-        [AcceptVerbs(HttpVerbs.Post)]
+        [HttpPost]
         [ValidateInput(false)]
         public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string code, string __di)
         {
@@ -75,9 +75,12 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
             var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code);
 
-            FPSTracking(txtUserName, loginResult);
-
-            ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
+            if (loginResult != null && loginResult.ErrCode != -2)
+            {
+                FPSTracking(txtUserName, loginResult);
+                ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
+            }
+            
             return PartialView(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
         }
 
@@ -103,6 +106,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             try
             {
                 var errorMessage = "login->successfully";
+                var errorCode = 0;
 
                 if (loginResult == null)
                 {
@@ -110,13 +114,14 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 }
                 else if (loginResult.ErrCode != -1)
                 {
+                    errorCode = loginResult.ErrCode;
                     errorMessage = string.Format("login->{0}", loginResult.ErrMsg);
                 }
 
                 new FPS.Client.Service().CheckTransaction(
-                    username,
-                    errorMessage,
-                    "Agency");
+                        username,
+                        errorMessage,
+                        "Agency");
             }
             catch (Exception ex)
             {
