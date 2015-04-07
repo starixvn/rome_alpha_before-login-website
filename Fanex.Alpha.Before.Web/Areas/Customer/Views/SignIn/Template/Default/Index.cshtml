@@ -42,7 +42,7 @@
                         <td class="row custom-row" id="captcha">
                             @if (ViewBag.ShowReCaptcha == true)
                             {
-                                @Html.Captcha(5, "~/Areas/Captcha/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
+                                @Html.Captcha(4, "~/Areas/Captcha/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
                             }
                             <input type="button" class="btnLogin" id="btnLogin" value="Login" onclick="return Sphinx.Login.doLogin();"
                                 tabindex="5" />
