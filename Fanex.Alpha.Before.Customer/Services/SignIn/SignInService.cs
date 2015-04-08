@@ -128,112 +128,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             return loginResult;
         }
-
-        /// <summary>
-        /// Sign In method.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="password">User's password.</param>
-        /// <param name="language">Current language.</param>
-        /// <param name="captcha">The captcha.</param>
-        /// <param name="code">The encrypt code.</param>
-        /// <returns>Return login result.</returns>
-        [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
-        public SignInResult SignIn(string username, string password, string language, string captcha, string code)
-        {
-            var signInResult = new SignInResult()
-            {
-                Ip = IPHelper.ClientIP(),
-                LoginTemplate = _loginTheme,
-                Username = username
-            };
-
-            try
-            {
-                AppSession.EncryptCode = code;
-                //// Login Failed Count > 15
-                if (this.TotallyLoginFailed() > _maxTimesToAllowLogInFail)
-                { //// After 15'
-                    if (this.LoginFailedTime().AddMinutes(_blockLoginMinute).CompareTo(DateTime.Now) > 0)
-                    {
-                        this.SetLoginFailedTime();
-                        var ipLockedError = string.Format(LoginLanguages.Labels.iploginfailedmultipletimeserror, _maxTimesToAllowLogInFail, _blockLoginMinute);
-                        signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
-                        signInResult.ErrMsg = ipLockedError;
-
-                        return signInResult;
-                    }
-                    else
-                    {
-                        this.ResetLoginFailed();
-                    }
-                }
-
-                AssignSettingLanguage(language);
-
-                if (AppSession.EncryptCode == null)
-                {
-                    signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
-                    signInResult.ErrMsg = LoginLanguages.Labels.errInvalidCaptcha;
-
-                    return signInResult;
-                }
-                else
-                {
-                    signInResult.Captcha = AppSession.EncryptCode;
-                }
-
-                if (captcha != AppSession.CaptchaCode)
-                {
-                    this.IncreaseLoginFailedCount();
-                    signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
-                    signInResult.ErrMsg = LoginLanguages.Labels.errInvalidCaptcha;
-
-                    return signInResult;
-                }
-
-                //// Create new code
-                AppSession.CaptchaCode = EncryptExtension.RandomNumberString(4).ToUpperInvariant();
-
-                try
-                {
-                    password = EncryptExtension.RC4(AppSession.EncryptCode, EncryptExtension.HexDecode(password));
-                }
-                catch (Exception ex)
-                {
-                    LogExtension.ExceptionHandler(ex);
-                    signInResult.ErrCode = ErrorCodeConstants.ServerError;
-                    signInResult.ErrMsg = string.Empty;
-
-                    return signInResult;
-                }
-
-                //// Get Browser
-                Hashtable requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request);
-                requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
-                var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
-
-                if (verifySignInResult.ErrorCode == 0)
-                {
-                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult);
-                }
-                else
-                {
-                    UpdateResultAfterLoginFail(signInResult, verifySignInResult);
-                }
-            }
-            catch (Exception ex)
-            {
-                signInResult.ErrCode = ErrorCodeConstants.ServerError;
-                signInResult.ErrMsg = InfrastructureLanguages.Labels.Error_Server;
-                LogExtension.ExceptionHandler(ex);
-            }
-
-            return signInResult;
-        }
-
+        
         /// <summary>
         /// Sign In method.
         /// </summary>
@@ -267,7 +162,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                         this.SetLoginFailedTime();
                         var ipLockedError = string.Format(LoginLanguages.Labels.iploginfailedmultipletimeserror, _maxTimesToAllowLogInFail, _blockLoginMinute);
                         signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
-                        signInResult.ErrMsg = ipLockedError;
+                        signInResult.ErrMsg = ipLockedError;                       
+
                         return signInResult;
                     }
                     else
@@ -276,7 +172,26 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     }
                 }
 
-                if (this.LoginFailedTime().AddMinutes(_notInteractionTimeInMinutes).CompareTo(DateTime.Now) < 0)
+                // If login with no action for the laset 5 minutes, login without captcha
+                if (!string.IsNullOrEmpty(this.LastLoginUserName()) &&
+                    !this.LastLoginUserName().Equals(username, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (IsShowReCaptcha() && !isValidCaptcha)
+                    {
+                        ResetCurrentLoginFailed();
+                        _cache.Set(this._lastLoginUserNameSessionKey, username);
+                        signInResult.ErrCode = -2; ////no need to write log in fps and redirect to login page.
+                        signInResult.Captcha = AppSession.EncryptCode;
+
+                        return signInResult;
+                    }
+
+                    ResetCurrentLoginFailed();
+                }
+
+                // If no action for the laset 5 minutes, login without captcha
+                if (this.LoginFailedTime() != DateTime.MinValue &&
+                    this.LoginFailedTime().AddMinutes(_notInteractionTimeInMinutes).CompareTo(DateTime.Now) < 0)
                 {
                     ResetCurrentLoginFailed();
                 }
@@ -292,21 +207,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 else
                 {
                     signInResult.Captcha = AppSession.EncryptCode;
-                }
-
-                if (!string.IsNullOrEmpty(this.LastLoginUserName()) && 
-                    !this.LastLoginUserName().Equals(username, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (IsShowReCaptcha() && !isValidCaptcha)
-                    {
-                        ResetCurrentLoginFailed();
-                        _cache.Set(this._lastLoginUserNameSessionKey, username);
-                        signInResult.ErrCode = -2; ////no need to write log in fps and redirect to login page.
-                        
-                        return signInResult;
-                    }
-
-                    ResetCurrentLoginFailed();
                 }
 
                 if (IsShowReCaptcha() && !isValidCaptcha)

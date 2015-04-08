@@ -15,6 +15,11 @@
                 });
             return false;
         }
+
+        setTimeout(
+            function(){
+                window.location = '~/signin/index';
+            }, @(Fanex.Alpha.Before.Customer.Configurations.AlphaCommonSection.Instance.NoInteractionTimeInMinutes * 60 * 1000));
     </script>
 }
 @if (Model.IsRequired)
