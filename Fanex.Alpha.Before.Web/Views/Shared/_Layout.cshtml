@@ -9,30 +9,32 @@
     <meta charset="utf-8" />
     <meta name="Login" content="width=device-width" />
     <title>Sign In</title>
-    
     <link href="~/Areas/Customer/Views/SignIn/Template/@Model.LoginTemplate/Styles/Login.less" rel="stylesheet"
           type="text/css" />
     <link href="~/Scripts/Component/Dropdown/DropdownStyle.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-1.7.1.js" type="text/javascript"></script>
+    @RenderSection("styles", false)
 </head>
-    <body>
-        <div id="divLoading" style="display: none"><h2>Loading... please wait</h2></div>
-        <div id="mainholder">
-            <form action="@Url.Content("~/Customer/SignIn/Index")" method="POST">    
-                @RenderBody()
-                <input name="code" id="code" type="hidden" value="@Model.Captcha"/>
-            </form>
-        </div>
-    </body>
-<script src="~/Scripts/jquery-1.7.1.js" type="text/javascript"></script>
+<body>
+    <div id="divLoading" style="display: none">
+        <h2>
+            Loading... please wait</h2>
+    </div>
+    <div id="mainholder">
+        <form action="@Url.Content("~/Customer/SignIn/Index")" method="POST">
+        @RenderBody()
+        <input name="code" id="code" type="hidden" value="@Model.Captcha"/>
+        </form>
+    </div>
+</body>
 <script src="~/Scripts/head.js" type="text/javascript"></script>
 <script src="~/Content/Bootstrap/js/bootstrap-dropdown.js" type="text/javascript"></script>
-
 <script src="~/Areas/Customer/Views/SignIn/Scripts/Core.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 <script src="~/Areas/Customer/Views/SignIn/Scripts/PlaceHolder.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 <script src="~/Areas/Customer/Views/SignIn/Scripts/Resources.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 <script src="~/Areas/Customer/Views/SignIn/Scripts/Login.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 <script src="~/Scripts/Component/Dropdown/Dropdown.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
-    <script language="javascript" type="text/javascript">
+<script language="javascript" type="text/javascript">
         var _page = {
             errCode: 0,
             errMsg: '',
@@ -63,7 +65,7 @@
             window.location.href = '@Model.AfterLoginUrl';
         }    
 
-    </script>
-    
-    <script type="text/javascript" src="@CommonAppSetting.FpsActivator"></script>
+</script>
+<script type="text/javascript" src="@CommonAppSetting.FpsActivator"></script>
+@RenderSection("scripts", false)
 </html>

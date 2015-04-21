@@ -16,7 +16,9 @@ namespace Fanex.Alpha.Before.Common.Constants
         public const string COOKIECODE = "Fanex.Alpha.Before.Common.Constants.SessionConstants.cookiecode";
         public const string CAPTCHACODE = "Fanex.Alpha.Before.Common.Constants.SessionConstants.captchacode";
         public const string USERNAME = "Fanex.Alpha.Before.Common.Constants.SessionConstants.username";
-        public const string LOGINFAILEDCOUNT = "Fanex.Alpha.Before.Common.Constants.SessionConstants.loginfailedcount.{0}";
+        public const string TOTALLOGINFAILEDCOUNT = "Fanex.Alpha.Before.Common.Constants.SessionConstants.totalloginfailedcount.{0}";
+        public const string CURRENTLOGINFAILEDCOUNT = "Fanex.Alpha.Before.Common.Constants.SessionConstants.currentloginfailedcount.{0}";
         public const string LOGINFAILEDTIME = "Fanex.Alpha.Before.Common.Constants.SessionConstants.loginfailedtime.{0}";
+        public const string LASTLOGINUSERNAME = "Fanex.Alpha.Before.Common.Constants.SessionConstants.lastloginusername.{0}";
     }
 }

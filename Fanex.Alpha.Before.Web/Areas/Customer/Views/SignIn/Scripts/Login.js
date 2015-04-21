@@ -54,14 +54,13 @@ Sphinx.Login = {
                 return;
             }
             Sphinx.Login.setPassword($(this));
-
         });
 
         $('#txtPassWord').blur(function () {
             Sphinx.Login.resetPassword($(this));
         });
 
-        $('#txtCaptcha').keydown(function (evt) {
+        $(document).keypress(function (evt) {
             Sphinx.Login.doEnter(evt, 'Sphinx.Login.doLogin()');
         });
 
@@ -81,10 +80,6 @@ Sphinx.Login = {
     getValidateImage: function () {
         var objDate = new Date();
         $("#imgCode").attr('src', Sphinx.rootUrl + 'Customer/SignIn/NewCaptcha?code=' + objDate.getMilliseconds());
-
-        setTimeout(function () {
-            Sphinx.Login.getValidateImage();
-        }, 120000);
     },
 
     setLanguague: function (languageCode, firstLoad) {

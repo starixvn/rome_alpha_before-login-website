@@ -1,0 +1,49 @@
+﻿@model CaptchaMvc.Models.DefaultBuildInfoModel
+@{
+    string id = Guid.NewGuid().ToString("N");
+    string functionName = string.Format("______{0}________()", Guid.NewGuid().ToString("N"));
+    <script type="text/javascript">
+        $(function () {
+            $('#@id').show();
+        });
+
+        function @functionName {
+                //$('#@id').hide();
+            $.post("@Model.RefreshUrl", { @Model.TokenParameterName: $('#@Model.TokenElementId').val() }, 
+                function () {
+                    $('#@id').show();
+                });
+            return false;
+        }
+
+        setTimeout(
+            function(){
+                window.location = '~/signin/index';
+            }, @(Fanex.Alpha.Before.Customer.Configurations.AlphaCommonSection.Instance.NoInteractionTimeInMinutes * 60 * 1000));
+    </script>
+}
+@if (Model.IsRequired)
+{
+    @Html.TextBox(Model.InputElementId, null, new Dictionary<string, object>
+                            {
+                                {"data-val", "true"},
+                                {"data-val-required", Model.RequiredMessage},
+                                {"id", "recaptcha_response_field"},
+                                {"class", "custom-textbox inputCaptcha"}
+                            })
+    
+}
+else
+{
+    @Html.TextBox(Model.InputElementId, null, new { @id = "recaptcha_response_field", @class = "custom-textbox inputCaptcha" })
+}
+
+<div class="codeCaptcha">
+    <img alt="" id="@Model.ImageElementId" src="@Model.ImageUrl" width="70px" height="27px" onclick="return @functionName" />
+    @Html.Hidden(Model.TokenElementId, Model.TokenValue)
+</div>
+
+<div class="refreshCont" id="@id" href="#@Model.ImageElementId">
+    <span class="refreshCode" onclick="return @functionName"></span>
+</div>
+

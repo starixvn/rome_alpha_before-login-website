@@ -7,9 +7,10 @@
 namespace Fanex.Alpha.Before.Customer.Controllers
 {
     using System;
-    using System.IO;
     using System.Web.Mvc;
+    using CaptchaMvc.HtmlHelpers;
     using Fanex.Alpha.Before.Common.Controllers;
+    using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
     using Fanex.Alpha.Before.Infrastructure.Extensions;
 
@@ -49,37 +50,38 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// <param name="txtUserName">User name.</param>
         /// <param name="txtPassWord">User password.</param>
         /// <param name="hidLanguage">Hidden language.</param>
-        /// <param name="txtCaptcha">Captcha value.</param>
         /// <param name="code">Encrypt code.</param>
         /// <param name="__di">FPS validate code.</param>
-        /// <returns>Return result.</returns>
-        [AcceptVerbs(HttpVerbs.Post)]
+        /// <returns>
+        /// Return result.
+        /// </returns>
+        [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string txtCaptcha, string code, string __di)
+        public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string code, string __di)
         {
-            var loginResult = _signInService.SignIn(txtUserName, txtPassWord, hidLanguage, txtCaptcha, code);
+            bool validCaptcha = false;
 
-            try
+            if (_signInService.IsShowReCaptcha())
             {
-                new FPS.Client.Service().CheckTransaction(
-                    txtUserName, 
-                    (loginResult == null || loginResult.ErrCode != -1) ? "login-failed" : "login", 
-                    "Agency");                
-            }
-            catch (Exception ex)
-            {
-                LogExtension.ExceptionHandler(ex);
+                try
+                {
+                    validCaptcha = this.IsCaptchaValid(null);
+                }
+                catch
+                {
+                    validCaptcha = false;
+                }
             }
 
+            var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code);
+
+            if (loginResult != null && loginResult.ErrCode != -2)
+            {
+                FPSTracking(txtUserName, loginResult);
+                ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
+            }
+            
             return PartialView(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
-        }
-
-        public ActionResult NewCaptcha()
-        {
-            var graphic = _signInService.NewCaptcha();
-
-            MemoryStream ms = new MemoryStream();
-            return new FileStreamResult(ms, "image/Jpeg");
         }
 
         public RedirectResult AutomationTest(string username, string password, string captcha)
@@ -92,6 +94,39 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             return Redirect("~/Customer/SignIn");
+        }
+
+        /// <summary>
+        /// Function to send login status to FPS.
+        /// </summary>
+        /// <param name="username">The Username.</param>
+        /// <param name="loginResult">Login result.</param>
+        private static void FPSTracking(string username, SignInResult loginResult)
+        {
+            try
+            {
+                var errorMessage = "login->successfully";
+                var errorCode = 0;
+
+                if (loginResult == null)
+                {
+                    errorMessage = "login->failed";
+                }
+                else if (loginResult.ErrCode != -1)
+                {
+                    errorCode = loginResult.ErrCode;
+                    errorMessage = string.Format("login->{0}", loginResult.ErrMsg);
+                }
+
+                new FPS.Client.Service().CheckTransaction(
+                        username,
+                        errorMessage,
+                        "Agency");
+            }
+            catch (Exception ex)
+            {
+                LogExtension.ExceptionHandler(ex);
+            }
         }
     }
 }

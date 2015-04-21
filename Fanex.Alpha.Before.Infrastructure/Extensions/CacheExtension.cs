@@ -6,39 +6,46 @@
 
 namespace Fanex.Alpha.Before.Infrastructure.Extensions
 {
+    using System;
     using Couchbase;
     using Enyim.Caching.Memcached;
 
     /// <summary>
     /// Caching service.
     /// </summary>
-    public class CacheExtension
+    public static class CacheExtension
     {
-        private CouchbaseClient _client;
+        private static CouchbaseClient _couchbaseClient = new CouchbaseClient();
 
-        public CacheExtension()
+        public static object Get(string key)
         {
-            this._client = new CouchbaseClient();
+            return _couchbaseClient.Get(key);
         }
 
-        public object Get(string key)
+        public static T Get<T>(string key)
         {
-            return _client.Get(key);
+            return _couchbaseClient.Get<T>(key);
         }
 
-        public T Get<T>(string key)
+        /// <summary>
+        /// Function to set cache info.
+        /// </summary>
+        /// <param name="key">Cache key.</param>
+        /// <param name="value">Cache value.</param>
+        /// <param name="expireTime">Expire time [Second].</param>
+        public static void Set(string key, object value, int expireTime = 1200)
         {
-            return _client.Get<T>(key);
+            _couchbaseClient.ExecuteStore(
+                StoreMode.Set,
+                key,
+                value,
+                DateTime.Now.Add(new TimeSpan(0, 0, expireTime)));
+            _couchbaseClient.FlushAll();
         }
 
-        public void Set(string key, object value)
+        public static void Remove(string key)
         {
-            _client.ExecuteStore(StoreMode.Set, key, value);
-        }
-
-        public void Remove(string key)
-        {
-            _client.Remove(key);
+            _couchbaseClient.Remove(key);
         }
     }
 }

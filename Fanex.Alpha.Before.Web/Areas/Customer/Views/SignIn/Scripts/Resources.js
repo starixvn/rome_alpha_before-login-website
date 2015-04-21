@@ -58,7 +58,7 @@ Sphinx.Resources = (function () {
         resource.ShowPassword = '顯示密碼';
         resource.AutumnTitle = 'textTitle-tw';
         resource.SignIn = 'SignIn';
-        resource.errUserName = '請輸入會員名字及密碼';
+        resource.errUserName = '請輸入賬號及密碼。';
         resource.errValidCode = '您必须输入正确验证码';
 
         return resource;

@@ -52,6 +52,33 @@ namespace Fanex.Alpha.Before.Customer.Configurations
             }
         }
 
+        [ConfigurationProperty("LoginFailTimeToStartUsingCaptcha", IsRequired = false)]
+        public int LoginFailTimeToStartUsingCaptcha
+        {
+            get
+            {
+                return (int)base["LoginFailTimeToStartUsingCaptcha"];
+            }
+        }
+
+        [ConfigurationProperty("PasswordMaxFailTimeForOneUser", IsRequired = false)]
+        public int PasswordMaxFailTimeForOneUser
+        {
+            get
+            {
+                return (int)base["PasswordMaxFailTimeForOneUser"];
+            }
+        }
+
+        [ConfigurationProperty("NoInteractionTimeInMinutes", IsRequired = false)]
+        public int NoInteractionTimeInMinutes
+        {
+            get
+            {
+                return (int)base["NoInteractionTimeInMinutes"];
+            }
+        }
+
         [ConfigurationProperty("MaxTimesToAllowLoginFail", IsRequired = false)]
         public int MaxTimesToAllowLoginFail
         {

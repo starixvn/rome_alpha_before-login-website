@@ -9,14 +9,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using System;
     using System.Collections;
     using System.Diagnostics.CodeAnalysis;
-    using System.Drawing;
     using System.Linq;
     using System.Web;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Constants;
     using Fanex.Alpha.Before.Common.Extensions;
     using Fanex.Alpha.Before.Common.Helpers;
-    using Fanex.Alpha.Before.Common.Utility.CaptchaUtility;
     using Fanex.Alpha.Before.Customer.Configurations;
     using Fanex.Alpha.Before.Customer.Constants;
     using Fanex.Alpha.Before.Customer.Models;
@@ -35,13 +33,17 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     {
         private int _maxTimesToAllowLogInFail = 0;
         private int _blockLoginMinute = 0;
+        private int _loginFailTimeToStartUsingCaptcha = 0;
+        private int _passwordMaxFailTimeForOneUser = 0;
+        private int _notInteractionTimeInMinutes = 0;
         private string _baseDomain = string.Empty;
         private string _loginTheme = string.Empty;
         private LoginThemeSection _loginThemeSection;
         private ISignInRepository _signInRepository;
-        private string _totalLoginFailedSessionKey = string.Format(SessionConstants.LOGINFAILEDCOUNT, IPHelper.ClientIP());
+        private string _totalLoginFailedSessionKey = string.Format(SessionConstants.TOTALLOGINFAILEDCOUNT, IPHelper.ClientIP());
+        private string _currentLoginFailedSessionKey = string.Format(SessionConstants.CURRENTLOGINFAILEDCOUNT, IPHelper.ClientIP());
         private string _latestLoginFailSessionKey = string.Format(SessionConstants.LOGINFAILEDTIME, IPHelper.ClientIP());
-        private CacheExtension _cache;
+        private string _lastLoginUserNameSessionKey = string.Format(SessionConstants.LASTLOGINUSERNAME, IPHelper.ClientIP());
 
         public SignInService() :
             this(null)
@@ -68,9 +70,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 this._maxTimesToAllowLogInFail = alphaCommonSettings.MaxTimesToAllowLoginFail;
                 this._blockLoginMinute = alphaCommonSettings.BlockLoginMinutes;
+                this._loginFailTimeToStartUsingCaptcha = alphaCommonSettings.LoginFailTimeToStartUsingCaptcha;
+                this._notInteractionTimeInMinutes = alphaCommonSettings.NoInteractionTimeInMinutes;
+                this._passwordMaxFailTimeForOneUser = alphaCommonSettings.PasswordMaxFailTimeForOneUser;
             }
-
-            _cache = new CacheExtension();
         }
 
         /// <summary>
@@ -122,20 +125,20 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             return loginResult;
         }
-
+        
         /// <summary>
         /// Sign In method.
         /// </summary>
         /// <param name="username">The username.</param>
         /// <param name="password">User's password.</param>
         /// <param name="language">Current language.</param>
-        /// <param name="captcha">The captcha.</param>
-        /// <param name="code">The encrypt code.</param>
+        /// <param name="isValidCaptcha">The captcha.</param>
+        /// <param name="code">The code string.</param>
         /// <returns>Return login result.</returns>
         [SuppressMessage("StyleCop.CSharp.Nexcel.NexcelCustomRules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
-        public SignInResult SignIn(string username, string password, string language, string captcha, string code)
+        public SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha, string code)
         {
             var signInResult = new SignInResult()
             {
@@ -147,6 +150,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             try
             {
                 AppSession.EncryptCode = code;
+
                 //// Login Failed Count > 15
                 if (this.TotallyLoginFailed() > _maxTimesToAllowLogInFail)
                 { //// After 15'
@@ -155,7 +159,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                         this.SetLoginFailedTime();
                         var ipLockedError = string.Format(LoginLanguages.Labels.iploginfailedmultipletimeserror, _maxTimesToAllowLogInFail, _blockLoginMinute);
                         signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
-                        signInResult.ErrMsg = ipLockedError;
+                        signInResult.ErrMsg = ipLockedError;                       
 
                         return signInResult;
                     }
@@ -165,9 +169,33 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     }
                 }
 
-                AssignSettingLanguage(language);
+                // If login with no action for the laset 5 minutes, login without captcha
+                if (!string.IsNullOrEmpty(this.LastLoginUserName()) &&
+                    !this.LastLoginUserName().Equals(username, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (IsShowReCaptcha() && !isValidCaptcha)
+                    {
+                        ResetCurrentLoginFailed();                        
+                        CacheExtension.Set(this._lastLoginUserNameSessionKey, username);
+            
+                        signInResult.ErrCode = -2; ////no need to write log in fps and redirect to login page.
+                        signInResult.Captcha = AppSession.EncryptCode;
 
-                if (AppSession.EncryptCode == null)
+                        return signInResult;
+                    }
+
+                    ResetCurrentLoginFailed();
+                }
+
+                // If no action for the laset 5 minutes, login without captcha
+                if (this.LoginFailedTime() != DateTime.MinValue &&
+                    this.LoginFailedTime().AddMinutes(_notInteractionTimeInMinutes).CompareTo(DateTime.Now) < 0)
+                {
+                    ResetCurrentLoginFailed();
+                }
+
+                AssignSettingLanguage(language);
+                if (string.IsNullOrEmpty(AppSession.EncryptCode))
                 {
                     signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
                     signInResult.ErrMsg = LoginLanguages.Labels.errInvalidCaptcha;
@@ -179,17 +207,13 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     signInResult.Captcha = AppSession.EncryptCode;
                 }
 
-                if (captcha != AppSession.CaptchaCode)
+                if (IsShowReCaptcha() && !isValidCaptcha)
                 {
                     this.IncreaseLoginFailedCount();
                     signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
                     signInResult.ErrMsg = LoginLanguages.Labels.errInvalidCaptcha;
-
                     return signInResult;
                 }
-
-                //// Create new code
-                AppSession.CaptchaCode = EncryptExtension.RandomNumberString(4).ToUpperInvariant();
 
                 try
                 {
@@ -200,7 +224,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     LogExtension.ExceptionHandler(ex);
                     signInResult.ErrCode = ErrorCodeConstants.ServerError;
                     signInResult.ErrMsg = string.Empty;
-
                     return signInResult;
                 }
 
@@ -225,6 +248,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 LogExtension.ExceptionHandler(ex);
             }
 
+            CacheExtension.Set(this._lastLoginUserNameSessionKey, username);
+            
             return signInResult;
         }
 
@@ -300,41 +325,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             return signInResult;
         }
-
-        /// <summary>
-        /// Get new captcha.
-        /// </summary>
-        /// <returns>Return result.</returns>
-        public Graphics NewCaptcha()
+        
+        public bool IsShowReCaptcha()
         {
-            Graphics graphic = null;
-            try
-            {
-                System.Web.HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-                System.Web.HttpContext.Current.Response.Cache.SetNoStore();
-
-                var captchaUtil = new CaptchaImage(IPHelper.ClientIP(), AppSession.Username, CaptchaType.Text);
-                var code = string.Empty;
-                var value = string.Empty;
-                Image bitmap = captchaUtil.Generate(out code, out value);
-                AppSession.CaptchaCode = value;
-
-                //// Set the image.
-                //// Change the response headers to output a JPEG image.
-                System.Web.HttpContext.Current.Response.Clear();
-
-                //// Write the image to the response stream in JPEG format.
-                bitmap.Save(System.Web.HttpContext.Current.Response.OutputStream, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-                //// Create new image
-                graphic = Graphics.FromImage(bitmap);
-            }
-            catch (Exception ex)
-            {
-                LogExtension.ExceptionHandler(ex);
-            }
-
-            return graphic;
+            return CacheExtension.Get<int>(this._currentLoginFailedSessionKey) >= this._loginFailTimeToStartUsingCaptcha;
         }
         
         /// <summary>
@@ -366,7 +360,26 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             int count = 0;
             try
             {
-                count = _cache.Get<int>(_totalLoginFailedSessionKey);
+                count = CacheExtension.Get<int>(_totalLoginFailedSessionKey);
+            }
+            catch (Exception ex)
+            {
+                LogExtension.ExceptionHandler(ex);
+            }
+
+            return count;
+        }
+
+        /// <summary>
+        /// Get login current failed.
+        /// </summary>
+        /// <returns>Return result.</returns>
+        private int CurrentLoginFailed()
+        {
+            int count = 0;
+            try
+            {
+                count = CacheExtension.Get<int>(_currentLoginFailedSessionKey);
             }
             catch (Exception ex)
             {
@@ -385,9 +398,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             DateTime date = DateTime.MinValue;
             try
             {
-                if (_cache.Get(_latestLoginFailSessionKey) != null)
+                if (CacheExtension.Get(_latestLoginFailSessionKey) != null)
                 {
-                    date = Converter.ToDateTime(_cache.Get(_latestLoginFailSessionKey));
+                    date = Converter.ToDateTime(CacheExtension.Get(_latestLoginFailSessionKey));
                 }
             }
             catch (Exception ex)
@@ -402,7 +415,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         {
             try
             {
-                _cache.Set(_latestLoginFailSessionKey, DateTime.Now);
+                CacheExtension.Set(_latestLoginFailSessionKey, DateTime.Now);
             }
             catch (Exception ex)
             {
@@ -417,8 +430,21 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         {
             try
             {
-                _cache.Remove(_totalLoginFailedSessionKey);
-                _cache.Remove(_latestLoginFailSessionKey);
+                CacheExtension.Remove(_totalLoginFailedSessionKey);
+                CacheExtension.Remove(_currentLoginFailedSessionKey);
+                CacheExtension.Remove(_latestLoginFailSessionKey);
+            }
+            catch (Exception ex)
+            {
+                LogExtension.ExceptionHandler(ex);
+            }
+        }
+
+        private void ResetCurrentLoginFailed()
+        {
+            try
+            {
+                CacheExtension.Remove(_currentLoginFailedSessionKey);
             }
             catch (Exception ex)
             {
@@ -434,12 +460,32 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             try
             {
                 var loginFailCount = TotallyLoginFailed() + 1;
-                _cache.Set(_totalLoginFailedSessionKey, loginFailCount);
+                CacheExtension.Set(_totalLoginFailedSessionKey, loginFailCount);
+                var currentLoginFailCount = CurrentLoginFailed() + 1;
+                CacheExtension.Set(_currentLoginFailedSessionKey, currentLoginFailCount);
             }
             catch (Exception ex)
             {
                 LogExtension.ExceptionHandler(ex);
             }
+        }
+
+        /// <summary>
+        /// Last Login Username.
+        /// </summary>
+        /// <returns>Return result.</returns>
+        private string LastLoginUserName()
+        {
+            try
+            {
+                return CacheExtension.Get<string>(this._lastLoginUserNameSessionKey);
+            }
+            catch (Exception ex)
+            {
+                LogExtension.ExceptionHandler(ex);
+            }
+
+            return string.Empty;
         }
         
         /// <summary>
