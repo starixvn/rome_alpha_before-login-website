@@ -39,8 +39,8 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
                 StoreMode.Set,
                 key,
                 value,
-                DateTime.Now.Add(new TimeSpan(0, 0, expireTime)));
-            _couchbaseClient.FlushAll();
+                Couchbase.Operations.PersistTo.One,
+                Couchbase.Operations.ReplicateTo.Two);
         }
 
         public static void Remove(string key)
