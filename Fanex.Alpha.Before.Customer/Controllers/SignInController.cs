@@ -7,6 +7,7 @@
 namespace Fanex.Alpha.Before.Customer.Controllers
 {
     using System;
+    using System.Configuration;
     using System.Web.Mvc;
     using CaptchaMvc.HtmlHelpers;
     using Fanex.Alpha.Before.Common.Controllers;
@@ -105,23 +106,24 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         {
             try
             {
-                var errorMessage = "login->successfully";
+                var errorMessage = "login -> successfully";
                 var errorCode = 0;
 
                 if (loginResult == null)
                 {
-                    errorMessage = "login->failed";
+                    errorMessage = "login -> failed";
                 }
                 else if (loginResult.ErrCode != -1)
                 {
                     errorCode = loginResult.ErrCode;
-                    errorMessage = string.Format("login->{0}", loginResult.ErrMsg);
+                    errorMessage = string.Format("login -> {0}", loginResult.ErrMsg);
                 }
 
+                var fpsSubscirber = ConfigurationManager.AppSettings["FPS_Subscriber"];
                 new FPS.Client.Service().CheckTransaction(
                         username,
                         errorMessage,
-                        "Agency");
+                        fpsSubscirber);
             }
             catch (Exception ex)
             {
