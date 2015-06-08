@@ -131,8 +131,15 @@
     <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Images\sprites.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Images\user.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\fonts\icomoon.svg" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\2_cn.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\2_en.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\2_tw.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\bg_light.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\caret.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\panel.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\pattern.jpg" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\penal.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\refresh.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\style.css" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\bg.jpg" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\caret.png" />
