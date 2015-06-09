@@ -130,7 +130,7 @@
     <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Images\shadow.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Images\sprites.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Images\user.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Font\fonts\icomoon.svg" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.svg" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\2_cn.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\2_en.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\2_tw.png" />
@@ -286,11 +286,11 @@
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Index.cshtml" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Index.cshtml" />
     <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Font\fonts\icomoon.eot" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Font\fonts\icomoon.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Font\fonts\icomoon.woff" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Font\Roboto-Bold.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Font\Roboto-Medium.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Font\Roboto-Regular.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.woff" />
+    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\Roboto\Roboto-Bold.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\Roboto\Roboto-Medium.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\Roboto\Roboto-Regular.ttf" />
     <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Login.less" />
     <None Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Login.less" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\SylouCaptchaPartialView.cshtml" />
