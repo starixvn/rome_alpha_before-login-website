@@ -131,6 +131,7 @@ Sphinx.Login = {
         $('.btnLogin').val(resource.Login);
 
         $('#divTitle').html(resource.Login);
+        $('title').text(resource.Login);
 
         Sphinx.Core.setCookie('LANGUAGE', languageCode, 30);
         Sphinx.Login.currentLanguageCode = languageCode;
