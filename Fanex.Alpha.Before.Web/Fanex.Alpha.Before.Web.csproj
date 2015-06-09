@@ -285,7 +285,7 @@
     <None Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Login.less" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Index.cshtml" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Index.cshtml" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Font\fonts\icomoon.eot" />
+    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.eot" />
     <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.ttf" />
     <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.woff" />
     <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\Roboto\Roboto-Bold.ttf" />
