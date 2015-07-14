@@ -106,24 +106,28 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         {
             try
             {
-                var errorMessage = "login -> successfully";
-                var errorCode = 0;
+                var loginAction = "login";
+                var loginMessage = "successfully";
+                var fpsSubscirber = ConfigurationManager.AppSettings["FPS_Subscriber"];
+                var fpsErrorMessage = string.Empty;
+                var fpsErrorCode = string.Empty;
 
                 if (loginResult == null)
                 {
-                    errorMessage = "login -> failed";
+                    loginMessage = "failed";
                 }
                 else if (loginResult.ErrCode != -1)
                 {
-                    errorCode = loginResult.ErrCode;
-                    errorMessage = string.Format("login -> {0}", loginResult.ErrMsg);
+                    loginMessage = string.Format("{0}", loginResult.ErrMsg);
                 }
 
-                var fpsSubscirber = ConfigurationManager.AppSettings["FPS_Subscriber"];
                 new FPS.Client.Service().CheckTransaction(
-                        username,
-                        errorMessage,
-                        fpsSubscirber);
+                    username,
+                    loginAction,
+                    loginMessage,
+                    fpsSubscirber,
+                    out fpsErrorMessage,
+                    out fpsErrorCode);
             }
             catch (Exception ex)
             {

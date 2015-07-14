@@ -167,6 +167,7 @@
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\sprite_bk.gif" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\stop.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Index.css" />
+    <Content Include="Configurations\Dev.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
     <Content Include="Scripts\Component\Dropdown\Dropdown.js" />
     <Content Include="Scripts\Component\Dropdown\DropdownStyle.css" />
     <Content Include="Scripts\Component\Dropdown\Image\down.png" />
@@ -190,13 +191,12 @@
     <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\Rec_sp.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\refresh.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\SignIn.png" />
-    <Content Include="Configurations\Dev.StoreProcedure\DBTXN.CustDB.BODBDownlineNet.xml">
+    <Content Include="Configurations\Local.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\Master.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\PRO.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\UAT.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\Local.StoreProcedure\DBTXN.CustDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\Master.StoreProcedure\DBTXN.CustDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\PRO.StoreProcedure\DBTXN.CustDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\UAT.StoreProcedure\DBTXN.CustDB.BODBDownlineNet.xml" />
     <Content Include="Content\Bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="Content\Bootstrap\img\glyphicons-halflings.png" />
     <Content Include="Content\Bootstrap\js\bootstrap-affix.js" />
