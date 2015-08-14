@@ -121,8 +121,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\icomoon\icomoon.svg" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_cn.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_en.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\bg.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_tw.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\bg.jpg" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\caret.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\panel.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\refresh.png" />
