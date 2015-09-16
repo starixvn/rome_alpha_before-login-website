@@ -17,20 +17,8 @@ strike, strong, sub, sup, tt, var, b, u, i, center,
     vertical-align: baseline;
 }
 
-@font-face {
-	font-family: "Roboto";
-	src: url(Fonts/Roboto/Roboto-Regular.ttf);
-}
-@font-face {
-	font-family: "Roboto medium";
-	src: url(Fonts/Roboto/Roboto-Medium.ttf);
-}
-@font-face {
-	font-family: "Roboto bold";
-	src: url(Fonts/Roboto/Roboto-Bold.ttf);
-}
 @font-size: 13px;
-@font-family: "Roboto", Arial, sans-serif;
+@font-family: 'Arial';
 @width-login: 542px;
 @text-color: #536270;
 @dropdown-color: #000;
@@ -48,7 +36,7 @@ body{
 }
 
 .content {
-	background: url(Images/panel.png) no-repeat center top;
+	background: url(Images/panel-min.png) no-repeat center top;
 	/*width: 100%;
 	height: 100%;
 	margin: 0 auto;
@@ -239,7 +227,7 @@ body{
 			color: #fff;
 			float: left;
 			font-size: @font-size + 1;
-			font-family: "Roboto bold";
+			font-weight: bold;
 			margin-left: 3px;
 			float: right;
 			&:hover {
@@ -278,7 +266,6 @@ body{
 		color: #cc0000;
 		padding: 0 25px 10px;
 		border-radius: 5px;
-		font-family: 'Roboto';
 	}
 	.textTitle_en, .textTitle-tw, .textTitle-cn {
 		position: relative;
