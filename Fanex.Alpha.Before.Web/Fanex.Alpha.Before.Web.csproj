@@ -124,10 +124,9 @@
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_cn.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_en.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_tw.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\bg.jpg" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\bg.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\bg.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\panel.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\refresh.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Images\seamless_pattern.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Images\sprites.png" />
