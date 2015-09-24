@@ -19,18 +19,7 @@ strike, strong, sub, sup, tt, var, b, u, i, center,
 @text-color: #999999;
 @dropdown-color: #000;
 @border-color: #d2dbe3;
-@font-face {
-	font-family: "Roboto";
-	src: url(Font/Roboto/Roboto-Regular.ttf);
-}
-@font-face {
-	font-family: "Roboto light";
-	src: url(Font/Roboto/Roboto-Light.ttf);
-}
-@font-face {
-	font-family: "Roboto medium";
-	src: url(Font/Roboto/Roboto-Medium.ttf);
-}
+
 html,body {
 	min-height: 100%;
 	margin: 0;
@@ -49,19 +38,17 @@ body{
 	position: relative;
 }
 .shadow {
-	background: url(Images/shadow.png) no-repeat center;
-	bottom: -9px;
+	background: url(Images/sprites.png) no-repeat -2px -98px;
     height: 14px;
-    position: absolute;
     width: 432px;
-	left: 0;
+	margin-left: 17px;
 }
 .header {
-	background: url(Images/header.png) no-repeat;
+	background: url(Images/sprites.png) no-repeat;
+	background-position: 0 -24px;
 	width: 432px;
 	height: 58px;
 	margin-bottom: 20px;
-	font-family: 'Roboto light';
 	font-size: 24px;
 	color: #fff;
 	line-height: 58px !important;
@@ -108,12 +95,12 @@ body{
 				position: relative;
 					z-index: 100;
 				.caret {
-					background: url(Images/caret.png) 0px 0px no-repeat;
-					width: 25px;
-					height: 22px;
+					background: url(Images/sprites.png) no-repeat -104px -11px;
+					width: 8px;
+					height: 5px;
 					position: absolute;
-					right: 10px;
-					top: 7px;
+					right: 26px;
+					top: 10px;
 				}
 
 				#divItemList {
@@ -161,32 +148,44 @@ body{
 				font-size: @font-size;
 			}
 		}
-		.custom-textbox {
-			width: 98%;
-			padding: 0 5px;
-			font-size: @font-size;
-			padding: 0 0 0 5px;
-			height: 26px;
-			border: none;
-			color: @text-color;
-			line-height: 26px !important;
-			border: 1px solid @border-color;
-			background: #f5f5f7;
-			&:focus {
-				font-style: normal;
+		.field-box {
+			position: relative;
+			.custom-textbox {
+				width: 98%;
+				padding: 0 5px;
+				font-size: @font-size;
+				padding: 0 0 0 5px;
 				height: 26px;
 				border: none;
-				outline: none;
+				color: @text-color;
+				line-height: 26px !important;
 				border: 1px solid @border-color;
+				background: #f5f5f7;
+				&:focus {
+					font-style: normal;
+					height: 26px;
+					border: none;
+					outline: none;
+					border: 1px solid @border-color;
+				}
 			}
-			&.username {
-				background: url(Images/user.png) no-repeat right center #f5f5f7;
+			.icon {
+				display: inline-block;
+				position: absolute;
+				right: 8px;
+				height: 13px;
+				top: 8px;
+				width: 13px;
+				&.username {
+					background: url(Images/sprites.png) no-repeat -2px -6px;
+				}
+				&.password {
+					background: url(Images/sprites.png) no-repeat -20px -5px;
+				}
 			}
-			&.password {
-				background: url(Images/key.png) no-repeat right center #f5f5f7;
-			}
-				
-		}			
+
+		}
+			
 		.showPass {
 			height: 14px;
 			float:left;
@@ -248,7 +247,6 @@ body{
 			color: #d1a5a8;
 			float: left;
 			font-size: @font-size + 1;
-			font-family: 'Roboto medium';
 			margin-left: 3px;
 			float: right;
 			&:hover {
@@ -268,31 +266,17 @@ body{
 			background: url(images/sprites.png) -38px 0px no-repeat;
 			width: 19px;
 			float: left;
-			height: 18px !important;
+			height: 20px !important;
 			cursor: pointer;
 			padding: 0;
+			position: relative;
+			top: -4px;
 			&:hover {
 				background: url(images/sprites.png) -59px 0px no-repeat;
 			}
 		}
 	}
 
-	.bestview {
-        color: #000;
-        font-size: @font-size - 2;
-        font-family: arial;
-		margin-top: 8px;
-		text-align: center;
-		.browser {
-			background: url(images/Rec_sp.png) right center no-repeat;
-			width: 143px;
-			height: 21px;
-			display: inline-block;
-			position: relative;
-			top: 7px;
-			left: 5px;
-		}
-	}
 	.event-text {
 		background: url(Images/event-text.png) no-repeat;
 		width: 307px;
@@ -305,28 +289,13 @@ body{
 		color: #cc0000;
 		padding: 0 25px 10px;
 		border-radius: 5px;
-		font-family: 'Roboto';
-		.icon-note {
+		/*.icon-note {
 			width: 22px;
 			height: 22px;
 			display: inline-block;
 			background: url(Images/sprites.png) no-repeat -78px 0;
-		}
+		}*/
 	}
 
 
- .eq-ie7 {
-	.showPass {
-		top: -1px;
-		.checkShowPass {
-			top: -5px;
-		}
-	}
-	.browser {
-		top: 4px;
-	}
-	.header .title {
-		float: left;
-	}
-}
 

@@ -10,83 +10,34 @@
            
 }
 
-.ddSelect .ddItem .flag-en {
-    background-image: url("Image/flags_en.jpg");
-    background-repeat: no-repeat;
-    color: #B96643;
-    display: inline-block;
-    height: 17px;
-    line-height: 11px;
-    padding-left: 30px;
-    padding-top: 2px;
-    vertical-align: text-top;
+.ddSelect .ddItem .flag i.flag-en 
+{
+    background-position: -27px 0;
 }
-.ddSelect .ddItem .flag-vn {
-    background-image: url("Image/flags_vn.jpg");
-    background-repeat: no-repeat;
-    color: #B96643;
-    display: inline-block;
-    height: 17px;
-    line-height: 11px;
-    padding-left: 30px;
-    padding-top: 2px;
-    vertical-align: text-top;
+.ddSelect .ddItem .flag i.flag-vn 
+{
+    background-position: -54px -21px;
 }
-.ddSelect .ddItem .flag-tw {
-    background-image: url("Image/flags_tw.jpg");
-    background-repeat: no-repeat;
-    color: #B96643;
-    display: inline-block;
-    height: 17px;
-    line-height: 11px;
-    padding-left: 30px;
-    padding-top: 2px;
-    vertical-align: text-top;
+.ddSelect .ddItem .flag i.flag-tw 
+{
+    background-position: -27px -21px;
 }
-.ddSelect .ddItem .flag-cn {
-    background-image: url("Image/flags_cn.jpg");
-    background-repeat: no-repeat;
-    color: #B96643;
-    display: inline-block;
-    height: 17px;
-    line-height: 11px;
-    padding-left: 30px;
-    padding-top: 2px;
-    vertical-align: text-top;
+.ddSelect .ddItem .flag i.flag-cn 
+{
+    background-position: 0 0;
 }
-.ddSelect .ddItem .flag-kr {
-    background-image: url("Image/flags_kr.jpg");
-    background-repeat: no-repeat;
-    color: #B96643;
-    display: inline-block;
-    height: 17px;
-    line-height: 11px;
-    padding-left: 30px;
-    padding-top: 2px;
-    vertical-align: text-top;
+.ddSelect .ddItem .flag i.flag-kr 
+{
+    background-position: 0 -42px;
 }
-.ddSelect .ddItem .flag-jp {
-    background-image: url("Image/flags_jp.jpg");
-    background-repeat: no-repeat;
-    color: #B96643;
-    display: inline-block;
-    height: 17px;
-    line-height: 11px;
-    padding-left: 30px;
-    padding-top: 2px;
-    vertical-align: text-top;
+.ddSelect .ddItem .flag i.flag-jp 
+{
+    background-position: -54px 0;
 }
 
-.ddSelect .ddItem .flag-th {
-    background-image: url("Image/flags_th.jpg");
-    background-repeat: no-repeat;
-    color: #B96643;
-    display: inline-block;
-    height: 17px;
-    line-height: 11px;
-    padding-left: 30px;
-    padding-top: 2px;
-    vertical-align: text-top;
+.ddSelect .ddItem .flag i.flag-th 
+{
+    background-position: 0 -21px;
 }
 
 .ddSelect .ddItem table {
@@ -94,6 +45,17 @@
 }
 
 .ddSelect .ddItem .flag {
+    width: 24px;
+}
+
+.ddSelect .ddItem .flag i 
+{
+    background: url("Image/flag-sprites.png") no-repeat;
+    display: inline-block;
+    height: 17px;
+    padding-top: 2px;
+    margin-right: 4px;
+    vertical-align: middle;
     width: 24px;
 }
 
@@ -106,10 +68,9 @@
 
 .ddSelect .caret {
     display: inline-block;
-    background-image: url("Image/down.png");
-    background-repeat: no-repeat;
-    height: 16px;
-    width: 16px;
+    background-image: url("Image/flag-sprites.png") no-repeat;
+    height: 7px;
+    width: 14px;
 }
 
 #divItemList {
