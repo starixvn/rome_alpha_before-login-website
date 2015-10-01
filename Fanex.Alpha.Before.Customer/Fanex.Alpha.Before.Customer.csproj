@@ -55,7 +55,7 @@
       <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="FPS.Client">
-      <HintPath>..\packages\FPS.Client.2.0.0.624\lib\net20\FPS.Client.dll</HintPath>
+      <HintPath>..\packages\Fanex.Oneyed.FPSClient.1.0.0\FPS.Client.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt">
       <HintPath>..\_Dependencies\3rd\Casino\IBCCrypt.dll</HintPath>

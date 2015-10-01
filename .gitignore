@@ -29,3 +29,5 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 
 /Fanex_Razorbill_Sphinx_Website/FPSLog
+/packages/*
+!/packages/*.config

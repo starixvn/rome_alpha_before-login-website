@@ -27,6 +27,7 @@
         <form action="@Url.Content("~/Customer/SignIn/Index")" method="POST">
         @RenderBody()
         <input name="code" id="code" type="hidden" value="@Model.Captcha"/>
+        <input id="detecas-analysis" type="hidden" value="{}" />
         </form>
     </div>
 </body>
