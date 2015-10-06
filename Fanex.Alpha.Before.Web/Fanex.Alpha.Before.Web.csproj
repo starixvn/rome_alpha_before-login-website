@@ -21,6 +21,8 @@
     <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <JSLintSkip>\Areas\Customer\|\Areas\Customer\SignIn\Scripts\|\Scripts\</JSLintSkip>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -265,7 +267,9 @@
     <None Include="IbcKeys\ibckey.snk" />
     <None Include="IbcKeys\ibcpkey.snk" />
     <Content Include="IbcKeys\Web.config" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Common\LimitedCountryAccess\Index.cshtml" />
     <None Include="Views\Common\ErrorPage\Style\Error.less" />
     <Content Include="Views\Common\ErrorPage\Style\Images\error2.png" />
@@ -354,4 +358,5 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
 </Project>
