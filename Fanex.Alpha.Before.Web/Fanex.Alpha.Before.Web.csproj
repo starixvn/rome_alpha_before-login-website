@@ -15,9 +15,6 @@
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>false</UseIISExpress>
-    <SccProjectName>%24/Rome/CRM/Main/SourceMVC/Fanex.CRM.Web.Presentation</SccProjectName>
-    <SccLocalPath>.</SccLocalPath>
-    <SccAuxPath>http://10.18.200.210:8080</SccAuxPath>
     <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
     <JSLintSkip>\Areas\Customer\|\Areas\Customer\SignIn\Scripts\|\Scripts\</JSLintSkip>
@@ -247,6 +244,8 @@
     <None Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Medium.ttf" />
     <None Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Regular.ttf" />
     <None Include="Views\Common\LimitedCountryAccess\Style\LimitedCountryAccess.less" />
+    <Content Include="FPS\no-cache\Web.config" />
+    <Content Include="FPS\no-cache\style.css" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.LimtedCountryAccessSection.config" />
     <Content Include="LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.LimtedCountryAccessSection.config" />
