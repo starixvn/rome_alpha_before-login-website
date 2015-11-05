@@ -31,3 +31,4 @@ _ReSharper*/
 /Fanex_Razorbill_Sphinx_Website/FPSLog
 /packages/*
 !/packages/*.config
+*.GhostDoc.xml
