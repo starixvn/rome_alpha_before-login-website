@@ -12,6 +12,8 @@ Sphinx.BrowserSuggestion = (function ($) {
     var needToUpdate = false;
 
     var updateLinkIe = "http://windows.microsoft.com/{0}/internet-explorer/download-ie";
+    //var updateLinkIe = "https://www.microsoft.com/{0}/download/internet-explorer.aspx";
+    //var updateLinkIe = "http://windows.microsoft.com/{0}/windows/upgrade-your-browser";
     var updateLinkFireFox = "https://www.mozilla.org/{0}/firefox/new/";
 
     var init = function () {
@@ -27,8 +29,8 @@ Sphinx.BrowserSuggestion = (function ($) {
         browserVersion = result.browser.major;
 
         if (result.os.name.toLowerCase() === "windows") {
-            if (browserName.toLowerCase() === "ie" && browserVersion < 8
-                || browserName.toLowerCase() === "firefox" && browserVersion < 30) {
+            if (browserName.toLowerCase() === "ie" && browserVersion <= 7
+                || browserName.toLowerCase() === "firefox" && browserVersion <= 30) {
 
                 needToUpdate = true;
             }
