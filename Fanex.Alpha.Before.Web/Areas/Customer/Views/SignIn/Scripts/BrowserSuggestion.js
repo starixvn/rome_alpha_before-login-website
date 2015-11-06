@@ -18,11 +18,6 @@ Sphinx.BrowserSuggestion = (function ($) {
 
     var init = function () {
         var parser = new UAParser();
-
-        //var uastring = "Mozilla/5.0 (Windows NT 5.1; rv:2.0) Gecko/20100101 Firefox/4.0";
-        //var uastring = "Mozilla/4.0 (compatible; MSIE 6.1; Windows XP; .NET CLR 1.1.4322; .NET CLR 2.0.50727)";
-        //parser.setUA(uastring);
-
         var result = parser.getResult();
 
         browserName = result.browser.name;
