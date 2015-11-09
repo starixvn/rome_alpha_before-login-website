@@ -59,7 +59,7 @@ Sphinx.BrowserSuggestion = (function ($) {
                 updateLink.text(language.updateYourBrowser);
 
                 if (browserName.toLowerCase() === "ie") {
-                    updateLink.attr("href", format(updateLinkIe, "en-US"));
+                    updateLink.attr("href", format(updateLinkIe, language.Id));
                 }
                 else if (browserName.toLowerCase() === "firefox") {
                     updateLink.attr("href", format(updateLinkFireFox, language.Id));
