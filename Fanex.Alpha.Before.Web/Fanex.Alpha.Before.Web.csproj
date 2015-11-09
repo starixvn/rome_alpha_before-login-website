@@ -124,7 +124,6 @@
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_en.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_tw.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\bg.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\bg.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\caret.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\refresh.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Images\seamless_pattern.png" />
@@ -137,7 +136,6 @@
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\caret.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\panel.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\pattern.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\penal.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\refresh.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\style.css" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\style.css" />
@@ -167,7 +165,6 @@
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\sprite_bk.gif" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\stop.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Index.css" />
-    <Content Include="Configurations\Dev.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
     <Content Include="Scripts\Component\Dropdown\Dropdown.js" />
     <Content Include="Scripts\Component\Dropdown\DropdownStyle.css" />
     <Content Include="Scripts\Component\Dropdown\Image\flag-sprites.png" />
@@ -188,11 +185,9 @@
     <Content Include="Configurations\Master.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\UAT.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\dev.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\dev.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\dev.Web.Setting.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.Web.config" />
@@ -249,12 +244,10 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.LimtedCountryAccessSection.config" />
     <Content Include="LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\dev.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local.LimtedCountryAccessSection.config" />
     <Content Include="DomainGroupSection.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\dev.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.DomainGroupSection.config" />
