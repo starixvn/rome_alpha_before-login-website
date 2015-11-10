@@ -190,7 +190,9 @@
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Master.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Master.Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.Web.Setting.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.config" />
@@ -198,8 +200,12 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.Web.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.Web.Setting.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local.Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local.Web.Setting.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\less-1.4.1.min.js" />
@@ -215,30 +221,24 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.Web.config" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Default\Index.cshtml" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Index.cshtml" />
-    <None Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\icomoon\icomoon.eot" />
-    <None Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\icomoon\icomoon.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\icomoon\icomoon.woff" />
-    <None Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\Roboto\Roboto-Bold.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\Roboto\Roboto-Medium.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\Roboto\Roboto-Regular.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Login.less" />
-    <None Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Login.less" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\icomoon\icomoon.eot" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\icomoon\icomoon.ttf" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\icomoon\icomoon.woff" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Login.less" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Login.less" />
     <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Index.cshtml" />
     <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Index.cshtml" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.eot" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.woff" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\Roboto\Roboto-Bold.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\Roboto\Roboto-Medium.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\Roboto\Roboto-Regular.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Login.less" />
-    <None Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Login.less" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.eot" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.ttf" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.woff" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Login.less" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Login.less" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\SylouCaptchaPartialView.cshtml" />
     <Content Include="Areas\Captcha\Views\Web.config" />
-    <None Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Bold.ttf" />
-    <None Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Medium.ttf" />
-    <None Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Regular.ttf" />
-    <None Include="Views\Common\LimitedCountryAccess\Style\LimitedCountryAccess.less" />
+    <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Bold.ttf" />
+    <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Medium.ttf" />
+    <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Regular.ttf" />
+    <Content Include="Views\Common\LimitedCountryAccess\Style\LimitedCountryAccess.less" />
     <Content Include="FPS\no-cache\Web.config" />
     <Content Include="FPS\no-cache\style.css" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.LimtedCountryAccessSection.config" />
@@ -254,20 +254,20 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.DomainGroupSection.config" />
     <Content Include="Areas\Customer\Web.config" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Index.cshtml" />
-    <None Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Login.less" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Login.less" />
     <Content Include="Areas\Customer\Views\SignIn\Transfer.cshtml" />
-    <None Include="IbcKeys\ibckey.snk" />
-    <None Include="IbcKeys\ibcpkey.snk" />
+    <Content Include="IbcKeys\ibckey.snk" />
+    <Content Include="IbcKeys\ibcpkey.snk" />
     <Content Include="IbcKeys\Web.config" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\Common\LimitedCountryAccess\Index.cshtml" />
-    <None Include="Views\Common\ErrorPage\Style\Error.less" />
+    <Content Include="Views\Common\ErrorPage\Style\Error.less" />
     <Content Include="Views\Common\ErrorPage\Style\Images\error2.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\seamless_pattern.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\style.css" />
-    <None Include="Views\Common\UnderMaintenance\Style\UnderMaintenance.less" />
+    <Content Include="Views\Common\UnderMaintenance\Style\UnderMaintenance.less" />
     <Content Include="Views\Common\UnderMaintenance\Style\Images\UnderMaintenance.gif" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
