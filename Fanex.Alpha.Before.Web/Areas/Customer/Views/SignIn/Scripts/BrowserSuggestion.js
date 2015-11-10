@@ -24,7 +24,7 @@ Sphinx.BrowserSuggestion = (function ($) {
         browserVersion = result.browser.major;
 
         if (result.os.name.toLowerCase() === "windows") {
-            if (browserName.toLowerCase() === "ie" && browserVersion <= 7
+            if (browserName.toLowerCase() === "ie" && browserVersion <= 9
                 || browserName.toLowerCase() === "firefox" && browserVersion <= 30) {
 
                 needToUpdate = true;
@@ -59,7 +59,7 @@ Sphinx.BrowserSuggestion = (function ($) {
                 updateLink.text(language.updateYourBrowser);
 
                 if (browserName.toLowerCase() === "ie") {
-                    updateLink.attr("href", format(updateLinkIe, language.Id));
+                    updateLink.attr("href", format(updateLinkIe, "en-US"));
                 }
                 else if (browserName.toLowerCase() === "firefox") {
                     updateLink.attr("href", format(updateLinkFireFox, language.Id));

@@ -172,8 +172,8 @@ Sphinx.Resources = (function () {
         resource.SignIn = 'SignIn';
         resource.errUserName = 'Vui lòng điền Tên đăng nhập và Mật khẩu';
         resource.errValidCode = 'Bạn phải nhập mã xác thực.';
-        resource.browserWarning = "Your browser is out of date and might not be working properly with our website. For a better support, we strongly recommend that you upgrade to a newer version";
-        resource.updateYourBrowser = "Click here to update your browser";
+        resource.browserWarning = "Trình duyệt của bạn đã cũ và có thể không tương thích với trang web của chúng tôi. Để hỗ trợ tốt hơn, chúng tôi đề nghị bạn nâng cấp lên một phiên bản mới hơn";
+        resource.updateYourBrowser = "Nhấn vào đây để cập nhật trình duyệt của bạn";
 
         return resource;
     };
