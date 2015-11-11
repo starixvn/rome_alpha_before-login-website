@@ -27,15 +27,15 @@
         </h2>
     </div>
     <div id="mainholder">
-        <form action="@Url.Content("~/Customer/SignIn/Index")" method="POST">
-            @RenderBody()
-            <input name="code" id="code" type="hidden" value="@Model.Captcha" />
-            <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
+        <form action="@Url.Content("~/Customer/SignIn/Index")" method="POST" autocomplete="off">
+        @RenderBody()
+        <input name="code" id="code" type="hidden" value="@Model.Captcha" />
+        <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
         </form>
     </div>
     <script type="text/javascript">
         var detecasAnalysis = document.getElementById("detecas-analysis");
-        detecasAnalysis ? (detecasAnalysis.value = '{"startTime":1446686616296,"ExecuteVersion":"X"}') : false;
+        detecasAnalysis ? (detecasAnalysis.value = '{"startTime":1446686616296,"version":"0.0.0","enable":true}') : false;
     </script>
     <script src="~/Areas/Customer/Views/SignIn/Scripts/Core.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
     <script src="~/Areas/Customer/Views/SignIn/Scripts/PlaceHolder.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
@@ -72,7 +72,7 @@
         $('#mainholder').css('display', 'none');
         $('#divLoading').css('display', 'block');
         $("body").css("background", "none");
-        window.location.href = '@Model.AfterLoginUrl';
+            window.location.href = 'Flow';
     }
 
     </script>

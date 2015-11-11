@@ -8,12 +8,17 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 {
     using System;
     using System.Configuration;
+    using System.Linq;
+    using System.Web;
     using System.Web.Mvc;
     using CaptchaMvc.HtmlHelpers;
     using Fanex.Alpha.Before.Common.Controllers;
     using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
     using Fanex.Alpha.Before.Infrastructure.Extensions;
+    using Fanex.Oneyed.RobotTrap.Handshakes;
+    using Fanex.Oneyed.RobotTrap.Repositories;
+    using Fanex.Oneyed.RobotTrap.Stylesheet;
 
     /// <summary>
     /// TODO: Update summary.
@@ -61,7 +66,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string code, string __di)
         {
             bool validCaptcha = false;
-
             if (_signInService.IsShowReCaptcha())
             {
                 try
@@ -81,7 +85,10 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 FPSTracking(txtUserName, loginResult);
                 ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
             }
-            
+
+            Session["Detecas-Username"] = txtUserName;
+            Session["Detecas-AfterLoginUrl"] = loginResult.AfterLoginUrl;
+
             return PartialView(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
         }
 
@@ -134,5 +141,96 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 LogExtension.ExceptionHandler(ex);
             }
         }
+
+        [HttpGet]
+        public ActionResult Flow()
+        {
+            if (IsDetecasSessionValid())
+            {
+                return GetFlowView();
+            }
+            else
+            {
+                return Redirect("~/Customer/SignIn");
+            }
+        }
+
+        private bool IsDetecasSessionValid()
+        {
+            return Session["Detecas-Username"] != null && !string.IsNullOrWhiteSpace(Session["Detecas-Username"].ToString())
+                      && Session["Detecas-AfterLoginUrl"] != null && !string.IsNullOrWhiteSpace(Session["Detecas-AfterLoginUrl"].ToString());
+        }
+
+        private ActionResult GetFlowView()
+        {
+            var handshaker = new Handshaker(Session);
+            var seedAndData = handshaker.GetSeedAndData();
+            var cookie = new HttpCookie("detecas-data") { Value = seedAndData.Value };
+
+            Response.Cookies.Add(cookie);
+
+            return View("Flow", (object)seedAndData.Key);
+        }
+
+        [HttpPost]
+        public ActionResult Flow(string detecasToken)
+        {
+            if (!IsDetecasSessionValid())
+            {
+                return Redirect("~/Customer/SignIn");
+            }
+            
+            detecasToken = string.IsNullOrEmpty(detecasToken)
+                ? Request["detecas-token"]
+                : string.Empty;
+
+            var afterLoginUrl = Session["Detecas-AfterLoginUrl"].ToString();
+            var username = Session["Detecas-Username"].ToString();
+            TryEvaluateRobot(username, detecasToken);
+            RemoveDetecasSession();
+
+            return string.IsNullOrEmpty(afterLoginUrl)
+                ? (ActionResult)RedirectToAction("Index")
+                : (ActionResult)Redirect(afterLoginUrl);
+        }
+
+        private void TryEvaluateRobot(string username, string encryptedData)
+        {
+            try
+            {
+                EvaluateRobot(username, encryptedData);
+            }
+            catch
+            {
+            }
+        }
+
+        private void EvaluateRobot(string username, string encryptedData)
+        {
+            var robotBitMask = GetRobotBitMask(encryptedData);
+            if (robotBitMask > 0)
+            {
+                var repository = new RobotRepository();
+                repository.Create(username, Session.SessionID, robotBitMask);
+            }
+        }
+
+        private int GetRobotBitMask(string encryptedData)
+        {
+            var cssTrap = new StyleSheetTrap(Session);
+            var handshaker = new Handshaker(Session);
+
+            var isValidCss = cssTrap.IsValid();
+            var isValidHandshake = handshaker.IsValid(encryptedData);
+
+            return 0 | (isValidCss ? 0 : 1) | (isValidHandshake ? 0 : 2);
+        }
+
+        private void RemoveDetecasSession()
+        {
+            var detecasSessionKeys = Session.Keys.Cast<string>().Where(k => k.StartsWith("Detecas-")).ToList();
+            detecasSessionKeys.ForEach(k => Session.Remove(k));
+        }
     }
+
 }

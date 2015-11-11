@@ -54,6 +54,9 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Oneyed.RobotTrap">
+      <HintPath>..\_Dependencies\FPS\Fanex.Oneyed.RobotTrap.dll</HintPath>
+    </Reference>
     <Reference Include="FPS.Client">
       <HintPath>..\packages\Fanex.Oneyed.FPSClient.1.0.0\FPS.Client.dll</HintPath>
     </Reference>
