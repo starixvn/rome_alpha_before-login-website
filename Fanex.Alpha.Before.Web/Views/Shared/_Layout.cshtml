@@ -14,7 +14,6 @@
     <meta charset="utf-8" />
     <meta name="Login" content="width=device-width" />
     <title>Login</title>
-    <link href="~/FPS/no-cache/style.css" rel="stylesheet" type="text/css" />
     <link href="~/Areas/Customer/Views/SignIn/Template/@Model.LoginTemplate/Styles/Login.less" rel="stylesheet"
           type="text/css" />
     <link href="~/Scripts/Component/Dropdown/DropdownStyle.css" rel="stylesheet" type="text/css" />
@@ -36,9 +35,7 @@
     </div>
     <script type="text/javascript">
         var detecasAnalysis = document.getElementById("detecas-analysis");
-        if (detecasAnalysis) {
-            detecasAnalysis.value = '{"startTime":1446686616296,"version":"1.0.2"}';
-        }
+        detecasAnalysis ? (detecasAnalysis.value = '{"startTime":1446686616296,"ExecuteVersion":"X"}') : false;
     </script>
     <script src="~/Areas/Customer/Views/SignIn/Scripts/Core.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
     <script src="~/Areas/Customer/Views/SignIn/Scripts/PlaceHolder.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
