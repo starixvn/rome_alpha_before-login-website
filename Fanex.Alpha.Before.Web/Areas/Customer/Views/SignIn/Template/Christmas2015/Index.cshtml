@@ -7,6 +7,8 @@
     <center>
         <div class="content">
             <div id="textTitle" class="textTitle_en"></div>
+             <div id="divPopupMobileVersion" style="color: #000; font-size: 14px; padding-top: 15px">@(Model.IsChangedPassword ? @Model.ChangedPasswordTime : "")
+            </div>
             <div class="wrapper">
                 <div class="inputContainer">
                     <table>
@@ -66,7 +68,6 @@
                     <div class="errorMessage" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
                 </div>
             </div>
-            <div id="divPopupMobileVersion" style="color: #000; font-size: 14px; padding-top: 480px;">@(Model.IsChangedPassword ? @Model.ChangedPasswordTime : "")
-            </div>
+           
         </div>   
     </center>
