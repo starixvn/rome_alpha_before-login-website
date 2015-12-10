@@ -119,6 +119,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Fonts\icomoon\icomoon.svg" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Images\bg.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Images\bg_repeat.jpg" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Images\caret.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Images\refresh.png" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\style.css" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\icomoon\icomoon.svg" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_cn.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_en.png" />
@@ -319,6 +325,13 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Index.cshtml" />
+    <None Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Fonts\icomoon\icomoon.eot" />
+    <None Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Fonts\icomoon\icomoon.ttf" />
+    <None Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Fonts\icomoon\icomoon.woff" />
+    <None Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Login.less" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
