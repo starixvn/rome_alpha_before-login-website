@@ -135,6 +135,8 @@ Sphinx.Login = {
 
         Sphinx.Core.setCookie('LANGUAGE', languageCode, 30);
         Sphinx.Login.currentLanguageCode = languageCode;
+
+        $(document).trigger("Sphinx.Login.LanguageChanged", [languageCode]);
     },
 
     showPassword: function (chkShowPass) {

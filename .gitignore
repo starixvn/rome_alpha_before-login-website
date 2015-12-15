@@ -32,3 +32,6 @@ _ReSharper*/
 /packages/*
 !/packages/*.config
 *.GhostDoc.xml
+
+
+.vs

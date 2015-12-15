@@ -43,38 +43,40 @@
     <script src="~/Areas/Customer/Views/SignIn/Scripts/Core.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
     <script src="~/Areas/Customer/Views/SignIn/Scripts/PlaceHolder.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
     <script src="~/Areas/Customer/Views/SignIn/Scripts/Resources.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
+<script src="~/Areas/Customer/Views/SignIn/Scripts/ua-parser.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
+<script src="~/Areas/Customer/Views/SignIn/Scripts/BrowserSuggestion.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
     <script src="~/Areas/Customer/Views/SignIn/Scripts/Login.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
     <script src="~/Scripts/Component/Dropdown/Dropdown.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
     <script language="javascript" type="text/javascript">
-        var _page = {
-            errCode: 0,
-            errMsg: '',
-            language: 0,
-            ip: '',
-            __utms: '',
-            domain: '',
-            captcha: '',
-            fpsActivator: ''
-        };
+    var _page = {
+        errCode: 0,
+        errMsg: '',
+        language: 0,
+        ip: '',
+        __utms: '',
+        domain: '',
+        captcha: '',
+        fpsActivator: ''
+    };
 
-        _page.errCode = @Model.ErrCode;
-        _page.errMsg = '@Html.Raw("@Model.ErrMsg")';
-        _page.language = @Model.Language;
-        _page.ip = '@Model.Ip';
-        _page.__utms = '@Model.UTMS';
-        _page.domain = '@Model.Domain';
-        _page.captcha = '@Model.Captcha';
-        _page.fpsActivator = '@CommonAppSetting.FpsActivator';
+    _page.errCode = @Model.ErrCode;
+    _page.errMsg = '@Html.Raw("@Model.ErrMsg")';
+    _page.language = @Model.Language;
+    _page.ip = '@Model.Ip';
+    _page.__utms = '@Model.UTMS';
+    _page.domain = '@Model.Domain';
+    _page.captcha = '@Model.Captcha';
+    _page.fpsActivator = '@CommonAppSetting.FpsActivator';
 
-        window.rootUrl = '@Url.Content("~")';
+    window.rootUrl = '@Url.Content("~")';
 
 
-        if(parseInt(_page.errCode) === -1) {
-            $('#mainholder').css('display', 'none');
-            $('#divLoading').css('display', 'block');
-            $("body").css("background", "none");
-            window.location.href = '@Model.AfterLoginUrl';
-        }
+    if(parseInt(_page.errCode) === -1) {
+        $('#mainholder').css('display', 'none');
+        $('#divLoading').css('display', 'block');
+        $("body").css("background", "none");
+        window.location.href = '@Model.AfterLoginUrl';
+    }
 
     </script>
     <script type="text/javascript" src="@CommonAppSetting.FpsActivator"></script>

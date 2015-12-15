@@ -40,6 +40,8 @@ Sphinx.Resources = (function () {
         resource.SignIn = 'SignIn';
         resource.errUserName = 'Please input username and password';
         resource.errValidCode = 'You must input validation code.';
+        resource.browserWarning = "Your browser is out of date and might not be working properly with our website. For a better support, we strongly recommend that you upgrade to a newer version";
+        resource.updateYourBrowser = "Click here to update your browser";
 
         return resource;
     };
@@ -60,6 +62,8 @@ Sphinx.Resources = (function () {
         resource.SignIn = 'SignIn';
         resource.errUserName = '請輸入賬號及密碼。';
         resource.errValidCode = '您必须输入正确验证码';
+        resource.browserWarning = "您的瀏覽器已過期，可能無法與我們的網站正常操作。為了提供更好的支援，我們強烈建議您升級至新的版本";
+        resource.updateYourBrowser = "請點擊這里以升級您的瀏覽器";
 
         return resource;
     };
@@ -80,6 +84,8 @@ Sphinx.Resources = (function () {
         resource.SignIn = 'SignIn';
         resource.errUserName = '请输入账号及密码';
         resource.errValidCode = '您必須輸入正確驗證碼';
+        resource.browserWarning = "您的浏览器已过期，可能无法与我们的网站正常操作。为了提供更好的支援，我们强烈建议您升级至新的版本";
+        resource.updateYourBrowser = "请点击这里以升级您的浏览器";
 
         return resource;
     };
@@ -100,6 +106,8 @@ Sphinx.Resources = (function () {
         resource.SignIn = 'SignIn';
         resource.errUserName = "ユーザー名とパスワードを入力してください";
         resource.errValidCode = "You must input validation code.";
+        resource.browserWarning = "Your browser is out of date and might not be working properly with our website. For a better support, we strongly recommend that you upgrade to a newer version";
+        resource.updateYourBrowser = "Click here to update your browser";
 
         return resource;
     };
@@ -120,6 +128,8 @@ Sphinx.Resources = (function () {
         resource.SignIn = 'SignIn';
         resource.errUserName = 'โปรดใส่ชื่อผู้ใช้และรหัสผ่าน';
         resource.errValidCode = 'คุณต้องใส่หมายเลขที่ใช้ในการตรวจสอบ';
+        resource.browserWarning = "เบราว์เซอร์ของท่านตกรุ่น ซึ่งอาจทำงานได้อย่างไม่เหมาะสมกับเวปไซค์ของทางบริษัท. เพื่อตอบสนองการใช้งานที่ดียิ่งขึ้น ทางเราใคร่ขอแนะนำให้ท่าน ทำการอัพเกรดให้เป็นเวอร์ชั่นที่ใหม่กว่าเดิม";
+        resource.updateYourBrowser = "คลิ๊กตรงนี้เพื่อทำการอัพเกรด เบราว์เซอร์ของท่าน";
 
         return resource;
     };
@@ -140,6 +150,8 @@ Sphinx.Resources = (function () {
         resource.SignIn = 'SignIn';
         resource.errUserName = '사용자명과 비밀번호를 입력해주세요';
         resource.errValidCode = '확인코드를 입력해주세요.';
+        resource.browserWarning = "Your browser is out of date and might not be working properly with our website. For a better support, we strongly recommend that you upgrade to a newer version";
+        resource.updateYourBrowser = "Click here to update your browser";
 
         return resource;
     };
@@ -160,6 +172,8 @@ Sphinx.Resources = (function () {
         resource.SignIn = 'SignIn';
         resource.errUserName = 'Vui lòng điền Tên đăng nhập và Mật khẩu';
         resource.errValidCode = 'Bạn phải nhập mã xác thực.';
+        resource.browserWarning = "Trình duyệt của bạn đã cũ và có thể không tương thích với trang web của chúng tôi. Để hỗ trợ tốt hơn, chúng tôi đề nghị bạn nâng cấp lên một phiên bản mới hơn";
+        resource.updateYourBrowser = "Nhấn vào đây để cập nhật trình duyệt của bạn";
 
         return resource;
     };
