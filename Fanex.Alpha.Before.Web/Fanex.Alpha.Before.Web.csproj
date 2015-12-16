@@ -71,6 +71,24 @@
     <Reference Include="Fanex.Data">
       <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.Oneyed.RobotTrap">
+      <HintPath>..\_Dependencies\FPS\Fanex.Oneyed.RobotTrap.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Data, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EnterpriseLibrary.Data.5.0.505.0\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Logging, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35\Microsoft.Practices.EnterpriseLibrary.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -193,9 +211,10 @@
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\sprite_bk.gif" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\stop.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Index.css" />
-    <Content Include="Configurations\Dev.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Configurations\Local.StoreProcedure\RobotSpNames.xml" />
+    <Content Include="Configurations\Master.StoreProcedure\RobotSpNames.xml" />
+    <Content Include="Configurations\PRO.StoreProcedure\RobotSpNames.xml" />
+    <Content Include="Configurations\UAT.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Scripts\Component\Dropdown\Dropdown.js" />
     <Content Include="Scripts\Component\Dropdown\DropdownStyle.css" />
     <Content Include="Scripts\Component\Dropdown\Image\flag-sprites.png" />
@@ -238,6 +257,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="Scripts\detecas\detecas-token.min.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\less-1.4.1.min.js" />
     <Content Include="Views\Common\ErrorPage\404Error.htm" />
@@ -270,8 +290,6 @@
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Medium.ttf" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Regular.ttf" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\LimitedCountryAccess.less" />
-    <Content Include="FPS\no-cache\Web.config" />
-    <Content Include="FPS\no-cache\style.css" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.LimtedCountryAccessSection.config" />
     <Content Include="LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.LimtedCountryAccessSection.config" />
@@ -353,6 +371,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\SignIn\Flow.cshtml" />
     <None Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Fonts\icomoon\icomoon.eot" />
     <None Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Fonts\icomoon\icomoon.ttf" />
     <None Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Fonts\icomoon\icomoon.woff" />
@@ -393,4 +412,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
 </Project>

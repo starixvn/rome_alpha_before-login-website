@@ -14,7 +14,6 @@
     <meta charset="utf-8" />
     <meta name="Login" content="width=device-width" />
     <title>Login</title>
-    <link href="~/FPS/no-cache/style.css" rel="stylesheet" type="text/css" />
     <link href="~/Areas/Customer/Views/SignIn/Template/@Model.LoginTemplate/Styles/Login.less" rel="stylesheet"
           type="text/css" />
     <link href="~/Scripts/Component/Dropdown/DropdownStyle.css" rel="stylesheet" type="text/css" />
@@ -28,17 +27,15 @@
         </h2>
     </div>
     <div id="mainholder">
-        <form action="@Url.Content("~/Customer/SignIn/Index")" method="POST">
-            @RenderBody()
-            <input name="code" id="code" type="hidden" value="@Model.Captcha" />
-            <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
+        <form action="@Url.Content("~/Customer/SignIn/Index")" method="POST" autocomplete="off">
+        @RenderBody()
+        <input name="code" id="code" type="hidden" value="@Model.Captcha" />
+        <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
         </form>
     </div>
     <script type="text/javascript">
         var detecasAnalysis = document.getElementById("detecas-analysis");
-        if (detecasAnalysis) {
-            detecasAnalysis.value = '{"startTime":1446686616296,"version":"1.0.2"}';
-        }
+        detecasAnalysis ? (detecasAnalysis.value = '{"startTime":1446686616296,"version":"0.0.0","enable":true}') : false;
     </script>
     <script src="~/Areas/Customer/Views/SignIn/Scripts/Core.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
     <script src="~/Areas/Customer/Views/SignIn/Scripts/PlaceHolder.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
@@ -75,7 +72,7 @@
         $('#mainholder').css('display', 'none');
         $('#divLoading').css('display', 'block');
         $("body").css("background", "none");
-        window.location.href = '@Model.AfterLoginUrl';
+            window.location.href = 'Flow';
     }
 
     </script>
