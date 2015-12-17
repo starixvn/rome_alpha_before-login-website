@@ -35,29 +35,32 @@ namespace Fanex.Alpha.Before.Common.Helpers
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                LogExtension.WriteInfo(ex);
             }
 
             try
             {
-                // Mobile Device Browser
-                if (request.Browser.IsMobileDevice)
+                if (request.Browser != null)
                 {
-                    requestInfo["browsername"] = string.Format("{0} {1}", request.Browser.Browser, request.Browser.MajorVersion);
-                    requestInfo["platform"] = request.Browser.MobileDeviceModel;
-                }
-                else
-                {
-                    requestInfo["browsername"] = string.Format(
-                        "{0} {1}", 
-                        request.UserAgent.ToUpper().Contains("CHROME") ? "Chrome" : request.Browser.Browser, 
-                        request.Browser.Version);
-                    requestInfo["platform"] = GetPlatform();
+                    // Mobile Device Browser
+                    if (request.Browser.IsMobileDevice)
+                    {
+                        requestInfo["browsername"] = string.Format("{0} {1}", request.Browser.Browser, request.Browser.MajorVersion);
+                        requestInfo["platform"] = request.Browser.MobileDeviceModel;
+                    }
+                    else
+                    {
+                        requestInfo["browsername"] = string.Format(
+                            "{0} {1}",
+                            request.UserAgent != null && request.UserAgent.ToUpper().Contains("CHROME") ? "Chrome" : request.Browser.Browser,
+                            request.Browser.Version);
+                        requestInfo["platform"] = GetPlatform();
+                    }
                 }
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                LogExtension.WriteInfo(ex);
             }
 
             return requestInfo;
@@ -102,12 +105,17 @@ namespace Fanex.Alpha.Before.Common.Helpers
             };
             HttpContext context = HttpContext.Current;
 
-            // Loop through each item in the list created above and check if the header contains that text
-            foreach (string flatform in platformArrays)
+            if (context != null && context.Request != null &&
+                context.Request.ServerVariables != null &&
+                !string.IsNullOrWhiteSpace(context.Request.ServerVariables["HTTP_USER_AGENT"]))
             {
-                if (context.Request.ServerVariables["HTTP_USER_AGENT"].ToLower().Contains(flatform.ToLower()))
+                // Loop through each item in the list created above and check if the header contains that text
+                foreach (string flatform in platformArrays)
                 {
-                    return flatform;
+                    if (context.Request.ServerVariables["HTTP_USER_AGENT"].ToLower().Contains(flatform.ToLower()))
+                    {
+                        return flatform;
+                    }
                 }
             }
 
