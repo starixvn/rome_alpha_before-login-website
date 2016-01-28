@@ -53,8 +53,11 @@
                                 tabindex="5" />
                         </td>
                     </tr>
+                    <tr>
+                        <td><span class="errorMessage" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</span></td>
+                    </tr>
                 </table>
-                <div class="errorMessage" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
+                
             </div>
         </div>
         <div id="divPopupMobileVersion" style="color: #000; font-size: 14px; padding-top: 180px;">@(Model.IsChangedPassword ? @Model.ChangedPasswordTime : "")
