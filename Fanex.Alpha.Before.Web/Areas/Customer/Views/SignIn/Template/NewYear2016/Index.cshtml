@@ -39,15 +39,6 @@
                             </label>
                         </td>
                     </tr>
-                    <tr class="browser-warning">
-                        <td class="row custom-row">
-                            <span class="warning-icon"></span>
-                            <div class="warning-info">
-                                <div class="warning-message"></div>
-                                <a class="update-link"></a>
-                            </div>
-                        </td>
-                    </tr>
                     <tr>
                         <td class="" id="captcha">
                             @if (ViewBag.ShowReCaptcha == true)
@@ -69,7 +60,14 @@
                 
             </div>
         </div>
-        <div id="divPopupMobileVersion" style="color: #000; font-size: 14px; padding-top: 180px;">@(Model.IsChangedPassword ? @Model.ChangedPasswordTime : "")
+        <div class="browser-warning">
+            <span class="warning-icon"></span>
+            <div class="warning-info">
+                <div class="warning-message"></div>
+                <a class="update-link"></a>
+            </div>
+        </div>
+        <div id="divPopupMobileVersion" style="color: #fff; font-size: 14px; padding-top: 80px;">@(Model.IsChangedPassword ? @Model.ChangedPasswordTime : "")
         </div>
     </div>
 </center>
