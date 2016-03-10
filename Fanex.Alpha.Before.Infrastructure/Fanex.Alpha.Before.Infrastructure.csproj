@@ -95,6 +95,7 @@
     <Compile Include="Extensions\CacheExtension.cs" />
     <Compile Include="Extensions\DateTimeExtension.cs" />
     <Compile Include="Extensions\EnumerableExtension.cs" />
+    <Compile Include="Extensions\LogExtensionFilter.cs" />
     <Compile Include="Extensions\SessionExtension.cs" />
     <Compile Include="Extensions\LogExtension.cs" />
     <Compile Include="Helpers\SystemTime.cs" />

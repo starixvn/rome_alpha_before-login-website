@@ -7,11 +7,12 @@
 namespace Fanex.Alpha.Before.Infrastructure.Extensions
 {
     using System;
-    using System.Web;
-    using Fanex.Logging;
     using System.Collections;
     using System.Data.SqlClient;
+    using System.Linq;
     using System.Threading;
+    using System.Web;
+    using Fanex.Logging;
 
     /// <summary>
     /// Log Extensions.
@@ -49,53 +50,15 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
                 SqlExceptionToString(ex));
         }
 
-        private static string ExceptionDataToString(IDictionary dictionary)
-        {
-            string message = string.Empty;
-            if (dictionary != null)
-            {
-                foreach (var key in dictionary.Keys)
-                {
-                    message += string.Format("\r\n{0}: {1}", key, dictionary[key]);
-                }
-            }
-
-            return message;
-        }
-
-        private static string SqlExceptionToString(Exception ex)
-        {
-            if (ex is SqlException)
-            {
-                return GetSqlExceptionInfo((SqlException)ex);
-            }
-            else
-            {
-                if (ex.InnerException is SqlException)
-                {
-                    return GetSqlExceptionInfo((SqlException)ex.InnerException);
-                }
-            }
-
-            return string.Empty;
-        }
-
-        private static string GetSqlExceptionInfo(SqlException ex)
-        {
-            return string.Join("\r\n",
-                    "PROCEDURE: " + ex.Procedure,
-                    "LINE NUMBER: " + ex.LineNumber,
-                    "SERVER: " + ex.Server);
-        }
-
         private static string ExceptionToString(Exception ex, HttpRequest httpRequest, int customerId)
         {
-            string url = httpRequest.Url.OriginalString;
+            string url = LogExtensionFilter.CensorSensitiveInformation(httpRequest.Url.OriginalString);
 
             string formString = string.Empty;
             if (httpRequest.Form.Count > 0)
             {
                 formString = httpRequest.Form.ToString();
+                formString = LogExtensionFilter.CensorSensitiveInformation(formString);
             }
 
             string message = string.Join("\r\n",
@@ -112,6 +75,17 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
             if (customerId != 0)
             {
                 message += "\r\nCUSTID: " + customerId;
+            }
+
+            return message;
+        }
+
+        private static string ExceptionDataToString(IDictionary dictionary)
+        {
+            string message = string.Empty;
+            if (dictionary != null)
+            {
+                message = dictionary.Keys.Cast<object>().Aggregate(message, (current, key) => current + string.Format("\r\n{0}: {1}", key, dictionary[key]));
             }
 
             return message;
@@ -141,6 +115,29 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
                 "Supports Cookies: " + browser.Cookies);
         }
 
+        private static string SqlExceptionToString(Exception ex)
+        {
+            if (ex is SqlException)
+            {
+                return GetSqlExceptionInfo((SqlException)ex);
+            }
+
+            if (ex.InnerException is SqlException)
+            {
+                return GetSqlExceptionInfo((SqlException)ex.InnerException);
+            }
+
+            return string.Empty;
+        }
+
+        private static string GetSqlExceptionInfo(SqlException ex)
+        {
+            return string.Join("\r\n",
+                    "PROCEDURE: " + ex.Procedure,
+                    "LINE NUMBER: " + ex.LineNumber,
+                    "SERVER: " + ex.Server);
+        }
+        
         private static string CustomerIp()
         {
             var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
