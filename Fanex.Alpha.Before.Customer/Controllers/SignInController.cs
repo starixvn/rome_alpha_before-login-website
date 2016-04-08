@@ -44,8 +44,12 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            var loginResult = _signInService.SignIn();
+            if (Request.QueryString["UMToken"] != null)
+            {
+                Session["UMToken"] = Request.QueryString["UMToken"];
+            }
 
+            var loginResult = _signInService.SignIn();
             return View(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
         }
 

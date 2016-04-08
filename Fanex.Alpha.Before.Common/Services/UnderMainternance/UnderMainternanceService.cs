@@ -45,28 +45,16 @@ namespace Fanex.Alpha.Before.Common.Configurations.UnderMainternance
             {
                 if (_maintenanceService.IsUnderMaintenance())
                 {
+                    if (_maintenanceService.IsPassUnderMaintenance())
+                    {
+                        return result;
+                    }
+
                     UnderMaintenanceTime underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
                     result.IsUM = true;
                     result.From = underMaintenanceTime.From;
                     result.To = underMaintenanceTime.To;
                 }
-
-                //string startTime = string.Empty, endTime = string.Empty;
-                //UMSection alphaUMSetting = UMSection.Instance;
-
-                //if (alphaUMSetting.IsUMTesting)
-                //{
-                //    result.IsUM = true;
-                //    startTime = alphaUMSetting.UMStartTesting;
-                //    endTime = alphaUMSetting.UMEndTesting;
-                //}
-                //else if (alphaUMSetting.EnableCheckUM)
-                //{
-                //    result.IsUM = new UMBusiness().isUnderMaintainence(Sites.Agency, alphaUMSetting.UMAddress, ref startTime, ref endTime);
-                //}
-
-                //result.From = startTime;
-                //result.To = endTime;
             }
             catch (Exception ex)
             {

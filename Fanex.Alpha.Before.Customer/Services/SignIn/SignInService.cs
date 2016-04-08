@@ -47,7 +47,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
         public SignInService() :
             this(null)
-        {            
+        {
         }
 
         public SignInService(SignInRepository signInRepository)
@@ -125,7 +125,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             return loginResult;
         }
-        
+
         /// <summary>
         /// Sign In method.
         /// </summary>
@@ -159,7 +159,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                         this.SetLoginFailedTime();
                         var ipLockedError = string.Format(LoginLanguages.Labels.iploginfailedmultipletimeserror, _maxTimesToAllowLogInFail, _blockLoginMinute);
                         signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
-                        signInResult.ErrMsg = ipLockedError;                       
+                        signInResult.ErrMsg = ipLockedError;
 
                         return signInResult;
                     }
@@ -175,9 +175,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 {
                     if (IsShowReCaptcha() && !isValidCaptcha)
                     {
-                        ResetCurrentLoginFailed();                        
+                        ResetCurrentLoginFailed();
                         CacheExtension.Set(this._lastLoginUserNameSessionKey, username);
-            
+
                         signInResult.ErrCode = -2; ////no need to write log in fps and redirect to login page.
                         signInResult.Captcha = AppSession.EncryptCode;
 
@@ -249,7 +249,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
 
             CacheExtension.Set(this._lastLoginUserNameSessionKey, username);
-            
+
             return signInResult;
         }
 
@@ -300,8 +300,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     !allowWords.All(s => username.ToUpper().Contains(s)))
                 {
                     return signInResult;
-                }         
-                                
+                }
+
                 //// Get Browser
                 Hashtable requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request);
                 requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
@@ -325,12 +325,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             return signInResult;
         }
-        
+
         public bool IsShowReCaptcha()
         {
             return CacheExtension.Get<int>(this._currentLoginFailedSessionKey) >= this._loginFailTimeToStartUsingCaptcha;
         }
-        
+
         /// <summary>
         /// Close RNG Account.
         /// </summary>
@@ -487,7 +487,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             return string.Empty;
         }
-        
+
         /// <summary>
         /// Setting language that user's choosing.
         /// </summary>
@@ -563,7 +563,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             var path = System.Web.HttpContext.Current.Server.MapPath("~/IbcKeys/ibcpkey.snk");
             var parameter = string.Format(
-                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}", 
+                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}",
                 verifySignInResult.CustId,
                 verifySignInResult.SubAccId,
                 verifySignInResult.LoginTime.Ticks,
@@ -575,11 +575,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             parameter = new EncryptionThread().EncryptString(parameter, keySize, path);
 
-            string url = string.Format(
-                "{0}{1}?params={2}", 
-                UrlHelper.SiteGroupSetting.AfterUrl, 
-                CustomerAppSetting.AfterLoginAuthorizationPage, 
-                parameter);
+            string url = HttpContext.Current.Session["UMToken"] == null
+                ? string.Format("{0}{1}?params={2}", UrlHelper.SiteGroupSetting.AfterUrl, CustomerAppSetting.AfterLoginAuthorizationPage, parameter)
+                : string.Format("{0}{1}?UMToken={2}&params={3}", UrlHelper.SiteGroupSetting.AfterUrl, CustomerAppSetting.AfterLoginAuthorizationPage, HttpContext.Current.Session["UMToken"], parameter);
+
 
             signInResult.ErrMsg = LoginLanguages.Labels.lblLoginSuccessful;
             signInResult.AfterLoginUrl = url;
