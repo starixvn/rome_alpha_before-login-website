@@ -37,6 +37,11 @@ namespace Fanex.Alpha.Before.Common.Controllers
             var downTime = _mainternanceService.UnderMainternanceInfo();
             if (!downTime.IsUM)
             {
+                if (Request.QueryString["UMToken"] != null)
+                {
+                    Session["UMToken"] = Request.QueryString["UMToken"];
+                }
+
                 FormsAuthentication.RedirectToLoginPage();
             }
 
