@@ -81,7 +81,11 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
             if (loginResult != null && loginResult.ErrCode != -2)
             {
-                FPSTracking(txtUserName, loginResult);
+                if(loginResult.ErrCode == -1)
+                {
+                    FPSTracking(txtUserName, loginResult);
+                }
+
                 ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
             }
 
