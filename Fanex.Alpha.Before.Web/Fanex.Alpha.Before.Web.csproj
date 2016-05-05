@@ -190,10 +190,6 @@
     <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Images\refresh.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\style.css" />
     <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Fonts\icomoon\icomoon.svg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Images\2_cn.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Images\2_en.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Images\2_tw.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Images\bg-yellow.jpg" />
     <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Images\browser-warning.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Images\caret.png" />
     <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Images\loginbg.jpg" />
