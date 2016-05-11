@@ -1,0 +1,16 @@
+﻿\\*.local.config
+\\*.master.config
+\\*.uat.config
+\\*.pro.config
+\\*.dev.config
+\\*.sit.config
+\\*.bkkbt67.config
+\\*.automation.ini
+\\*.local.ini
+\\*.production.ini
+\\*.pro.ini
+\\*.uat.ini
+\\*.sit.ini
+\\*.txt
+\\LogCS\\*
+\\IbcKeys\\*
