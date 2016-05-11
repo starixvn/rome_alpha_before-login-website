@@ -411,6 +411,12 @@
     <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Fonts\icomoon\icomoon.ttf" />
     <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Fonts\icomoon\icomoon.woff" />
     <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Login.less" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.Web.config" />
+    <None Include="Configurations\WebDeployment.ConfigTransform\SIT.Web.Setting.config" />
+    <Content Include="deployment.ignore" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
