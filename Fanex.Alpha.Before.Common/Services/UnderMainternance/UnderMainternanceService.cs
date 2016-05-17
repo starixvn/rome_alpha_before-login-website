@@ -4,22 +4,22 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using System;
+using Fanex.Alpha.Before.Common.Configurations.UnderMainternance;
+using Fanex.Alpha.Before.Common.Models;
+using Fanex.Alpha.Before.Infrastructure.Extensions;
 using ONEbook.UM.Models;
 using ONEbook.UM.Services;
 using ONEbook.UM.Services.Impl;
 
-namespace Fanex.Alpha.Before.Common.Configurations.UnderMainternance
+namespace Fanex.Alpha.Before.Common.Services.UnderMainternance
 {
-    using System;
-    using Fanex.Alpha.Before.Common.Models;
-    using Fanex.Alpha.Before.Infrastructure.Extensions;
-
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class UnderMainternanceService : IUnderMainternanceService
     {
-        private IMaintenanceService _maintenanceService;
+        private readonly IMaintenanceService _maintenanceService;
 
         public UnderMainternanceService() : this(null)
         {
@@ -45,11 +45,6 @@ namespace Fanex.Alpha.Before.Common.Configurations.UnderMainternance
             {
                 if (_maintenanceService.IsUnderMaintenance())
                 {
-                    if (_maintenanceService.IsPassUnderMaintenance())
-                    {
-                        return result;
-                    }
-
                     UnderMaintenanceTime underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
                     result.IsUM = true;
                     result.From = underMaintenanceTime.From;

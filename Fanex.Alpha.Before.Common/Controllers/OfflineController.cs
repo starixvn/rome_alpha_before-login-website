@@ -4,11 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Fanex.Alpha.Before.Common.Services.UnderMainternance;
+
 namespace Fanex.Alpha.Before.Common.Controllers
 {
     using System.Web.Mvc;
     using System.Web.Security;
-    using Fanex.Alpha.Before.Common.Configurations.UnderMainternance;
+    using Configurations.UnderMainternance;
 
     /// <summary>
     /// TODO: Update summary.
