@@ -273,13 +273,19 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Master.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Master.Web.Setting.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.Setting.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.Web.Setting.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local.Web.config">
       <SubType>Designer</SubType>
     </Content>

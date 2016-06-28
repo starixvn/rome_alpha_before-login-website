@@ -1,6 +1,6 @@
 ﻿// --------------------------------------------------------------------------
-// <copyright file="LogExtension.cs" company="Nexcel Solutions Vietnam">
-// Copyright (c) Nexcel Solutions Vietnam. All rights reserved.
+// <copyright file="LogExtension.cs" company="">
+// Copyright (c). All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------
 
