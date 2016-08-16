@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Fanex.Alpha.Before.Common.Services.UnderMainternance;
+
 namespace Fanex.Alpha.Before.Common.Controllers
 {
     using System.Globalization;

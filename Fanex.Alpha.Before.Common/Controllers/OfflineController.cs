@@ -4,11 +4,13 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Fanex.Alpha.Before.Common.Services.UnderMainternance;
+
 namespace Fanex.Alpha.Before.Common.Controllers
 {
     using System.Web.Mvc;
     using System.Web.Security;
-    using Fanex.Alpha.Before.Common.Configurations.UnderMainternance;
+    using Configurations.UnderMainternance;
 
     /// <summary>
     /// TODO: Update summary.
@@ -37,6 +39,11 @@ namespace Fanex.Alpha.Before.Common.Controllers
             var downTime = _mainternanceService.UnderMainternanceInfo();
             if (!downTime.IsUM)
             {
+                if (Request.QueryString["UMToken"] != null)
+                {
+                    Session["UMToken"] = Request.QueryString["UMToken"];
+                }
+
                 FormsAuthentication.RedirectToLoginPage();
             }
 

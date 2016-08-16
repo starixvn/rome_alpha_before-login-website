@@ -4,48 +4,52 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
-namespace Fanex.Alpha.Before.Common.Configurations.UnderMainternance
-{
-    using System;
-    using Fanex.Alpha.Before.Common.Configurations;
-    using Fanex.Alpha.Before.Common.Models;
-    using Fanex.Alpha.Before.Infrastructure.Extensions;
-    using Sunplus.UMControllerLibrary;
+using System;
+using Fanex.Alpha.Before.Common.Configurations.UnderMainternance;
+using Fanex.Alpha.Before.Common.Models;
+using Fanex.Alpha.Before.Infrastructure.Extensions;
+using ONEbook.UM.Models;
+using ONEbook.UM.Services;
+using ONEbook.UM.Services.Impl;
 
+namespace Fanex.Alpha.Before.Common.Services.UnderMainternance
+{
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
     public class UnderMainternanceService : IUnderMainternanceService
     {
+        private readonly IMaintenanceService _maintenanceService;
+
+        public UnderMainternanceService() : this(null)
+        {
+        }
+
+        public UnderMainternanceService(IMaintenanceService maintenanceService)
+        {
+            _maintenanceService = maintenanceService ?? new MaintenanceService();
+        }
+
         /// <summary>
         /// Checking UM.
         /// </summary>
         /// <returns>Return UM info.</returns>
         public UnderMaintenanceModel UnderMainternanceInfo()
         {
-            var result = new UnderMaintenanceModel()
+            UnderMaintenanceModel result = new UnderMaintenanceModel()
             {
                 IsUM = false
             };
 
             try
             {
-                string startTime = string.Empty, endTime = string.Empty;
-                var alphaUMSetting = UMSection.Instance;
-
-                if (alphaUMSetting.IsUMTesting)
+                if (_maintenanceService.IsUnderMaintenance())
                 {
+                    UnderMaintenanceTime underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
                     result.IsUM = true;
-                    startTime = alphaUMSetting.UMStartTesting;
-                    endTime = alphaUMSetting.UMEndTesting;
+                    result.From = underMaintenanceTime.From;
+                    result.To = underMaintenanceTime.To;
                 }
-                else if (alphaUMSetting.EnableCheckUM)
-                {
-                    result.IsUM = new UMBusiness().isUnderMaintainence(Sites.Agency, alphaUMSetting.UMAddress, ref startTime, ref endTime);                
-                }
-
-                result.From = startTime;
-                result.To = endTime;
             }
             catch (Exception ex)
             {
