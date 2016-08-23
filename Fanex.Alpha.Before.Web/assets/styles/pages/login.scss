@@ -36,6 +36,11 @@ input, button {
     font-size: inherit;
 }
 
+input[type="checkbox"], input[type="radio"] {
+    position: relative;
+    top: 1px;
+}
+
 // icons
 %icon {
     background: url(../images/sprites.png) no-repeat;
@@ -44,35 +49,28 @@ input, button {
 
 .icon-user {
     @extend %icon;
-    background-position: -54px -4px;
+    background-position: -55px -4px;
     height: 14px;
     width: 14px;
 }
 
 .icon-lock {
     @extend %icon;
-    background-position: -78px 0;
+    background-position: -79px 0;
     height: 19px;
     width: 14px;
 }
 
 .icon-refresh {
     @extend %icon;
-    background-position: -28px -3px;
+    background-position: -29px -2px;
     cursor: pointer;
     height: 16px;
     width: 16px;
 
     &:hover {
-        background-position: -28px -29px;
+        background-position: -29px -28px;
     }
-}
-
-.icon-captcha {
-    @extend %icon;
-    background-position: -26px -50px;
-    height: 34px;
-    width: 89px;
 }
 
 .flag {
@@ -81,7 +79,7 @@ input, button {
     height: 16px;
     position: relative;
     top: 4px;
-    margin-right: 2px;
+    margin-right: 4px;
 
     &.flag-en {
         background-position: 0 0px;
@@ -93,16 +91,16 @@ input, button {
         background-position: 0 -34px;
     }
     &.flag-jp {
-        background-position: 0 -50px;
+        background-position: 0 -51px;
     }
     &.flag-th {
-        background-position: 0 -69px;
+        background-position: 0 -68px;
     }
     &.flag-kr {
-        background-position: 0 -86px;
+        background-position: 0 -85px;
     }
     &.flag-vn {
-        background-position: 0 -104px;
+        background-position: 0 -102px;
     }
 }
 
@@ -138,11 +136,11 @@ input, button {
             color: $text-box-color-focus;
 
             + .icon-user {
-                 background-position: -54px -30px;
+                 background-position: -55px -31px;
             }
 
             + .icon-lock {
-                 background-position: -78px -26px;
+                 background-position: -79px -27px;
             }
         }
     }
@@ -165,13 +163,13 @@ input, button {
         }
 
         .icon-lock {              
-            top: 7px;
+            top: 8px;
         }
 
         &.group-captcha {
             display: table;
             width: 100%;
-            .icon-captcha, .action-refresh, .txt-validation {
+            .codeCaptcha, .action-refresh, .txt-validation {
                 display: table-cell;
             }
 
@@ -205,6 +203,14 @@ input, button {
         &:hover {
             background-color: $btn-bg-hover;
         }
+
+        &[disabled], .disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            &:hover {
+                background-color: $btn-bg;
+            }
+        }
     }
 }
 
@@ -215,6 +221,10 @@ input, button {
     .dropdown-menu {
         left: auto;
         right: 0;
+
+        > li > a {
+            padding: 4px 16px;
+        }
     }
 
     .btn:active, .btn.active {

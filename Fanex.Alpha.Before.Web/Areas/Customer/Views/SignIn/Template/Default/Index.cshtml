@@ -51,12 +51,13 @@
         <span id="lbShowPass">Show password</span>
     </label>
 </div>
-
+@Html.Captcha(4, "~/Areas/Captcha/Views/SylouCaptcha/CaptchaPartialView.cshtml", ViewData)
 @if (ViewBag.ShowReCaptcha == true)
 {
     @Html.Captcha(4, "~/Areas/Captcha/Views/SylouCaptcha/CaptchaPartialView.cshtml", ViewData)
 }
 <div class="list-button">
     <input type="button" class="btnLogin" value="Login" id="btnLogin"/>
+    @*<input type="button" class="btnLogin" value="Login" id="btnLogin" disabled />*@
 </div>
 

@@ -26,6 +26,9 @@
         <img alt="" id="@Model.ImageElementId" src="@Model.ImageUrl" width="70px" height="27px" onclick="return @functionName" />
         @Html.Hidden(Model.TokenElementId, Model.TokenValue)
     </div>
+    <div class="action-refresh" id="@id" href="#@Model.ImageElementId">
+        <i class="icon-refresh" onclick="return @functionName"></i>
+    </div>
 
     @if (Model.IsRequired)
     {
@@ -40,11 +43,7 @@
     }
     else
     {
-        @Html.TextBox(Model.InputElementId, null, new { @id = "recaptcha_response_field", @class = "txt txt-validation" })
+        @Html.TextBox(Model.InputElementId, null, new { @id = "recaptcha_response_field", @class = "txt txt-validation", @placeholder= "Validation" })
     }
-
-    <div class="action-refresh" id="@id" href="#@Model.ImageElementId">
-        <i class="icon-refresh" onclick="return @functionName"></i>
-    </div>
 
 </div>
