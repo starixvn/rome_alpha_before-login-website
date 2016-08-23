@@ -8,22 +8,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="~/assets/bundles/login.min.css" rel="stylesheet" />
-
-    <script src="~/assets/bundles/libs.js"></script>
 </head>
 <body>
+
     <div id="divLoading" style="display: none">
         <h2>
             Loading... please wait
         </h2>
     </div>
+
     <div class="block-warning">
         <div class="content">
-            <p class="warning-message">Your browser is out of date and might not be working properly with our website. For a better support, we strongly recommend that you upgrade to a newer version.</p>
-            <a href="#" class="update-link">Click here to update your broswer</a>
-            <span class="icon-close"></span>
+            <p class="warning-message"></p>
+            <a href="#" class="update-link"></a>
         </div>
     </div>
+
     <div id="mainholder" class="block">
         <form class="form-login" action="@Url.Content("~/Customer/SignIn/Index")" method="POST" autocomplete="off">
             @RenderBody()
@@ -31,15 +31,15 @@
             <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
         </form>
     </div>
-    <script type="text/javascript">
-        var detecasAnalysis = document.getElementById("detecas-analysis");
-        detecasAnalysis ? (detecasAnalysis.value = '{"startTime":1446686616296,"version":"0.0.0","enable":true}') : false;
-    </script>
 
+    <script src="~/assets/bundles/libs.js"></script>
     <script src="~/assets/scripts/login/ua-parser.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
     <script src="~/assets/bundles/login.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 
     <script language="javascript" type="text/javascript">
+        var detecasAnalysis = document.getElementById("detecas-analysis");
+        detecasAnalysis ? (detecasAnalysis.value = '{"startTime":1446686616296,"version":"0.0.0","enable":true}') : false;
+
         var _page = {
             errCode: 0,
             errMsg: '',
@@ -75,6 +75,7 @@
             o = t.getElementsByTagName(c)[0];
             s.async = true, s.defer = true, s.src = n, o.appendChild(s)
         }(window, document, "script", "body", "@CommonAppSetting.FpsActivator");
+
     </script>
 
     @RenderSection("scripts", false)
