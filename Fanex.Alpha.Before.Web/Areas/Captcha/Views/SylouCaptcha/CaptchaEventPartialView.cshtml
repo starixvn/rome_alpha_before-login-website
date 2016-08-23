@@ -18,7 +18,7 @@
 
         setTimeout(
             function(){
-                window.location = '~/signin/index';
+                window.location.href = window.location.href;
             }, @(Fanex.Alpha.Before.Customer.Configurations.AlphaCommonSection.Instance.NoInteractionTimeInMinutes * 60 * 1000));
     </script>
 }

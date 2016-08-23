@@ -1,0 +1,334 @@
+﻿/// <reference path="core.js" />
+
+"use strict";
+/* global _page */
+/* jshint unused: vars */
+
+var Sphinx = Sphinx || {};
+
+Sphinx.rootUrl = '';
+
+Sphinx.Error = {
+    InvalidUserAndPass: '1',
+    InvalidCaptcha: '2',
+
+    clientError: function (error) {
+
+        if (error === Sphinx.Error.InvalidUserAndPass || 
+            error === Sphinx.Error.InvalidCaptcha) {
+            return true;
+        }
+
+        return false;
+    }
+};
+
+Sphinx.Helper = (function () {
+    return {
+        browserStandardMode: function () {
+            return document.compatMode === 'CSS1Compat';
+        }
+    };
+})();
+
+Sphinx.Login = {
+    currentLanguageCode: 'en-US',
+    init: function () {
+        Sphinx.Login.cachedDomElements();
+        Sphinx.rootUrl = window.rootUrl;
+        var language = Sphinx.Core.getCookie('LANGUAGE');
+        if (!language) {
+            language = _page.language;
+        }
+
+        if (parseInt(language) === 0) {
+            language = Sphinx.Login.currentLanguageCode;
+        }
+        Sphinx.Login.setLanguague(language, true);
+
+        Sphinx.Login.initComponent();
+    },
+    domElements: {
+        ddlLanguages: null,
+        formTitle: null,
+        txtUsername: null,
+        txtPassword: null,
+        chbShowPassword: null,
+        btnLogin: null,
+        txtCaptcha: null,
+        imgCode: null,
+        errorMsg: null,
+        lblLanguage: null,
+        flag: null,
+        hidLanguage: null,
+        languageItems: null,
+        lblShowPass: null
+    },
+    cachedDomElements: function () {
+        Sphinx.Login.domElements.txtUsername = $('#txtUserName');
+        Sphinx.Login.domElements.txtPassword = $('#txtPassWord');
+        Sphinx.Login.domElements.chbShowPassword = $('#chbShowPass');
+        Sphinx.Login.domElements.txtCaptcha = $('#txtCaptcha');
+        Sphinx.Login.domElements.imgCode = $('#imgCode');
+        Sphinx.Login.domElements.errorMsg = $('#errmsg');
+        Sphinx.Login.domElements.lblLanguage = $('#lblLanguage');
+        Sphinx.Login.domElements.flag = $("#flag");
+        Sphinx.Login.domElements.hidLanguage = $('#hidLanguage');
+        Sphinx.Login.domElements.languageItems = $('#language-ddl a');
+        Sphinx.Login.domElements.btnLogin = $('#btnLogin');
+        Sphinx.Login.domElements.formTitle = $('.login-text');
+        Sphinx.Login.domElements.lblShowPass = $('#lbShowPass');
+    },
+    initComponent: function () {
+        var domElements = Sphinx.Login.domElements;
+
+        domElements.txtPassword.focus(function () {
+            if (domElements.chbShowPassword.is(':checked')) {
+                return;
+            }
+            Sphinx.Login.setPassword($(this));
+        }).blur(function () {
+            Sphinx.Login.resetPassword($(this));
+        });
+
+        $(document).keypress(function (evt) {
+            Sphinx.Login.doEnter(evt, 'Sphinx.Login.doLogin()');
+        });
+
+        //Adjust component for Quirk mode
+        if (!Sphinx.Helper.browserStandardMode()) {
+            domElements.txtCaptcha.height('22.5px');
+            $('#lbLanguage').css('color', '#B96643');
+            $('#lbLanguage').css('font-size', '13px');
+            $('.showPass').css('top', '1px');
+            $('.refreshCont').css('width', '50px');
+            $('.header .title').css('float', 'left');
+        }
+
+        Sphinx.Login.getValidateImage();
+
+        Sphinx.Login.domElements.languageItems.click(function () {
+            Sphinx.Login.setLanguague($(this).find('span').data('language-code'));
+        });
+
+        Sphinx.Login.domElements.btnLogin.click(Sphinx.Login.doLogin);
+        Sphinx.Login.domElements.chbShowPassword.click(Sphinx.Login.showPassword);
+    },
+
+    getValidateImage: function () {
+        var objDate = new Date();
+        $("#imgCode").attr('src', Sphinx.rootUrl + 'Customer/SignIn/NewCaptcha?code=' + objDate.getMilliseconds());
+    },
+
+    setLanguague: function (languageCode, firstLoad) {
+        var domElements = Sphinx.Login.domElements;
+
+        if (!firstLoad) {
+            domElements.errorMsg.html('');
+            $('#divPopupMobileVersion').html('');
+        }
+
+        var flag = domElements.flag;
+        var language = Sphinx.Resources;
+        var resource = language.getLanguage(languageCode);
+
+        var error = domElements.errorMsg.attr('errCode');
+        if (Sphinx.Error.clientError(error)) {
+            domElements.errorMsg.html(Sphinx.Login.getErrorMessage(error, resource));
+        }
+
+        var ctrUsername = domElements.txtUsername;
+        var currentUsername = ctrUsername.attr('placeholder');
+        ctrUsername.attr('placeholder', resource.Username);
+        if (Sphinx.Core.detectBrowser.msie && ctrUsername.val() === currentUsername) {
+            ctrUsername.val(resource.Username);
+        }
+
+        var strPassword = domElements.txtPassword;
+        var currentPlaceholder = strPassword.attr('placeholder');
+        strPassword.attr('placeholder', resource.Password);
+        if (Sphinx.Core.detectBrowser.msie && strPassword.val() === currentPlaceholder) {
+            strPassword.val(resource.Password);
+        }
+
+        var strCaptcha = domElements.txtCaptcha;
+        var currentCaptcha = strCaptcha.attr('placeholder');
+        strCaptcha.attr('placeholder', resource.Captcha);
+        if (Sphinx.Core.detectBrowser.msie && strCaptcha.val() === currentCaptcha) {
+            strCaptcha.val(resource.Captcha);
+        }
+
+        flag.removeClass().addClass(resource.Flag);
+        domElements.lblLanguage.html(resource.Language);
+
+        domElements.hidLanguage.val(languageCode);
+        domElements.lblShowPass.html(resource.ShowPassword);
+
+        $('#textTitle').removeClass();
+        $('#textTitle').addClass(resource.AutumnTitle);
+        domElements.btnLogin.val(resource.Login);
+        domElements.formTitle.text(resource.Login);;
+        document.title = resource.Login;
+
+        Sphinx.Core.setCookie('LANGUAGE', languageCode, 30);
+        Sphinx.Login.currentLanguageCode = languageCode;
+
+        $(document).trigger("Sphinx.Login.LanguageChanged", [languageCode]);
+    },
+
+    showPassword: function (chkShowPass) {
+        var currentInputPass = Sphinx.Login.domElements.txtPassword;
+        if (currentInputPass.val() === currentInputPass.attr('placeholder')) {
+            return;
+        }
+
+        if ($(this).is(':checked')) {
+            Sphinx.Login.resetPassword(currentInputPass);
+        }
+        else {
+            Sphinx.Login.setPassword(currentInputPass);
+        }
+    },
+
+    setPassword: function ($input) {
+        var valPlaceholder = $input.attr('placeholder');
+        var inputPassword = $('<input type="password" id="txtPassWord" name="txtPassWord" tabindex="2" placeholder="' +
+            valPlaceholder +
+            '"  class="txt"  value="' +
+            $input.val() + '" />');
+        $input.replaceWith(inputPassword);
+        Sphinx.Login.domElements.txtPassword = inputPassword;
+        inputPassword.focus();
+        if (Sphinx.Core.detectBrowser.msie) {
+            inputPassword.blur(function () {
+                if (inputPassword.val() === '') {
+                    Sphinx.Login.resetPassword(inputPassword);
+                }
+            });
+        }
+    },
+
+    resetPassword: function ($input) {
+        var valPlaceholder = $input.attr('placeholder');
+        var inputPassword = $('<input type="text" id="txtPassWord" name="txtPassWord" tabindex="2" placeholder="' +
+            valPlaceholder +
+            '" class="txt" value="' +
+             $input.val() +
+             '"  />');
+        $input.replaceWith(inputPassword);
+        Sphinx.Login.domElements.txtPassword = inputPassword;
+        if (Sphinx.Core.detectBrowser.msie) {
+            if (inputPassword.val() === '') {
+                inputPassword.val(inputPassword.attr('placeholder')).addClass('placeholder');
+            }
+
+            inputPassword.focus(function () {
+                if (inputPassword.val() === inputPassword.attr('placeholder')) {
+                    inputPassword.val('').removeClass('placeholder');
+                    if ( Sphinx.Login.domElements.chbShowPassword.is(':checked')) {
+                        return;
+                    }
+                    Sphinx.Login.setPassword(inputPassword);
+                }
+            });
+
+            inputPassword.blur(function () {
+                if (inputPassword.val() === '') {
+                    inputPassword.val(inputPassword.attr('placeholder')).addClass('placeholder');
+                }
+            });
+        }
+    },
+
+    validateInput: function () {
+        var language = Sphinx.Resources.getLanguage(Sphinx.Login.currentLanguageCode);
+        var domeElements = Sphinx.Login.domElements;
+        if (domeElements.txtUsername.val() === ""
+            || domeElements.txtUsername.val() === language.Username) {
+
+            domeElements.errorMsg
+                .attr('errCode', Sphinx.Error.InvalidUserAndPass)
+                .show()
+                .html(language.errUserName);
+
+            domeElements.txtUsername.focus();
+
+            return false;
+        }
+
+        if (domeElements.txtPassword.val() === "" || domeElements.txtPassword.val() === language.Password) {
+            domeElements.errorMsg
+                .html(language.errUserName)
+                .errorMsg.attr('errCode', Sphinx.Error.InvalidUserAndPass)
+                .show();
+
+            domeElements.txtPassword.focus();
+
+            return false;
+        }
+
+        if (domeElements.txtCaptcha.val() === "") {
+            domeElements.errorMsg
+                .html(language.errValidCode)
+                .attr('errCode', Sphinx.Error.InvalidCaptcha)
+                .show();
+
+            domeElements.txtCaptcha.focus();
+
+            return false;
+        }
+
+        return true;
+    },
+
+    doEnter: function (evt, action) {
+        /*jshint evil:true */
+        if ((!Sphinx.Core.detectBrowser.msie && evt.keyCode === 13) ||
+            (Sphinx.Core.detectBrowser.msie && window.event.keyCode === 13)) {
+            eval(action);
+        }
+    },
+
+    doLogin: function () {
+
+        if (!Sphinx.Login.validateInput()) {
+            return false;
+        }
+
+        Sphinx.Login.blockComponent();
+
+        Sphinx.Login.domElements.txtPassword.val(Sphinx.Login.domElements.txtPassword.val().ec(_page.captcha).hc());
+
+        try {
+            Sphinx.Core.setCookie2("__utms", _page.__utms, 1, "/", "." + _page.domain, "");
+        }
+        catch (exception) {
+        }
+
+        Sphinx.Core.setCookie("ssl", location.href.indexOf('https://') === 0, 30);
+
+        document.forms[0].submit();
+
+        return true;
+    },
+
+    blockComponent: function () {
+        Sphinx.Login.domElements.btnLogin.attr('disabled', true);
+    },
+
+    getErrorMessage: function (errorCode, resource) {
+        switch (errorCode) {
+            case Sphinx.Error.InvalidUserAndPass:
+                return resource.errUserName;
+
+            case Sphinx.Error.InvalidCaptcha:
+                return resource.errValidCode;
+        }
+
+        return '';
+    }
+};
+
+$(document).ready(function () {
+    Sphinx.Login.init();
+});

@@ -1,0 +1,26 @@
+[
+  {
+    "outputFileName": "assets/bundles/login.js",
+    "inputFiles": [
+      "assets/scripts/login/core.js",
+      "assets/scripts/login/browser-suggestion.js",
+      "assets/scripts/login/place-holder.js",
+      "assets/scripts/login/resources.js",
+      "assets/scripts/login/login.js"
+    ]
+  },
+  {
+    "outputFileName": "assets/bundles/libs.js",
+    "inputFiles": [
+      "assets/scripts/libs/jquery/jquery-1.11.3.js",
+      "assets/scripts/libs/bootstrap/dropdown.js"
+    ]
+  },
+  {
+    "outputFileName": "assets/bundles/login.css",
+    "inputFiles": [
+      "assets/styles/vendors-extensions/login/bootstrap-ex.css",
+      "assets/styles/pages/login.css"
+    ]
+  }
+]
