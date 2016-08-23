@@ -44,8 +44,8 @@ Sphinx.Login = {
         if (parseInt(language) === 0) {
             language = Sphinx.Login.currentLanguageCode;
         }
-        Sphinx.Login.setLanguague(language, true);
 
+        Sphinx.Login.setLanguague(language, true);
         Sphinx.Login.initComponent();
     },
     domElements: {
@@ -62,7 +62,8 @@ Sphinx.Login = {
         flag: null,
         hidLanguage: null,
         languageItems: null,
-        lblShowPass: null
+        lblShowPass: null,
+        formLogin: null
     },
     cachedDomElements: function () {
         Sphinx.Login.domElements.txtUsername = $('#txtUserName');
@@ -78,41 +79,25 @@ Sphinx.Login = {
         Sphinx.Login.domElements.btnLogin = $('#btnLogin');
         Sphinx.Login.domElements.formTitle = $('.login-text');
         Sphinx.Login.domElements.lblShowPass = $('#lbShowPass');
+        Sphinx.Login.domElements.formLogin = $('#formLogin');
     },
     initComponent: function () {
         var domElements = Sphinx.Login.domElements;
 
-        domElements.txtPassword.focus(function () {
-            if (domElements.chbShowPassword.is(':checked')) {
-                return;
-            }
-            Sphinx.Login.setPassword($(this));
-        }).blur(function () {
-            Sphinx.Login.resetPassword($(this));
-        });
-
         $(document).keypress(function (evt) {
-            Sphinx.Login.doEnter(evt, 'Sphinx.Login.doLogin()');
+            if ((!Sphinx.Core.detectBrowser.msie && evt.keyCode === 13)
+                || (Sphinx.Core.detectBrowser.msie && window.event.keyCode === 13)) {
+                Sphinx.Login.doLogin();
+            }
         });
-
-        //Adjust component for Quirk mode
-        if (!Sphinx.Helper.browserStandardMode()) {
-            domElements.txtCaptcha.height('22.5px');
-            $('#lbLanguage').css('color', '#B96643');
-            $('#lbLanguage').css('font-size', '13px');
-            $('.showPass').css('top', '1px');
-            $('.refreshCont').css('width', '50px');
-            $('.header .title').css('float', 'left');
-        }
 
         Sphinx.Login.getValidateImage();
 
-        Sphinx.Login.domElements.languageItems.click(function () {
+        domElements.languageItems.click(function () {
             Sphinx.Login.setLanguague($(this).find('span').data('language-code'));
         });
-
-        Sphinx.Login.domElements.btnLogin.click(Sphinx.Login.doLogin);
-        Sphinx.Login.domElements.chbShowPassword.click(Sphinx.Login.showPassword);
+        domElements.btnLogin.click(Sphinx.Login.doLogin);
+        domElements.chbShowPassword.click(Sphinx.Login.showPassword);
     },
 
     getValidateImage: function () {
@@ -164,8 +149,6 @@ Sphinx.Login = {
         domElements.hidLanguage.val(languageCode);
         domElements.lblShowPass.html(resource.ShowPassword);
 
-        $('#textTitle').removeClass();
-        $('#textTitle').addClass(resource.AutumnTitle);
         domElements.btnLogin.val(resource.Login);
         domElements.formTitle.text(resource.Login);;
         document.title = resource.Login;
@@ -176,7 +159,7 @@ Sphinx.Login = {
         $(document).trigger("Sphinx.Login.LanguageChanged", [languageCode]);
     },
 
-    showPassword: function (chkShowPass) {
+    showPassword: function () {
         var currentInputPass = Sphinx.Login.domElements.txtPassword;
         if (currentInputPass.val() === currentInputPass.attr('placeholder')) {
             return;
@@ -215,8 +198,10 @@ Sphinx.Login = {
             '" class="txt" value="' +
              $input.val() +
              '"  />');
+
         $input.replaceWith(inputPassword);
         Sphinx.Login.domElements.txtPassword = inputPassword;
+
         if (Sphinx.Core.detectBrowser.msie) {
             if (inputPassword.val() === '') {
                 inputPassword.val(inputPassword.attr('placeholder')).addClass('placeholder');
@@ -230,9 +215,7 @@ Sphinx.Login = {
                     }
                     Sphinx.Login.setPassword(inputPassword);
                 }
-            });
-
-            inputPassword.blur(function () {
+            }).blur(function () {
                 if (inputPassword.val() === '') {
                     inputPassword.val(inputPassword.attr('placeholder')).addClass('placeholder');
                 }
@@ -248,18 +231,19 @@ Sphinx.Login = {
 
             domeElements.errorMsg
                 .attr('errCode', Sphinx.Error.InvalidUserAndPass)
-                .show()
-                .html(language.errUserName);
+                .html(language.errUserName)
+                .show();
 
             domeElements.txtUsername.focus();
 
             return false;
         }
 
-        if (domeElements.txtPassword.val() === "" || domeElements.txtPassword.val() === language.Password) {
+        if (domeElements.txtPassword.val() === ""
+            || domeElements.txtPassword.val() === language.Password) {
             domeElements.errorMsg
                 .html(language.errUserName)
-                .errorMsg.attr('errCode', Sphinx.Error.InvalidUserAndPass)
+                .attr('errCode', Sphinx.Error.InvalidUserAndPass)
                 .show();
 
             domeElements.txtPassword.focus();
@@ -281,14 +265,6 @@ Sphinx.Login = {
         return true;
     },
 
-    doEnter: function (evt, action) {
-        /*jshint evil:true */
-        if ((!Sphinx.Core.detectBrowser.msie && evt.keyCode === 13) ||
-            (Sphinx.Core.detectBrowser.msie && window.event.keyCode === 13)) {
-            eval(action);
-        }
-    },
-
     doLogin: function () {
 
         if (!Sphinx.Login.validateInput()) {
@@ -296,7 +272,6 @@ Sphinx.Login = {
         }
 
         Sphinx.Login.blockComponent();
-
         Sphinx.Login.domElements.txtPassword.val(Sphinx.Login.domElements.txtPassword.val().ec(_page.captcha).hc());
 
         try {
@@ -306,8 +281,7 @@ Sphinx.Login = {
         }
 
         Sphinx.Core.setCookie("ssl", location.href.indexOf('https://') === 0, 30);
-
-        document.forms[0].submit();
+        Sphinx.Login.domElements.formLogin.submit();
 
         return true;
     },

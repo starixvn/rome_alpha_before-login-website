@@ -6,6 +6,11 @@
 
 @model Fanex.Alpha.Before.Customer.Models.SignInResult
 
+@section styles
+{
+    <link href="~/assets/bundles/login.min.css?ver=@AppSetting.Version" rel="stylesheet" />
+}
+
 <div class="box-lang">
     <div class="dropdown">
         <span class="btn dropdown-toggle" type="button" id="langList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -42,7 +47,8 @@
 
 <div class="rowlg checkbox">
     <label>
-        <input name="chb-showpass" type="checkbox" id="chbShowPass" onclick="Sphinx.Login.showPassword(this)"> <span id="lbShowPass">Show password</span>
+        <input name="chb-showpass" type="checkbox" id="chbShowPass" /> 
+        <span id="lbShowPass">Show password</span>
     </label>
 </div>
 

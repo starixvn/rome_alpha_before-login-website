@@ -7,7 +7,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="~/assets/bundles/login.min.css" rel="stylesheet" />
+    <link href="~/assets/styles/vendors-extensions/login/bootstrap-ex.min.css?ver=@CommonAppSetting.Version" rel="stylesheet" />
+    @RenderSection("styles", false)
 </head>
 <body>
 
@@ -17,24 +18,16 @@
         </h2>
     </div>
 
-    <div class="block-warning">
-        <div class="content">
-            <p class="warning-message"></p>
-            <a href="#" class="update-link"></a>
-        </div>
-    </div>
-
     <div id="mainholder" class="block">
-        <form class="form-login" action="@Url.Content("~/Customer/SignIn/Index")" method="POST" autocomplete="off">
+        <form id="formLogin" class="form-login" action="@Url.Content("~/Customer/SignIn/Index")" method="POST" autocomplete="off">
             @RenderBody()
             <input name="code" id="code" type="hidden" value="@Model.Captcha" />
             <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
         </form>
     </div>
 
-    <script src="~/assets/bundles/libs.js"></script>
-    <script src="~/assets/scripts/login/ua-parser.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
-    <script src="~/assets/bundles/login.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
+    <script src="~/assets/bundles/libs.min.js?ver=@CommonAppSetting.Version"></script>
+    <script src="~/assets/bundles/login.min.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 
     <script language="javascript" type="text/javascript">
         var detecasAnalysis = document.getElementById("detecas-analysis");

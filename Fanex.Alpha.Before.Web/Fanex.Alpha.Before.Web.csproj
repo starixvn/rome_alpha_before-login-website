@@ -224,52 +224,6 @@
     <Content Include="assets\bundles\login.min.js">
       <DependentUpon>login.js</DependentUpon>
     </Content>
-    <Content Include="assets\scripts\login\browser-suggestion.js" />
-    <Content Include="assets\scripts\login\ua-parser.js" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Default\Styles\Images\browser-warning.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2015\Styles\Fonts\icomoon\icomoon.svg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2015\Styles\Images\bg.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2015\Styles\Images\bg_repeat.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2015\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2015\Styles\Images\refresh.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2015\Styles\style.css" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\NewYear2016\Styles\Fonts\icomoon\icomoon.svg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\NewYear2016\Styles\Images\browser-warning.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\NewYear2016\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\NewYear2016\Styles\Images\loginbg.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\NewYear2016\Styles\Images\refresh.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\NewYear2016\Styles\style.css" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Styles\Fonts\icomoon\icomoon.svg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Styles\Images\2_cn.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Styles\Images\2_en.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Styles\Images\2_tw.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Styles\Images\bg.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Styles\Images\refresh.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Default\Styles\Images\seamless_pattern.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Default\Styles\Images\sprites.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Fonts\icomoon\icomoon.svg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Images\2_cn.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Images\2_en.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Images\2_tw.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Images\bg_light.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Images\panel.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Images\pattern.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Images\refresh.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\style.css" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Styles\style.css" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Styles\Images\bg.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Styles\Images\cn_simplified_text.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Styles\Images\cn_traditional_text.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Styles\Images\error_icon.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Styles\Images\key.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Styles\Images\panel.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Styles\Images\Rec_sp.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Styles\Images\sprites.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Styles\Images\text_en.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Styles\Images\user.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Scripts\SylouCaptcha.js" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\atticon.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\audio.gif" />
@@ -301,8 +255,6 @@
     <Content Include="assets\styles\vendors-extensions\login\bootstrap-ex.min.css">
       <DependentUpon>bootstrap-ex.css</DependentUpon>
     </Content>
-    <Content Include="assets\styles\vendors\bootstrap.css" />
-    <Content Include="assets\styles\vendors\bootstrap.min.css" />
     <Content Include="Configurations\Local.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\Master.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\RobotSpNames.xml" />
@@ -310,15 +262,6 @@
     <Content Include="assets\scripts\login\core.js" />
     <Content Include="assets\scripts\login\login.js" />
     <Content Include="assets\scripts\login\place-holder.js" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2014\Styles\Images\bg.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2014\Styles\Images\box.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2014\Styles\Images\btnLogin.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2014\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2014\Styles\Images\event-text.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2014\Styles\Images\panel.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2014\Styles\Images\Rec_sp.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2014\Styles\Images\refresh.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2014\Styles\Images\SignIn.png" />
     <Content Include="Configurations\Local.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\Master.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
@@ -362,20 +305,6 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.Web.config" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Default\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Styles\Fonts\icomoon\icomoon.eot" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Styles\Fonts\icomoon\icomoon.ttf" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Styles\Fonts\icomoon\icomoon.woff" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\MidAutumn2015\Styles\Login.less" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Default\Styles\Login.less" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Fonts\icomoon\icomoon.eot" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Fonts\icomoon\icomoon.ttf" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Fonts\icomoon\icomoon.woff" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\DragonBoat2015\Styles\Login.less" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\newyear2015\Styles\Login.less" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\CaptchaPartialView.cshtml" />
     <Content Include="Areas\Captcha\Views\Web.config" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Bold.ttf" />
@@ -394,8 +323,6 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.DomainGroupSection.config" />
     <Content Include="Areas\Customer\Web.config" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2014\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2014\Styles\Login.less" />
     <Content Include="Areas\Customer\Views\SignIn\Transfer.cshtml" />
     <Content Include="IbcKeys\ibckey.snk" />
     <Content Include="IbcKeys\ibcpkey.snk" />
@@ -422,7 +349,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Default.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Common\UnderMaintenance\Index.cshtml" />
   </ItemGroup>
@@ -455,19 +381,7 @@
     <Content Include="Views\Common\ErrorPage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2015\Index.cshtml" />
     <Content Include="Areas\Customer\Views\SignIn\Flow.cshtml" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\CaptchaEventPartialView.cshtml" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\SylouCaptchaPartialView.cshtml" />
-    <None Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2015\Styles\Fonts\icomoon\icomoon.eot" />
-    <None Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2015\Styles\Fonts\icomoon\icomoon.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2015\Styles\Fonts\icomoon\icomoon.woff" />
-    <None Include="Areas\Customer\Views\SignIn\Template\Old\Christmas2015\Styles\Login.less" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\NewYear2016\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\NewYear2016\Styles\Fonts\icomoon\icomoon.eot" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\NewYear2016\Styles\Fonts\icomoon\icomoon.ttf" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\NewYear2016\Styles\Fonts\icomoon\icomoon.woff" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Old\NewYear2016\Styles\Login.less" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.LimtedCountryAccessSection.config" />
@@ -579,7 +493,6 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="deployment.ignore" />
-    <Content Include="Views\Shared\_Layout.old.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
