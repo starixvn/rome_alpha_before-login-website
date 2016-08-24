@@ -280,6 +280,10 @@ input[type="checkbox"], input[type="radio"] {
 
         .rowlg {
             margin-bottom: 20px;
+
+            &.msg-error {
+                margin: 14px 0 8px;
+            }
         }
 
         .box-lang {
@@ -302,7 +306,7 @@ input[type="checkbox"], input[type="radio"] {
 
        &:before {
             left: 30px;   
-            top: 1px;  
+            top: 3px;  
         }
    }
 
@@ -334,6 +338,10 @@ input[type="checkbox"], input[type="radio"] {
 
         .rowlg {
             margin-bottom: 16px;
+
+            &.msg-error {
+                margin: 12px 0 4px;
+            }
         }
 
         .title {
@@ -345,4 +353,8 @@ input[type="checkbox"], input[type="radio"] {
             padding-top: 0;
         }
     }
+
+   .block-info:before {
+        top: 1px; 
+   }
 }
