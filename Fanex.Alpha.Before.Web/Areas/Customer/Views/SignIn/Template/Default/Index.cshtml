@@ -35,12 +35,12 @@
 
 <span class="rowlg msg-error" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</span>
 
-<div class="rowlg box">
+<div class="rowlg">
     <input type="text" class="txt" placeholder="Username"  id="txtUserName" name="txtUserName">
     <i class="icon-user"></i>
 </div>
 
-<div class="rowlg box">
+<div class="rowlg">
     <input type="password" class="txt" placeholder="Password" id="txtPassWord" name="txtPassWord" >
     <i class="icon-lock"></i>
 </div>
@@ -52,6 +52,7 @@
     </label>
 </div>
 @Html.Captcha(4, "~/Areas/Captcha/Views/SylouCaptcha/CaptchaPartialView.cshtml", ViewData)
+
 @if (ViewBag.ShowReCaptcha == true)
 {
     @Html.Captcha(4, "~/Areas/Captcha/Views/SylouCaptcha/CaptchaPartialView.cshtml", ViewData)
