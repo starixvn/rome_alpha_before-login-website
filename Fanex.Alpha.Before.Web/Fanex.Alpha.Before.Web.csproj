@@ -255,6 +255,12 @@
     <Content Include="assets\styles\vendors-extensions\login\bootstrap-ex.min.css">
       <DependentUpon>bootstrap-ex.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\vendors\bootstrap.css">
+      <DependentUpon>bootstrap.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\vendors\bootstrap.min.css">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
     <Content Include="Configurations\Local.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\Master.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\RobotSpNames.xml" />
@@ -536,4 +542,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>cd $(ProjectDir)
+cd ..
+BuildTask.Release</PostBuildEvent>
+  </PropertyGroup>
 </Project>

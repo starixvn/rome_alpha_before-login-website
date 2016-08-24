@@ -8,7 +8,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="~/assets/styles/vendors-extensions/login/bootstrap-ex.min.css?ver=@CommonAppSetting.Version" rel="stylesheet" />
+
     @RenderSection("styles", false)
+
+    <script src="~/assets/bundles/libs.min.js?ver=@CommonAppSetting.Version"></script>
+
 </head>
 <body>
 
@@ -25,11 +29,14 @@
             <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
         </form>
     </div>
-    <div class="block-info">
-        Your password was last changed on 8/23/2016 5:26:48 AM. Please contact to CSD at once if you still cannot login.
-    </div>
 
-    <script src="~/assets/bundles/libs.min.js?ver=@CommonAppSetting.Version"></script>
+    @if (Model.IsChangedPassword)
+    {
+        <div class="block-info">
+            @Model.ChangedPasswordTime
+        </div>
+    }
+
     <script src="~/assets/bundles/login.min.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 
     <script language="javascript" type="text/javascript">

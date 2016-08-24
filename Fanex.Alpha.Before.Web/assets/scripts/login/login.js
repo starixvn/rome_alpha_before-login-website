@@ -287,7 +287,7 @@ Sphinx.Login = {
     },
 
     blockComponent: function () {
-        Sphinx.Login.domElements.btnLogin.attr('disabled', true);
+        Sphinx.Login.domElements.btnLogin.attr('disabled', 'disabled');
     },
 
     getErrorMessage: function (errorCode, resource) {
