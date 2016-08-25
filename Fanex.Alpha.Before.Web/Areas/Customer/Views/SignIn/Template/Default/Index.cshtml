@@ -36,18 +36,18 @@
 <div class="rowlg msg-error" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
 
 <div class="rowlg">
-    <input type="text" class="txt" placeholder="Username"  id="txtUserName" name="txtUserName">
+    <input type="text" class="txt" placeholder="Username"  id="txtUserName" name="txtUserName" tabindex="1" >
     <i class="icon-user"></i>
 </div>
 
 <div class="rowlg">
-    <input type="password" class="txt" placeholder="Password" id="txtPassWord" name="txtPassWord" >
+    <input type="password" class="txt" placeholder="Password" id="txtPassWord" name="txtPassWord" tabindex="2" autocomplete="off"  >
     <i class="icon-lock"></i>
 </div>
 
 <div class="rowlg checkbox">
     <label>
-        <input name="chb-showpass" type="checkbox" id="chbShowPass" /> 
+        <input name="chb-showpass" type="checkbox" id="chbShowPass" tabindex="3" /> 
         <span id="lbShowPass">Show password</span>
     </label>
 </div>
@@ -58,6 +58,6 @@
 }
 
 <div class="list-button">
-    <input type="button" class="btnLogin" value="Login" id="btnLogin"/>
+    <input type="button" class="btnLogin" value="Login" id="btnLogin" tabindex="5"/>
 </div>
 
