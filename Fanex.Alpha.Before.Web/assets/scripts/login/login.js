@@ -34,6 +34,7 @@ Sphinx.Helper = (function () {
 Sphinx.Login = {
     currentLanguageCode: 'en-US',
     init: function () {
+        Sphinx.Login.browser = Sphinx.Core.detectBrowser();
         Sphinx.Login.cachedDomElements();
         Sphinx.rootUrl = window.rootUrl;
         var language = Sphinx.Core.getCookie('LANGUAGE');
@@ -85,8 +86,8 @@ Sphinx.Login = {
         var domElements = Sphinx.Login.domElements;
 
         $(document).keypress(function (evt) {
-            if ((!Sphinx.Core.detectBrowser.msie && evt.keyCode === 13)
-                || (Sphinx.Core.detectBrowser.msie && window.event.keyCode === 13)) {
+            if ((!Sphinx.Login.browser.msie && evt.keyCode === 13)
+                || (Sphinx.Login.browser.msie && window.event.keyCode === 13)) {
                 Sphinx.Login.doLogin();
             }
         });
@@ -125,21 +126,21 @@ Sphinx.Login = {
         var ctrUsername = domElements.txtUsername;
         var currentUsername = ctrUsername.attr('placeholder');
         ctrUsername.attr('placeholder', resource.Username);
-        if (Sphinx.Core.detectBrowser.msie && ctrUsername.val() === currentUsername) {
+        if (Sphinx.Login.browser.msie && ctrUsername.val() === currentUsername) {
             ctrUsername.val(resource.Username);
         }
 
         var strPassword = domElements.txtPassword;
         var currentPlaceholder = strPassword.attr('placeholder');
         strPassword.attr('placeholder', resource.Password);
-        if (Sphinx.Core.detectBrowser.msie && strPassword.val() === currentPlaceholder) {
+        if (Sphinx.Login.browser.msie && strPassword.val() === currentPlaceholder) {
             strPassword.val(resource.Password);
         }
 
         var strCaptcha = domElements.txtCaptcha;
         var currentCaptcha = strCaptcha.attr('placeholder');
         strCaptcha.attr('placeholder', resource.Captcha);
-        if (Sphinx.Core.detectBrowser.msie && strCaptcha.val() === currentCaptcha) {
+        if (Sphinx.Login.browser.msie && strCaptcha.val() === currentCaptcha) {
             strCaptcha.val(resource.Captcha);
         }
 
@@ -182,7 +183,7 @@ Sphinx.Login = {
         $input.replaceWith(inputPassword);
         Sphinx.Login.domElements.txtPassword = inputPassword;
         inputPassword.focus();
-        if (Sphinx.Core.detectBrowser.msie) {
+        if (Sphinx.Login.browser.msie) {
             inputPassword.blur(function () {
                 if (inputPassword.val() === '') {
                     Sphinx.Login.resetPassword(inputPassword);
@@ -202,7 +203,7 @@ Sphinx.Login = {
         $input.replaceWith(inputPassword);
         Sphinx.Login.domElements.txtPassword = inputPassword;
 
-        if (Sphinx.Core.detectBrowser.msie) {
+        if (Sphinx.Login.browser.msie) {
             if (inputPassword.val() === '') {
                 inputPassword.val(inputPassword.attr('placeholder')).addClass('placeholder');
             }
