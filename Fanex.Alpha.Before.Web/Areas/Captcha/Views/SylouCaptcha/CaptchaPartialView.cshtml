@@ -37,13 +37,14 @@
                                 {"data-val", "true"},
                                 {"data-val-required", Model.RequiredMessage},
                                 {"id", "recaptcha_response_field"},
-                                {"class", "custom-textbox inputCaptcha"}
+                                {"class", "custom-textbox inputCaptcha"},
+                                {"tabindex", "4"}
                             })
 
     }
     else
     {
-        @Html.TextBox(Model.InputElementId, null, new { @id = "recaptcha_response_field", @class = "txt txt-validation", @placeholder= "Validation" })
+        @Html.TextBox(Model.InputElementId, null, new { @id = "recaptcha_response_field", @class = "txt txt-validation", @placeholder= "Validation", @tabindex = "4" })
     }
 
 </div>
