@@ -37,50 +37,17 @@
         </div>
     }
 
+    @Html.Hidden("ModelErrCode", Model.ErrCode)
+    @Html.Hidden("ModelErrMsg", Html.Raw(Model.ErrMsg))
+    @Html.Hidden("ModelLanguage", Model.Language)
+    @Html.Hidden("ModelIp", Model.Ip)
+    @Html.Hidden("ModelUTMS", Model.UTMS)
+    @Html.Hidden("ModelDomain", Model.Domain)
+    @Html.Hidden("ModelCaptcha", Model.Captcha)
+    @Html.Hidden("CommonAppSettingFpsActivator", CommonAppSetting.FpsActivator)
+    @Html.Hidden("RootUrl", Url.Content("~"))
+
     <script src="~/assets/bundles/login.min.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
-
-    <script language="javascript" type="text/javascript">
-        var detecasAnalysis = document.getElementById("detecas-analysis");
-        detecasAnalysis ? (detecasAnalysis.value = '{"startTime":1446686616296,"version":"0.0.0","enable":true}') : false;
-
-        var _page = {
-            errCode: 0,
-            errMsg: '',
-            language: 0,
-            ip: '',
-            __utms: '',
-            domain: '',
-            captcha: '',
-            fpsActivator: ''
-        };
-
-        _page.errCode = @Model.ErrCode;
-        _page.errMsg = '@Html.Raw("@Model.ErrMsg")';
-        _page.language = @Model.Language;
-        _page.ip = '@Model.Ip';
-        _page.__utms = '@Model.UTMS';
-        _page.domain = '@Model.Domain';
-        _page.captcha = '@Model.Captcha';
-        _page.fpsActivator = '@CommonAppSetting.FpsActivator';
-
-        window.rootUrl = '@Url.Content("~")';
-
-
-        if(parseInt(_page.errCode) === -1) {
-            $('#mainholder').css('display', 'none');
-            $('#divLoading').css('display', 'block');
-            $("body").css("background", "none");
-            window.location.href = 'Flow';
-        }
-
-        !function(e, t, a, c, n) {
-            var s = t.createElement(a),
-            o = t.getElementsByTagName(c)[0];
-            s.async = true, s.defer = true, s.src = n, o.appendChild(s)
-        }(window, document, "script", "body", "@CommonAppSetting.FpsActivator");
-
-    </script>
-
     @RenderSection("scripts", false)
 </body>
 </html>

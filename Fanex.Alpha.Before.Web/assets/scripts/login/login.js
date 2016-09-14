@@ -179,9 +179,10 @@ Sphinx.Login = {
         var inputPassword = $('<input type="password" id="txtPassWord" name="txtPassWord" tabindex="2" placeholder="' +
             valPlaceholder +
             '"  class="txt"  value="' +
-            $input.val() + '" />');
+            $('<div>').text($input.val()).html() + '" autocomplete="off"  />');
         $input.replaceWith(inputPassword);
         Sphinx.Login.domElements.txtPassword = inputPassword;
+
         inputPassword.focus();
         if (Sphinx.Login.browser.msie) {
             inputPassword.blur(function () {
@@ -197,8 +198,8 @@ Sphinx.Login = {
         var inputPassword = $('<input type="text" id="txtPassWord" name="txtPassWord" tabindex="2" placeholder="' +
             valPlaceholder +
             '" class="txt" value="' +
-             $input.val() +
-             '"  />');
+             $('<div>').text($input.val()).html() +
+             '" autocomplete="off"  />');
 
         $input.replaceWith(inputPassword);
         Sphinx.Login.domElements.txtPassword = inputPassword;
