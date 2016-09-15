@@ -240,17 +240,10 @@
     <Content Include="assets\bundles\captcha.min.js">
       <DependentUpon>captcha.js</DependentUpon>
     </Content>
-    <Content Include="assets\bundles\libs.js" />
-    <Content Include="assets\bundles\libs.min.js">
-      <DependentUpon>libs.js</DependentUpon>
-    </Content>
     <Content Include="assets\bundles\login.css" />
     <Content Include="assets\bundles\login.js" />
     <Content Include="assets\bundles\login.min.css">
       <DependentUpon>login.css</DependentUpon>
-    </Content>
-    <Content Include="assets\bundles\login.min.js">
-      <DependentUpon>login.js</DependentUpon>
     </Content>
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Scripts\SylouCaptcha.js" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\atticon.png" />
@@ -267,6 +260,9 @@
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\sprite_bk.gif" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\stop.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Index.css" />
+    <Content Include="assets\bundles\login.min.js">
+      <DependentUpon>login.js</DependentUpon>
+    </Content>
     <Content Include="assets\scripts\libs\bootstrap\dropdown.js" />
     <Content Include="assets\scripts\libs\jquery\jquery-1.11.3.js" />
     <Content Include="assets\scripts\login\captcha.js" />
@@ -315,7 +311,9 @@
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.Setting.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.Web.config">
       <SubType>Designer</SubType>

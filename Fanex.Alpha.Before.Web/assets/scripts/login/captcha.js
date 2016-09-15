@@ -17,7 +17,7 @@ $(function () {
     }); 
 });
 
-var noInteractionTimeInMinutes = parseInt($("#NoInteractionTimeInMinutes").val());
+var noInteractionTimeInMinutes = parseInt(document.getElementById("NoInteractionTimeInMinutes").value);
 
 if (noInteractionTimeInMinutes > 0) {
     setTimeout(

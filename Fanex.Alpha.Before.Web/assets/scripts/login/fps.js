@@ -23,14 +23,17 @@ _page.fpsActivator = document.getElementById("CommonAppSettingFpsActivator").val
 
 window.rootUrl = document.getElementById("RootUrl").value;
 
-if(parseInt(_page.errCode) === -1) {
-    $('#mainholder').css('display', 'none');
-    $('#divLoading').css('display', 'block');
-    $("body").css("background", "none");
-    window.location.href = 'Flow';
-}
 
-!function(e, t, a, c, n) {
+$(function () {
+    if (parseInt(_page.errCode) === -1) {
+        $('#mainholder').css('display', 'none');
+        $('#divLoading').css('display', 'block');
+        $("body").css("background", "none");
+        window.location.href = 'Flow';
+    }
+});
+
+!function (e, t, a, c, n) {
     var s = t.createElement(a),
     o = t.getElementsByTagName(c)[0];
     s.async = true, s.defer = true, s.src = n, o.appendChild(s)

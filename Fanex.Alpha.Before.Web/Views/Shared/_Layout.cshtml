@@ -11,8 +11,6 @@
 
     @RenderSection("styles", false)
 
-    <script src="~/assets/bundles/libs.min.js?ver=@CommonAppSetting.Version"></script>
-
 </head>
 <body>
 
@@ -48,6 +46,8 @@
     @Html.Hidden("RootUrl", Url.Content("~"))
 
     <script src="~/assets/bundles/login.min.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
+
     @RenderSection("scripts", false)
+
 </body>
 </html>

@@ -13,8 +13,6 @@
 @Html.Hidden("ModelImageElementId", Model.ImageElementId)
 @Html.Hidden("ReloadCaptchaFunctionName", reloadCaptchaFunctionName)
 
-<script src="~/assets/bundles/captcha.js?ver=@Fanex.Alpha.Before.Common.Configurations.AppSetting.Version" type="text/javascript"></script>
-
 <div class="rowlg group-captcha">
     <div class="codeCaptcha">
         <img alt="" id="@Model.ImageElementId" src="@Model.ImageUrl" width="70px" height="27px"/>

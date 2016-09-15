@@ -61,3 +61,12 @@
     <input type="button" class="btnLogin" value="Login" id="btnLogin" tabindex="5"/>
 </div>
 
+@if (ViewBag.ShowReCaptcha == true)
+{
+    @section scripts
+    {
+        <script src="~/assets/bundles/captcha.js?ver=@Fanex.Alpha.Before.Common.Configurations.AppSetting.Version" type="text/javascript"></script>
+    }
+}
+
+
