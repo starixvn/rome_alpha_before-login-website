@@ -1,75 +1,63 @@
 ﻿@using CaptchaMvc.HtmlHelpers;
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @model Fanex.Alpha.Before.Customer.Models.SignInResult
-<center>
-    <div class="content">
-        <div class="wrapper">
-            <div class="inputContainer">
-                <div class="header">
-                    <div class="title" id="divTitle">
-                    </div>
-                    <div class="language-box">
-                        <div id="ddLanguage" class="language-select">
-                        </div>
-                        <input type="hidden" value="en-US" id="hidLanguage" name="hidLanguage" />
-                    </div>
-                </div>
-                <table>
-                    <tr>
-                        <td class="row">
-                            <div class="field-box">
-                                <input type="text" id="txtUserName" name="txtUserName" class="custom-textbox"
-                                    placeholder="Username" tabindex="1" autocomplete="off" maxlength="50" />
-                                <span class="icon username"></span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="row">
-                            <div class="field-box">
-                                <input type="text" id="txtPassWord" name="txtPassWord" class="custom-textbox"
-                                    placeholder="Password" tabindex="2" autocomplete="off" />
-                                <span class="icon password"></span>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="row custom-row">
-                            <label class="showPass">
-                                <input type="checkbox" id="chbShowPass" class="checkShowPass" onclick="Sphinx.Login.showPassword(this)"
-                                       tabindex="3"/>
-                                <span id="lbShowPass">Show password</span>
-                            </label>
-                        </td>
-                    </tr>
-                    <tr class="browser-warning">
-                        <td class="row custom-row">
-                            <span class="warning-icon"></span>
-                            <div class="warning-info">
-                                <div class="warning-message"></div>
-                                <a class="update-link"></a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="row custom-row" id="captcha">
-                            @if (ViewBag.ShowReCaptcha == true)
-                            {
-                                @Html.Captcha(4, "~/Areas/Captcha/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)                                
-                            }
-                            <input type="button" class="btnLogin" id="btnLogin" value="Login" onclick="return Sphinx.Login.doLogin();"
-                                tabindex="5" />
-                        </td>
-                    </tr>
-                </table>
-                <div class="errorMessage" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
-            </div>
-            <div class="shadow">
-            </div>
-        </div>
-        <div id="divPopupMobileVersion" style="color: #000; font-size: 14px; padding-top: 20px;">@(Model.IsChangedPassword ? @Model.ChangedPasswordTime : "")
-        </div>
+
+@section styles
+{
+    <link href="~/assets/bundles/login.min.css?ver=@AppSetting.Version" rel="stylesheet" />
+}
+
+<div class="box-lang">
+    <div class="dropdown">
+        <span class="btn dropdown-toggle" type="button" id="langList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class="flag" id="flag"></span>
+            <span id="lblLanguage">English</span> 
+            <span class="caret"></span>
+            <input type="hidden" value="en-US" id="hidLanguage" name="hidLanguage">
+        </span>
+        <ul class="dropdown-menu" aria-labelledby="langList" id="language-ddl">
+            <li><a href="javascript:void(0);"><span class="flag flag-en" data-language-code="en-US"></span>English</a></li>
+            <li><a href="javascript:void(0);"><span class="flag flag-tw" data-language-code="zh-TW"></span>繁體中文</a></li>
+            <li><a href="javascript:void(0);"><span class="flag flag-cn" data-language-code="zh-CN"></span>简体中文</a></li>
+            <li><a href="javascript:void(0);"><span class="flag flag-jp" data-language-code="ja-JP"></span>日本語</a></li>
+            <li><a href="javascript:void(0);"><span class="flag flag-th" data-language-code="th-TH"></span>ภาษาไทย</a></li>
+            <li><a href="javascript:void(0);"><span class="flag flag-kr" data-language-code="ko-KR"></span>한국어</a></li>
+            <li><a href="javascript:void(0);"><span class="flag flag-vn" data-language-code="vi-VN"></span>Tiếng Việt</a></li>
+        </ul>
     </div>
-</center>
+</div>
+
+<h1 class="title login-text">Login</h1>
+
+<div class="rowlg msg-error" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
+
+<div class="rowlg">
+    <input type="text" class="txt" placeholder="Username"  id="txtUserName" name="txtUserName" tabindex="1" >
+    <i class="icon-user"></i>
+</div>
+
+<div class="rowlg">
+    <input type="password" class="txt" placeholder="Password" id="txtPassWord" name="txtPassWord" tabindex="2" autocomplete="off"  >
+    <i class="icon-lock"></i>
+</div>
+
+<div class="rowlg checkbox">
+    <label>
+        <input name="chb-showpass" type="checkbox" id="chbShowPass" tabindex="3" /> 
+        <span id="lbShowPass">Show password</span>
+    </label>
+</div>
+
+@if (ViewBag.ShowReCaptcha == true)
+{
+    @Html.Captcha(4, "~/Areas/Captcha/Views/SylouCaptcha/CaptchaPartialView.cshtml", ViewData)
+}
+
+<div class="list-button">
+    <input type="button" class="btnLogin" value="Login" id="btnLogin" tabindex="5"/>
+</div>
+

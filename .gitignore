@@ -35,3 +35,6 @@ _ReSharper*/
 
 
 .vs
+
+bundles/
+**/assets/styles/**/*.css

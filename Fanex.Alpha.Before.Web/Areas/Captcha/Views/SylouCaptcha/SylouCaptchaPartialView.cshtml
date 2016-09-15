@@ -18,7 +18,7 @@
 
         setTimeout(
             function(){
-                window.location = '~/signin/index';
+                window.location.href = window.location.href;
             }, @(Fanex.Alpha.Before.Customer.Configurations.AlphaCommonSection.Instance.NoInteractionTimeInMinutes * 60 * 1000));
     </script>
 }
@@ -31,11 +31,11 @@
                                 {"id", "recaptcha_response_field"},
                                 {"class", "custom-textbox inputCaptcha"}
                             })
-    
+
 }
 else
 {
-    @Html.TextBox(Model.InputElementId, null, new { @id = "recaptcha_response_field", @class = "custom-textbox inputCaptcha" })
+    @Html.TextBox(Model.InputElementId, null, new { @id = "recaptcha_response_field", @class = "txt txt-validation" })
 }
 
 <div class="codeCaptcha">

@@ -65,6 +65,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_Dependencies\Captcha\CaptchaMvc.dll</HintPath>
     </Reference>
+    <Reference Include="CasinoLibrary, Version=1.0.2.6, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Dependencies\3rd\Casino\CasinoLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Dependencies\3rd\Casino\CasinoSetting.dll</HintPath>
+    </Reference>
     <Reference Include="Couchbase, Version=1.2.6.0, Culture=neutral, PublicKeyToken=05e9c6b5a9ec94c2, processorArchitecture=MSIL">
       <HintPath>..\packages\CouchbaseNetClient.1.2.6\lib\net40\Couchbase.dll</HintPath>
       <Private>True</Private>
@@ -94,9 +102,17 @@
     <Reference Include="Fanex.Oneyed.RobotTrap">
       <HintPath>..\_Dependencies\FPS\Fanex.Oneyed.RobotTrap.dll</HintPath>
     </Reference>
+    <Reference Include="IBCCrypt, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Dependencies\3rd\Casino\IBCCrypt.dll</HintPath>
+    </Reference>
     <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.File.1.0.0\lib\net40\IBCFile.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="ILogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Dependencies\3rd\Casino\ILogger.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -137,6 +153,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
+    <Reference Include="NetUtility, Version=1.0.4199.22106, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Dependencies\3rd\Casino\NetUtility.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -152,6 +172,10 @@
     <Reference Include="SPSRemoting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SPSRemoting.1.0.0\lib\net40\SPSRemoting.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="Sunplus.Libraries.AOP, Version=1.0.4218.28561, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_Dependencies\3rd\Casino\Sunplus.Libraries.AOP.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
@@ -212,52 +236,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Customer\Views\SignIn\Scripts\BrowserSuggestion.js" />
-    <Content Include="Areas\Customer\Views\SignIn\Scripts\ua-parser.js" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Images\browser-warning.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Fonts\icomoon\icomoon.svg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Images\bg.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Images\bg_repeat.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Images\refresh.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\style.css" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Fonts\icomoon\icomoon.svg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Images\browser-warning.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Images\loginbg.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Images\refresh.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\style.css" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\icomoon\icomoon.svg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_cn.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_en.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\2_tw.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\bg.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Images\refresh.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Images\seamless_pattern.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Images\sprites.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.svg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\2_cn.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\2_en.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\2_tw.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\bg_light.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\panel.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\pattern.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Images\refresh.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\style.css" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\style.css" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\bg.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\cn_simplified_text.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\cn_traditional_text.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\error_icon.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\key.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\panel.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\Rec_sp.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\sprites.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\text_en.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Images\user.png" />
+    <Content Include="assets\bundles\libs.js" />
+    <Content Include="assets\bundles\libs.min.js">
+      <DependentUpon>libs.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\login.css" />
+    <Content Include="assets\bundles\login.js" />
+    <Content Include="assets\bundles\login.min.css">
+      <DependentUpon>login.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\login.min.js">
+      <DependentUpon>login.js</DependentUpon>
+    </Content>
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Scripts\SylouCaptcha.js" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\atticon.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\audio.gif" />
@@ -273,26 +263,35 @@
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\sprite_bk.gif" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\stop.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Index.css" />
+    <Content Include="assets\scripts\libs\bootstrap\dropdown.js" />
+    <Content Include="assets\scripts\libs\jquery\jquery-1.11.3.js" />
+    <Content Include="assets\scripts\login\resources.js" />
+    <Content Include="assets\styles\images\sprites.png" />
+    <Content Include="assets\styles\pages\login.css">
+      <DependentUpon>login.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\login.min.css">
+      <DependentUpon>login.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\vendors-extensions\login\bootstrap-ex.css">
+      <DependentUpon>bootstrap-ex.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\vendors-extensions\login\bootstrap-ex.min.css">
+      <DependentUpon>bootstrap-ex.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\vendors\bootstrap.css">
+      <DependentUpon>bootstrap.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\vendors\bootstrap.min.css">
+      <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
     <Content Include="Configurations\Local.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\Master.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\UAT.StoreProcedure\RobotSpNames.xml" />
-    <Content Include="Scripts\Component\Dropdown\Dropdown.js" />
-    <Content Include="Scripts\Component\Dropdown\DropdownStyle.css" />
-    <Content Include="Scripts\Component\Dropdown\Image\flag-sprites.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Scripts\Core.js" />
-    <Content Include="Areas\Customer\Views\SignIn\Scripts\Login.js" />
-    <Content Include="Areas\Customer\Views\SignIn\Scripts\PlaceHolder.js" />
-    <Content Include="Areas\Customer\Views\SignIn\Scripts\Resources.js" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\bg.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\box.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\btnLogin.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\caret.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\event-text.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\panel.jpg" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\Rec_sp.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\refresh.png" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Images\SignIn.png" />
+    <Content Include="assets\scripts\login\core.js" />
+    <Content Include="assets\scripts\login\login.js" />
+    <Content Include="assets\scripts\login\place-holder.js" />
     <Content Include="Configurations\Local.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\Master.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
@@ -325,9 +324,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Global.asax" />
-    <Content Include="Scripts\detecas\detecas-token.min.js" />
-    <Content Include="Scripts\jquery-1.7.1.js" />
-    <Content Include="Scripts\less-1.4.1.min.js" />
+    <Content Include="assets\scripts\libs\detecas\detecas-token.min.js" />
     <Content Include="Views\Common\ErrorPage\404Error.htm" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\LICENSE.txt" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon-notify.png" />
@@ -338,21 +335,7 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.Web.config" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Default\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\icomoon\icomoon.eot" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\icomoon\icomoon.ttf" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Fonts\icomoon\icomoon.woff" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\MidAutumn2015\Styles\Login.less" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Default\Styles\Login.less" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.eot" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.ttf" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Fonts\icomoon\icomoon.woff" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\DragonBoat2015\Styles\Login.less" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\newyear2015\Styles\Login.less" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\SylouCaptchaPartialView.cshtml" />
+    <Content Include="Areas\Captcha\Views\SylouCaptcha\CaptchaPartialView.cshtml" />
     <Content Include="Areas\Captcha\Views\Web.config" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Bold.ttf" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Medium.ttf" />
@@ -370,8 +353,6 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.DomainGroupSection.config" />
     <Content Include="Areas\Customer\Web.config" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2014\Styles\Login.less" />
     <Content Include="Areas\Customer\Views\SignIn\Transfer.cshtml" />
     <Content Include="IbcKeys\ibckey.snk" />
     <Content Include="IbcKeys\ibcpkey.snk" />
@@ -398,15 +379,10 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Default.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Common\UnderMaintenance\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="App_GlobalResources\" />
-    <Folder Include="App_Start\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Web.Setting.config">
       <SubType>Designer</SubType>
@@ -435,24 +411,114 @@
     <Content Include="Views\Common\ErrorPage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Index.cshtml" />
     <Content Include="Areas\Customer\Views\SignIn\Flow.cshtml" />
-    <None Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Fonts\icomoon\icomoon.eot" />
-    <None Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Fonts\icomoon\icomoon.ttf" />
-    <None Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Fonts\icomoon\icomoon.woff" />
-    <None Include="Areas\Customer\Views\SignIn\Template\Christmas2015\Styles\Login.less" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Fonts\icomoon\icomoon.eot" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Fonts\icomoon\icomoon.ttf" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Fonts\icomoon\icomoon.woff" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2016\Styles\Login.less" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.Web.config" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\Default\Index.cshtml" />
+    <Content Include="assets\scripts\libs\jquery\jquery-1.11.3.min.map" />
+    <Content Include="assets\styles\abstracts\_mixins.scss" />
+    <Content Include="assets\styles\abstracts\_variables.scss" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Bold.eot" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Bold.ttf" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Bold.woff" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Bold.woff2" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Light.eot" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Light.ttf" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Light.woff" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Light.woff2" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Medium.eot" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Medium.ttf" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Medium.woff" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Medium.woff2" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Regular.eot" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Regular.ttf" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Regular.woff" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Regular.woff2" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Thin.eot" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Thin.ttf" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Thin.woff" />
+    <Content Include="assets\styles\fonts\roboto\Roboto-Thin.woff2" />
+    <Content Include="assets\styles\pages\login.scss" />
+    <Content Include="assets\styles\vendors\bootstrap.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_alerts.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_background-variant.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_border-radius.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_buttons.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_center-block.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_clearfix.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_forms.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_gradients.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_grid-framework.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_grid.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_hide-text.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_image.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_labels.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_list-group.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_nav-divider.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_nav-vertical-align.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_opacity.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_pagination.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_panels.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_progress-bar.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_reset-filter.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_reset-text.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_resize.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_responsive-visibility.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_size.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_tab-focus.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_table-row.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_text-emphasis.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_text-overflow.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\mixins\_vendor-prefixes.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_alerts.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_badges.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_breadcrumbs.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_button-groups.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_buttons.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_carousel.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_close.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_code.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_component-animations.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_dropdowns.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_forms.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_glyphicons.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_grid.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_input-groups.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_jumbotron.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_labels.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_list-group.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_media.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_mixins.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_modals.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_navbar.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_navs.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_normalize.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_pager.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_pagination.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_panels.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_popovers.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_print.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_progress-bars.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_responsive-embed.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_responsive-utilities.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_scaffolding.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_tables.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_theme.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_thumbnails.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_tooltip.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_type.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_utilities.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_variables.scss" />
+    <Content Include="assets\styles\vendors\bootstrap\_wells.scss" />
+    <Content Include="assets\styles\vendors-extensions\login\bootstrap-ex.scss" />
+    <Content Include="assets\styles\vendors-extensions\login\_bootstrap-mixins.scss" />
+    <None Include="bundleconfig.json" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Configurations\WebDeployment.ConfigTransform\SIT.Web.Setting.config">
       <SubType>Designer</SubType>
     </None>
@@ -500,4 +566,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>cd $(ProjectDir)
+cd ..
+BuildTask.Release</PostBuildEvent>
+  </PropertyGroup>
 </Project>
