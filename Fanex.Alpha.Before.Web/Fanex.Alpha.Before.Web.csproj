@@ -265,6 +265,7 @@
     </Content>
     <Content Include="assets\scripts\libs\bootstrap\dropdown.js" />
     <Content Include="assets\scripts\libs\jquery\jquery-1.11.3.js" />
+    <Content Include="assets\scripts\libs\storage\store-with-json2.min.js" />
     <Content Include="assets\scripts\login\captcha.js" />
     <Content Include="assets\scripts\login\fps.js" />
     <Content Include="assets\scripts\login\resources.js" />

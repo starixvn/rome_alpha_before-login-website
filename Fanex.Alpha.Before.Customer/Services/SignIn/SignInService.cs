@@ -100,6 +100,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     //// Set cookie with custid id
                     HttpCookie cookie = new HttpCookie("__utms", randomCookieTicket);
                     cookie.Domain = this._baseDomain;
+                    cookie.HttpOnly = true;
                     cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
                     System.Web.HttpContext.Current.Response.SetCookie(cookie);
                 }
@@ -591,6 +592,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 HttpCookie cookie = new HttpCookie("__utms", crossCookieValue);
                 cookie.Domain = this._baseDomain;
                 cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
+                cookie.HttpOnly = true;
                 System.Web.HttpContext.Current.Response.SetCookie(cookie);
             }
             catch (Exception ex)
