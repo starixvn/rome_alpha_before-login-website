@@ -1,25 +1,24 @@
-﻿"use strict";
+﻿/// <reference path="../libs/storage/store-with-json2.min.js" />
+
+"use strict";
 /*jshint -W121 */
 /*jshint bitwise: false*/
 
 var Sphinx = Sphinx || {};
 
 Sphinx.Core = {
-    getCookie: function (name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) === ' ') {
-                c = c.substring(1, c.length);
-            }
-            if (c.indexOf(nameEQ) === 0) {
-                return c.substring(nameEQ.length, c.length);
-            }
+    getUserData: function (name) {
+        if (store.enabled) {
+            return store.get(name);
         }
+
         return null;
     },
-
+    setUserData: function (name, value) {
+        if (store.enabled) {
+            return store.set(name, value);
+        }
+    },
     setCookie: function (name, value, days, domain) {
         var expires = "";
         if (days) {

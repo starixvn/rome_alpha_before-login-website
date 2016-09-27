@@ -236,17 +236,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\bundles\libs.js" />
-    <Content Include="assets\bundles\libs.min.js">
-      <DependentUpon>libs.js</DependentUpon>
+    <Content Include="assets\bundles\captcha.js" />
+    <Content Include="assets\bundles\captcha.min.js">
+      <DependentUpon>captcha.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\login.css" />
     <Content Include="assets\bundles\login.js" />
     <Content Include="assets\bundles\login.min.css">
       <DependentUpon>login.css</DependentUpon>
-    </Content>
-    <Content Include="assets\bundles\login.min.js">
-      <DependentUpon>login.js</DependentUpon>
     </Content>
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Scripts\SylouCaptcha.js" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\atticon.png" />
@@ -263,8 +260,14 @@
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\sprite_bk.gif" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\stop.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Index.css" />
+    <Content Include="assets\bundles\login.min.js">
+      <DependentUpon>login.js</DependentUpon>
+    </Content>
     <Content Include="assets\scripts\libs\bootstrap\dropdown.js" />
     <Content Include="assets\scripts\libs\jquery\jquery-1.11.3.js" />
+    <Content Include="assets\scripts\libs\storage\store-with-json2.min.js" />
+    <Content Include="assets\scripts\login\captcha.js" />
+    <Content Include="assets\scripts\login\fps.js" />
     <Content Include="assets\scripts\login\resources.js" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\pages\login.css">
@@ -309,7 +312,9 @@
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.Setting.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.Web.config">
       <SubType>Designer</SubType>
@@ -342,7 +347,9 @@
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Regular.ttf" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\LimitedCountryAccess.less" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.LimtedCountryAccessSection.config" />
-    <Content Include="LimtedCountryAccessSection.config" />
+    <Content Include="LimtedCountryAccessSection.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local.LimtedCountryAccessSection.config" />
     <Content Include="DomainGroupSection.config">

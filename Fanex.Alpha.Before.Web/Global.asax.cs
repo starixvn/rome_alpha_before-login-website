@@ -59,6 +59,8 @@ namespace Fanex.Alpha.Before.Web.View
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
             defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
+
+            MvcHandler.DisableMvcResponseHeader = true;
         }
 
         private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
@@ -87,6 +89,13 @@ namespace Fanex.Alpha.Before.Web.View
                                         captchaManager.TokenParameterName, keyValuePair.Key
                                     }
                                 });
+        }
+
+        protected void Application_PreSendRequestHeaders()
+        {
+            Response.Headers.Remove("Server");
+            Response.Headers.Remove("X-AspNet-Version");
+            Response.Headers.Remove("X-AspNetMvc-Version");
         }
     }
 }

@@ -192,6 +192,7 @@ input[type="checkbox"], input[type="radio"] {
         text-align: center;
         border: none;
         cursor: pointer;
+        text-transform: uppercase;
         @include border-radius(0);
 
         &:hover {

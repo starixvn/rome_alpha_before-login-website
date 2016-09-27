@@ -2,23 +2,26 @@
   {
     "outputFileName": "assets/bundles/login.js",
     "inputFiles": [
+      "assets/scripts/libs/jquery/jquery-1.11.3.js",
+      "assets/scripts/libs/bootstrap/dropdown.js",
+      "assets/scripts/libs/storage/store-with-json2.min.js",
       "assets/scripts/login/core.js",
       "assets/scripts/login/place-holder.js",
       "assets/scripts/login/resources.js",
-      "assets/scripts/login/login.js"
-    ]
-  },
-  {
-    "outputFileName": "assets/bundles/libs.js",
-    "inputFiles": [
-      "assets/scripts/libs/jquery/jquery-1.11.3.js",
-      "assets/scripts/libs/bootstrap/dropdown.js"
+      "assets/scripts/login/login.js",
+      "assets/scripts/login/fps.js"
     ]
   },
   {
     "outputFileName": "assets/bundles/login.css",
     "inputFiles": [
-      "assets/styles/pages/login.css"
+      "assets/styles/pages/login.css" 
+    ]
+  },
+  {
+    "outputFileName": "assets/bundles/captcha.js",
+    "inputFiles": [
+      "assets/scripts/login/captcha.js"
     ]
   }
 ]

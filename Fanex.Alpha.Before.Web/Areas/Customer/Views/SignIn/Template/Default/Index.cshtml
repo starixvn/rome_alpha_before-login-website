@@ -20,13 +20,13 @@
             <input type="hidden" value="en-US" id="hidLanguage" name="hidLanguage">
         </span>
         <ul class="dropdown-menu" aria-labelledby="langList" id="language-ddl">
-            <li><a href="javascript:void(0);"><span class="flag flag-en" data-language-code="en-US"></span>English</a></li>
-            <li><a href="javascript:void(0);"><span class="flag flag-tw" data-language-code="zh-TW"></span>繁體中文</a></li>
-            <li><a href="javascript:void(0);"><span class="flag flag-cn" data-language-code="zh-CN"></span>简体中文</a></li>
-            <li><a href="javascript:void(0);"><span class="flag flag-jp" data-language-code="ja-JP"></span>日本語</a></li>
-            <li><a href="javascript:void(0);"><span class="flag flag-th" data-language-code="th-TH"></span>ภาษาไทย</a></li>
-            <li><a href="javascript:void(0);"><span class="flag flag-kr" data-language-code="ko-KR"></span>한국어</a></li>
-            <li><a href="javascript:void(0);"><span class="flag flag-vn" data-language-code="vi-VN"></span>Tiếng Việt</a></li>
+            <li><a href="#"><span class="flag flag-en" data-language-code="en-US"></span>English</a></li>
+            <li><a href="#"><span class="flag flag-tw" data-language-code="zh-TW"></span>繁體中文</a></li>
+            <li><a href="#"><span class="flag flag-cn" data-language-code="zh-CN"></span>简体中文</a></li>
+            <li><a href="#"><span class="flag flag-jp" data-language-code="ja-JP"></span>日本語</a></li>
+            <li><a href="#"><span class="flag flag-th" data-language-code="th-TH"></span>ภาษาไทย</a></li>
+            <li><a href="#"><span class="flag flag-kr" data-language-code="ko-KR"></span>한국어</a></li>
+            <li><a href="#"><span class="flag flag-vn" data-language-code="vi-VN"></span>Tiếng Việt</a></li>
         </ul>
     </div>
 </div>
@@ -36,12 +36,12 @@
 <div class="rowlg msg-error" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
 
 <div class="rowlg">
-    <input type="text" class="txt" placeholder="Username"  id="txtUserName" name="txtUserName" tabindex="1" >
+    <input type="text" class="txt" placeholder="Username"  id="txtUserName" name="txtUserName" tabindex="1" />
     <i class="icon-user"></i>
 </div>
 
 <div class="rowlg">
-    <input type="password" class="txt" placeholder="Password" id="txtPassWord" name="txtPassWord" tabindex="2" autocomplete="off"  >
+    <input type="password" class="txt" placeholder="Password" id="txtPassWord" name="txtPassWord" tabindex="2" autocomplete="off" />
     <i class="icon-lock"></i>
 </div>
 
@@ -60,4 +60,13 @@
 <div class="list-button">
     <input type="button" class="btnLogin" value="Login" id="btnLogin" tabindex="5"/>
 </div>
+
+@if (ViewBag.ShowReCaptcha == true)
+{
+    @section scripts
+    {
+        <script src="~/assets/bundles/captcha.js?ver=@Fanex.Alpha.Before.Common.Configurations.AppSetting.Version" type="text/javascript"></script>
+    }
+}
+
 

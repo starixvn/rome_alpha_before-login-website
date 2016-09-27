@@ -37,7 +37,7 @@ Sphinx.Login = {
         Sphinx.Login.browser = Sphinx.Core.detectBrowser();
         Sphinx.Login.cachedDomElements();
         Sphinx.rootUrl = window.rootUrl;
-        var language = Sphinx.Core.getCookie('LANGUAGE');
+        var language = Sphinx.Core.getUserData('LANGUAGE');
         if (!language) {
             language = _page.language;
         }
@@ -154,7 +154,7 @@ Sphinx.Login = {
         domElements.formTitle.text(resource.Login);;
         document.title = resource.Login;
 
-        Sphinx.Core.setCookie('LANGUAGE', languageCode, 30);
+        Sphinx.Core.setUserData('LANGUAGE', languageCode);
         Sphinx.Login.currentLanguageCode = languageCode;
 
         $(document).trigger("Sphinx.Login.LanguageChanged", [languageCode]);
@@ -179,9 +179,10 @@ Sphinx.Login = {
         var inputPassword = $('<input type="password" id="txtPassWord" name="txtPassWord" tabindex="2" placeholder="' +
             valPlaceholder +
             '"  class="txt"  value="' +
-            $input.val() + '" />');
+            $('<div>').text($input.val()).html() + '" autocomplete="off"  />');
         $input.replaceWith(inputPassword);
         Sphinx.Login.domElements.txtPassword = inputPassword;
+
         inputPassword.focus();
         if (Sphinx.Login.browser.msie) {
             inputPassword.blur(function () {
@@ -197,8 +198,8 @@ Sphinx.Login = {
         var inputPassword = $('<input type="text" id="txtPassWord" name="txtPassWord" tabindex="2" placeholder="' +
             valPlaceholder +
             '" class="txt" value="' +
-             $input.val() +
-             '"  />');
+             $('<div>').text($input.val()).html() +
+             '" autocomplete="off"  />');
 
         $input.replaceWith(inputPassword);
         Sphinx.Login.domElements.txtPassword = inputPassword;
@@ -275,13 +276,13 @@ Sphinx.Login = {
         Sphinx.Login.blockComponent();
         Sphinx.Login.domElements.txtPassword.val(Sphinx.Login.domElements.txtPassword.val().ec(_page.captcha).hc());
 
-        try {
-            Sphinx.Core.setCookie2("__utms", _page.__utms, 1, "/", "." + _page.domain, "");
-        }
-        catch (exception) {
-        }
+        ////try {
+        ////    Sphinx.Core.setCookie2("__utms", _page.__utms, 1, "/", "." + _page.domain, "");
+        ////}
+        ////catch (exception) {
+        ////}
 
-        Sphinx.Core.setCookie("ssl", location.href.indexOf('https://') === 0, 30);
+        ////Sphinx.Core.setCookie("ssl", location.href.indexOf('https://') === 0, 30);
         Sphinx.Login.domElements.formLogin.submit();
 
         return true;

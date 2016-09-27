@@ -1,33 +1,26 @@
 ﻿@model CaptchaMvc.Models.DefaultBuildInfoModel
 @{
     string id = Guid.NewGuid().ToString("N");
-    string functionName = string.Format("______{0}________()", Guid.NewGuid().ToString("N"));
-    <script type="text/javascript">
-        $(function () {
-            $('#@id').show();
-        });
 
-        function @functionName {
-            $.post("@Model.RefreshUrl", { @Model.TokenParameterName: $('#@Model.TokenElementId').val() }, 
-                function () {
-                    $('#@id').show();
-                });
-            return false;
-        }
-
-        setTimeout(
-            function(){
-                window.location.href = window.location.href;
-            }, @(Fanex.Alpha.Before.Customer.Configurations.AlphaCommonSection.Instance.NoInteractionTimeInMinutes * 60 * 1000));
-    </script>
+    string reloadCaptchaFunctionName = string.Format("______{0}________", Guid.NewGuid().ToString("N"));
 }
+
+@Html.Hidden("CaptchaId", id)
+@Html.Hidden("ModelRefreshUrl", Model.RefreshUrl)
+@Html.Hidden("ModelTokenParameterName", Model.TokenParameterName)
+@Html.Hidden("ModelTokenElementId", Model.TokenElementId)
+@Html.Hidden("NoInteractionTimeInMinutes", Fanex.Alpha.Before.Customer.Configurations.AlphaCommonSection.Instance.NoInteractionTimeInMinutes * 60 * 1000)
+@Html.Hidden("ModelImageElementId", Model.ImageElementId)
+@Html.Hidden("ReloadCaptchaFunctionName", reloadCaptchaFunctionName)
+
 <div class="rowlg group-captcha">
     <div class="codeCaptcha">
-        <img alt="" id="@Model.ImageElementId" src="@Model.ImageUrl" width="70px" height="27px" onclick="return @functionName" />
+        <img alt="" id="@Model.ImageElementId" src="@Model.ImageUrl" width="100px" height="30px"/>
         @Html.Hidden(Model.TokenElementId, Model.TokenValue)
     </div>
+
     <div class="action-refresh" id="@id" href="#@Model.ImageElementId">
-        <i class="icon-refresh" onclick="return @functionName"></i>
+        <i class="icon-refresh" id="captcha-refresh-icon"></i>
     </div>
 
     @if (Model.IsRequired)
