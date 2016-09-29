@@ -328,6 +328,7 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local.Web.Setting.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="assets\scripts\libs\detecas\detecas-token.min.js" />
     <Content Include="Views\Common\ErrorPage\404Error.htm" />
