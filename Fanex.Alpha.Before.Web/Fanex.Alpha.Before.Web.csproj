@@ -264,10 +264,11 @@
       <DependentUpon>login.js</DependentUpon>
     </Content>
     <Content Include="assets\scripts\libs\bootstrap\dropdown.js" />
+    <Content Include="assets\scripts\libs\detecas\Detecas.Base64.js" />
+    <Content Include="assets\scripts\libs\detecas\Detecas.JSON.js" />
     <Content Include="assets\scripts\libs\jquery\jquery-1.11.3.js" />
     <Content Include="assets\scripts\libs\storage\store-with-json2.min.js" />
     <Content Include="assets\scripts\login\captcha.js" />
-    <Content Include="assets\scripts\login\fps.js" />
     <Content Include="assets\scripts\login\resources.js" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\pages\login.css">
@@ -531,6 +532,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="deployment.ignore" />
+    <Content Include="Views\Shared\FPS.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

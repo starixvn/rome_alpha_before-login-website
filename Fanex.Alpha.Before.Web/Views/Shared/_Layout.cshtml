@@ -36,17 +36,9 @@
         </div>
     }
 
-    @Html.Hidden("ModelErrCode", Model.ErrCode)
-    @Html.Hidden("ModelErrMsg", Html.Raw(Model.ErrMsg))
-    @Html.Hidden("ModelLanguage", Model.Language)
-    @Html.Hidden("ModelIp", Model.Ip)
-    @Html.Hidden("ModelUTMS", Model.UTMS)
-    @Html.Hidden("ModelDomain", Model.Domain)
-    @Html.Hidden("ModelCaptcha", Model.Captcha)
-    @Html.Hidden("CommonAppSettingFpsActivator", CommonAppSetting.FpsActivator)
-    @Html.Hidden("RootUrl", Url.Content("~"))
-
     <script src="~/assets/bundles/login.min.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
+
+    @Html.Partial("FPS", Model)
 
     @RenderSection("scripts", false)
 

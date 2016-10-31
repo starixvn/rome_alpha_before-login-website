@@ -139,7 +139,13 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
-        public SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha, string code)
+        public SignInResult SignInWithRecaptcha(
+            string username, 
+            string password, 
+            string language, 
+            bool isValidCaptcha, 
+            string code,
+            string deviceId)
         {
             var signInResult = new SignInResult()
             {
@@ -235,7 +241,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
                 if (verifySignInResult.ErrorCode == 0)
                 {
-                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult);
+                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId);
                 }
                 else
                 {
@@ -264,7 +270,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
-        public SignInResult AutomationTest(string username, string password, string captcha)
+        public SignInResult AutomationTest(string username, string password, string captcha, string deviceId)
         {
             var signInResult = new SignInResult()
             {
@@ -310,7 +316,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
                 if (verifySignInResult.ErrorCode == 0)
                 {
-                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult);
+                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId);
                 }
                 else
                 {
@@ -553,7 +559,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private void UpdateResultAfterLoginSuccessfully(
             string password,
             SignInResult signInResult,
-            VerifySignInResult verifySignInResult)
+            VerifySignInResult verifySignInResult,
+            string deviceId)
         {
             this.ResetLoginFailed();
 
@@ -564,7 +571,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             var path = System.Web.HttpContext.Current.Server.MapPath("~/IbcKeys/ibcpkey.snk");
             var parameter = string.Format(
-                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}",
+                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}",
                 verifySignInResult.CustId,
                 verifySignInResult.SubAccId,
                 verifySignInResult.LoginTime.Ticks,
@@ -572,7 +579,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 verifySignInResult.Nickname,
                 verifySignInResult.IsNickname,
                 AppSession.Language,
-                numberCrossCookie);
+                numberCrossCookie,
+                deviceId);
 
             parameter = new EncryptionThread().EncryptString(parameter, keySize, path);
 
