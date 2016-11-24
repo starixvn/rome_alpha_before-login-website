@@ -66,7 +66,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// </returns>
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string code, string __di)
+        public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string code, string deviceId = "N/A")
         {
             bool validCaptcha = false;
             if (_signInService.IsShowReCaptcha())
@@ -81,7 +81,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 }
             }
 
-            var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code);
+            var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code, deviceId);
 
             if (loginResult != null && loginResult.ErrCode != -2)
             {
@@ -99,9 +99,9 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             return PartialView(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
         }
 
-        public RedirectResult AutomationTest(string username, string password, string captcha)
+        public RedirectResult AutomationTest(string username, string password, string captcha, string deviceId)
         {
-            var loginResult = _signInService.AutomationTest(username, password, captcha);
+            var loginResult = _signInService.AutomationTest(username, password, captcha, deviceId);
 
             if (loginResult.ErrCode == -1)
             {

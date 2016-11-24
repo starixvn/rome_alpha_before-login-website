@@ -33,7 +33,10 @@
 
 <h1 class="title login-text">Login</h1>
 
-<div class="rowlg msg-error" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
+@if (Model.ErrCode != -1)
+{
+    <div class="rowlg msg-error" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
+}
 
 <div class="rowlg">
     <input type="text" class="txt" placeholder="Username"  id="txtUserName" name="txtUserName" tabindex="1" />
