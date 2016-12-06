@@ -10,7 +10,6 @@
 \\IbcKeys\\*
 \\local.*.config
 \\master.*.config
-\\backupmnl.*.config
 \\uat.*.config
 \\pro.*.config
 \\dev.*.config
