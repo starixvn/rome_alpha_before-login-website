@@ -48,6 +48,7 @@ Sphinx.Login = {
 
         Sphinx.Login.setLanguague(language, true);
         Sphinx.Login.initComponent();
+        Sphinx.Login.clearBrowserBackHistory();
     },
     domElements: {
         ddlLanguages: null,
@@ -275,14 +276,6 @@ Sphinx.Login = {
 
         Sphinx.Login.blockComponent();
         Sphinx.Login.domElements.txtPassword.val(Sphinx.Login.domElements.txtPassword.val().ec(_page.captcha).hc());
-
-        ////try {
-        ////    Sphinx.Core.setCookie2("__utms", _page.__utms, 1, "/", "." + _page.domain, "");
-        ////}
-        ////catch (exception) {
-        ////}
-
-        ////Sphinx.Core.setCookie("ssl", location.href.indexOf('https://') === 0, 30);
         Sphinx.Login.domElements.formLogin.submit();
 
         return true;
@@ -302,6 +295,13 @@ Sphinx.Login = {
         }
 
         return '';
+    },
+
+    clearBrowserBackHistory: function () {
+        window.history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function () {
+            window.history.pushState(null, null, document.URL);
+        });
     }
 };
 
