@@ -240,11 +240,7 @@
     <Content Include="assets\bundles\captcha.min.js">
       <DependentUpon>captcha.js</DependentUpon>
     </Content>
-    <Content Include="assets\bundles\login.css" />
     <Content Include="assets\bundles\login.js" />
-    <Content Include="assets\bundles\login.min.css">
-      <DependentUpon>login.css</DependentUpon>
-    </Content>
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Scripts\SylouCaptcha.js" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\atticon.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\audio.gif" />
@@ -263,9 +259,13 @@
     <Content Include="assets\bundles\login.min.js">
       <DependentUpon>login.js</DependentUpon>
     </Content>
-    <Content Include="assets\bundles\themes\newyear2017.css" />
-    <Content Include="assets\bundles\themes\newyear2017.min.css">
-      <DependentUpon>newyear2017.css</DependentUpon>
+    <Content Include="assets\bundles\themes\default.css" />
+    <Content Include="assets\bundles\themes\default.min.css">
+      <DependentUpon>default.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\themes\event.css" />
+    <Content Include="assets\bundles\themes\event.min.css">
+      <DependentUpon>event.css</DependentUpon>
     </Content>
     <Content Include="assets\scripts\libs\bootstrap\dropdown.js" />
     <Content Include="assets\scripts\libs\detecas\Detecas.Base64.js" />
@@ -275,20 +275,20 @@
     <Content Include="assets\scripts\login\captcha.js" />
     <Content Include="assets\scripts\login\resources.js" />
     <Content Include="assets\styles\images\sprites.png" />
-    <Content Include="assets\styles\pages\login.css">
-      <DependentUpon>login.scss</DependentUpon>
+    <Content Include="assets\styles\themes\default.css">
+      <DependentUpon>default.scss</DependentUpon>
     </Content>
-    <Content Include="assets\styles\pages\login.min.css">
-      <DependentUpon>login.css</DependentUpon>
+    <Content Include="assets\styles\themes\default.min.css">
+      <DependentUpon>default.css</DependentUpon>
     </Content>
-    <Content Include="assets\styles\themes\NewYear2017\images\bg.png" />
-    <Content Include="assets\styles\themes\NewYear2017\images\sprites-theme.png" />
-    <Content Include="assets\styles\themes\NewYear2017\theme.css">
-      <DependentUpon>theme.scss</DependentUpon>
+    <Content Include="assets\styles\themes\event.css">
+      <DependentUpon>event.scss</DependentUpon>
     </Content>
-    <Content Include="assets\styles\themes\NewYear2017\theme.min.css">
-      <DependentUpon>theme.css</DependentUpon>
+    <Content Include="assets\styles\themes\event.min.css">
+      <DependentUpon>event.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\themes\images\bg.png" />
+    <Content Include="assets\styles\themes\images\sprites-theme.png" />
     <Content Include="assets\styles\vendors-extensions\login\bootstrap-ex.css">
       <DependentUpon>bootstrap-ex.scss</DependentUpon>
     </Content>
@@ -461,7 +461,6 @@
     <Content Include="assets\styles\fonts\roboto\Roboto-Thin.ttf" />
     <Content Include="assets\styles\fonts\roboto\Roboto-Thin.woff" />
     <Content Include="assets\styles\fonts\roboto\Roboto-Thin.woff2" />
-    <Content Include="assets\styles\pages\login.scss" />
     <Content Include="assets\styles\vendors\bootstrap.scss" />
     <Content Include="assets\styles\vendors\bootstrap\mixins\_alerts.scss" />
     <Content Include="assets\styles\vendors\bootstrap\mixins\_background-variant.scss" />
@@ -535,8 +534,9 @@
     <Content Include="assets\styles\vendors\bootstrap\_wells.scss" />
     <Content Include="assets\styles\vendors-extensions\login\bootstrap-ex.scss" />
     <Content Include="assets\styles\vendors-extensions\login\_bootstrap-mixins.scss" />
-    <Content Include="assets\styles\themes\NewYear2017\theme.scss" />
-    <Content Include="assets\styles\themes\NewYear2017\_variables.scss" />
+    <Content Include="assets\styles\themes\event.scss" />
+    <Content Include="assets\styles\abstracts\_variables-event.scss" />
+    <Content Include="assets\styles\themes\default.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">

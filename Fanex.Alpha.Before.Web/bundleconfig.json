@@ -14,9 +14,9 @@
     ]
   },
   {
-    "outputFileName": "assets/bundles/login.css",
+    "outputFileName": "assets/bundles/themes/default.css",
     "inputFiles": [
-      "assets/styles/pages/login.css" 
+      "assets/styles/themes/default.css" 
     ]
   },
   {
@@ -26,10 +26,10 @@
     ]
   },
   {
-    "outputFileName": "assets/bundles/themes/newyear2017.css",
+    "outputFileName": "assets/bundles/themes/event.css",
     "inputFiles": [
-      "assets/styles/pages/login.css",
-      "assets/styles/themes/NewYear2017/theme.css"
+      "assets/styles/themes/default.css",
+      "assets/styles/themes/event.css"
     ]
   }
 ]

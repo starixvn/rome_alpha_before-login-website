@@ -1,4 +1,4 @@
-﻿@import '_variables.scss';
+﻿@import '../abstracts/_variables-event.scss';
 
 body {
     background: url(images/#{$bg-image}) top center $bg-color no-repeat;
