@@ -281,7 +281,7 @@
     <Content Include="assets\styles\pages\login.min.css">
       <DependentUpon>login.css</DependentUpon>
     </Content>
-    <Content Include="assets\styles\themes\NewYear2017\images\bg1.png" />
+    <Content Include="assets\styles\themes\NewYear2017\images\bg.png" />
     <Content Include="assets\styles\themes\NewYear2017\images\sprites-theme.png" />
     <Content Include="assets\styles\themes\NewYear2017\theme.css">
       <DependentUpon>theme.scss</DependentUpon>

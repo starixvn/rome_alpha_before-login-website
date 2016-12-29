@@ -1,45 +1,31 @@
 ﻿@import '_variables.scss';
-@import '../../abstracts/_mixins.scss';
 
 body {
-    background: url(images/bg1.png) top center $bg-color no-repeat;
+    background: url(images/#{$bg-image}) top center $bg-color no-repeat;
 }
 
 // icons
 %icon {
-    background: url(images/sprites-theme.png) no-repeat;
-    display: inline-block;
+    background-image: url(images/#{$sprite-image});
 }
 
 .icon-user {
     @extend %icon;
     background-position: -2px -4px;
-    height: 14px;
-    width: 14px;
 }
 
 .icon-lock {
     @extend %icon;
     background-position: -26px 0;
-    height: 19px;
-    width: 14px;
-}
-
-
-%block {
-    max-width: 300px;
-    width: 300px;    
 }
 
 .block-login {    
-    @extend %block;
     background: $block-bg;
-
 
     .txt {       
 
         &:focus {
-            border-bottom: 2px solid $border-color-dark;
+            border-bottom-color: $border-color-dark;
             color: $text-box-color-focus;
 
             + .icon-user {
@@ -69,32 +55,9 @@ body {
     }
 }
 
-.box-lang {
-    .dropdown {
-        float: left;
-
-        .btn {
-            padding-left: 0;
-        }
-    }
-    .dropdown-menu {
-        left: 0;
-        right: auto;
-    }
-}
-
-.msg-error {
-    color: $msg-error-color;
-}
-
 @media only screen and (max-device-width: 767px)
 {  
    body {
-      background-color: $block-bg;
+      background: none;
    }
-}
-
-@media only screen and (max-device-width: 374px)
-{  
-   
 }
