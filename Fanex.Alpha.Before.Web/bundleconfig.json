@@ -29,7 +29,7 @@
     "outputFileName": "assets/bundles/themes/newyear2017.css",
     "inputFiles": [
       "assets/styles/pages/login.css",
-      "assets/themes/NewYear2017/theme.css"
+      "assets/styles/themes/NewYear2017/theme.css"
     ]
   }
 ]

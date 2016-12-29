@@ -282,6 +282,7 @@
       <DependentUpon>login.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\themes\NewYear2017\images\bg1.png" />
+    <Content Include="assets\styles\themes\NewYear2017\images\sprites-theme.png" />
     <Content Include="assets\styles\themes\NewYear2017\theme.css">
       <DependentUpon>theme.scss</DependentUpon>
     </Content>
@@ -536,6 +537,7 @@
     <Content Include="assets\styles\vendors-extensions\login\_bootstrap-mixins.scss" />
     <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2017\Index.cshtml" />
     <Content Include="assets\styles\themes\NewYear2017\theme.scss" />
+    <Content Include="assets\styles\themes\NewYear2017\_variables.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
