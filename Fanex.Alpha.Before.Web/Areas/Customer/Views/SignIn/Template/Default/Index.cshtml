@@ -8,12 +8,15 @@
 
 @section styles
 {
-    <link href="~/assets/bundles/login.min.css?ver=@AppSetting.Version" rel="stylesheet" />
-    @if (!string.IsNullOrWhiteSpace(Model.LoginTemplate))
+    
+    @if (string.IsNullOrWhiteSpace(Model.LoginTemplate))
+    {
+        <link href="~/assets/bundles/login.min.css?ver=@AppSetting.Version" rel="stylesheet" />
+    }
+    else
     {
         <link href="~/assets/bundles/themes/@(Model.LoginTemplate).min.css?ver=@AppSetting.Version" rel="stylesheet" />
     }
-
 
 }
 
