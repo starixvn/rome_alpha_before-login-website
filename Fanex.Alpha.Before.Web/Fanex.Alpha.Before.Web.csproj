@@ -535,7 +535,6 @@
     <Content Include="assets\styles\vendors\bootstrap\_wells.scss" />
     <Content Include="assets\styles\vendors-extensions\login\bootstrap-ex.scss" />
     <Content Include="assets\styles\vendors-extensions\login\_bootstrap-mixins.scss" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2017\Index.cshtml" />
     <Content Include="assets\styles\themes\NewYear2017\theme.scss" />
     <Content Include="assets\styles\themes\NewYear2017\_variables.scss" />
     <None Include="bundleconfig.json" />

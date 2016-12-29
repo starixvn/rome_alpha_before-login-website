@@ -24,8 +24,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     /// </summary>
     public class SignInController : BaseController
     {
-        private ISignInService _signInService;
-        private string _templatePath = "~/Areas/Customer/Views/SignIn/Template/{0}/Index.cshtml";
+        private readonly ISignInService _signInService;
+        private readonly string viewPath = "~/Areas/Customer/Views/SignIn/Template/Default/Index.cshtml";
 
         public SignInController() :
             this(null)
@@ -50,7 +50,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             var loginResult = _signInService.SignIn();
-            return View(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
+            return View(viewPath, loginResult);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             Session["Detecas-Username"] = txtUserName;
             Session["Detecas-AfterLoginUrl"] = loginResult.AfterLoginUrl;
 
-            return PartialView(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
+            return PartialView(viewPath, loginResult);
         }
 
         public RedirectResult AutomationTest(string username, string password, string captcha, string deviceId)

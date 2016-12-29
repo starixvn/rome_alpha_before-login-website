@@ -43,15 +43,6 @@ namespace Fanex.Alpha.Before.Customer.Configurations
             }
         }
 
-        [ConfigurationProperty("DefaultTheme", IsRequired = false)]
-        public string DefaultTheme
-        {
-            get
-            {
-                return (string)base["DefaultTheme"];
-            }
-        }
-
         [ConfigurationProperty("StartDateShowEventTheme", IsRequired = false)]
         public string StartDateShowEventTheme
         {
