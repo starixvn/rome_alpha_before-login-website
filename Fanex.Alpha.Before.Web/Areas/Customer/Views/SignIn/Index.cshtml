@@ -9,15 +9,7 @@
 @section styles
 {
     
-    @if (string.IsNullOrWhiteSpace(Model.LoginTemplate))
-    {
-        <link href="~/assets/bundles/login.min.css?ver=@AppSetting.Version" rel="stylesheet" />
-    }
-    else
-    {
-        <link href="~/assets/bundles/themes/@(Model.LoginTemplate).min.css?ver=@AppSetting.Version" rel="stylesheet" />
-    }
-
+    <link href="~/assets/bundles/themes/@(Model.LoginTemplate).min.css?ver=@AppSetting.Version" rel="stylesheet" />
 }
 
 <div class="box-lang">

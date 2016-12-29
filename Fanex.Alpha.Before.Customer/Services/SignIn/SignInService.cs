@@ -55,6 +55,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             _signInRepository = signInRepository ?? new SignInRepository();
             _loginThemeSection = LoginThemeSection.Instance;
 
+            this._loginTheme = _loginThemeSection.DefaultTheme;
             if (DateTime.Now >= Converter.ToDateTime(_loginThemeSection.StartDateShowEventTheme) &&
                 DateTime.Now <= Converter.ToDateTime(_loginThemeSection.EndDateShowEventTheme))
             {
