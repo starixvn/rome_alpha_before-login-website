@@ -43,7 +43,8 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
             }
 
             HttpRequest httpRequest = HttpContext.Current.Request;
-            return string.Join("\r\n",
+            return string.Join(
+                "\r\n",
                 ExceptionToString(ex, httpRequest, customerId),
                 "EXCEPTION DATA:" + ExceptionDataToString(ex.Data),
                 "BROWSER CAPABILITIES:" + BrowserInformation(httpRequest.Browser),
@@ -61,7 +62,8 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
                 formString = LogExtensionFilter.CensorSensitiveInformation(formString);
             }
 
-            string message = string.Join("\r\n",
+            string message = string.Join(
+                "\r\n",
                 ex.Message,
                 "URL: " + url,
                 "REFERRER: " + httpRequest.UrlReferrer,
@@ -98,7 +100,8 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
                 return string.Empty;
             }
 
-            return string.Join("\r\n",
+            return string.Join(
+                "\r\n",
                 "Type: " + browser.Type,
                 "Name: " + browser.Browser,
                 "Version: " + browser.Version,
@@ -132,7 +135,8 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
 
         private static string GetSqlExceptionInfo(SqlException ex)
         {
-            return string.Join("\r\n",
+            return string.Join(
+                    "\r\n",
                     "PROCEDURE: " + ex.Procedure,
                     "LINE NUMBER: " + ex.LineNumber,
                     "SERVER: " + ex.Server);

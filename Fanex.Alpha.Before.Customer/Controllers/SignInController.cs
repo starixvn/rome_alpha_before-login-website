@@ -85,7 +85,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
             if (loginResult != null && loginResult.ErrCode != -2)
             {
-                if(loginResult.ErrCode == -1)
+                if (loginResult.ErrCode == -1)
                 {
                     FPSTracking(txtUserName, loginResult);
                 }
@@ -236,5 +236,4 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             detecasSessionKeys.ForEach(k => Session.Remove(k));
         }
     }
-
 }

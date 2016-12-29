@@ -66,10 +66,6 @@ namespace Fanex.Alpha.Before.Common.Controllers
             base.OnActionExecuting(filterContext);
         }
 
-        protected override void OnResultExecuting(ResultExecutingContext filterContext)
-        {
-        }
-
         protected override void ExecuteCore()
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo(AppSession.Language);
