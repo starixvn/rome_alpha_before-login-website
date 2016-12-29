@@ -25,7 +25,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     public class SignInController : BaseController
     {
         private readonly ISignInService _signInService;
-        private readonly string viewPath = "~/Areas/Customer/Views/SignIn/Template/Default/Index.cshtml";
+        private readonly string viewPath = "~/Areas/Customer/Views/SignIn/Index.cshtml";
 
         public SignInController() :
             this(null)

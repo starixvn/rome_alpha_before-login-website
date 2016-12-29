@@ -437,7 +437,7 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.Web.config" />
-    <Content Include="Areas\Customer\Views\SignIn\Template\Default\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\SignIn\Index.cshtml" />
     <Content Include="assets\scripts\libs\jquery\jquery-1.11.3.min.map" />
     <Content Include="assets\styles\abstracts\_mixins.scss" />
     <Content Include="assets\styles\abstracts\_variables.scss" />
