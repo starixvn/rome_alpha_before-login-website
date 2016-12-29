@@ -24,5 +24,12 @@
     "inputFiles": [
       "assets/scripts/login/captcha.js"
     ]
+  },
+  {
+    "outputFileName": "assets/bundles/themes/newyear2017.css",
+    "inputFiles": [
+      "assets/styles/pages/login.css",
+      "assets/themes/NewYear2017/theme.css"
+    ]
   }
 ]

@@ -10,5 +10,9 @@
   {
     "outputFile": "assets/styles/pages/login.css",
     "inputFile": "assets/styles/pages/login.scss"
+  },
+  {
+    "outputFile": "assets/styles/themes/NewYear2017/theme.css",
+    "inputFile": "assets/styles/themes/NewYear2017/theme.scss"
   }
 ]

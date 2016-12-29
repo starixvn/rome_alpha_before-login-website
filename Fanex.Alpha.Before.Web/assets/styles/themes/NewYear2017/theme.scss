@@ -1,0 +1,165 @@
+﻿@import '../../abstracts/_variables.scss';
+@import '../../abstracts/_mixins.scss';
+
+body {
+    background-color: $bg-color;
+}
+
+// icons
+%icon {
+    background: url(../images/sprites.png) no-repeat;
+    display: inline-block;
+}
+
+.icon-user {
+    @extend %icon;
+    background-position: -55px -4px;
+    height: 14px;
+    width: 14px;
+}
+
+.icon-lock {
+    @extend %icon;
+    background-position: -79px 0;
+    height: 19px;
+    width: 14px;
+}
+
+
+%block {
+    margin: auto;
+    max-width: 360px;
+    width: 400px;    
+    @include box-sizing;
+}
+
+.block-login {    
+    @extend %block;
+    background: $block-bg;
+    padding: 40px 30px;
+    @include box-shadow-multiple('0px 2px 2px rgba(0, 0, 0, 0.3)');
+    
+    .title {
+        font-size: $font-size + 11;
+        color: $text-color;
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+
+    .txt {
+        border: none;
+        outline: none;
+        width: 100%;        
+        border-bottom: 1px solid $border-color;
+        height: 36px;
+        padding: 8px 0 4px 28px;
+        color: $text-box-color;
+        @include border-radius(0);       
+
+        &:focus {
+            border-bottom: 2px solid $border-color-dark;
+            color: $text-box-color-focus;
+
+            + .icon-user {
+                 background-position: -55px -31px;
+            }
+
+            + .icon-lock {
+                 background-position: -79px -27px;
+            }
+        }
+    }
+
+    
+
+    .rowlg {
+        margin-bottom: 15px;
+        position: relative;
+        .icon-user, .icon-lock {
+            position: absolute;
+            left: 0;
+        }
+
+        .icon-user {
+            top: 11px;
+        }
+
+        .icon-lock {              
+            top: 8px;
+        }
+
+        &.group-captcha {
+            display: table;
+            width: 100%;
+
+            .codeCaptcha {
+                position: relative;
+                width: 72px;
+            }
+
+            .codeCaptcha, .action-refresh, .txt-validation {
+                display: table-cell;
+                vertical-align: middle;
+            }
+
+            .action-refresh {
+                padding: 0 10px;
+                width: 40px;
+
+                .icon-refresh {
+                    position: relative;
+                    top: 4px;
+                }
+            }
+
+            .txt-validation {
+                padding-left: 0;
+            }          
+        }
+    }
+
+    .btnLogin {
+        background-color: $btn-bg;
+        color: $btn-color;
+
+        &:hover {
+            background-color: $btn-bg-hover;
+        }
+
+        &[disabled], .disabled {
+            &:hover {
+                background-color: $btn-bg;
+            }
+        }
+    }
+}
+
+.box-lang {
+    .dropdown {
+        float: left;
+    }
+    .dropdown-menu {
+        left: 0;
+        right: auto;
+
+        > li > a {
+            padding: 4px 16px;
+        }
+    }
+}
+
+.msg-error {
+    color: $msg-error-color;
+}
+
+@media only screen and (max-device-width: 767px)
+{  
+   body {
+      background-color: $block-bg;
+   }
+}
+
+@media only screen and (max-device-width: 374px)
+{  
+   
+}

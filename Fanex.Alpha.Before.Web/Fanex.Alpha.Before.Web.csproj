@@ -263,6 +263,10 @@
     <Content Include="assets\bundles\login.min.js">
       <DependentUpon>login.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\themes\newyear2017.css" />
+    <Content Include="assets\bundles\themes\newyear2017.min.css">
+      <DependentUpon>newyear2017.css</DependentUpon>
+    </Content>
     <Content Include="assets\scripts\libs\bootstrap\dropdown.js" />
     <Content Include="assets\scripts\libs\detecas\Detecas.Base64.js" />
     <Content Include="assets\scripts\libs\detecas\Detecas.JSON.js" />
@@ -276,6 +280,13 @@
     </Content>
     <Content Include="assets\styles\pages\login.min.css">
       <DependentUpon>login.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\themes\NewYear2017\images\bg1.png" />
+    <Content Include="assets\styles\themes\NewYear2017\theme.css">
+      <DependentUpon>theme.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\themes\NewYear2017\theme.min.css">
+      <DependentUpon>theme.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\vendors-extensions\login\bootstrap-ex.css">
       <DependentUpon>bootstrap-ex.scss</DependentUpon>
@@ -523,6 +534,8 @@
     <Content Include="assets\styles\vendors\bootstrap\_wells.scss" />
     <Content Include="assets\styles\vendors-extensions\login\bootstrap-ex.scss" />
     <Content Include="assets\styles\vendors-extensions\login\_bootstrap-mixins.scss" />
+    <Content Include="Areas\Customer\Views\SignIn\Template\NewYear2017\Index.cshtml" />
+    <Content Include="assets\styles\themes\NewYear2017\theme.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
