@@ -587,13 +587,14 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string url = HttpContext.Current.Session["UMToken"] == null
                 ? string.Format("{0}{1}?params={2}", UrlHelper.SiteGroupSetting.AfterUrl, CustomerAppSetting.AfterLoginAuthorizationPage, parameter)
                 : string.Format("{0}{1}?UMToken={2}&params={3}", UrlHelper.SiteGroupSetting.AfterUrl, CustomerAppSetting.AfterLoginAuthorizationPage, HttpContext.Current.Session["UMToken"], parameter);
-
-
+            
             signInResult.ErrMsg = LoginLanguages.Labels.lblLoginSuccessful;
             signInResult.AfterLoginUrl = url;
             signInResult.UTMS = crossCookieValue;
             signInResult.Domain = this._baseDomain;
             signInResult.ErrCode = -1;
+            signInResult.Username = verifySignInResult.SubAccId == 0 ? verifySignInResult.Username : signInResult.Username;
+
             try
             {
                 // Set cookie with custid id and seed

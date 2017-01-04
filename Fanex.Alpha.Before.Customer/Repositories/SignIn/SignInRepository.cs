@@ -47,9 +47,10 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
 
                 objectDB.AssignParamValues(parameters);
                 objectDB.ExecuteNonQuery();
-                return new VerifySignInResult()
+                var result = new VerifySignInResult()
                 {
                     CustId = Converter.ToInt(objectDB.GetOuputParams()["custid"]),
+                    Username = Converter.ToString2(objectDB.GetOuputParams()["username"]),
                     SubAccId = Converter.ToInt(objectDB.GetOuputParams()["subaccid"]),
                     IsNickname = Converter.ToBool(objectDB.GetOuputParams()["isnickname"]),
                     Nickname = Converter.ToString2(objectDB.GetOuputParams()["nickname"]),
@@ -60,6 +61,8 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
                     ErrorCode = Converter.ToInt(objectDB.GetOuputParams()["errcode"]),
                     ErrorMessage = Converter.ToString2(objectDB.GetOuputParams()["errmsg"])
                 };
+                
+                return result;
             }
         }
 

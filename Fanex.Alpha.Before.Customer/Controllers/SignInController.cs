@@ -87,7 +87,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             {
                 if (loginResult.ErrCode == -1)
                 {
-                    FPSTracking(txtUserName, loginResult);
+                    FPSTracking(loginResult);
                 }
 
                 ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
@@ -116,7 +116,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// </summary>
         /// <param name="username">The Username.</param>
         /// <param name="loginResult">Login result.</param>
-        private static void FPSTracking(string username, SignInResult loginResult)
+        private static void FPSTracking(SignInResult loginResult)
         {
             try
             {
@@ -136,7 +136,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 }
 
                 new FPS.Client.Service().CheckTransaction(
-                    username,
+                    loginResult.Username,
                     loginAction,
                     loginMessage,
                     fpsSubscirber,
