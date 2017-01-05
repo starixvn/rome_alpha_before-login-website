@@ -23,6 +23,23 @@ body {
     background: $block-bg;
 
     .txt {       
+         &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+          color: $text-box-color;
+        }
+        &::-moz-placeholder { /* Firefox 19+ */
+          color: $text-box-color;
+        }
+        &:-ms-input-placeholder { /* IE 10+ */
+          color: $text-box-color;
+        }
+        &:-moz-placeholder { /* Firefox 18- */
+          color: $text-box-color;
+        }
+
+        &:focus {
+            border-bottom-color: $border-color-dark;
+            color: $text-box-color-focus;
+        }
 
         &:focus {
             border-bottom-color: $border-color-dark;
