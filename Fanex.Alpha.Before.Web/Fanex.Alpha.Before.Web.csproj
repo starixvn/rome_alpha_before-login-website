@@ -287,7 +287,7 @@
     <Content Include="assets\styles\themes\event.min.css">
       <DependentUpon>event.css</DependentUpon>
     </Content>
-    <Content Include="assets\styles\themes\images\bg.png" />
+    <Content Include="assets\styles\themes\images\bg.jpg" />
     <Content Include="assets\styles\themes\images\sprites-theme.png" />
     <Content Include="assets\styles\vendors-extensions\login\bootstrap-ex.css">
       <DependentUpon>bootstrap-ex.scss</DependentUpon>
