@@ -72,9 +72,26 @@ body {
     }
 }
 
+.block-info {  
+    color: $block-info-color;
+
+    &:before {
+        @extend %icon;
+        background-position: -48px 0;    
+    }
+}
+
 @media only screen and (max-device-width: 767px)
 {  
    body {
       background: none;
    }
+
+   .block-info {  
+        color: $block-info-mobile-color;
+
+        &:before {
+            background-position: -48px -27px;    
+        }
+    }
 }
