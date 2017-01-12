@@ -43,6 +43,12 @@ namespace Fanex.Alpha.Before.Customer.Models
             set; 
         }
 
+        public string Username
+        {
+            get;
+            set;
+        }
+
         public bool IsNickname 
         { 
             get; 

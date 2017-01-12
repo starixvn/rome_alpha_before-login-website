@@ -11,6 +11,7 @@ namespace Fanex.Alpha.Before.Common.Configurations.LimitedCountryAccessService
     using Fanex.Alpha.Before.Common.Configurations.LimtedCountryAccess;
     using Fanex.Alpha.Before.Common.Repositories.LimitedCountryAccessRepository;
     using Infrastructure.Extensions;
+
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
@@ -57,7 +58,7 @@ namespace Fanex.Alpha.Before.Common.Configurations.LimitedCountryAccessService
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);                
+                LogExtension.ExceptionHandler(ex);
             }
 
             return false;

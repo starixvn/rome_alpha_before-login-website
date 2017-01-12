@@ -33,7 +33,8 @@ namespace Fanex.Alpha.Before.Web.View
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             var defaultParameter = new
             {
-                controller = "Home",
+                area = "Customer",
+                controller = "SignIn",
                 action = "Index",
                 id = UrlParameter.Optional
             };

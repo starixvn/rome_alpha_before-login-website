@@ -8,7 +8,11 @@
     "inputFile": "assets/styles/vendors/bootstrap.scss"
   },
   {
-    "outputFile": "assets/styles/pages/login.css",
-    "inputFile": "assets/styles/pages/login.scss"
+    "outputFile": "assets/styles/themes/default.css",
+    "inputFile": "assets/styles/themes/default.scss"
+  },
+  {
+    "outputFile": "assets/styles/themes/event.css",
+    "inputFile": "assets/styles/themes/event.scss"
   }
 ]

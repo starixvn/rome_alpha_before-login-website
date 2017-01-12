@@ -14,15 +14,22 @@
     ]
   },
   {
-    "outputFileName": "assets/bundles/login.css",
+    "outputFileName": "assets/bundles/themes/default.css",
     "inputFiles": [
-      "assets/styles/pages/login.css" 
+      "assets/styles/themes/default.css" 
     ]
   },
   {
     "outputFileName": "assets/bundles/captcha.js",
     "inputFiles": [
       "assets/scripts/login/captcha.js"
+    ]
+  },
+  {
+    "outputFileName": "assets/bundles/themes/event.css",
+    "inputFiles": [
+      "assets/styles/themes/default.css",
+      "assets/styles/themes/event.css"
     ]
   }
 ]

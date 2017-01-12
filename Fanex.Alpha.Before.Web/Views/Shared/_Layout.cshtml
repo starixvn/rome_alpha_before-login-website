@@ -22,7 +22,7 @@
     </div>
 
     <div id="mainholder" class="block-login">
-        <form id="formLogin" class="form-login" action="@Url.Content("~/Customer/SignIn/Index")" method="POST" autocomplete="off">
+        <form id="formLogin" class="form-login" action="@Url.Content("~/")" method="POST" autocomplete="off">
             @RenderBody()
             <input name="code" id="code" type="hidden" value="@Model.Captcha" />
             <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />

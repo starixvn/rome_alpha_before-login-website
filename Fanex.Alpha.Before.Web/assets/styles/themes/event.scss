@@ -1,0 +1,97 @@
+﻿@import '../abstracts/_variables-event.scss';
+
+body {
+    background: url(images/#{$bg-image}) top center $bg-color no-repeat;
+}
+
+// icons
+%icon {
+    background-image: url(images/#{$sprite-image});
+}
+
+.icon-user {
+    @extend %icon;
+    background-position: -2px -4px;
+}
+
+.icon-lock {
+    @extend %icon;
+    background-position: -26px 0;
+}
+
+.block-login {    
+    background: $block-bg;
+
+    .txt {       
+         &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+          color: $text-box-color;
+        }
+        &::-moz-placeholder { /* Firefox 19+ */
+          color: $text-box-color;
+        }
+        &:-ms-input-placeholder { /* IE 10+ */
+          color: $text-box-color;
+        }
+        &:-moz-placeholder { /* Firefox 18- */
+          color: $text-box-color;
+        }
+
+        &:focus {
+            border-bottom-color: $border-color-dark;
+            color: $text-box-color-focus;
+        }
+
+        &:focus {
+            border-bottom-color: $border-color-dark;
+            color: $text-box-color-focus;
+
+            + .icon-user {
+                 background-position: -2px -31px;
+            }
+
+            + .icon-lock {
+                 background-position: -26px -27px;
+            }
+        }
+    }
+
+
+    .btnLogin {
+        background-color: $btn-bg;
+        color: $btn-color;
+
+        &:hover {
+            background-color: $btn-bg-hover;
+        }
+
+        &[disabled], .disabled {
+            &:hover {
+                background-color: $btn-bg;
+            }
+        }
+    }
+}
+
+.block-info {  
+    color: $block-info-color;
+
+    &:before {
+        @extend %icon;
+        background-position: -48px 0;    
+    }
+}
+
+@media only screen and (max-device-width: 767px)
+{  
+   body {
+      background: none;
+   }
+
+   .block-info {  
+        color: $block-info-mobile-color;
+
+        &:before {
+            background-position: -48px -27px;    
+        }
+    }
+}

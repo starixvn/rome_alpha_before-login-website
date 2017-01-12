@@ -24,8 +24,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     /// </summary>
     public class SignInController : BaseController
     {
-        private ISignInService _signInService;
-        private string _templatePath = "~/Areas/Customer/Views/SignIn/Template/{0}/Index.cshtml";
+        private readonly ISignInService _signInService;
+        private readonly string viewPath = "~/Areas/Customer/Views/SignIn/Index.cshtml";
 
         public SignInController() :
             this(null)
@@ -50,7 +50,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             var loginResult = _signInService.SignIn();
-            return View(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
+            return View(viewPath, loginResult);
         }
 
         /// <summary>
@@ -85,9 +85,9 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
             if (loginResult != null && loginResult.ErrCode != -2)
             {
-                if(loginResult.ErrCode == -1)
+                if (loginResult.ErrCode == -1)
                 {
-                    FPSTracking(txtUserName, loginResult);
+                    FPSTracking(loginResult);
                 }
 
                 ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
@@ -96,7 +96,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             Session["Detecas-Username"] = txtUserName;
             Session["Detecas-AfterLoginUrl"] = loginResult.AfterLoginUrl;
 
-            return PartialView(string.Format(_templatePath, loginResult.LoginTemplate), loginResult);
+            return PartialView(viewPath, loginResult);
         }
 
         public RedirectResult AutomationTest(string username, string password, string captcha, string deviceId)
@@ -116,7 +116,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// </summary>
         /// <param name="username">The Username.</param>
         /// <param name="loginResult">Login result.</param>
-        private static void FPSTracking(string username, SignInResult loginResult)
+        private static void FPSTracking(SignInResult loginResult)
         {
             try
             {
@@ -136,7 +136,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 }
 
                 new FPS.Client.Service().CheckTransaction(
-                    username,
+                    loginResult.Username,
                     loginAction,
                     loginMessage,
                     fpsSubscirber,
@@ -236,5 +236,4 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             detecasSessionKeys.ForEach(k => Session.Remove(k));
         }
     }
-
 }
