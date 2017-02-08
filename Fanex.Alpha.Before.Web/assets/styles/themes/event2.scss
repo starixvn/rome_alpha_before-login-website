@@ -1,0 +1,98 @@
+﻿@import '../abstracts/_variables-event2.scss';
+
+body {
+    background: url(images/#{$bg-image}) top center $bg-color no-repeat;
+    color: $text-color;
+}
+
+// icons
+%icon {
+    background-image: url(images/#{$sprite-image});
+}
+
+.icon-refresh {
+    @extend %icon;
+    background-position: -2px 0;
+    cursor: pointer;
+    height: 16px;
+    width: 16px;
+
+    &:hover {
+        background-position: -2px -27px;
+    }
+}
+
+.block-login {
+    background: $block-bg;
+
+    .title {
+        color: $text-color;
+    }
+
+    .txt {
+        border-bottom-color: $border-color;
+        color: $text-box-color;
+
+        &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+            color: $text-box-color;
+        }
+
+        &::-moz-placeholder { /* Firefox 19+ */
+            color: $text-box-color;
+        }
+
+        &:-ms-input-placeholder { /* IE 10+ */
+            color: $text-box-color;
+        }
+
+        &:-moz-placeholder { /* Firefox 18- */
+            color: $text-box-color;
+        }
+
+        &:focus {
+            border-bottom-color: $border-color-dark;
+            color: $text-box-color-focus;
+        }
+    }
+
+    .btnLogin {
+        background-color: $btn-bg;
+        color: $btn-color;
+
+        &:hover {
+            background-color: $btn-bg-hover;
+        }
+
+        &[disabled], .disabled {
+            &:hover {
+                background-color: $btn-bg;
+            }
+        }
+    }
+
+    .rowlg.group-captcha .codeCaptcha {
+        border-color: $border-color;
+    }
+}
+
+.box-lang .dropdown-toggle {
+    color: $text-color;
+}
+
+.msg-error {
+    color: $msg-error-color;
+}
+
+@media only screen and (max-device-width: 767px) {
+    body {
+        background: none;
+    }
+
+    .block-info {
+        color: $text-color;
+
+        &:before {
+            background-position: -29px -83px;
+        }
+    }
+}

@@ -274,7 +274,9 @@
     <Content Include="assets\scripts\libs\storage\store-with-json2.min.js" />
     <Content Include="assets\scripts\login\captcha.js" />
     <Content Include="assets\scripts\login\resources.js" />
+    <Content Include="assets\styles\images\crossword.png" />
     <Content Include="assets\styles\images\sprites.png" />
+    <Content Include="assets\styles\images\sprites2.png" />
     <Content Include="assets\styles\themes\default.css">
       <DependentUpon>default.scss</DependentUpon>
     </Content>
@@ -288,7 +290,9 @@
       <DependentUpon>event.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\themes\images\bg.jpg" />
+    <Content Include="assets\styles\themes\images\bg2.jpg" />
     <Content Include="assets\styles\themes\images\sprites-theme.png" />
+    <Content Include="assets\styles\themes\images\sprites-theme2.png" />
     <Content Include="assets\styles\vendors-extensions\login\bootstrap-ex.css">
       <DependentUpon>bootstrap-ex.scss</DependentUpon>
     </Content>
@@ -300,6 +304,9 @@
     </Content>
     <Content Include="assets\styles\vendors\bootstrap.min.css">
       <DependentUpon>bootstrap.css</DependentUpon>
+    </Content>
+    <Content Include="compilerconfig2.json">
+      <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
     <Content Include="Configurations\Local.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\Master.StoreProcedure\RobotSpNames.xml" />
@@ -541,16 +548,50 @@
     <Content Include="assets\styles\themes\event.scss" />
     <Content Include="assets\styles\abstracts\_variables-event.scss" />
     <Content Include="assets\styles\themes\default.scss" />
+    <Content Include="assets\styles\themes\default2.scss" />
+    <Content Include="assets\styles\themes\event2.scss" />
+    <Content Include="assets\styles\fonts\opensans\OpenSans-Bold.ttf" />
+    <Content Include="assets\styles\fonts\opensans\OpenSans-BoldItalic.ttf" />
+    <Content Include="assets\styles\fonts\opensans\OpenSans-ExtraBold.ttf" />
+    <Content Include="assets\styles\fonts\opensans\OpenSans-ExtraBoldItalic.ttf" />
+    <Content Include="assets\styles\fonts\opensans\OpenSans-Italic.ttf" />
+    <Content Include="assets\styles\fonts\opensans\OpenSans-Light.ttf" />
+    <Content Include="assets\styles\fonts\opensans\OpenSans-LightItalic.ttf" />
+    <Content Include="assets\styles\fonts\opensans\OpenSans-Regular.ttf" />
+    <Content Include="assets\styles\fonts\opensans\OpenSans-Semibold.ttf" />
+    <Content Include="assets\styles\fonts\opensans\OpenSans-SemiboldItalic.ttf" />
+    <Content Include="assets\styles\abstracts\_variables-event2.scss" />
+    <Content Include="assets\styles\abstracts\_variables2.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <None Include="Configurations\WebDeployment.ConfigTransform\SIT.Web.Setting.config">
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.Web.Setting.config">
       <SubType>Designer</SubType>
-    </None>
+    </Content>
     <Content Include="deployment.ignore" />
     <Content Include="Views\Shared\FPS.cshtml" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.Web.Setting.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -597,6 +638,6 @@
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
 cd ..
-BuildTask.Release</PostBuildEvent>
+build.cmd</PostBuildEvent>
   </PropertyGroup>
 </Project>
