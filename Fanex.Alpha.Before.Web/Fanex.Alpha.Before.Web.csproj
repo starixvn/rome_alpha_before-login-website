@@ -379,7 +379,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.DomainGroupSection.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.DomainGroupSection.config" />
     <Content Include="Areas\Customer\Web.config" />
