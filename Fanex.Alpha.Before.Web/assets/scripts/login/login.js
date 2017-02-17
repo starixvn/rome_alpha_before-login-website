@@ -13,8 +13,7 @@ Sphinx.Error = {
     InvalidCaptcha: '2',
 
     clientError: function (error) {
-
-        if (error === Sphinx.Error.InvalidUserAndPass || 
+        if (error === Sphinx.Error.InvalidUserAndPass ||
             error === Sphinx.Error.InvalidCaptcha) {
             return true;
         }
@@ -213,7 +212,7 @@ Sphinx.Login = {
             inputPassword.focus(function () {
                 if (inputPassword.val() === inputPassword.attr('placeholder')) {
                     inputPassword.val('').removeClass('placeholder');
-                    if ( Sphinx.Login.domElements.chbShowPassword.is(':checked')) {
+                    if (Sphinx.Login.domElements.chbShowPassword.is(':checked')) {
                         return;
                     }
                     Sphinx.Login.setPassword(inputPassword);
@@ -231,7 +230,6 @@ Sphinx.Login = {
         var domeElements = Sphinx.Login.domElements;
         if (domeElements.txtUsername.val() === ""
             || domeElements.txtUsername.val() === language.Username) {
-
             domeElements.errorMsg
                 .attr('errCode', Sphinx.Error.InvalidUserAndPass)
                 .html(language.errUserName)
@@ -269,7 +267,6 @@ Sphinx.Login = {
     },
 
     doLogin: function () {
-
         if (!Sphinx.Login.validateInput()) {
             return false;
         }
@@ -298,10 +295,12 @@ Sphinx.Login = {
     },
 
     clearBrowserBackHistory: function () {
-        window.history.pushState(null, null, document.URL);
-        window.addEventListener('popstate', function () {
+        if (window.history.pushState) {
             window.history.pushState(null, null, document.URL);
-        });
+            window.addEventListener('popstate', function () {
+                window.history.pushState(null, null, document.URL);
+            });
+        }
     }
 };
 
