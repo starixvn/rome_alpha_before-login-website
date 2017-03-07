@@ -594,6 +594,7 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.Web.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.Web.Setting.config" />
+    <Content Include="Views\Shared\GoogleAnalytic.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
