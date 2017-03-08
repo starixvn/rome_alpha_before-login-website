@@ -14,11 +14,22 @@ namespace Fanex.Alpha.Before.Common.Configurations
     /// </summary>
     public static class AppSetting
     {
+        private static string version;
+        private static string fpsActivator;
+        private static string googleAnalyticId;
+
+        static AppSetting()
+        {
+            version = Converter.ToString2(ConfigurationManager.AppSettings["AppVersion"]);
+            fpsActivator = Converter.ToString2(ConfigurationManager.AppSettings["FPS_Activator"]);
+            googleAnalyticId = Converter.ToString2(ConfigurationManager.AppSettings["GoogleAnalyticId"]);
+        }
+
         public static string Version
         {
-            get 
+            get
             {
-                return Converter.ToString2(ConfigurationManager.AppSettings["AppVersion"]); 
+                return version;
             }
         }
 
@@ -26,7 +37,15 @@ namespace Fanex.Alpha.Before.Common.Configurations
         {
             get
             {
-                return Converter.ToString2(ConfigurationManager.AppSettings["FPS_Activator"]);
+                return fpsActivator;
+            }
+        }
+
+        public static string GoogleAnalyticId
+        {
+            get
+            {
+                return googleAnalyticId;
             }
         }
     }
