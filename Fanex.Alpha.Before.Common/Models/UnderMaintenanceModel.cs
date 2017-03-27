@@ -28,5 +28,7 @@ namespace Fanex.Alpha.Before.Common.Models
             get;
             set;
         }
+
+        public bool HasError { get; set; }
     }
 }

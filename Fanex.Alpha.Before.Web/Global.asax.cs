@@ -6,15 +6,21 @@
 
 namespace Fanex.Alpha.Before.Web.View
 {
+    using System;
     using System.Collections.Generic;
+    using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
+    using Infrastructure.Extensions;
+    using Logging;
+    using ONEbook.UM.Configurations;
+    using ONEbook.UM.Models;
 
     /// <summary>
     /// MVC Application.
-    /// For instructions on enabling IIS6 or IIS7 classic mode, 
+    /// For instructions on enabling IIS6 or IIS7 classic mode,
     /// visit http://go.microsoft.com/?LinkId=9394801.
     /// </summary>
     public class MvcApplication : System.Web.HttpApplication
@@ -56,12 +62,17 @@ namespace Fanex.Alpha.Before.Web.View
             RegisterRoutes(RouteTable.Routes);
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
-            
+
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
             defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
 
             MvcHandler.DisableMvcResponseHeader = true;
+
+            UMClientManager.WhenError((message) =>
+            {
+                LogExtension.ExceptionHandler(new UMClientException(message));
+            });
         }
 
         private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
@@ -79,7 +90,7 @@ namespace Fanex.Alpha.Before.Web.View
         private string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
         {
             return urlHelper.Action(
-                "Generate", 
+                "Generate",
                 "DefaultCaptcha",
                 new RouteValueDictionary
                                 {
@@ -90,6 +101,20 @@ namespace Fanex.Alpha.Before.Web.View
                                         captchaManager.TokenParameterName, keyValuePair.Key
                                     }
                                 });
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError().GetBaseException();
+            if (ex is HttpException)
+            {
+                return;
+            }
+
+            if (!Request.IsLocal)
+            {
+                LogExtension.ExceptionHandler(ex);
+            }
         }
 
         protected void Application_PreSendRequestHeaders()

@@ -36,25 +36,15 @@ namespace Fanex.Alpha.Before.Common.Services.UnderMainternance
         /// <returns>Return UM info.</returns>
         public UnderMaintenanceModel UnderMainternanceInfo()
         {
-            UnderMaintenanceModel result = new UnderMaintenanceModel()
-            {
-                IsUM = false
-            };
+            var underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
 
-            try
+            var result = new UnderMaintenanceModel()
             {
-                if (_maintenanceService.IsUnderMaintenance())
-                {
-                    UnderMaintenanceTime underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
-                    result.IsUM = true;
-                    result.From = underMaintenanceTime.From;
-                    result.To = underMaintenanceTime.To;
-                }
-            }
-            catch (Exception ex)
-            {
-                LogExtension.ExceptionHandler(ex);
-            }
+                IsUM = _maintenanceService.IsUnderMaintenance(),
+                From = underMaintenanceTime.From,
+                To = underMaintenanceTime.To,
+                HasError = underMaintenanceTime.ConnectionResult.IsNotOk
+            };
 
             return result;
         }
