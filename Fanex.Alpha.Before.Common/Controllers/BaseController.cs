@@ -44,7 +44,18 @@ namespace Fanex.Alpha.Before.Common.Controllers
         /// <param name="filterContext">Filter context.</param>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (_mainternanceService.UnderMainternanceInfo().IsUM)
+            var underMaintenanceInfo = _mainternanceService.UnderMainternanceInfo();
+
+            if (underMaintenanceInfo.HasError)
+            {
+                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                {
+                    controller = "ErrorPage",
+                    action = "Index",
+                    area = "Common"
+                }));
+            }
+            else if (underMaintenanceInfo.IsUM)
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
