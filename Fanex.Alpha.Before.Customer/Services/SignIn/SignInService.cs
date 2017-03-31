@@ -11,6 +11,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
+    using CasinoLibrary.Model.UserException;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Constants;
     using Fanex.Alpha.Before.Common.Extensions;
@@ -347,14 +348,14 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             try
             {
                 CasinoLibrary.SBAgent.Customer rngCustomer = new CasinoLibrary.SBAgent.Customer();
-                if (rngCustomer.CheckCustSetting(custId))
+                // if (rngCustomer.CheckCustSetting(custId))
                 {
                     rngCustomer.UpdateCustClosedWrongPwd(custId, true, IPHelper.ClientIP());
                 }
             }
-            catch (Exception ex)
+            catch (ErrorException ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                LogExtension.WriteInfo(ex);
             }
         }
 
@@ -523,7 +524,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             VerifySignInResult verifySignInResult)
         {
             // Closed by wrong pwd 5 times, need to be synchronized to Casino DB
-            if (verifySignInResult.ErrorCode == SignInErrorContants.Error109 && verifySignInResult.SubAccId == 0)
+            if ((verifySignInResult.ErrorCode == SignInErrorContants.Error109 || verifySignInResult.ErrorCode == SignInErrorContants.Error108) && verifySignInResult.SubAccId == 0)
             {
                 CloseRnGAccount(verifySignInResult.CustId);
             }
