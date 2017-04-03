@@ -276,6 +276,10 @@
     <Content Include="assets\bundles\login.min.js">
       <DependentUpon>login.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\themes\um.css" />
+    <Content Include="assets\bundles\themes\um.min.css">
+      <DependentUpon>um.css</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\themes\default.css" />
     <Content Include="assets\bundles\themes\default.min.css">
       <DependentUpon>default.css</DependentUpon>
@@ -284,16 +288,30 @@
     <Content Include="assets\bundles\themes\event.min.css">
       <DependentUpon>event.css</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\um.js" />
+    <Content Include="assets\bundles\um.min.js">
+      <DependentUpon>um.js</DependentUpon>
+    </Content>
     <Content Include="assets\scripts\libs\bootstrap\dropdown.js" />
     <Content Include="assets\scripts\libs\detecas\Detecas.Base64.js" />
     <Content Include="assets\scripts\libs\detecas\Detecas.JSON.js" />
+    <Content Include="assets\scripts\libs\flipclock\flipclock.css" />
+    <Content Include="assets\scripts\libs\flipclock\flipclock.js" />
+    <Content Include="assets\scripts\libs\flipclock\flipclock.min.js" />
     <Content Include="assets\scripts\libs\jquery\jquery-1.11.3.js" />
     <Content Include="assets\scripts\libs\storage\store-with-json2.min.js" />
     <Content Include="assets\scripts\login\captcha.js" />
     <Content Include="assets\scripts\login\resources.js" />
+    <Content Include="assets\scripts\um\um.js" />
     <Content Include="assets\styles\images\crossword.png" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\sprites2.png" />
+    <Content Include="assets\styles\pages\um.css">
+      <DependentUpon>um.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\um.min.css">
+      <DependentUpon>um.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\themes\default.css">
       <DependentUpon>default.scss</DependentUpon>
     </Content>
@@ -414,8 +432,6 @@
     <Content Include="Views\Common\ErrorPage\Style\Images\error2.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\seamless_pattern.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\style.css" />
-    <Content Include="Views\Common\UnderMaintenance\Style\UnderMaintenance.less" />
-    <Content Include="Views\Common\UnderMaintenance\Style\Images\UnderMaintenance.gif" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -612,6 +628,7 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.Web.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.Web.Setting.config" />
     <Content Include="Views\Shared\GoogleAnalytic.cshtml" />
+    <Content Include="assets\styles\pages\um.scss" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
