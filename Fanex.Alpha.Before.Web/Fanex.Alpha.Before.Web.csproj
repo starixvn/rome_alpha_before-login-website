@@ -253,11 +253,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\bundles\captcha.js" />
-    <Content Include="assets\bundles\captcha.min.js">
-      <DependentUpon>captcha.js</DependentUpon>
-    </Content>
-    <Content Include="assets\bundles\login.js" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Scripts\SylouCaptcha.js" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\atticon.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\audio.gif" />
@@ -273,12 +268,13 @@
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\sprite_bk.gif" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\stop.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Index.css" />
+    <Content Include="assets\bundles\captcha.js" />
+    <Content Include="assets\bundles\captcha.min.js">
+      <DependentUpon>captcha.js</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\login.js" />
     <Content Include="assets\bundles\login.min.js">
       <DependentUpon>login.js</DependentUpon>
-    </Content>
-    <Content Include="assets\bundles\themes\um.css" />
-    <Content Include="assets\bundles\themes\um.min.css">
-      <DependentUpon>um.css</DependentUpon>
     </Content>
     <Content Include="assets\bundles\themes\default.css" />
     <Content Include="assets\bundles\themes\default.min.css">
@@ -287,6 +283,10 @@
     <Content Include="assets\bundles\themes\event.css" />
     <Content Include="assets\bundles\themes\event.min.css">
       <DependentUpon>event.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\themes\um.css" />
+    <Content Include="assets\bundles\themes\um.min.css">
+      <DependentUpon>um.css</DependentUpon>
     </Content>
     <Content Include="assets\bundles\themes\um2.css" />
     <Content Include="assets\bundles\themes\um2.min.css">
