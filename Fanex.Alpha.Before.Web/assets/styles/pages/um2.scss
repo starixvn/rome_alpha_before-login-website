@@ -1,0 +1,109 @@
+﻿@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/Roboto-Regular.woff2') format("woff2"), url('../fonts/roboto/Roboto-Regular.woff') format("woff"), url('../fonts/roboto/Roboto-Regular.ttf') format("truetype");
+}
+
+
+body {
+    font-family: Roboto, sans-serif;
+    background: #ffffff;
+    color: #333;
+    font-size: 14px;
+
+    @media only screen and (min-device-width: 767px) {
+        font-size: 20px;
+    }
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    //padding-top: 10px;
+    text-align: center;
+    position: relative;
+
+    .img {
+        width: 100%;
+    }
+
+    @media only screen and (min-device-width: 767px) {
+        padding-top: 100px;
+        max-width: 800px;
+    }
+
+    @media only screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) {
+        padding-top: 0;
+    }
+}
+
+.title {
+    margin-top: 30px;
+    color: #3881c4;
+    font-size: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    @media only screen and (min-device-width: 767px) {
+        margin-top: 10px;
+    }
+
+    @media only screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : landscape) {
+        margin-top: 30px;
+    }
+}
+
+.time {
+    color: #3881c4;
+}
+
+.caption {
+    padding-top: 17px;
+
+    p {
+        margin: 0;
+        text-transform: uppercase;
+    }
+}
+
+.flip-clock-wrapper {
+    width: 460px;
+    margin: 40px auto 0;
+
+    .flip {
+        box-shadow: none;
+    }
+
+
+
+    ul li a div div.inn {
+        color: #fff;
+        background: #3881c4;
+        text-shadow: none;
+    }
+
+    /*@media only screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) {
+        ul {
+            width: 50px;
+            height: 74px;
+
+            li {
+                line-height: 78px;
+
+                a div div.inn {
+                    font-size: 60px;
+                }
+            }
+        }
+    }*/
+}
+
+.flip-clock-divider .flip-clock-label {
+    top: auto;
+    bottom: -20px;
+    font-size: 14px;
+}
+
+.flip-clock-dot {
+    background: #ffffff;
+    box-shadow: none;
+}

@@ -288,9 +288,13 @@
     <Content Include="assets\bundles\themes\event.min.css">
       <DependentUpon>event.css</DependentUpon>
     </Content>
-    <Content Include="assets\bundles\um.js" />
-    <Content Include="assets\bundles\um.min.js">
-      <DependentUpon>um.js</DependentUpon>
+    <Content Include="assets\bundles\themes\um2.css" />
+    <Content Include="assets\bundles\themes\um2.min.css">
+      <DependentUpon>um2.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\um2.js" />
+    <Content Include="assets\bundles\um2.min.js">
+      <DependentUpon>um2.js</DependentUpon>
     </Content>
     <Content Include="assets\scripts\libs\bootstrap\dropdown.js" />
     <Content Include="assets\scripts\libs\detecas\Detecas.Base64.js" />
@@ -311,6 +315,12 @@
     </Content>
     <Content Include="assets\styles\pages\um.min.css">
       <DependentUpon>um.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\um2.css">
+      <DependentUpon>um2.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\um2.min.css">
+      <DependentUpon>um2.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\themes\default.css">
       <DependentUpon>default.scss</DependentUpon>
@@ -386,6 +396,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="favicon.ico" />
+    <Content Include="favicon2.ico">
+      <DependentUpon>favicon.ico</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="assets\scripts\libs\detecas\detecas-token.min.js" />
     <Content Include="Views\Common\ErrorPage\404Error.htm" />
@@ -432,6 +445,9 @@
     <Content Include="Views\Common\ErrorPage\Style\Images\error2.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\seamless_pattern.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\style.css" />
+    <Content Include="Views\Common\UnderMaintenance\Index2.cshtml">
+      <DependentUpon>Index.cshtml</DependentUpon>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -447,7 +463,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Common\UnderMaintenance\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -597,6 +612,7 @@
     <Content Include="assets\styles\fonts\opensans\OpenSans-SemiboldItalic.ttf" />
     <Content Include="assets\styles\abstracts\_variables-event2.scss" />
     <Content Include="assets\styles\abstracts\_variables2.scss" />
+    <Content Include="assets\styles\pages\um.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -628,7 +644,8 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.Web.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.Web.Setting.config" />
     <Content Include="Views\Shared\GoogleAnalytic.cshtml" />
-    <Content Include="assets\styles\pages\um.scss" />
+    <Content Include="assets\styles\pages\um2.scss" />
+    <Content Include="Views\Common\UnderMaintenance\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -33,7 +33,7 @@
     ]
   },
   {
-    "outputFileName": "assets/bundles/um.js",
+    "outputFileName": "assets/bundles/um2.js",
     "inputFiles": [
       "assets/scripts/libs/jquery/jquery-1.11.3.js",
       "assets/scripts/libs/flipclock/flipclock.js",
@@ -41,9 +41,15 @@
     ]
   },
   {
-    "outputFileName": "assets/bundles/themes/um.css",
+    "outputFileName": "assets/bundles/themes/um2.css",
     "inputFiles": [
       "assets/scripts/libs/flipclock/flipclock.css",
+      "assets/styles/pages/um2.css"
+    ]
+  },
+  {
+    "outputFileName": "assets/bundles/themes/um.css",
+    "inputFiles": [
       "assets/styles/pages/um.css"
     ]
   }
