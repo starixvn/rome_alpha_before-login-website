@@ -13,7 +13,7 @@ namespace Fanex.Alpha.Before.Customer.Constants
     {
         public const int ErrorInvalidLogin = 101;
         public const int ErrorInvalidCaptcha = 102;
-        public const int Error180 = 108;
         public const int Error109 = 109;
+        public const int Error108 = 108;
     }
 }

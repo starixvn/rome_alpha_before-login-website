@@ -41,12 +41,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_Dependencies\Captcha\CaptchaMvc.dll</HintPath>
     </Reference>
-    <Reference Include="CasinoLibrary, Version=1.0.2.6, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\3rd\Casino\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=1.0.2.14, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoLibrary.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="CasinoSetting">
-      <HintPath>..\_Dependencies\3rd\Casino\CasinoSetting.dll</HintPath>
+    <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoSetting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoUtility.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
@@ -60,14 +65,32 @@
     <Reference Include="FPS.Client">
       <HintPath>..\packages\Fanex.Oneyed.FPSClient.1.0.0\FPS.Client.dll</HintPath>
     </Reference>
+    <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\HandHistoryLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="IBCCrypt">
       <HintPath>..\_Dependencies\3rd\Casino\IBCCrypt.dll</HintPath>
     </Reference>
-    <Reference Include="ILogger">
-      <HintPath>..\_Dependencies\3rd\Casino\ILogger.dll</HintPath>
+    <Reference Include="IBCDBLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IBCDBLibrary.1.0.0.0\lib\net40\IBCDBLibrary.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\_Dependencies\3rd\Casino\log4net.dll</HintPath>
+    <Reference Include="IBCFile, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\IBCFile.1.0.0.0\lib\net40\IBCFile.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IBCUtils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Utils.1.0.0\lib\net40\IBCUtils.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ILogger, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ILogger.1.0.0.0\lib\net40\ILogger.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
+      <HintPath>..\packages\log4net.1.2.9.1\lib\net40\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
