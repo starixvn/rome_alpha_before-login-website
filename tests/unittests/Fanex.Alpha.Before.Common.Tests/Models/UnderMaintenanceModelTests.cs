@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Alpha.Before.Common.Tests.Models
 {
+    using System;
     using Common.Models;
     using NUnit.Framework;
 
@@ -22,6 +23,50 @@
 
             // Assert
             Assert.IsFalse(isShowCountDown);
+        }
+
+        [TestCase("09:00 AM")]
+        [TestCase("9:2 AM")]
+        [TestCase("09:00 PM")]
+        [TestCase("9:00 PM")]
+        [TestCase("12:00 PM")]
+        [TestCase("11:00 PM")]
+        [TestCase("15:00 PM")]
+        [TestCase("12:11 PM")]
+        [TestCase("1:1 PM")]
+        public void ShowCountDown_ToTimeValid_ReturnTrue(string toTime)
+        {
+            // Arrange
+            var utcNow = new DateTime(1989, 5, 28);
+            var underMaintenance = new UnderMaintenanceModel(false, "00:00", toTime, false, utcNow);
+
+            // Act
+            var isShowCountDown = underMaintenance.ShowCountDown();
+
+            // Assert
+            Assert.IsTrue(isShowCountDown);
+        }
+
+        [TestCase("09:00 AM", 540)]
+        [TestCase("9:2 AM", 542)]
+        [TestCase("09:00 PM", 1260)]
+        [TestCase("9:01 PM", 1261)]
+        [TestCase("12:01 PM", 721)]
+        [TestCase("11:11 PM", 1391)]
+        [TestCase("15:03 PM", 903)]
+        [TestCase("16:11 PM", 971)]
+        [TestCase("1:1 PM", 781)]
+        public void ShowCountDown_ShowCountDown_UpdateCountDownTime(string toTime, int totalMinutes)
+        {
+            // Arrange
+            var utcNow = new DateTime(1989, 5, 28, 16, 0, 0); // => GMT+8 = 00:00
+            var underMaintenance = new UnderMaintenanceModel(false, "00:00", toTime, false, utcNow);
+
+            // Act
+            underMaintenance.ShowCountDown();
+
+            // Assert
+            Assert.AreEqual(totalMinutes, underMaintenance.CountdownTime.TotalMinutes);
         }
     }
 }

@@ -5,17 +5,20 @@
     public class UnderMaintenanceModel
     {
         private const string TaipeiStandardTime = "Taipei Standard Time";
+        private readonly DateTime utcNow;
 
         public UnderMaintenanceModel(
             bool isUm,
             string fromTimeText,
             string toTimeText,
-            bool hasError)
+            bool hasError,
+            DateTime? utcNow = null)
         {
             IsUM = isUm;
             FromTimeText = fromTimeText;
             ToTimeText = toTimeText;
             HasError = hasError;
+            this.utcNow = utcNow != null ? utcNow.Value : DateTime.UtcNow;
         }
 
         public bool IsUM { get; }
@@ -34,20 +37,25 @@
         {
             if (string.IsNullOrWhiteSpace(ToTimeText)
                 || ToTimeText.Length < 5
-                || (ToTimeText.Length > 2 && ToTimeText[2] != ':'))
+                || (ToTimeText.Length > 2 && !ToTimeText.Contains(":")))
             {
                 return false;
             }
 
             int endHours;
             int endMinutes;
+            var doubleColonIndex = ToTimeText.IndexOf(':');
 
-            if (int.TryParse(ToTimeText.Substring(0, 2), out endHours)
-                && int.TryParse(ToTimeText.Substring(3, 2), out endMinutes))
+            if (int.TryParse(ToTimeText.Substring(0, doubleColonIndex), out endHours)
+                && int.TryParse(ToTimeText.Substring(doubleColonIndex + 1, 2), out endMinutes))
             {
-                var currentDate = DateTime.Now.ToUniversalTime();
+                if (ToTimeText.ToUpperInvariant().Contains("PM") && endHours < 12)
+                {
+                    endHours += 12;
+                }
+
                 var taipeiTimeZone = TimeZoneInfo.FindSystemTimeZoneById(TaipeiStandardTime);
-                var nowInGMT8 = TimeZoneInfo.ConvertTimeFromUtc(currentDate, taipeiTimeZone);
+                var nowInGMT8 = TimeZoneInfo.ConvertTimeFromUtc(utcNow, taipeiTimeZone);
 
                 EndTime = nowInGMT8.Date.AddHours(endHours).AddMinutes(endMinutes);
                 if (EndTime > nowInGMT8)
