@@ -14,5 +14,13 @@
   {
     "outputFile": "assets/styles/themes/event.css",
     "inputFile": "assets/styles/themes/event.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/um.css",
+    "inputFile": "assets/styles/pages/um.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/um2.css",
+    "inputFile": "assets/styles/pages/um2.scss"
   }
 ]

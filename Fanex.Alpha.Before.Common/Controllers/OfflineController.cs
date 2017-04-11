@@ -47,10 +47,7 @@ namespace Fanex.Alpha.Before.Common.Controllers
                 FormsAuthentication.RedirectToLoginPage();
             }
 
-            ViewBag.UmtFrom = downTime.From;
-            ViewBag.UmtTo = downTime.To;
-
-            return View("~/Views/Common/UnderMaintenance/Index.cshtml");
+            return View("~/Views/Common/UnderMaintenance/Index.cshtml", downTime);
         }
     }
 }
