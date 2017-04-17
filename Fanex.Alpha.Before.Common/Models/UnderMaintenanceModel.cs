@@ -57,7 +57,7 @@
                 var taipeiTimeZone = TimeZoneInfo.FindSystemTimeZoneById(TaipeiStandardTime);
                 var nowInGMT8 = TimeZoneInfo.ConvertTimeFromUtc(utcNow, taipeiTimeZone);
 
-                EndTime = nowInGMT8.Date.AddHours(endHours).AddMinutes(endMinutes);
+                EndTime = nowInGMT8.Date.AddHours(endHours).AddMinutes(endMinutes + 2);
                 if (EndTime > nowInGMT8)
                 {
                     CountdownTime = EndTime - nowInGMT8;
