@@ -61,6 +61,11 @@ namespace Fanex.Alpha.Before.Common.Helpers
         /// <returns>Return result.</returns>
         public static bool IsValidLanguage(string culture)
         {
+            if (AppSetting.DisabledVietnamese && culture == "vi-VN")
+            {
+                return false;
+            }
+
             int totalLangaugesSupport = languages.Length;
             for (int i = 0; i < totalLangaugesSupport; i++)
             {

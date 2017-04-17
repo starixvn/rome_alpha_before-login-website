@@ -27,7 +27,10 @@
             <li><a href="#"><span class="flag flag-jp" data-language-code="ja-JP"></span>日本語</a></li>
             <li><a href="#"><span class="flag flag-th" data-language-code="th-TH"></span>ภาษาไทย</a></li>
             <li><a href="#"><span class="flag flag-kr" data-language-code="ko-KR"></span>한국어</a></li>
-            <li><a href="#"><span class="flag flag-vn" data-language-code="vi-VN"></span>Tiếng Việt</a></li>
+            @if (!AppSetting.DisabledVietnamese)
+            {
+                <li><a href="#"><span class="flag flag-vn" data-language-code="vi-VN"></span>Tiếng Việt</a></li>
+            }
         </ul>
     </div>
 </div>
