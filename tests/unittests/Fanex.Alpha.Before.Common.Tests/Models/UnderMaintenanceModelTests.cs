@@ -47,15 +47,15 @@
             Assert.IsTrue(isShowCountDown);
         }
 
-        [TestCase("09:00 AM", 540)]
-        [TestCase("9:2 AM", 542)]
-        [TestCase("09:00 PM", 1260)]
-        [TestCase("9:01 PM", 1261)]
-        [TestCase("12:01 PM", 721)]
-        [TestCase("11:11 PM", 1391)]
-        [TestCase("15:03 PM", 903)]
-        [TestCase("16:11 PM", 971)]
-        [TestCase("1:1 PM", 781)]
+        [TestCase("09:00 AM", 542)]
+        [TestCase("9:2 AM", 544)]
+        [TestCase("09:00 PM", 1262)]
+        [TestCase("9:01 PM", 1263)]
+        [TestCase("12:01 PM", 723)]
+        [TestCase("11:11 PM", 1393)]
+        [TestCase("15:03 PM", 905)]
+        [TestCase("16:11 PM", 973)]
+        [TestCase("1:1 PM", 783)]
         public void ShowCountDown_ShowCountDown_UpdateCountDownTime(string toTime, int totalMinutes)
         {
             // Arrange

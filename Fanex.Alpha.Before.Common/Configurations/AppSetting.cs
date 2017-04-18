@@ -1,28 +1,22 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="AppSetting.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.Alpha.Before.Common.Configurations
+﻿namespace Fanex.Alpha.Before.Common.Configurations
 {
     using System.Configuration;
     using Fanex.Common;
 
-    /// <summary>
-    /// Application Setting.
-    /// </summary>
     public static class AppSetting
     {
         private static string version;
         private static string fpsActivator;
         private static string googleAnalyticId;
+        private static bool isMBCSite;
 
         static AppSetting()
         {
             version = Converter.ToString2(ConfigurationManager.AppSettings["AppVersion"]);
             fpsActivator = Converter.ToString2(ConfigurationManager.AppSettings["FPS_Activator"]);
             googleAnalyticId = Converter.ToString2(ConfigurationManager.AppSettings["GoogleAnalyticId"]);
+            isMBCSite = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["IsMBCSite"])
+                && ConfigurationManager.AppSettings["IsMBCSite"] == "1";
         }
 
         public static string Version
@@ -48,5 +42,15 @@ namespace Fanex.Alpha.Before.Common.Configurations
                 return googleAnalyticId;
             }
         }
+
+        public static bool IsMBCSite
+        {
+            get
+            {
+                return isMBCSite;
+            }
+        }
+
+        public static bool DisabledVietnamese => IsMBCSite;
     }
 }
