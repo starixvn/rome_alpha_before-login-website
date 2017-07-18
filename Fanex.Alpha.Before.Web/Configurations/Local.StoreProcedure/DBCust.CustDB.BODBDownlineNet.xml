@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Functions>
+<Functions SiteId="105" SiteName="Alpha">
   <Function Name="Login">
     <Setting Key="Age_LoginClaimDownline" SpName="Age_LoginClaimDownline" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
     <Setting Key="Age_LoginVerifyDownline" SpName="Age_LoginVerifyDownline" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
