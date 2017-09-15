@@ -307,6 +307,9 @@
     <Content Include="assets\scripts\login\captcha.js" />
     <Content Include="assets\scripts\login\resources.js" />
     <Content Include="assets\scripts\um\um.js" />
+    <Content Include="assets\styles\images\bg-block.png" />
+    <Content Include="assets\styles\images\block-bottom.png" />
+    <Content Include="assets\styles\images\block-top.png" />
     <Content Include="assets\styles\images\crossword.png" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\sprites2.png" />
@@ -613,6 +616,8 @@
     <Content Include="assets\styles\abstracts\_variables-event2.scss" />
     <Content Include="assets\styles\abstracts\_variables2.scss" />
     <Content Include="assets\styles\pages\um.scss" />
+    <Content Include="assets\styles\abstracts\_variables3.scss" />
+    <Content Include="assets\styles\themes\default3.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
