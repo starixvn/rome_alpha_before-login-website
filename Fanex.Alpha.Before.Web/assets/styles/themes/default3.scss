@@ -1,4 +1,4 @@
-﻿@import '../abstracts/_variables.scss';
+﻿@import '../abstracts/_variables3.scss';
 @import '../abstracts/_mixins.scss';
 
 html, body {
@@ -98,7 +98,7 @@ input[type="checkbox"], input[type="radio"] {
 
 .block-login {    
     @extend %block;
-    background: url(../images/bg-block.png) no-repeat center center;
+    background: url(../images/block3-bg.png) no-repeat center center;
     padding: 60px 92px 77px 117px;
     
     .title {        
@@ -228,7 +228,7 @@ input[type="checkbox"], input[type="radio"] {
         position: absolute;
         top: -56px;
         right: -9px;
-        background: url(../images/block-top.png) no-repeat;
+        background: url(../images/block3-top.png) no-repeat;
         content: '';
         width: 118px;
         height: 96px;
@@ -238,7 +238,7 @@ input[type="checkbox"], input[type="radio"] {
         position: absolute;
         bottom: -15px;
         left: -38px;
-        background: url(../images/block-bottom.png) no-repeat;
+        background: url(../images/block3-bottom.png) no-repeat;
         content: '';
         width: 91px;
         height: 74px;

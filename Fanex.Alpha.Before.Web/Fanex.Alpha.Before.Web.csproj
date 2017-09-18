@@ -292,6 +292,10 @@
     <Content Include="assets\bundles\themes\um2.min.css">
       <DependentUpon>um2.css</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\themes\um3.css" />
+    <Content Include="assets\bundles\themes\um3.min.css">
+      <DependentUpon>um3.css</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\um2.js" />
     <Content Include="assets\bundles\um2.min.js">
       <DependentUpon>um2.js</DependentUpon>
@@ -307,12 +311,13 @@
     <Content Include="assets\scripts\login\captcha.js" />
     <Content Include="assets\scripts\login\resources.js" />
     <Content Include="assets\scripts\um\um.js" />
-    <Content Include="assets\styles\images\bg-block.png" />
-    <Content Include="assets\styles\images\block-bottom.png" />
-    <Content Include="assets\styles\images\block-top.png" />
+    <Content Include="assets\styles\images\block3-bg.png" />
+    <Content Include="assets\styles\images\block3-bottom.png" />
+    <Content Include="assets\styles\images\block3-top.png" />
     <Content Include="assets\styles\images\crossword.png" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\sprites2.png" />
+    <Content Include="assets\styles\images\um3-bg.png" />
     <Content Include="assets\styles\pages\um.css">
       <DependentUpon>um.scss</DependentUpon>
     </Content>
@@ -324,6 +329,12 @@
     </Content>
     <Content Include="assets\styles\pages\um2.min.css">
       <DependentUpon>um2.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\um3.css">
+      <DependentUpon>um3.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\um3.min.css">
+      <DependentUpon>um3.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\themes\default.css">
       <DependentUpon>default.scss</DependentUpon>
@@ -621,6 +632,7 @@
     <Content Include="assets\styles\pages\um.scss" />
     <Content Include="assets\styles\abstracts\_variables3.scss" />
     <Content Include="assets\styles\themes\default3.scss" />
+    <Content Include="assets\styles\pages\um3.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -655,6 +667,7 @@
     <Content Include="assets\styles\pages\um2.scss" />
     <Content Include="Views\Common\UnderMaintenance\Index.cshtml" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.ConnectionStrings.config" />
+    <Content Include="Views\Common\UnderMaintenance\Index3.cshtml" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.Web.config">

@@ -47,6 +47,13 @@
       "assets/styles/pages/um2.css"
     ]
   },
+   {
+    "outputFileName": "assets/bundles/themes/um3.css",
+    "inputFiles": [
+      "assets/scripts/libs/flipclock/flipclock.css",
+      "assets/styles/pages/um3.css"
+    ]
+  },
   {
     "outputFileName": "assets/bundles/themes/um.css",
     "inputFiles": [
