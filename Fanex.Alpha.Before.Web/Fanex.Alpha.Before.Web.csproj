@@ -356,6 +356,9 @@
     <Content Include="compilerconfig2.json">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
+    <Content Include="compilerconfig3.json">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </Content>
     <Content Include="Configurations\Local.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\Master.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\RobotSpNames.xml" />
@@ -651,6 +654,15 @@
     <Content Include="Views\Shared\GoogleAnalytic.cshtml" />
     <Content Include="assets\styles\pages\um2.scss" />
     <Content Include="Views\Common\UnderMaintenance\Index.cshtml" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.Web.Setting.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
