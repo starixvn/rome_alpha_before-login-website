@@ -11,7 +11,7 @@ body {
     font-size: $font-size + 2;
     background-color: $bg-color;
     margin: 0;
-    padding-top: 10%;
+    padding-top: 7%;
 }
 
 input, button {
@@ -28,7 +28,7 @@ input[type="checkbox"], input[type="radio"] {
 
 // icons
 %icon {
-    background: url(../images/sprites.png) no-repeat;
+    background: url(../images/sprites3.png) no-repeat;
     display: inline-block;
 }
 
@@ -91,13 +91,13 @@ input[type="checkbox"], input[type="radio"] {
 %block {
     margin: auto;
     max-width: 600px;
-    width: 528px;    
-    min-height: 577px;
+    width: 528px; 
     @include box-sizing;
 }
 
 .block-login {    
     @extend %block;
+    min-height: 577px;
     background: url(../images/block3-bg.png) no-repeat center center;
     padding: 60px 92px 77px 117px;
     
@@ -117,7 +117,7 @@ input[type="checkbox"], input[type="radio"] {
         width: 100%;        
         border-bottom: 1px solid $border-color;
         height: 36px;
-        padding: 8px 0 4px 28px;
+        padding: 8px 24px 4px 0;
         color: $text-box-color;
         @include border-radius(0);       
 
@@ -147,7 +147,7 @@ input[type="checkbox"], input[type="radio"] {
 
         .icon-user, .icon-lock {
             position: absolute;
-            left: 0;
+            right: 0;
         }
 
         .icon-user {
@@ -284,6 +284,7 @@ input[type="checkbox"], input[type="radio"] {
     margin-top: 16px;
     padding-left: 24px;
     position: relative;
+    color: #2e6dfb;
 
     &:before {
         @extend %icon;
@@ -293,7 +294,7 @@ input[type="checkbox"], input[type="radio"] {
         width: 16px;
         position: absolute;
         left: 0;
-        top: 2px;        
+        top: 2px;     
     }
 }
 
@@ -309,6 +310,7 @@ input[type="checkbox"], input[type="radio"] {
         width: 100%;
         background: none;
         padding: 0;
+        min-height: initial;
 
         .rowlg {
             margin-bottom: 20px;

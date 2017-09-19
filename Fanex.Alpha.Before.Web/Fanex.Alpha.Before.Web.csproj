@@ -280,6 +280,10 @@
     <Content Include="assets\bundles\themes\default.min.css">
       <DependentUpon>default.css</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\themes\error3.css" />
+    <Content Include="assets\bundles\themes\error3.min.css">
+      <DependentUpon>error3.css</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\themes\event.css" />
     <Content Include="assets\bundles\themes\event.min.css">
       <DependentUpon>event.css</DependentUpon>
@@ -315,9 +319,17 @@
     <Content Include="assets\styles\images\block3-bottom.png" />
     <Content Include="assets\styles\images\block3-top.png" />
     <Content Include="assets\styles\images\crossword.png" />
+    <Content Include="assets\styles\images\error3-bg.png" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\sprites2.png" />
+    <Content Include="assets\styles\images\sprites3.png" />
     <Content Include="assets\styles\images\um3-bg.png" />
+    <Content Include="assets\styles\pages\error3.css">
+      <DependentUpon>error3.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\error3.min.css">
+      <DependentUpon>error3.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\um.css">
       <DependentUpon>um.scss</DependentUpon>
     </Content>
@@ -633,6 +645,7 @@
     <Content Include="assets\styles\abstracts\_variables3.scss" />
     <Content Include="assets\styles\themes\default3.scss" />
     <Content Include="assets\styles\pages\um3.scss" />
+    <Content Include="assets\styles\pages\error3.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -676,6 +689,7 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.Web.Setting.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Views\Common\ErrorPage\Index3.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
