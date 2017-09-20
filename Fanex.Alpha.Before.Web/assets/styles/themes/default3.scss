@@ -127,6 +127,7 @@ input[type="checkbox"], input[type="radio"] {
         height: 40px;
         padding: 10px 24px 10px 10px;
         color: $text-box-color;
+        font-size: $font-size + 1;
          -webkit-appearance: none;
         @include border-radius(0); 
 
@@ -156,7 +157,7 @@ input[type="checkbox"], input[type="radio"] {
     }
 
     .checkbox {
-        font-size: $font-size + 1;
+        font-size: $font-size;
         color: #9da5a5;
     }
 
@@ -269,9 +270,9 @@ input[type="checkbox"], input[type="radio"] {
 .form-login {
     position: relative;   
     width: 320px;    
-    padding: 55px 30px 70px;
+    padding: 65px 30px 70px;
     background-color: $block-bg;
-    min-height: 484px;
+    min-height: 440px;
     
     @include box-sizing;
     @include box-shadow-multiple("0 0 50px 0 rgba(0,0,0,0.42)");
@@ -282,17 +283,17 @@ input[type="checkbox"], input[type="radio"] {
         right: -9px;
         background: url(../images/block3-top.png) no-repeat;
         content: '';
-        width: 118px;
-        height: 96px;
+        width: 119px;
+        height: 97px;
     }
 
     &:after {
         position: absolute;
-        bottom: -15px;
+        bottom: -17px;
         left: -38px;
         background: url(../images/block3-bottom.png) no-repeat;
         content: '';
-        width: 91px;
+        width: 87px;
         height: 74px;
     }
 }
