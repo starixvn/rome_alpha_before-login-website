@@ -1,6 +1,7 @@
 ﻿@import '../abstracts/_variables3.scss';
 @import '../abstracts/_mixins.scss';
 
+
 html, body {
   height: 100%;
   width: 100%;
@@ -101,28 +102,36 @@ input[type="checkbox"], input[type="radio"] {
     background: url(../images/block3-bg.png) no-repeat center center;
     padding: 60px 92px 77px 117px;
     
-    .title {        
-        margin-top: 12px;
-        margin-bottom: 25px;
-        float: left;
-        font-weight: bold;
-        font-size: $font-size + 3;
-        color: $text-color;
-        text-transform: uppercase;
+    .title {       
+        display: none;        
+    }
+
+    ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+      color: $text-box-color;
+    }
+    ::-moz-placeholder { /* Firefox 19+ */
+      color: $text-box-color;
+    }
+    :-ms-input-placeholder { /* IE 10+ */
+      color: $text-box-color;
+    }
+    :-moz-placeholder { /* Firefox 18- */
+      color: $text-box-color;
     }
 
     .txt {
         border: none;
         outline: none;
         width: 100%;        
-        border-bottom: 1px solid $border-color;
-        height: 36px;
-        padding: 8px 24px 4px 0;
+        border: 1px solid $border-color;
+        height: 40px;
+        padding: 10px 24px 10px 10px;
         color: $text-box-color;
-        @include border-radius(0);       
+         -webkit-appearance: none;
+        @include border-radius(0); 
 
         &:focus {
-            border-bottom-color: $border-color-dark;
+            border-color: $border-color-dark;
             color: $text-box-color-focus;
 
             + .icon-user {
@@ -135,19 +144,30 @@ input[type="checkbox"], input[type="radio"] {
         }
     }
 
+    .txt.txt-validation {
+        float: left;
+        width: calc(100% - 145px);
+        height: 32px;
+    }
+
     .list-button {
         padding-top: 20px;
         text-align: center;
     }
 
+    .checkbox {
+        font-size: $font-size + 1;
+        color: #9da5a5;
+    }
+
     .rowlg {
         margin-bottom: 15px;
         position: relative;
-        clear: both;
+        clear: both;        
 
         .icon-user, .icon-lock {
             position: absolute;
-            right: 0;
+            right: 10px;
         }
 
         .icon-user {
@@ -162,29 +182,25 @@ input[type="checkbox"], input[type="radio"] {
             display: table;
             width: 100%;
 
-            .codeCaptcha {
-                position: relative;
-                width: 72px;
+            .codeCaptcha {    
+                position: relative; 
+                top: 1px;          
+                width: 100px;
             }
 
-            .codeCaptcha, .action-refresh, .txt-validation {
-                display: table-cell;
-                vertical-align: middle;
+            .codeCaptcha, .action-refresh {                               
+                float: right;
             }
 
-            .action-refresh {
+            .action-refresh {                
                 padding: 0 10px;
                 width: 40px;
 
                 .icon-refresh {
                     position: relative;
-                    top: 4px;
+                    top: 8px;
                 }
-            }
-
-            .txt-validation {
-                padding-left: 0;
-            }          
+            }        
         }
     }
 
@@ -214,12 +230,48 @@ input[type="checkbox"], input[type="radio"] {
     }
 }
 
+.checkbox {
+    input[type='checkbox'] {
+      height: 18px;
+      width: 18px;
+      cursor: pointer;
+      margin-right: 8px;
+      float: left;
+    }
+
+    input[type='checkbox']:after {
+      @extend %icon;    
+      content: "";  
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      padding: 0 2px;
+      height: 18px;
+      width: 18px;
+      border: 1px solid $border-color;
+      display: block;            
+      pointer-events: none;
+      font-size: $font-size - 2;
+      vertical-align: middle;
+      color: #fff;
+      transition: .25s all ease-in-out;
+      background-color: white;
+      background-position: -55px -82px;
+    }
+
+    input[type='checkbox']:checked:after {
+         background-image: none;
+         transition: .25s all ease-in-out;
+    }  
+}
+
+
 .form-login {
-    position: relative;    
-    max-width: 360px;
+    position: relative;   
     width: 320px;    
-    padding: 60px 30px 90px;
+    padding: 55px 30px 70px;
     background-color: $block-bg;
+    min-height: 484px;
     
     @include box-sizing;
     @include box-shadow-multiple("0 0 50px 0 rgba(0,0,0,0.42)");
@@ -276,6 +328,8 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 .msg-error {
+    padding-top: 8px;
+    height: 30px;
     color: $msg-error-color;
 }
 
@@ -316,6 +370,7 @@ input[type="checkbox"], input[type="radio"] {
             margin-bottom: 20px;
 
             &.msg-error {
+                height: auto;
                 margin: 14px 0 8px;
             }
         }
@@ -323,10 +378,6 @@ input[type="checkbox"], input[type="radio"] {
         .box-lang {
             padding-top: 8px;
             padding-bottom: 4px;
-        }
-
-        .title {
-            margin: 18px 0 12px;
         }
 
         .list-button {
@@ -340,8 +391,22 @@ input[type="checkbox"], input[type="radio"] {
 
        @include box-shadow-multiple(none);
 
-       &:before, &:after {
+       &:after {
            display: none;
+       }
+
+       &:before {
+           background-image: url(../images/login3-logo.png);
+           width: 98px;
+           height: 104px;
+           left: 50%;
+           margin-left: -49px;
+           right: auto;
+           top: 64px;
+       }
+
+       .msg-error {
+           padding-top: 170px;
        }
    }
 
@@ -387,11 +452,6 @@ input[type="checkbox"], input[type="radio"] {
             &.msg-error {
                 margin: 12px 0 4px;
             }
-        }
-
-        .title {
-            margin: 4px 0 4px;
-            font-size: $font-size + 7;
         }
 
         .list-button {

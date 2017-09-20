@@ -1,12 +1,12 @@
 ﻿$font-size: 13px;
-$font-family: Arial, Tahoma,helvetica,sans-serif;
-$text-color: #333;
-$border-color: #c4c4c4;
+$font-family: Roboto, Arial, Tahoma,helvetica,sans-serif;
+$text-color: #9da5a5;
+$border-color: #b6cccc;
 $border-color-dark: #53bab3;
 $bg-color: #fff;
 $block-bg: #fff;
-$text-box-color: #888;
-$text-box-color-focus: #666;
+$text-box-color: #b1d1d1;
+$text-box-color-focus: #53bab3;
 $link-color: #045ace;
 $link-hover-color: #F60;
 
@@ -27,4 +27,27 @@ $msg-warning-icon-color: #f08708;
 $msg-error-bg: #fadddd;
 $msg-error-color: #fe0000;
 $msg-error-border: #ef2d2d;
+
+@font-face {
+    font-family: 'Roboto';
+    src:    url('../fonts/roboto/Roboto-Light.woff2') format("woff2");
+    src:   url('../fonts/roboto/Roboto-Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src:    url('../fonts/roboto/Roboto-Medium.woff2') format("woff2");
+    src:    url('../fonts/roboto/Roboto-Medium.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src:    url('../fonts/roboto/Roboto-Italic.ttf') format("truetype");
+    font-weight: normal;
+    font-style: italic;
+}
 
