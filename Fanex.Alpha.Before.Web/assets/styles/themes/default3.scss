@@ -256,12 +256,13 @@ input[type="checkbox"], input[type="radio"] {
       vertical-align: middle;
       color: #fff;
       transition: .25s all ease-in-out;
-      background-color: white;
+      background-image: none;
+      background-color: #fff;
       background-position: -55px -82px;
     }
 
     input[type='checkbox']:checked:after {
-         background-image: none;
+         background-image: url(../images/sprites3.png);
          transition: .25s all ease-in-out;
     }  
 }
