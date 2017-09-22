@@ -126,7 +126,7 @@ input[type="checkbox"], input[type="radio"] {
         border: 1px solid $border-color;
         height: 40px;
         padding: 10px 24px 10px 10px;
-        color: $text-box-color;
+        color: $text-box-color-focus;
         font-size: $font-size + 1;
          -webkit-appearance: none;
         @include border-radius(0); 
