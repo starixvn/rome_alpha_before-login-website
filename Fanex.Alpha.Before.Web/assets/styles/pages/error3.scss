@@ -24,6 +24,8 @@ body {
 
     @media only screen and (min-device-width: 767px) {
         font-size: 18px;
+        padding-left: 30px;
+        padding-right: 30px;
     }
 }
 
@@ -33,24 +35,32 @@ body {
     text-align: center;
 
     .img {
-        width: 80%;
-        
-        @media only screen and (max-device-width: 767px) and (orientation : portrait) {
-           width: 60%;
+        width: 70%;
+
+        @media only screen and (max-device-width: 1024px) and (orientation : landscape) {
+           width: 40%;
         }
 
         @media only screen and (max-device-width: 767px) and (orientation : landscape) {
+           width: 40%;
+        }
+
+        @media only screen and (max-device-width: 374px) and (orientation: landscape) {  
            width: 35%;
         }
     }
 
-    @media only screen and (min-device-width: 1200px) {
+    @media only screen and (min-device-width: 768px) {
         padding-top: 120px;
         max-width: 800px;
     }
 
-    @media only screen and (max-device-width: 767px) {
+    @media only screen and (max-device-width: 767px) and (orientation: landscape) {
         padding-top: 20px;
+    }
+
+     @media only screen and (max-device-width: 767px) and (orientation: portrait) {
+        padding-top: 40px;
     }
 }
 
@@ -73,10 +83,10 @@ body {
 }
 
 .caption {
-    margin-top: 40px;
+    margin-top: 30px;
     margin-bottom: 0;
 
     @media only screen and (max-device-width: 767px) {
-        margin-top: 5px;
+        margin-top: 10px;
     }
 }

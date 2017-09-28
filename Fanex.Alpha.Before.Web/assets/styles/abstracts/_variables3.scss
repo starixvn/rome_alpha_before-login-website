@@ -1,18 +1,19 @@
 ﻿$font-size: 13px;
 $font-family: Roboto, Arial, Tahoma,helvetica,sans-serif;
-$text-color: #9da5a5;
-$border-color: #b6cccc;
-$border-color-dark: #53bab3;
+$text-color: #333;
+$title-color: #000;
+$border-color: #c4c4c4;
+$border-color-dark: #1a3e60;
 $bg-color: #fff;
 $block-bg: #fff;
-$text-box-color: #b1d1d1;
-$text-box-color-focus: #53bab3;
+$text-box-color: #333;
+$text-box-color-focus: #1a3e60;
 $link-color: #045ace;
 $link-hover-color: #F60;
 
-$btn-bg: #53bab3;
+$btn-bg: #1a3e60;
 $btn-color: #fff;
-$btn-bg-hover: darken(#53bab3, 5%);
+$btn-bg-hover: darken(#1a3e60, 5%);
 $btn-color-hover: #fff;
 
 $msg-success-bg: #eefbe9;
@@ -28,10 +29,11 @@ $msg-error-bg: #fadddd;
 $msg-error-color: #fe0000;
 $msg-error-border: #ef2d2d;
 
+
 @font-face {
     font-family: 'Roboto';
-    src:    url('../fonts/roboto/Roboto-Light.woff2') format("woff2");
-    src:   url('../fonts/roboto/Roboto-Light.woff') format('woff');
+    src:    url('../fonts/roboto/Roboto-Regular.woff2') format("woff2");
+    src:   url('../fonts/roboto/Roboto-Regular.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -50,4 +52,6 @@ $msg-error-border: #ef2d2d;
     font-weight: normal;
     font-style: italic;
 }
+
+
 

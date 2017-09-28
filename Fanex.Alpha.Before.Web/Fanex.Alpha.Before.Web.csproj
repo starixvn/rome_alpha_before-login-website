@@ -315,12 +315,8 @@
     <Content Include="assets\scripts\login\captcha.js" />
     <Content Include="assets\scripts\login\resources.js" />
     <Content Include="assets\scripts\um\um.js" />
-    <Content Include="assets\styles\images\block3-bg.png" />
-    <Content Include="assets\styles\images\block3-bottom.png" />
-    <Content Include="assets\styles\images\block3-top.png" />
     <Content Include="assets\styles\images\crossword.png" />
     <Content Include="assets\styles\images\error3-bg.png" />
-    <Content Include="assets\styles\images\login3-logo.png" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\sprites2.png" />
     <Content Include="assets\styles\images\sprites3.png" />
