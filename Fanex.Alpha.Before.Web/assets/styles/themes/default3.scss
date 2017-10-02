@@ -233,10 +233,10 @@ input[type="checkbox"], input[type="radio"] {
 
     &:before {
         @extend %icon;
-        background-position: -29px -83px;
+        background-position: -28px -82px;
         content: '';
-        height: 16px;
-        width: 16px;
+        height: 18px;
+        width: 18px;
         position: absolute;
         left: 0;
         top: 2px;        
