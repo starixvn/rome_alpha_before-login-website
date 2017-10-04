@@ -280,6 +280,10 @@
     <Content Include="assets\bundles\themes\default.min.css">
       <DependentUpon>default.css</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\themes\error3.css" />
+    <Content Include="assets\bundles\themes\error3.min.css">
+      <DependentUpon>error3.css</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\themes\event.css" />
     <Content Include="assets\bundles\themes\event.min.css">
       <DependentUpon>event.css</DependentUpon>
@@ -291,6 +295,10 @@
     <Content Include="assets\bundles\themes\um2.css" />
     <Content Include="assets\bundles\themes\um2.min.css">
       <DependentUpon>um2.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\themes\um3.css" />
+    <Content Include="assets\bundles\themes\um3.min.css">
+      <DependentUpon>um3.css</DependentUpon>
     </Content>
     <Content Include="assets\bundles\um2.js" />
     <Content Include="assets\bundles\um2.min.js">
@@ -308,8 +316,17 @@
     <Content Include="assets\scripts\login\resources.js" />
     <Content Include="assets\scripts\um\um.js" />
     <Content Include="assets\styles\images\crossword.png" />
+    <Content Include="assets\styles\images\error3-bg.png" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\sprites2.png" />
+    <Content Include="assets\styles\images\sprites3.png" />
+    <Content Include="assets\styles\images\um3-bg.png" />
+    <Content Include="assets\styles\pages\error3.css">
+      <DependentUpon>error3.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\error3.min.css">
+      <DependentUpon>error3.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\um.css">
       <DependentUpon>um.scss</DependentUpon>
     </Content>
@@ -321,6 +338,12 @@
     </Content>
     <Content Include="assets\styles\pages\um2.min.css">
       <DependentUpon>um2.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\um3.css">
+      <DependentUpon>um3.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\um3.min.css">
+      <DependentUpon>um3.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\themes\default.css">
       <DependentUpon>default.scss</DependentUpon>
@@ -351,6 +374,9 @@
       <DependentUpon>bootstrap.css</DependentUpon>
     </Content>
     <Content Include="compilerconfig2.json">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </Content>
+    <Content Include="compilerconfig3.json">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
     <Content Include="Configurations\Local.StoreProcedure\RobotSpNames.xml" />
@@ -613,6 +639,10 @@
     <Content Include="assets\styles\abstracts\_variables-event2.scss" />
     <Content Include="assets\styles\abstracts\_variables2.scss" />
     <Content Include="assets\styles\pages\um.scss" />
+    <Content Include="assets\styles\abstracts\_variables3.scss" />
+    <Content Include="assets\styles\themes\default3.scss" />
+    <Content Include="assets\styles\pages\um3.scss" />
+    <Content Include="assets\styles\pages\error3.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -646,6 +676,37 @@
     <Content Include="Views\Shared\GoogleAnalytic.cshtml" />
     <Content Include="assets\styles\pages\um2.scss" />
     <Content Include="Views\Common\UnderMaintenance\Index.cshtml" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.ConnectionStrings.config" />
+    <Content Include="Views\Common\UnderMaintenance\Index3.cshtml" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.Web.Setting.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Common\ErrorPage\Index3.cshtml" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT3.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT3.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT3.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT3.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT3.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT3.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT3.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT3.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT3.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT3.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL3.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL3.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL3.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL3.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL3.Web.Setting.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,91 @@
+﻿@font-face {
+  font-family: 'Roboto';  
+  src: url('../fonts/roboto/Roboto-Regular.woff2') format('woff2'), 
+       url('../fonts/roboto/Roboto-Regular.woff') format('woff'),
+       url('../fonts/roboto/Roboto-Regular.ttf')  format('truetype'),
+}
+
+@font-face {
+  font-family: 'Roboto';  
+  src: url('../fonts/roboto/Roboto-Bold.woff2') format('woff2'), 
+       url('../fonts/roboto/Roboto-Bold.woff') format('woff'),
+       url('../fonts/roboto/Roboto-Bold.ttf')  format('truetype');
+  font-weight: bold;
+}
+
+
+body {
+    font-family: Roboto, sans-serif;    
+    background: #fff;
+    color: #333;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+
+    @media only screen and (min-device-width: 767px) {
+        font-size: 18px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+
+    .img {
+        max-width: 100%;
+
+        @media only screen and (max-device-width: 1024px) and (orientation : landscape) {
+           width: 40%;
+        }
+
+        @media only screen and (max-device-width: 767px) and (orientation : landscape) {
+           width: 40%;
+        }
+
+        @media only screen and (max-device-width: 374px) and (orientation: landscape) {  
+           width: 35%;
+        }
+    }
+
+    @media only screen and (min-device-width: 768px) {
+        padding-top: 80px;
+    }
+
+    @media only screen and (max-device-width: 767px) and (orientation: landscape) {
+        padding-top: 20px;
+    }
+
+     @media only screen and (max-device-width: 767px) and (orientation: portrait) {
+        padding-top: 40px;
+    }
+}
+
+.title {
+    margin-top: 79px;
+    color: #E44D1E;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+
+    @media only screen and (max-device-width: 767px) {
+        margin-top: 20px;
+        font-size: 20px;
+    }
+
+    @media only screen and (max-device-width: 767px) and (orientation: landscape) {
+       font-size: 18px;
+    }
+}
+
+.caption {
+    margin-top: 30px;
+    margin-bottom: 0;
+
+    @media only screen and (max-device-width: 767px) {
+        margin-top: 10px;
+    }
+}

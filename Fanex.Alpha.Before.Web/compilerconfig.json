@@ -22,5 +22,13 @@
   {
     "outputFile": "assets/styles/pages/um2.css",
     "inputFile": "assets/styles/pages/um2.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/um3.css",
+    "inputFile": "assets/styles/pages/um3.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/error3.css",
+    "inputFile": "assets/styles/pages/error3.scss"
   }
 ]

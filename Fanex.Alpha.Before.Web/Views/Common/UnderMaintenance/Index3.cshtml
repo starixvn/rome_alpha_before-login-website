@@ -1,0 +1,40 @@
+﻿@model UnderMaintenanceModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>UM Page</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/assets/bundles/themes/um3.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <img src="~/assets/styles/images/um3-bg.png" title="" alt="" class="img" />
+        <div class="title">Under Maintenance</div>
+        <div class="caption">
+            <p>We are having regular server maintenance.</p>
+            <p>The website is currently unavailable <span class="time"> from @Model.FromTimeText until @Model.ToTimeText (GMT +8).</span></p>
+            <p> Please come back later.</p>
+        </div>
+        <div class="caption">
+            <p>本公司將於 <span class="time"> @Model.FromTimeText 至 @Model.ToTimeText (GMT +8) </span>對服務器進行例行維護。</p>
+            <p>期間所有的網頁將無法登入。</p>
+            <p>請您稍候再來。</p>
+        </div>
+    </div>
+    @if (Model.ShowCountDown())
+    {
+        <script type="text/javascript">
+            setTimeout(function () {
+                window.location.href = window.location.href;
+            }, @Model.CountdownTime.TotalMilliseconds);
+        </script>
+    }
+</body>
+</html>
+

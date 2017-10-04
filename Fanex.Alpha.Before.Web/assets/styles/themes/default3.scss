@@ -1,0 +1,400 @@
+﻿@import '../abstracts/_variables3.scss';
+@import '../abstracts/_mixins.scss';
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+    font-family: $font-family;
+    font-size: $font-size;
+    background-color: $bg-color;
+    margin: 0;
+    padding-top: 10%;
+}
+
+input, button {
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    position: relative;
+    top: 1px;
+    margin-right: 4px;
+}
+
+// icons
+%icon {
+    background: url(../images/sprites3.png) no-repeat;
+    display: inline-block;
+}
+
+.icon-refresh {
+    @extend %icon;
+    background-position: -29px -2px;
+    cursor: pointer;
+    height: 16px;
+    width: 16px;
+
+    &:hover {
+        background-position: -29px -28px;
+    }
+}
+
+.flag {
+    @extend %icon;
+    width: 23px;
+    height: 16px;
+    position: relative;
+    top: 4px;
+    margin-right: 4px;
+
+    &.flag-en {
+        background-position: 0 0px;
+    }
+    &.flag-cn {
+        background-position: 0 -17px;
+    }
+    &.flag-tw {
+        background-position: 0 -34px;
+    }
+    &.flag-jp {
+        background-position: 0 -51px;
+    }
+    &.flag-th {
+        background-position: 0 -68px;
+    }
+    &.flag-kr {
+        background-position: 0 -85px;
+    }
+    &.flag-vn {
+        background-position: 0 -102px;
+    }
+}
+%block {
+    margin: auto;
+    width: 320px;    
+    @include box-sizing;
+}
+
+.block-login {    
+    @extend %block;
+    background: $block-bg;
+    padding: 40px 30px;
+    min-height: 440px;
+    @include box-shadow-multiple('0 0 60px rgba(0,0,0,.3)');
+    
+    .title {
+        margin-top: 12px;
+        margin-bottom: 0;
+        float: left;
+        font-size: $font-size + 3;
+        font-weight: bold;
+        color: $title-color;
+        text-transform: uppercase;
+    }
+
+    .txt {
+        color: $text-box-color-focus;
+        height: 40px;
+        width: 100%;
+        margin-bottom: 8px;
+        padding: 10px;
+        background-color: transparent;
+        border: 1px solid $border-color; 
+        -webkit-appearance: none;   
+        @include border-radius(0);
+
+        &:focus {
+            border-color: $border-color-dark;
+            color: $text-box-color-focus;
+        }
+    }
+
+    .lbl {
+        display: block;
+        padding-bottom: 8px;
+        color: #1b3f5f;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+    .list-button {
+        padding-top: 8px;
+        text-align: center;
+    }
+
+    .rowlg {
+        margin-bottom: 15px;
+        position: relative;
+        clear: both;
+
+        &.group-captcha {
+            display: table;
+            width: 100%;
+
+            .codeCaptcha {
+                position: relative;
+                width: 72px;
+            }
+
+            .codeCaptcha, .action-refresh, .txt-validation {
+                display: table-cell;
+                vertical-align: middle;
+            }
+
+            .action-refresh {
+                padding: 0 10px;
+                width: 40px;
+
+                .icon-refresh {
+                    position: relative;
+                    top: 4px;
+                }
+            }
+
+            .txt-validation {
+                padding: 10px;
+            }          
+        }
+    }
+
+    .btnLogin {
+        width: 100%;
+        background-color: $btn-bg;
+        color: $btn-color;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        text-transform: uppercase;
+        @include border-radius(0);
+
+        &:hover {
+            background-color: $btn-bg-hover;
+        }
+
+        &[disabled], .disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            &:hover {
+                background-color: $btn-bg;
+            }
+        }
+    }
+
+    .msg-error {
+        color: $msg-error-color;
+        min-height: 30px;
+        padding-top: 12px;
+    }
+}
+
+.box-lang {
+    float: right;
+
+    .dropdown-menu {
+        left: auto;
+        right: 0;
+
+        > li > a {
+            padding: 4px 16px;
+        }
+    }
+
+    .btn:active, .btn.active {
+        @include box-shadow-multiple(none);
+    }
+
+    .dropdown {
+        float: right;        
+        .dropdown-menu {
+            @include border-radius(1px);
+            @include box-shadow-multiple('0px 2px 2px rgba(0, 0, 0, 0.3)');
+
+            li a {
+                padding-bottom: 6px;
+                padding-top: 6px;
+            }
+        }
+    }
+}
+
+.block-info {  
+    @extend %block; 
+    margin-top: 16px;
+    padding-left: 24px;
+    position: relative;
+    color: #2ca7ef;
+
+    &:before {
+        @extend %icon;
+        background-position: -28px -82px;
+        content: '';
+        height: 18px;
+        width: 18px;
+        position: absolute;
+        left: 0;
+        top: 2px;        
+    }
+}
+
+.checkbox {
+    input[type='checkbox'] {
+      height: 18px;
+      width: 18px;
+      cursor: pointer;
+      margin-right: 8px;
+      float: left;
+    }
+
+    input[type='checkbox']:after {
+      @extend %icon;    
+      content: "";  
+      position: absolute;
+      top: -2px;
+      left: -1px;
+      padding: 0 2px;
+      height: 19px;
+      width: 19px;
+      border: 1px solid #8d9faf;
+      display: block;            
+      pointer-events: none;
+      font-size: $font-size - 2;
+      vertical-align: middle;
+      color: #fff;
+      transition: .25s all ease-in-out;
+      background-image: none;
+      background-color: #fff;
+      background-position: -55px -82px;
+    }
+
+    input[type='checkbox']:checked:after {
+         background-image: url(../images/sprites3.png);
+         transition: .25s all ease-in-out;
+    }  
+}
+
+@media only screen and (max-device-width: 767px)
+{  
+   body {
+      font-size: $font-size + 3;
+      padding-top: 5%;
+      background-color: $block-bg;
+   }
+
+   .block-login {
+        padding: 0 30px;
+        width: 100%;
+        @include box-shadow-multiple(none);
+
+        .rowlg {
+            margin-bottom: 20px;
+
+            &.msg-error {
+               min-height: initial;
+               padding-top: 12px;
+            }
+        }
+
+        .title {
+            font-size: $font-size + 7;
+            margin-top: 10px;
+        }
+
+        .list-button {
+            padding-top: 0;
+        }
+    }
+
+   .block-info {
+       padding: 0 30px 8px 54px;
+       width: 100%;
+
+       &:before {
+            left: 30px;   
+            top: 3px;  
+        }
+   }
+
+   .block-warning {
+       position: relative;
+
+       .content {
+           padding: 12px 48px;
+           width: 100%;
+
+           &:before {
+                margin-left: 12px;
+           }
+
+           .icon-close {
+               right: 12px;
+           }
+       }
+   }
+}
+
+@media only screen and (max-device-width: 374px) and (orientation: portrait)
+{  
+   body {
+      font-size: $font-size;
+   }
+
+   .block-login {
+        @include box-shadow-multiple(none);
+
+        .rowlg {
+            margin-bottom: 16px;
+        }
+
+        .title {
+            font-size: $font-size + 7;
+        }
+
+        .list-button {
+            padding-top: 0;
+        }
+    }
+
+   .block-info:before {
+        top: 1px; 
+   }
+}
+
+
+@media only screen and (max-device-width: 374px) and (orientation: landscape)
+{  
+   body {
+      font-size: $font-size;
+      padding-top: 1%;
+   }
+
+   .block-login {
+        @include box-shadow-multiple(none);
+
+        .rowlg {
+            margin-bottom: 12px;
+
+            &.msg-error {
+                padding-top: 4px;
+            }
+        }
+
+        .title {
+            font-size: $font-size + 7;
+        }
+
+        .list-button {
+            padding-top: 0;
+        }
+    }
+
+   .block-info:before {
+        top: 1px; 
+   }
+}
