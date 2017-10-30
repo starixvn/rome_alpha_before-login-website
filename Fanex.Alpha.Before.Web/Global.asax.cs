@@ -8,13 +8,12 @@ namespace Fanex.Alpha.Before.Web.View
 {
     using System;
     using System.Collections.Generic;
-    using System.Web;
     using System.Web.Mvc;
     using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
-    using Infrastructure.Extensions;
-    using Logging;
+    using Logging.Extensions.Database;
+    using Logging.Extensions.Web;
     using ONEbook.UM.Configurations;
     using ONEbook.UM.Models;
 
@@ -69,9 +68,15 @@ namespace Fanex.Alpha.Before.Web.View
 
             MvcHandler.DisableMvcResponseHeader = true;
 
+            var loggingConfiguration = new LoggingConfiguration()
+               .HideSensitiveInfo(GetRegexToHideSensitiveInfo())
+               .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
+
+            ExceptionHandler.UseConfig(loggingConfiguration);
+
             UMClientManager.WhenError((message) =>
             {
-                LogExtension.ExceptionHandler(new UMClientException(message));
+                ExceptionHandler.Handle(new UMClientException(message));
             });
         }
 
@@ -105,16 +110,12 @@ namespace Fanex.Alpha.Before.Web.View
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            Exception ex = Server.GetLastError().GetBaseException();
-            if (ex is HttpException)
+            if (Request.IsLocal)
             {
                 return;
             }
 
-            if (!Request.IsLocal)
-            {
-                LogExtension.ExceptionHandler(ex);
-            }
+            ExceptionHandler.Handle(Server.GetLastError());
         }
 
         protected void Application_PreSendRequestHeaders()
@@ -122,6 +123,20 @@ namespace Fanex.Alpha.Before.Web.View
             Response.Headers.Remove("Server");
             Response.Headers.Remove("X-AspNet-Version");
             Response.Headers.Remove("X-AspNetMvc-Version");
+        }
+
+        private static List<string> GetRegexToHideSensitiveInfo()
+        {
+            var result = new List<string>();
+            var sensitiveInfo = new[] { "password", "txtpassword" };
+
+            foreach (var info in sensitiveInfo)
+            {
+                result.Add($"(?:{info}=)(?<paramValue>[^&|^\\s]+)");
+                result.Add($"(\"{info}\":)(?<paramValue>[^,|^\r]+)");
+            }
+
+            return result;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
 {
     using System;
     using System.Web;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// Session Extension.
@@ -28,7 +29,7 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
@@ -47,7 +48,7 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
                 return default(T);
             }
         }

@@ -15,9 +15,9 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using Fanex.Alpha.Before.Common.Controllers;
     using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
-    using Fanex.Alpha.Before.Infrastructure.Extensions;
     using Fanex.Oneyed.RobotTrap.Handshakes;
     using Fanex.Oneyed.RobotTrap.Repositories;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// TODO: Update summary.
@@ -145,7 +145,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
