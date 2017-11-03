@@ -357,7 +357,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
             catch (ErrorException ex)
             {
-                ExceptionHandler.Handle(ex, TraceEventType.Information);
+                ExceptionHandler.Handle(new Exception(ex.Message, ex), TraceEventType.Information);
             }
         }
 
