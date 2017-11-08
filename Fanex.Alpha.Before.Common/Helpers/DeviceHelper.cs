@@ -8,9 +8,10 @@ namespace Fanex.Alpha.Before.Common.Helpers
 {
     using System;
     using System.Collections;
+    using System.Diagnostics;
     using System.Web;
-    using Fanex.Alpha.Before.Infrastructure.Extensions;
     using Fanex.Common;
+    using Logging.Extensions.Web;
     using Sunplus.Core.Common.IPs;
     using Sunplus.Core.Common.IPs.DAL;
 
@@ -35,7 +36,7 @@ namespace Fanex.Alpha.Before.Common.Helpers
             }
             catch (Exception ex)
             {
-                LogExtension.WriteInfo(ex);
+                ExceptionHandler.Handle(ex, TraceEventType.Information);
             }
 
             try
@@ -60,7 +61,7 @@ namespace Fanex.Alpha.Before.Common.Helpers
             }
             catch (Exception ex)
             {
-                LogExtension.WriteInfo(ex);
+                ExceptionHandler.Handle(ex, TraceEventType.Information);
             }
 
             return requestInfo;
@@ -74,34 +75,34 @@ namespace Fanex.Alpha.Before.Common.Helpers
         {
             // Create a list of all platform
             string[] platformArrays = new[]
-            { 
-                "Windows 3", 
-                "Win16", 
-                "Windows 95", 
-                "Win95", 
-                "Windows 98", 
-                "Win98", 
-                "Windows 2000", 
-                "Windows XP", 
-                "Windows Server 2003", 
-                "Windows Vista", 
-                "Windows NT", 
-                "WinNT", 
-                "Windows ME", 
-                "Open BSD", 
-                "OpenBSD", 
-                "Sun OS", 
-                "SunOS", 
-                "Linux", 
-                "Mac OS", 
-                "Mac_PowerPC", 
-                "Macintosh", 
-                "QNX", 
-                "QNX", 
-                "BeOS", 
-                "BeOS", 
-                "OS/2", 
-                "OS/2" 
+            {
+                "Windows 3",
+                "Win16",
+                "Windows 95",
+                "Win95",
+                "Windows 98",
+                "Win98",
+                "Windows 2000",
+                "Windows XP",
+                "Windows Server 2003",
+                "Windows Vista",
+                "Windows NT",
+                "WinNT",
+                "Windows ME",
+                "Open BSD",
+                "OpenBSD",
+                "Sun OS",
+                "SunOS",
+                "Linux",
+                "Mac OS",
+                "Mac_PowerPC",
+                "Macintosh",
+                "QNX",
+                "QNX",
+                "BeOS",
+                "BeOS",
+                "OS/2",
+                "OS/2"
             };
             HttpContext context = HttpContext.Current;
 

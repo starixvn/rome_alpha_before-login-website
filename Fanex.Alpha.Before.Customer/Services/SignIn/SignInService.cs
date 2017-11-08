@@ -8,6 +8,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 {
     using System;
     using System.Collections;
+    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
@@ -23,6 +24,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using Fanex.Alpha.Before.Infrastructure.Constants;
     using Fanex.Alpha.Before.Infrastructure.Extensions;
     using Fanex.Common;
+    using Logging.Extensions.Web;
     using RSACryptoPad;
     using InfrastructureLanguages = Fanex.Alpha.Before.Infrastructure.Resources;
     using LoginLanguages = Fanex.Alpha.Before.Customer.Resources;
@@ -107,7 +109,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 }
                 catch (Exception ex)
                 {
-                    LogExtension.ExceptionHandler(ex);
+                    ExceptionHandler.Handle(ex);
                 }
 
                 loginResult.Language = LanguageHelper.CheckingLanguageFromCookie();
@@ -122,7 +124,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 loginResult.ErrCode = ErrorCodeConstants.ServerError;
                 loginResult.ErrMsg = Infrastructure.Resources.Labels.Error_Server;
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return loginResult;
@@ -141,10 +143,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
         public SignInResult SignInWithRecaptcha(
-            string username, 
-            string password, 
-            string language, 
-            bool isValidCaptcha, 
+            string username,
+            string password,
+            string language,
+            bool isValidCaptcha,
             string code,
             string deviceId)
         {
@@ -229,7 +231,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 }
                 catch (Exception ex)
                 {
-                    LogExtension.ExceptionHandler(ex);
+                    ExceptionHandler.Handle(ex);
                     signInResult.ErrCode = ErrorCodeConstants.ServerError;
                     signInResult.ErrMsg = string.Empty;
                     return signInResult;
@@ -253,7 +255,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 signInResult.ErrCode = ErrorCodeConstants.ServerError;
                 signInResult.ErrMsg = InfrastructureLanguages.Labels.Error_Server;
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             CacheExtension.Set(this._lastLoginUserNameSessionKey, username);
@@ -328,7 +330,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 signInResult.ErrCode = ErrorCodeConstants.ServerError;
                 signInResult.ErrMsg = InfrastructureLanguages.Labels.Error_Server;
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return signInResult;
@@ -355,7 +357,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
             catch (ErrorException ex)
             {
-                LogExtension.WriteInfo(ex);
+                ExceptionHandler.Handle(new Exception(ex.Message, ex), TraceEventType.Information);
             }
         }
 
@@ -372,7 +374,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return count;
@@ -391,7 +393,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return count;
@@ -413,7 +415,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return date;
@@ -427,7 +429,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
@@ -444,7 +446,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
@@ -456,7 +458,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
@@ -474,7 +476,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
@@ -490,7 +492,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
 
             return string.Empty;
@@ -588,7 +590,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string url = HttpContext.Current.Session["UMToken"] == null
                 ? string.Format("{0}{1}?params={2}", UrlHelper.SiteGroupSetting.AfterUrl, CustomerAppSetting.AfterLoginAuthorizationPage, parameter)
                 : string.Format("{0}{1}?UMToken={2}&params={3}", UrlHelper.SiteGroupSetting.AfterUrl, CustomerAppSetting.AfterLoginAuthorizationPage, HttpContext.Current.Session["UMToken"], parameter);
-            
+
             signInResult.ErrMsg = LoginLanguages.Labels.lblLoginSuccessful;
             signInResult.AfterLoginUrl = url;
             signInResult.UTMS = crossCookieValue;
@@ -607,7 +609,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
             catch (Exception ex)
             {
-                LogExtension.ExceptionHandler(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
     }
