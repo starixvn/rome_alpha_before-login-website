@@ -394,6 +394,8 @@
     </Content>
     <Content Include="Configurations\Local.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\Master.StoreProcedure\RobotSpNames.xml" />
+    <Content Include="Configurations\MNL.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\MNL.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\UAT.StoreProcedure\RobotSpNames.xml" />
     <Content Include="assets\scripts\login\core.js" />
