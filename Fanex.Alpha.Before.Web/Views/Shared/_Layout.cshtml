@@ -1,48 +1,56 @@
-﻿@using CommonAppSetting = Fanex.Alpha.Before.Common.Configurations.AppSetting
-@model Fanex.Alpha.Before.Customer.Models.SignInResult
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="~/assets/styles/vendors-extensions/login/bootstrap-ex.min.css?ver=@CommonAppSetting.Version" rel="stylesheet" />
+@using CommonAppSetting = Fanex.Alpha.Before.Common.Configurations.AppSetting
+@if (Model is HandleErrorInfo)
+{
+    Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(Model.Exception);
+}
+else if (Model.GetType() == typeof(Fanex.Alpha.Before.Customer.Models.SignInResult))
+{
+    var data = Model as Fanex.Alpha.Before.Customer.Models.SignInResult;
 
-    @RenderSection("styles", false)
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Login</title>
+        <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link href="~/assets/styles/vendors-extensions/login/bootstrap-ex.min.css?ver=@CommonAppSetting.Version" rel="stylesheet" />
 
-</head>
-<body>
+        @RenderSection("styles", false)
 
-    <div id="divLoading" style="display: none">
-        <h2>
-            Loading... please wait
-        </h2>
-    </div>
+    </head>
+    <body>
 
-    <div id="mainholder" class="block-login">
-        <form id="formLogin" class="form-login" action="@Url.Content("~/")" method="POST" autocomplete="off">
-            @RenderBody()
-            <input name="code" id="code" type="hidden" value="@Model.Captcha" />
-            <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
-        </form>
-    </div>
-
-    @if (Model.IsChangedPassword)
-    {
-        <div class="block-info">
-            @Model.ChangedPasswordTime
+        <div id="divLoading" style="display: none">
+            <h2>
+                Loading... please wait
+            </h2>
         </div>
-    }
 
-    <script src="~/assets/bundles/login.min.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
+        <div id="mainholder" class="block-login">
+            <form id="formLogin" class="form-login" action="@Url.Content("~/")" method="POST" autocomplete="off">
+                @RenderBody()
+                <input name="code" id="code" type="hidden" value="@Model.Captcha" />
+                <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
+            </form>
+        </div>
 
-    @Html.Partial("FPS", Model)
+        @if (Model.IsChangedPassword)
+        {
+            <div class="block-info">
+                @Model.ChangedPasswordTime
+            </div>
+        }
 
-    @RenderSection("scripts", false)
+        <script src="~/assets/bundles/login.min.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 
-    @Html.Partial("GoogleAnalytic", CommonAppSetting.GoogleAnalyticId)
+        @Html.Partial("FPS", data)
 
-</body>
+        @RenderSection("scripts", false)
+
+        @Html.Partial("GoogleAnalytic", CommonAppSetting.GoogleAnalyticId)
+
+    </body>
 </html>
+}

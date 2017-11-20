@@ -33,7 +33,7 @@ namespace Fanex.Alpha.Before.Common.Controllers
             UnderMainternanceService mainternanceService,
             LimitedCountryAccessService limitedCountryAccessService)
         {
-            _mainternanceService = _mainternanceService ?? new UnderMainternanceService();
+            _mainternanceService = mainternanceService ?? new UnderMainternanceService();
             _limitedCountryAccessService = limitedCountryAccessService ?? new LimitedCountryAccessService();
         }
 
