@@ -442,6 +442,7 @@
     </Content>
     <Content Include="Global.asax" />
     <Content Include="assets\scripts\libs\detecas\detecas-token.min.js" />
+    <Content Include="speedtest.png" />
     <Content Include="Views\Common\ErrorPage\404Error.htm" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\LICENSE.txt" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon-notify.png" />
