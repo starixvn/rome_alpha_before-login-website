@@ -62,6 +62,7 @@ namespace Fanex.Alpha.Before.Web.View
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
 
+            CaptchaUtils.CaptchaManager.StorageProvider = new CookieStorageProvider();
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
             defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
