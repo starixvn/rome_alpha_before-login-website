@@ -137,6 +137,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UAParser, Version=2.1.0.0, Culture=neutral, PublicKeyToken=f7377bf021646069, processorArchitecture=MSIL">
+      <HintPath>..\packages\UAParser.2.1.0.0\lib\net40-Client\UAParser.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
@@ -159,6 +163,10 @@
     <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\LimitedCountryAccessController.cs" />
     <Compile Include="Controllers\OfflineController.cs" />
+    <Compile Include="Criteria\LimitedCountryAccess\GetAllowedAccessIPsCriteria.cs" />
+    <Compile Include="Criteria\LimitedCountryAccess\GetIpRangesByCountryCriteria.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Models\IPRange.cs" />
     <Compile Include="Resources\Labels.ja-JP.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -189,6 +197,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.zh-TW.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\CacheService.cs" />
+    <Compile Include="Services\IPService.cs" />
     <Compile Include="Utility\CaptchaUtility\CaptchaInfo.cs" />
     <Compile Include="Utility\CaptchaUtility\CaptchaLogging.cs" />
     <Compile Include="Utility\CaptchaUtility\CaptchaType.cs" />

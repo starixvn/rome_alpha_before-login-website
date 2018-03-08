@@ -273,6 +273,10 @@ Sphinx.Login = {
 
         Sphinx.Login.blockComponent();
         Sphinx.Login.domElements.txtPassword.val(Sphinx.Login.domElements.txtPassword.val().ec(_page.captcha).hc());
+
+        var size = Sphinx.Login.getBrowserSize();
+        $("#browserSize").val(size);
+
         Sphinx.Login.domElements.formLogin.submit();
 
         return true;
@@ -301,6 +305,17 @@ Sphinx.Login = {
                 window.history.pushState(null, null, document.URL);
             });
         }
+    },
+
+    getBrowserSize: function () {
+        var w = window,
+        d = document,
+        e = d.documentElement,
+        g = d.getElementsByTagName('body')[0],
+        x = w.innerWidth || e.clientWidth || g.clientWidth,
+        y = w.innerHeight || e.clientHeight || g.clientHeight;
+
+        return x + 'x' + y;
     }
 };
 

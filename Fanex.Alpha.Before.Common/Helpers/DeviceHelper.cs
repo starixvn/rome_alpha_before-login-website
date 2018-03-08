@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="DeviceHelper.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.Alpha.Before.Common.Helpers
+﻿namespace Fanex.Alpha.Before.Common.Helpers
 {
     using System;
     using System.Collections;
@@ -14,20 +8,13 @@ namespace Fanex.Alpha.Before.Common.Helpers
     using Logging.Extensions.Web;
     using Sunplus.Core.Common.IPs;
     using Sunplus.Core.Common.IPs.DAL;
+    using UAParser;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class DeviceHelper
     {
-        /// <summary>
-        /// Get Request Info.
-        /// </summary>
-        /// <param name="request">HTTP Request.</param>
-        /// <returns>Return result.</returns>
-        public static Hashtable GetRequestInfo(HttpRequest request)
+        public static Hashtable GetRequestInfo(HttpRequest request, string browserSize)
         {
-            Hashtable requestInfo = ClientRequestInfo(request);
+            Hashtable requestInfo = InitClientRequestInfo(request);
 
             try
             {
@@ -41,23 +28,7 @@ namespace Fanex.Alpha.Before.Common.Helpers
 
             try
             {
-                if (request.Browser != null)
-                {
-                    // Mobile Device Browser
-                    if (request.Browser.IsMobileDevice)
-                    {
-                        requestInfo["browsername"] = string.Format("{0} {1}", request.Browser.Browser, request.Browser.MajorVersion);
-                        requestInfo["platform"] = request.Browser.MobileDeviceModel;
-                    }
-                    else
-                    {
-                        requestInfo["browsername"] = string.Format(
-                            "{0} {1}",
-                            request.UserAgent != null && request.UserAgent.ToUpper().Contains("CHROME") ? "Chrome" : request.Browser.Browser,
-                            request.Browser.Version);
-                        requestInfo["platform"] = GetPlatform();
-                    }
-                }
+                GetRequestInfoFromContext(request, browserSize, requestInfo);
             }
             catch (Exception ex)
             {
@@ -67,89 +38,41 @@ namespace Fanex.Alpha.Before.Common.Helpers
             return requestInfo;
         }
 
-        /// <summary>
-        /// Get Plat form.
-        /// </summary>
-        /// <returns>Return result.</returns>
-        private static string GetPlatform()
+        private static Hashtable InitClientRequestInfo(HttpRequest request)
         {
-            // Create a list of all platform
-            string[] platformArrays = new[]
+            return new Hashtable
             {
-                "Windows 3",
-                "Win16",
-                "Windows 95",
-                "Win95",
-                "Windows 98",
-                "Win98",
-                "Windows 2000",
-                "Windows XP",
-                "Windows Server 2003",
-                "Windows Vista",
-                "Windows NT",
-                "WinNT",
-                "Windows ME",
-                "Open BSD",
-                "OpenBSD",
-                "Sun OS",
-                "SunOS",
-                "Linux",
-                "Mac OS",
-                "Mac_PowerPC",
-                "Macintosh",
-                "QNX",
-                "QNX",
-                "BeOS",
-                "BeOS",
-                "OS/2",
-                "OS/2"
+                ["loginip"] = IPHelper.ClientIP(),
+                ["countrycode"] = "Unknown",
+                ["logindomain"] = request.ServerVariables["SERVER_NAME"],
+                ["browsername"] = string.Empty,
+                ["platform"] = string.Empty
             };
-            HttpContext context = HttpContext.Current;
-
-            if (context != null && context.Request != null &&
-                context.Request.ServerVariables != null &&
-                !string.IsNullOrWhiteSpace(context.Request.ServerVariables["HTTP_USER_AGENT"]))
-            {
-                // Loop through each item in the list created above and check if the header contains that text
-                foreach (string flatform in platformArrays)
-                {
-                    if (context.Request.ServerVariables["HTTP_USER_AGENT"].ToLower().Contains(flatform.ToLower()))
-                    {
-                        return flatform;
-                    }
-                }
-            }
-
-            return "Unknown";
         }
 
-        /// <summary>
-        /// Client Request Info.
-        /// </summary>
-        /// <param name="request">HTTP Request.</param>
-        /// <returns>Return result.</returns>
-        private static Hashtable ClientRequestInfo(HttpRequest request)
+        private static void GetRequestInfoFromContext(HttpRequest request, string browserSize, Hashtable requestInfo)
         {
-            var clientIp = IPHelper.ClientIP();
-            var countryCode = "Unknown";
-            return new Hashtable()
+            var userAgent = request.UserAgent ?? string.Empty;
+            var userAgentParser = Parser.GetDefault();
+            var clientInfo = userAgentParser.Parse(userAgent);
+            var clientUserAgent = clientInfo.UserAgent;
+            var clientPatch = clientUserAgent.Patch ?? "0";
+
+            var browser = $"{clientUserAgent.Family} {clientUserAgent.Major}.{clientUserAgent.Minor}.{clientPatch}";
+            if (!string.IsNullOrWhiteSpace(browserSize))
             {
-                {
-                    "loginip", clientIp
-                },
-                {
-                    "countrycode", countryCode
-                },
-                {
-                    "logindomain", request.ServerVariables["SERVER_NAME"]
-                },
-                {
-                    "browsername", string.Empty
-                },
-                {
-                    "platform", string.Empty
-                }
-            };
+                browser += $", {browserSize}";
+            }
+
+            var device = $"{clientInfo.Device.Family}, IsCrawler: {clientInfo.Device.IsSpider}";
+
+            var majorVersion = clientInfo.OS.Major ?? "0";
+            var minorVersion = clientInfo.OS.Minor ?? "0";
+            var osVersion = clientInfo.OS.Patch ?? "0";
+            var operateSystem = $"{clientInfo.OS.Family} {majorVersion}.{minorVersion}.{osVersion}";
+
+            requestInfo["browsername"] = browser;
+            requestInfo["platform"] = $"{operateSystem}, Device: {device}";
         }
     }
 }

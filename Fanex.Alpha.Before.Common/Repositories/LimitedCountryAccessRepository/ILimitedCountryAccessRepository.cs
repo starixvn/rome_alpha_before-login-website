@@ -1,16 +1,13 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="ILimitedCountryAccessRepository.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.Alpha.Before.Common.Repositories.LimitedCountryAccessRepository
+﻿namespace Fanex.Alpha.Before.Common.Repositories.LimitedCountryAccessRepository
 {
-    /// <summary>
-    /// Limited Country Access Repository Interface.
-    /// </summary>
+    using System.Collections.Generic;
+    using Criteria.LimitedCountryAccess;
+    using Models;
+
     public interface ILimitedCountryAccessRepository
     {
-        string CountryCodeByIp();
+        IList<IpRange> GetIPRangesByCountry(GetIpRangesByCountryCriteria criteria);
+
+        IList<string> GetsAllowedAccessIPs(GetAllowedAccessIPsCriteria criteria);
     }
 }

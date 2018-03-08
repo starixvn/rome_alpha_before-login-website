@@ -1,38 +1,58 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="LimitedCountryAccessRepository.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.Alpha.Before.Common.Repositories.LimitedCountryAccessRepository
+﻿namespace Fanex.Alpha.Before.Common.Repositories.LimitedCountryAccessRepository
 {
-    using System.Collections;
+    using System.Collections.Generic;
+    using Criteria.LimitedCountryAccess;
+    using Data;
     using Fanex.Common;
-    using Fanex.Data;
+    using Models;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class LimitedCountryAccessRepository : BaseRepository, ILimitedCountryAccessRepository
     {
-        /// <summary>
-        /// Get country code by customer's IP.
-        /// </summary>
-        /// <returns>Return country code.</returns>
-        public string CountryCodeByIp()
+        public IList<IpRange> GetIPRangesByCountry(GetIpRangesByCountryCriteria criteria)
         {
-            using (ObjectDb objectDb = new ObjectDb("Age_CheckValidCountry"))
+            var result = new List<IpRange>();
+
+            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
             {
-                objectDb.AssignParamValues(new Hashtable()
+                using (var reader = objectDb.ExecuteReader(criteria.GetSpParams()))
                 {
-                    { "ip", Helpers.IPHelper.ClientIP() },
-                    { "countrycode", string.Empty }
-                });
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            var ipRange = new IpRange(
+                                ipFrom: Converter.To<long>(reader["IPFrom"]),
+                                ipTo: Converter.To<long>(reader["IPTo"]),
+                                countryCode: Converter.ToString2(reader["CountryShort"]));
 
-                objectDb.ExecuteNonQuery();
-
-                return Converter.ToString2(objectDb.GetOuputParams()["countrycode"]);
+                            result.Add(ipRange);
+                        }
+                    }
+                }
             }
+
+            return result;
+        }
+
+        public IList<string> GetsAllowedAccessIPs(GetAllowedAccessIPsCriteria criteria)
+        {
+            var result = new List<string>();
+
+            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                using (var reader = objectDb.ExecuteReader(criteria.GetSpParams()))
+                {
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            result.Add(Converter.ToString2(reader["IP"]));
+                        }
+                    }
+                }
+            }
+
+            return result;
         }
     }
 }

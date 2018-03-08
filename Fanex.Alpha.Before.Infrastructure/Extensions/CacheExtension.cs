@@ -43,6 +43,17 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
                 Couchbase.Operations.ReplicateTo.Two);
         }
 
+        public static void Set(string key, object value, TimeSpan validFor)
+        {
+            _couchbaseClient.ExecuteStore(
+                StoreMode.Set,
+                key,
+                value,
+                validFor,
+                Couchbase.Operations.PersistTo.One,
+                Couchbase.Operations.ReplicateTo.Two);
+        }
+
         public static void Remove(string key)
         {
             _couchbaseClient.Remove(key);

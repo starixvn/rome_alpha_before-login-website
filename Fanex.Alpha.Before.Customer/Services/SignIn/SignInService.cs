@@ -148,7 +148,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string language,
             bool isValidCaptcha,
             string code,
-            string deviceId)
+            string deviceId,
+            string browserSize)
         {
             var signInResult = new SignInResult()
             {
@@ -238,13 +239,13 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 }
 
                 //// Get Browser
-                Hashtable requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request);
+                Hashtable requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request, browserSize);
                 requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
                 var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
 
                 if (verifySignInResult.ErrorCode == 0)
                 {
-                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId);
+                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
                 }
                 else
                 {
@@ -273,7 +274,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
-        public SignInResult AutomationTest(string username, string password, string captcha, string deviceId)
+        public SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
         {
             var signInResult = new SignInResult()
             {
@@ -313,13 +314,13 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 }
 
                 //// Get Browser
-                Hashtable requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request);
+                Hashtable requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request, browserSize);
                 requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
                 var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
 
                 if (verifySignInResult.ErrorCode == 0)
                 {
-                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId);
+                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
                 }
                 else
                 {
@@ -563,7 +564,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string password,
             SignInResult signInResult,
             VerifySignInResult verifySignInResult,
-            string deviceId)
+            string deviceId,
+            string browserSize)
         {
             this.ResetLoginFailed();
 
@@ -574,7 +576,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             var path = System.Web.HttpContext.Current.Server.MapPath("~/IbcKeys/ibcpkey.snk");
             var parameter = string.Format(
-                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}",
+                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}",
                 verifySignInResult.CustId,
                 verifySignInResult.SubAccId,
                 verifySignInResult.LoginTime.Ticks,
@@ -583,7 +585,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 verifySignInResult.IsNickname,
                 AppSession.Language,
                 numberCrossCookie,
-                deviceId);
+                deviceId,
+                browserSize);
 
             parameter = new EncryptionThread().EncryptString(parameter, keySize, path);
 
