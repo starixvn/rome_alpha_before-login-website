@@ -1,23 +1,33 @@
 ﻿namespace Fanex.Alpha.Before.Common.Services
 {
     using System;
-    using Infrastructure.Extensions;
+    using Caching;
 
     public interface ICacheService
     {
-        T Get<T>(string key);
-
-        void Set(string key, object value);
-
-        void Set(string key, object value, TimeSpan validFor);
+        T GetOrSet<T>(string key, Func<T> factory, TimeSpan validFor);
     }
 
-    public class CacheService : ICacheService
+    public class CacheServiceImpl : ICacheService
     {
-        public T Get<T>(string key) => CacheExtension.Get<T>(key);
+        private readonly ICache instance;
 
-        public void Set(string key, object value) => CacheExtension.Set(key, value);
+        public CacheServiceImpl()
+        {
+            instance = CacheService.CreateInstance(CacheType.MemoryCache);
+        }
 
-        public void Set(string key, object value, TimeSpan validFor) => CacheExtension.Set(key, value, validFor);
+        public T GetOrSet<T>(string key, Func<T> factory, TimeSpan validFor)
+        {
+            var result = instance.Get<T>(key);
+            if (result != null)
+            {
+                return result;
+            }
+
+            result = factory();
+            instance.Set(key, result, validFor);
+            return result;
+        }
     }
 }

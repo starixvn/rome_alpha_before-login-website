@@ -12,6 +12,7 @@ namespace Fanex.Alpha.Before.Web.View
     using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
+    using Common.Configurations.LimitedCountryAccessService;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using ONEbook.UM.Configurations;
@@ -79,6 +80,8 @@ namespace Fanex.Alpha.Before.Web.View
             {
                 ExceptionHandler.Handle(new UMClientException(message));
             });
+
+            InitIPsCache();
         }
 
         private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
@@ -138,6 +141,12 @@ namespace Fanex.Alpha.Before.Web.View
             }
 
             return result;
+        }
+
+        private static void InitIPsCache()
+        {
+            var limitedCountryAccessService = new LimitedCountryAccessService();
+            limitedCountryAccessService.GetIPRangesByRestrictedCountry(limitedCountryAccessService.GetActiveRestrictedCountriesConfig());
         }
     }
 }

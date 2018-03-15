@@ -27,7 +27,7 @@
         {
             this.ipRepository = ipRepository ?? new LimitedCountryAccessRepository();
             this.ipService = ipService ?? new IpServiceImpl();
-            this.cacheService = cacheService ?? new CacheService();
+            this.cacheService = cacheService ?? new CacheServiceImpl();
         }
 
         public bool LimitedAccess()
@@ -65,7 +65,7 @@
             return result;
         }
 
-        private IEnumerable<LimitedCountriesElement> GetActiveRestrictedCountriesConfig()
+        public IEnumerable<LimitedCountriesElement> GetActiveRestrictedCountriesConfig()
         {
             var limitedCountryAccessSection = LimtedCountryAccessSection.Instance.LimitedCountries;
             if (limitedCountryAccessSection == null || limitedCountryAccessSection.Count == 0)
@@ -76,39 +76,34 @@
             return limitedCountryAccessSection.Cast<LimitedCountriesElement>().Where(m => m.Active && DateTime.Now >= m.AffectedDate);
         }
 
-        private bool IsTestedIP(IEnumerable<LimitedCountriesElement> activeLimitedCountriesConfig, string clientIP)
+        public IList<IpRange> GetIPRangesByRestrictedCountry(IEnumerable<LimitedCountriesElement> activeLimitedCountriesConfig)
         {
-            return activeLimitedCountriesConfig.Any(m => m.IsTesting && m.TestingIp.Split(',').Contains(clientIP));
-        }
-
-        private IList<IpRange> GetIPRangesByRestrictedCountry(IEnumerable<LimitedCountriesElement> activeLimitedCountriesConfig)
-        {
-            var restrictedIpRanges = cacheService.Get<IList<IpRange>>(RestrictedIPRangesCachedKey);
-
-            if (restrictedIpRanges != null)
-            {
-                return restrictedIpRanges;
-            }
-
-            var restrictedCountries = string.Join(",", activeLimitedCountriesConfig.Select(m => m.Name));
-            var criteria = new GetIpRangesByCountryCriteria(restrictedCountries);
-            restrictedIpRanges = ipRepository.GetIPRangesByCountry(criteria);
-            cacheService.Set(RestrictedIPRangesCachedKey, restrictedIpRanges);
+            var restrictedIpRanges = cacheService.GetOrSet(
+                RestrictedIPRangesCachedKey,
+                () =>
+                {
+                    var restrictedCountries = string.Join(",", activeLimitedCountriesConfig.Select(m => m.Name));
+                    var criteria = new GetIpRangesByCountryCriteria(restrictedCountries);
+                    return ipRepository.GetIPRangesByCountry(criteria);
+                },
+                TimeSpan.FromDays(30));
 
             return restrictedIpRanges;
         }
 
         public IList<string> GetsAllowedAccessIPs()
         {
-            var allowedAccessIPs = cacheService.Get<IList<string>>(AllowedAccessIPsCachedKey);
-            if (allowedAccessIPs != null)
-            {
-                return allowedAccessIPs;
-            }
+            var allowedAccessIPs = cacheService.GetOrSet(
+                AllowedAccessIPsCachedKey,
+                () => ipRepository.GetsAllowedAccessIPs(new GetAllowedAccessIPsCriteria()),
+                 TimeSpan.FromMinutes(10));
 
-            allowedAccessIPs = ipRepository.GetsAllowedAccessIPs(new GetAllowedAccessIPsCriteria());
-            cacheService.Set(AllowedAccessIPsCachedKey, allowedAccessIPs, TimeSpan.FromMinutes(10));
             return allowedAccessIPs;
+        }
+
+        private bool IsTestedIP(IEnumerable<LimitedCountriesElement> activeLimitedCountriesConfig, string clientIP)
+        {
+            return activeLimitedCountriesConfig.Any(m => m.IsTesting && m.TestingIp.Split(',').Contains(clientIP));
         }
     }
 }
