@@ -2,16 +2,16 @@
 {
     public class IpRange
     {
-        public IpRange(long ipFrom, long ipTo, string countryCode)
+        public IpRange(ulong ipFrom, ulong ipTo, string countryCode)
         {
             IPFrom = ipFrom;
             IPTo = ipTo;
             CountryCode = countryCode;
         }
 
-        public long IPFrom { get; set; }
+        public ulong IPFrom { get; set; }
 
-        public long IPTo { get; set; }
+        public ulong IPTo { get; set; }
 
         public string CountryCode { get; set; }
     }

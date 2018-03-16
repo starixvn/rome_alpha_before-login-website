@@ -146,7 +146,8 @@ namespace Fanex.Alpha.Before.Web.View
         private static void InitIPsCache()
         {
             var limitedCountryAccessService = new LimitedCountryAccessService();
-            limitedCountryAccessService.GetIPRangesByRestrictedCountry(limitedCountryAccessService.GetActiveRestrictedCountriesConfig());
+            var activeRestrictedCountry = limitedCountryAccessService.GetActiveRestrictedCountriesConfig();
+            limitedCountryAccessService.GetIPRangesByRestrictedCountry(activeRestrictedCountry, isIpV6: false);
         }
     }
 }

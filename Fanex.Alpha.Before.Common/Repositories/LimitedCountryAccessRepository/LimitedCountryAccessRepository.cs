@@ -21,8 +21,8 @@
                         while (reader.Read())
                         {
                             var ipRange = new IpRange(
-                                ipFrom: Converter.To<long>(reader["IPFrom"]),
-                                ipTo: Converter.To<long>(reader["IPTo"]),
+                                ipFrom: Converter.To<ulong>(reader["IPFrom"]),
+                                ipTo: Converter.To<ulong>(reader["IPTo"]),
                                 countryCode: Converter.ToString2(reader["CountryShort"]));
 
                             result.Add(ipRange);

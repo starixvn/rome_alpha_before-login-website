@@ -2,18 +2,16 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using Criteria.LimitedCountryAccess;
     using LimtedCountryAccess;
-    using Logging.Extensions.Web;
     using Models;
     using Repositories.LimitedCountryAccessRepository;
     using Services;
 
     public class LimitedCountryAccessService : ILimitedCountryAccessService
     {
-        private const string RestrictedIPRangesCachedKey = "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey";
+        private const string RestrictedIPRangesCachedKey = "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV";
         private const string AllowedAccessIPsCachedKey = "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey";
 
         private readonly ILimitedCountryAccessRepository ipRepository;
@@ -32,27 +30,25 @@
 
         public bool LimitedAccess()
         {
-            var clientIP = ipService.GetClientIp();
-
-            if (IpServiceImpl.IsIPV6(clientIP))
-            {
-                ExceptionHandler.Handle(new Exception("Customer Access via IPV6"), TraceEventType.Information);
-                return false;
-            }
-
             var activeRestrictedCountriesConfig = GetActiveRestrictedCountriesConfig();
             if (!activeRestrictedCountriesConfig.Any())
             {
                 return false;
             }
 
+            var clientIP = ipService.GetClientIp();
+
             if (IsTestedIP(activeRestrictedCountriesConfig, clientIP))
             {
                 return true;
             }
 
-            var restrictedIPs = GetIPRangesByRestrictedCountry(activeRestrictedCountriesConfig);
-            var ipNumber = IpServiceImpl.ConvertIPToNumber(clientIP);
+            var isIpV6 = IpServiceImpl.IsIPV6(clientIP);
+            var restrictedIPs = GetIPRangesByRestrictedCountry(activeRestrictedCountriesConfig, isIpV6);
+            var ipNumber = isIpV6
+                ? IpServiceImpl.ConvertIPV6ToNumber(clientIP)
+                : IpServiceImpl.ConvertIPV4ToNumber(clientIP);
+
             var range = restrictedIPs.FirstOrDefault(ipRange => ipRange.IPFrom <= ipNumber && ipNumber <= ipRange.IPTo);
             if (range == null)
             {
@@ -76,14 +72,17 @@
             return limitedCountryAccessSection.Cast<LimitedCountriesElement>().Where(m => m.Active && DateTime.Now >= m.AffectedDate);
         }
 
-        public IList<IpRange> GetIPRangesByRestrictedCountry(IEnumerable<LimitedCountriesElement> activeLimitedCountriesConfig)
+        public IList<IpRange> GetIPRangesByRestrictedCountry(
+            IEnumerable<LimitedCountriesElement> activeLimitedCountriesConfig,
+            bool isIpV6)
         {
+            var cacheKey = RestrictedIPRangesCachedKey + (isIpV6 ? "6" : "4");
             var restrictedIpRanges = cacheService.GetOrSet(
-                RestrictedIPRangesCachedKey,
+                cacheKey,
                 () =>
                 {
                     var restrictedCountries = string.Join(",", activeLimitedCountriesConfig.Select(m => m.Name));
-                    var criteria = new GetIpRangesByCountryCriteria(restrictedCountries);
+                    var criteria = new GetIpRangesByCountryCriteria(isIpV6, restrictedCountries);
                     return ipRepository.GetIPRangesByCountry(criteria);
                 },
                 TimeSpan.FromDays(30));
