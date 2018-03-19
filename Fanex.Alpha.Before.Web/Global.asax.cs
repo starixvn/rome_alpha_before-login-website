@@ -13,6 +13,7 @@ namespace Fanex.Alpha.Before.Web.View
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
     using Common.Configurations.LimitedCountryAccessService;
+    using Common.Services.LimitedCountryAccessService;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using ONEbook.UM.Configurations;
@@ -145,9 +146,8 @@ namespace Fanex.Alpha.Before.Web.View
 
         private static void InitIPsCache()
         {
-            var limitedCountryAccessService = new LimitedCountryAccessService();
-            var activeRestrictedCountry = limitedCountryAccessService.GetActiveRestrictedCountriesConfig();
-            limitedCountryAccessService.GetIPRangesByRestrictedCountry(activeRestrictedCountry, isIpV6: false);
+            var activeRestrictedCountry = new LimitedCountriesConfigService().GetActiveRestrictedCountriesConfig();
+            new LimitedCountryAccessService().GetIPRangesByRestrictedCountry(activeRestrictedCountry, isIpV6: false);
         }
     }
 }

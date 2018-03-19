@@ -12,6 +12,7 @@
 
     public class IpServiceImpl : IPService
     {
+        [ThreadStatic]
         private static bool IsLittleEndian = BitConverter.IsLittleEndian;
 
         public static bool IsIPV6(string clientIP)
@@ -53,7 +54,7 @@
             return ipNum;
         }
 
-        public static void SetIsLittleEndian(bool isLittleEndian)
+        internal static void SetIsLittleEndian(bool isLittleEndian)
         {
             IsLittleEndian = isLittleEndian;
         }

@@ -1,4 +1,4 @@
-﻿namespace Fanex.Alpha.Before.Common.Repositories.LimitedCountryAccessRepository
+﻿namespace Fanex.Alpha.Before.Common.Repositories.LimitedCountryAccess
 {
     using System.Collections.Generic;
     using Criteria.LimitedCountryAccess;

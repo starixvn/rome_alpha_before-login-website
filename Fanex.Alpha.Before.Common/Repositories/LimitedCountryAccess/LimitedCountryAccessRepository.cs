@@ -1,8 +1,7 @@
-﻿namespace Fanex.Alpha.Before.Common.Repositories.LimitedCountryAccessRepository
+﻿namespace Fanex.Alpha.Before.Common.Repositories.LimitedCountryAccess
 {
     using System.Collections.Generic;
     using Criteria.LimitedCountryAccess;
-    using Data;
     using Fanex.Common;
     using Models;
 
@@ -12,7 +11,7 @@
         {
             var result = new List<IpRange>();
 
-            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 using (var reader = objectDb.ExecuteReader(criteria.GetSpParams()))
                 {
@@ -38,7 +37,7 @@
         {
             var result = new List<string>();
 
-            using (ObjectDb objectDb = new ObjectDb(criteria.GetSettingKey()))
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 using (var reader = objectDb.ExecuteReader(criteria.GetSpParams()))
                 {

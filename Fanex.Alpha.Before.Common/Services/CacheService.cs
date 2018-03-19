@@ -5,6 +5,10 @@
 
     public interface ICacheService
     {
+        T Get<T>(string key);
+
+        void Set<T>(string key, T value, TimeSpan validFor);
+
         T GetOrSet<T>(string key, Func<T> factory, TimeSpan validFor);
     }
 
@@ -17,16 +21,20 @@
             instance = CacheService.CreateInstance(CacheType.MemoryCache);
         }
 
+        public T Get<T>(string key) => instance.Get<T>(key);
+
+        public void Set<T>(string key, T value, TimeSpan validFor) => instance.Set(key, value, validFor);
+
         public T GetOrSet<T>(string key, Func<T> factory, TimeSpan validFor)
         {
-            var result = instance.Get<T>(key);
+            var result = Get<T>(key);
             if (result != null)
             {
                 return result;
             }
 
             result = factory();
-            instance.Set(key, result, validFor);
+            Set(key, result, validFor);
             return result;
         }
     }

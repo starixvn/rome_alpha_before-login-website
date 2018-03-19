@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Criteria.LimitedCountryAccess;
-    using LimtedCountryAccess;
     using Models;
-    using Repositories.LimitedCountryAccessRepository;
+    using Repositories.LimitedCountryAccess;
     using Services;
+    using Services.LimitedCountryAccessService;
 
     public class LimitedCountryAccessService : ILimitedCountryAccessService
     {
@@ -17,20 +17,24 @@
         private readonly ILimitedCountryAccessRepository ipRepository;
         private readonly IPService ipService;
         private readonly ICacheService cacheService;
+        private readonly ILimitedCountriesConfigService limitedCountriesConfigService;
+
 
         public LimitedCountryAccessService(
             ILimitedCountryAccessRepository ipRepository = null,
             IPService ipService = null,
-            ICacheService cacheService = null)
+            ICacheService cacheService = null,
+            ILimitedCountriesConfigService limitedCountriesConfigService = null)
         {
             this.ipRepository = ipRepository ?? new LimitedCountryAccessRepository();
             this.ipService = ipService ?? new IpServiceImpl();
             this.cacheService = cacheService ?? new CacheServiceImpl();
+            this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
         }
 
         public bool LimitedAccess()
         {
-            var activeRestrictedCountriesConfig = GetActiveRestrictedCountriesConfig();
+            var activeRestrictedCountriesConfig = limitedCountriesConfigService.GetActiveRestrictedCountriesConfig();
             if (!activeRestrictedCountriesConfig.Any())
             {
                 return false;
@@ -61,19 +65,8 @@
             return result;
         }
 
-        public IEnumerable<LimitedCountriesElement> GetActiveRestrictedCountriesConfig()
-        {
-            var limitedCountryAccessSection = LimtedCountryAccessSection.Instance.LimitedCountries;
-            if (limitedCountryAccessSection == null || limitedCountryAccessSection.Count == 0)
-            {
-                return new List<LimitedCountriesElement>();
-            }
-
-            return limitedCountryAccessSection.Cast<LimitedCountriesElement>().Where(m => m.Active && DateTime.Now >= m.AffectedDate);
-        }
-
         public IList<IpRange> GetIPRangesByRestrictedCountry(
-            IEnumerable<LimitedCountriesElement> activeLimitedCountriesConfig,
+            IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig,
             bool isIpV6)
         {
             var cacheKey = RestrictedIPRangesCachedKey + (isIpV6 ? "6" : "4");
@@ -100,7 +93,7 @@
             return allowedAccessIPs;
         }
 
-        private bool IsTestedIP(IEnumerable<LimitedCountriesElement> activeLimitedCountriesConfig, string clientIP)
+        private bool IsTestedIP(IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig, string clientIP)
         {
             return activeLimitedCountriesConfig.Any(m => m.IsTesting && m.TestingIp.Split(',').Contains(clientIP));
         }

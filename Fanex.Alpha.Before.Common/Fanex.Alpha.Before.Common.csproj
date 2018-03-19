@@ -179,6 +179,8 @@
     <Compile Include="Criteria\LimitedCountryAccess\GetIpRangesByCountryCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\IPRange.cs" />
+    <Compile Include="Models\LimitedCountriesConfigModel.cs" />
+    <Compile Include="Repositories\ObjectDbFactory.cs" />
     <Compile Include="Resources\Labels.ja-JP.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -211,6 +213,8 @@
     </Compile>
     <Compile Include="Services\CacheService.cs" />
     <Compile Include="Services\IPService.cs" />
+    <Compile Include="Services\LimitedCountryAccessService\ILimitedCountriesConfigService.cs" />
+    <Compile Include="Services\LimitedCountryAccessService\LimitedCountriesConfigService.cs" />
     <Compile Include="Utility\CaptchaUtility\CaptchaInfo.cs" />
     <Compile Include="Utility\CaptchaUtility\CaptchaLogging.cs" />
     <Compile Include="Utility\CaptchaUtility\CaptchaType.cs" />
@@ -227,8 +231,8 @@
     <Compile Include="Models\UnderMaintenanceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />
-    <Compile Include="Repositories\LimitedCountryAccessRepository\ILimitedCountryAccessRepository.cs" />
-    <Compile Include="Repositories\LimitedCountryAccessRepository\LimitedCountryAccessRepository.cs" />
+    <Compile Include="Repositories\LimitedCountryAccess\ILimitedCountryAccessRepository.cs" />
+    <Compile Include="Repositories\LimitedCountryAccess\LimitedCountryAccessRepository.cs" />
     <Compile Include="Resources\Labels.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
