@@ -81,7 +81,7 @@
             var cacheKey = RestrictedIPRangesCachedKey + (isIpV6 ? "6" : "4");
             var restrictedIpRanges = cacheService.GetOrSet(
                 cacheKey,
-                () => trackRunTime ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc) : getDataFromDatabaseFunc(),
+                () => trackRunTime ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc, "GetIPRangesByRestrictedCountry") : getDataFromDatabaseFunc(),
                 TimeSpan.FromDays(30));
 
             return restrictedIpRanges;
