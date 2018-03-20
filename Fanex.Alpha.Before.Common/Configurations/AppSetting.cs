@@ -9,6 +9,7 @@
         private static string fpsActivator;
         private static string googleAnalyticId;
         private static bool isMBCSite;
+        private static bool trackRunTime;
 
         static AppSetting()
         {
@@ -17,6 +18,8 @@
             googleAnalyticId = Converter.ToString2(ConfigurationManager.AppSettings["GoogleAnalyticId"]);
             isMBCSite = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["IsMBCSite"])
                 && ConfigurationManager.AppSettings["IsMBCSite"] == "1";
+
+            trackRunTime = ConfigurationManager.AppSettings["TrackRunTime"] == "1";
         }
 
         public static string Version
@@ -52,5 +55,7 @@
         }
 
         public static bool DisabledVietnamese => IsMBCSite;
+
+        public static bool TrackRunTime => trackRunTime;
     }
 }

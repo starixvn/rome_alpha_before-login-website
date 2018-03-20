@@ -35,7 +35,7 @@
             cacheService = Substitute.For<ICacheService>();
             limitedCountriesConfigService = Substitute.For<ILimitedCountriesConfigService>();
 
-            limitedCountryAccessService = new LimitedCountryAccessService(ipRepository, ipService, cacheService, limitedCountriesConfigService);
+            limitedCountryAccessService = new LimitedCountryAccessService(false, ipRepository, ipService, cacheService, limitedCountriesConfigService);
 
             limitedCountriesConfig = new List<LimitedCountriesConfigModel>
             {

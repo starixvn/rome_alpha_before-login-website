@@ -18,9 +18,10 @@
         private readonly IPService ipService;
         private readonly ICacheService cacheService;
         private readonly ILimitedCountriesConfigService limitedCountriesConfigService;
-
+        private readonly bool trackRunTime;
 
         public LimitedCountryAccessService(
+            bool trackRunTime,
             ILimitedCountryAccessRepository ipRepository = null,
             IPService ipService = null,
             ICacheService cacheService = null,
@@ -30,6 +31,7 @@
             this.ipService = ipService ?? new IpServiceImpl();
             this.cacheService = cacheService ?? new CacheServiceImpl();
             this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
+            this.trackRunTime = trackRunTime;
         }
 
         public bool LimitedAccess()
@@ -69,15 +71,17 @@
             IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig,
             bool isIpV6)
         {
+            Func<IList<IpRange>> getDataFromDatabaseFunc = () =>
+            {
+                var restrictedCountries = string.Join(",", activeLimitedCountriesConfig.Select(m => m.Name));
+                var criteria = new GetIpRangesByCountryCriteria(isIpV6, restrictedCountries);
+                return ipRepository.GetIPRangesByCountry(criteria);
+            };
+
             var cacheKey = RestrictedIPRangesCachedKey + (isIpV6 ? "6" : "4");
             var restrictedIpRanges = cacheService.GetOrSet(
                 cacheKey,
-                () =>
-                {
-                    var restrictedCountries = string.Join(",", activeLimitedCountriesConfig.Select(m => m.Name));
-                    var criteria = new GetIpRangesByCountryCriteria(isIpV6, restrictedCountries);
-                    return ipRepository.GetIPRangesByCountry(criteria);
-                },
+                () => trackRunTime ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc) : getDataFromDatabaseFunc(),
                 TimeSpan.FromDays(30));
 
             return restrictedIpRanges;

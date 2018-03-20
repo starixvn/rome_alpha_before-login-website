@@ -34,7 +34,7 @@ namespace Fanex.Alpha.Before.Common.Controllers
             LimitedCountryAccessService limitedCountryAccessService)
         {
             _mainternanceService = mainternanceService ?? new UnderMainternanceService();
-            _limitedCountryAccessService = limitedCountryAccessService ?? new LimitedCountryAccessService();
+            _limitedCountryAccessService = limitedCountryAccessService ?? new LimitedCountryAccessService(AppSetting.TrackRunTime);
         }
 
         /// <summary>
