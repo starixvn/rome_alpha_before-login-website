@@ -11,6 +11,7 @@
 
     public class LimitedCountryAccessService : ILimitedCountryAccessService
     {
+        private const string RestrictedCountriesCachedKey = "Fanex.Alpha.Before.Common.RestrictedCountriesCachedKey";
         private const string RestrictedIPRangesCachedKey = "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV";
         private const string AllowedAccessIPsCachedKey = "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey";
 
@@ -71,14 +72,22 @@
             IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig,
             bool isIpV6)
         {
+            var restrictedCountries = string.Join(",", activeLimitedCountriesConfig.Select(m => m.Name));
+            var cachedRestrictedCountries = cacheService.Get<string>(RestrictedCountriesCachedKey);
+            var cacheKey = RestrictedIPRangesCachedKey + (isIpV6 ? "6" : "4");
+
+            if (!string.Equals(cachedRestrictedCountries, restrictedCountries))
+            {
+                cacheService.Remove(cacheKey);
+                cacheService.Set(RestrictedCountriesCachedKey, restrictedCountries, TimeSpan.FromDays(30));
+            }
+
             Func<IList<IpRange>> getDataFromDatabaseFunc = () =>
             {
-                var restrictedCountries = string.Join(",", activeLimitedCountriesConfig.Select(m => m.Name));
                 var criteria = new GetIpRangesByCountryCriteria(isIpV6, restrictedCountries);
                 return ipRepository.GetIPRangesByCountry(criteria);
             };
 
-            var cacheKey = RestrictedIPRangesCachedKey + (isIpV6 ? "6" : "4");
             var restrictedIpRanges = cacheService.GetOrSet(
                 cacheKey,
                 () => trackRunTime ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc, "GetIPRangesByRestrictedCountry") : getDataFromDatabaseFunc(),

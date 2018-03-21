@@ -687,7 +687,9 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.ConnectionStrings.config" />
     <Content Include="Views\Common\UnderMaintenance\Index3.cshtml" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.LimtedCountryAccessSection.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.Web.config">
       <SubType>Designer</SubType>
     </Content>

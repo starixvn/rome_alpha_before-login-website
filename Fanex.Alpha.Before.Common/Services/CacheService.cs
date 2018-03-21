@@ -10,6 +10,8 @@
         void Set<T>(string key, T value, TimeSpan validFor);
 
         T GetOrSet<T>(string key, Func<T> factory, TimeSpan validFor);
+
+        void Remove(string key);
     }
 
     public class CacheServiceImpl : ICacheService
@@ -37,5 +39,7 @@
             Set(key, result, validFor);
             return result;
         }
+
+        public void Remove(string key) => instance.Remove(key);
     }
 }

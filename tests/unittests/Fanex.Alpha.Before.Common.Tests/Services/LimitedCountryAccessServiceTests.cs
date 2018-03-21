@@ -16,6 +16,7 @@
     public class LimitedCountryAccessServiceTests
     {
         private const string AllowedAccessIPsCachedKey = "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey";
+        private const string RestrictedCountriesCachedKey = "Fanex.Alpha.Before.Common.RestrictedCountriesCachedKey";
 
         private LimitedCountryAccessService limitedCountryAccessService;
         private ILimitedCountryAccessRepository ipRepository;
@@ -122,7 +123,7 @@
 
         [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4")]
         [TestCase(true, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6")]
-        public void GetsAllowedAccessIPs_Always_CacheDataFor30Days(bool isIpV6, string expectedCacheKey)
+        public void GetIPRangesByRestrictedCountry_Always_CacheDataFor30Days(bool isIpV6, string expectedCacheKey)
         {
             // Act
             limitedCountryAccessService.GetIPRangesByRestrictedCountry(Enumerable.Empty<LimitedCountriesConfigModel>(), isIpV6);
@@ -136,7 +137,7 @@
 
         [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4")]
         [TestCase(true, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6")]
-        public void GetsAllowedAccessIPs_Always_GetDataWhenCacheNotHaveData(bool isIpV6, string expectedCacheKey)
+        public void GetIPRangesByRestrictedCountry_Always_GetDataWhenCacheNotHaveData(bool isIpV6, string expectedCacheKey)
         {
             // Arrange
             var data = new List<IpRange> { };
@@ -159,7 +160,7 @@
 
         [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4")]
         [TestCase(true, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6")]
-        public void GetsAllowedAccessIPs_Always_ReturnCorrectData(bool isIpV6, string expectedCacheKey)
+        public void GetIPRangesByRestrictedCountry_Always_ReturnCorrectData(bool isIpV6, string expectedCacheKey)
         {
             // Arrange
             var data = new List<IpRange> { };
@@ -175,6 +176,87 @@
 
             // Assert
             Assert.AreEqual(data, actualData);
+        }
+
+        [Test]
+        public void GetIPRangesByRestrictedCountry_IsDifferentRestrictedCountriesConfig_CachedRestrictedCountries()
+        {
+            // Arrange
+            var limitCountry = new List<LimitedCountriesConfigModel> {
+                new LimitedCountriesConfigModel("HKK", false, null)
+            };
+
+            cacheService.Get<string>(RestrictedCountriesCachedKey).Returns("AU");
+
+            // Act
+            limitedCountryAccessService.GetIPRangesByRestrictedCountry(limitCountry, false);
+
+            // Assert
+            cacheService.Received().Set(
+                RestrictedCountriesCachedKey,
+                Arg.Any<string>(),
+                Arg.Is<TimeSpan>(timeSpan => timeSpan.TotalDays == 30));
+        }
+
+        [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4")]
+        [TestCase(true, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6")]
+        public void GetIPRangesByRestrictedCountry_IsDifferentRestrictedCountriesConfig_RemoveCachedIPs(bool isIpV6, string expectedCacheKey)
+        {
+            // Arrange
+            var limitCountry = new List<LimitedCountriesConfigModel> {
+                new LimitedCountriesConfigModel("HKK", false, null)
+            };
+
+            cacheService.Get<string>(RestrictedCountriesCachedKey).Returns("AU");
+
+            // Act
+            limitedCountryAccessService.GetIPRangesByRestrictedCountry(limitCountry, isIpV6);
+
+            // Assert
+            cacheService.Received().Remove(expectedCacheKey);
+        }
+
+        [Test]
+        public void GetIPRangesByRestrictedCountry_NotDifferentRestrictedCountriesConfig_NotCallCachedRestrictedCountries()
+        {
+            // Arrange
+            var cache = Substitute.For<ICacheService>();
+            var service = new LimitedCountryAccessService(false, ipRepository, ipService, cache, limitedCountriesConfigService);
+
+            var limitCountry = new List<LimitedCountriesConfigModel> {
+                new LimitedCountriesConfigModel("HKK", false, null)
+            };
+
+            cache.Get<string>(RestrictedCountriesCachedKey).Returns("HKK");
+
+            // Act
+            service.GetIPRangesByRestrictedCountry(limitCountry, false);
+
+            // Assert
+            cache.DidNotReceive().Set(
+                RestrictedCountriesCachedKey,
+                Arg.Any<string>(),
+                Arg.Is<TimeSpan>(timeSpan => timeSpan.TotalDays == 30));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void GetIPRangesByRestrictedCountry_NotDifferentRestrictedCountriesConfig_NotRemoveCachedIPs(bool isIpV6)
+        {
+            // Arrange
+            var cache = Substitute.For<ICacheService>();
+            var service = new LimitedCountryAccessService(false, ipRepository, ipService, cache, limitedCountriesConfigService);
+            var limitCountry = new List<LimitedCountriesConfigModel> {
+                new LimitedCountriesConfigModel("HKK", false, null)
+            };
+
+            cache.Get<string>(RestrictedCountriesCachedKey).Returns("HKK");
+
+            // Act
+            service.GetIPRangesByRestrictedCountry(limitCountry, isIpV6);
+
+            // Assert
+            cache.DidNotReceive().Remove(Arg.Any<string>());
         }
 
         [Test]
