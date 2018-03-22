@@ -105,8 +105,8 @@
             Assert.AreEqual(data, actualData);
         }
 
-        [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4")]
-        [TestCase(true, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6")]
+        [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4_")]
+        [TestCase(true, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6_")]
         public void GetIPRangesByRestrictedCountry_Always_CallGetOrSetToCacheData(
             bool isIpV6,
             string expectedCacheKey)
@@ -121,8 +121,8 @@
                 Arg.Any<TimeSpan>());
         }
 
-        [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4")]
-        [TestCase(true, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6")]
+        [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4_")]
+        [TestCase(true, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6_")]
         public void GetIPRangesByRestrictedCountry_Always_CacheDataFor30Days(bool isIpV6, string expectedCacheKey)
         {
             // Act
@@ -135,17 +135,20 @@
                 Arg.Is<TimeSpan>(timeSpan => timeSpan.TotalDays == 30));
         }
 
-        [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4")]
-        [TestCase(true, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6")]
+        [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4_MNL,UK")]
+        [TestCase(true, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6_MNL,UK")]
         public void GetIPRangesByRestrictedCountry_Always_GetDataWhenCacheNotHaveData(bool isIpV6, string expectedCacheKey)
         {
             // Arrange
-            var data = new List<IpRange> { };
-            var limitCountry = new List<LimitedCountriesConfigModel> {
-                new LimitedCountriesConfigModel("HKK", false, null)
+            var data = new List<IpRange>();
+            var limitCountry = new List<LimitedCountriesConfigModel>
+            {
+                new LimitedCountriesConfigModel("MNL", false, null),
+                new LimitedCountriesConfigModel("UK", false, null)
             };
 
-            ipRepository.GetIPRangesByCountry(Arg.Is<GetIpRangesByCountryCriteria>(c => c.CountryCodes == "HKK"))
+            ipRepository.GetIPRangesByCountry(
+                Arg.Is<GetIpRangesByCountryCriteria>(c => c.CountryCodes == "MNL,UK"))
                 .Returns(data);
 
             // Act
@@ -179,44 +182,6 @@
         }
 
         [Test]
-        public void GetIPRangesByRestrictedCountry_IsDifferentRestrictedCountriesConfig_CachedRestrictedCountries()
-        {
-            // Arrange
-            var limitCountry = new List<LimitedCountriesConfigModel> {
-                new LimitedCountriesConfigModel("HKK", false, null)
-            };
-
-            cacheService.Get<string>(RestrictedCountriesCachedKey).Returns("AU");
-
-            // Act
-            limitedCountryAccessService.GetIPRangesByRestrictedCountry(limitCountry, false);
-
-            // Assert
-            cacheService.Received().Set(
-                RestrictedCountriesCachedKey,
-                Arg.Any<string>(),
-                Arg.Is<TimeSpan>(timeSpan => timeSpan.TotalDays == 30));
-        }
-
-        [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4")]
-        [TestCase(true, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6")]
-        public void GetIPRangesByRestrictedCountry_IsDifferentRestrictedCountriesConfig_RemoveCachedIPs(bool isIpV6, string expectedCacheKey)
-        {
-            // Arrange
-            var limitCountry = new List<LimitedCountriesConfigModel> {
-                new LimitedCountriesConfigModel("HKK", false, null)
-            };
-
-            cacheService.Get<string>(RestrictedCountriesCachedKey).Returns("AU");
-
-            // Act
-            limitedCountryAccessService.GetIPRangesByRestrictedCountry(limitCountry, isIpV6);
-
-            // Assert
-            cacheService.Received().Remove(expectedCacheKey);
-        }
-
-        [Test]
         public void GetIPRangesByRestrictedCountry_NotDifferentRestrictedCountriesConfig_NotCallCachedRestrictedCountries()
         {
             // Arrange
@@ -239,26 +204,6 @@
                 Arg.Is<TimeSpan>(timeSpan => timeSpan.TotalDays == 30));
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public void GetIPRangesByRestrictedCountry_NotDifferentRestrictedCountriesConfig_NotRemoveCachedIPs(bool isIpV6)
-        {
-            // Arrange
-            var cache = Substitute.For<ICacheService>();
-            var service = new LimitedCountryAccessService(false, ipRepository, ipService, cache, limitedCountriesConfigService);
-            var limitCountry = new List<LimitedCountriesConfigModel> {
-                new LimitedCountriesConfigModel("HKK", false, null)
-            };
-
-            cache.Get<string>(RestrictedCountriesCachedKey).Returns("HKK");
-
-            // Act
-            service.GetIPRangesByRestrictedCountry(limitCountry, isIpV6);
-
-            // Assert
-            cache.DidNotReceive().Remove(Arg.Any<string>());
-        }
-
         [Test]
         public void LimitedAccess_NotHaveActiveRestrictedCountry_ReturnFalse()
         {
@@ -267,7 +212,7 @@
                 .Returns(Enumerable.Empty<LimitedCountriesConfigModel>());
 
             // Act
-            var actualLimitedAccess = limitedCountryAccessService.LimitedAccess();
+            var actualLimitedAccess = limitedCountryAccessService.IsLimitedAccess();
 
             // Assert
             Assert.IsFalse(actualLimitedAccess);
@@ -282,7 +227,7 @@
             ipService.GetClientIp().Returns("127.0.0.0");
 
             // Act
-            var actualLimitedAccess = limitedCountryAccessService.LimitedAccess();
+            var actualLimitedAccess = limitedCountryAccessService.IsLimitedAccess();
 
             // Assert
             Assert.IsTrue(actualLimitedAccess);
@@ -292,16 +237,26 @@
         public void LimitedAccess_V6IPNotInRestrictedRange_ReturnFalse()
         {
             // Arrange
-            limitedCountriesConfigService.GetActiveRestrictedCountriesConfig()
+            limitedCountriesConfigService
+                .GetActiveRestrictedCountriesConfig()
                 .Returns(limitedCountriesConfig);
-            ipService.GetClientIp().Returns("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
-            cacheService.GetOrSet("Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6", Arg.Any<Func<IList<IpRange>>>(), Arg.Any<TimeSpan>())
-                .Returns(new List<IpRange> {
-                new IpRange(2306291500588430130, 2306291500588430131, "HKK")
-            });
+
+            ipService
+                .GetClientIp()
+                .Returns("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
+
+            cacheService
+                .GetOrSet(
+                "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6_HKK", 
+                Arg.Any<Func<IList<IpRange>>>(), 
+                Arg.Any<TimeSpan>())
+                .Returns(
+                new List<IpRange> {
+                    new IpRange(2306291500588430130, 2306291500588430131, "HKK")
+                });
 
             // Act
-            var actualLimitedAccess = limitedCountryAccessService.LimitedAccess();
+            var actualLimitedAccess = limitedCountryAccessService.IsLimitedAccess();
 
             // Assert
             Assert.IsFalse(actualLimitedAccess);
@@ -311,17 +266,32 @@
         public void LimitedAccess_V6IPInAllowedAccessIPs_ReturnFalse()
         {
             // Arrange
-            limitedCountriesConfigService.GetActiveRestrictedCountriesConfig()
+            limitedCountriesConfigService
+                .GetActiveRestrictedCountriesConfig()
                 .Returns(limitedCountriesConfig);
-            ipService.GetClientIp().Returns("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
-            cacheService.GetOrSet("Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6", Arg.Any<Func<IList<IpRange>>>(), Arg.Any<TimeSpan>())
-                .Returns(new List<IpRange> { new IpRange(2306291500588430132, 2306291500588430132, "HKK") });
 
-            cacheService.GetOrSet(Arg.Any<string>(), Arg.Any<Func<IList<string>>>(), Arg.Any<TimeSpan>())
+            ipService
+                .GetClientIp()
+                .Returns("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
+
+            cacheService
+                .GetOrSet(
+                "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6", 
+                Arg.Any<Func<IList<IpRange>>>(), 
+                Arg.Any<TimeSpan>())
+                .Returns(new List<IpRange>
+                {
+                    new IpRange(2306291500588430132, 2306291500588430132, "HKK")
+                });
+
+            cacheService.GetOrSet(
+                Arg.Any<string>(), 
+                Arg.Any<Func<IList<string>>>(), 
+                Arg.Any<TimeSpan>())
                .Returns(new List<string> { "2001:0db8:85a3:0000:0000:8a2e:0370:7334" });
 
             // Act
-            var actualLimitedAccess = limitedCountryAccessService.LimitedAccess();
+            var actualLimitedAccess = limitedCountryAccessService.IsLimitedAccess();
 
             // Assert
             Assert.IsFalse(actualLimitedAccess);
@@ -331,17 +301,31 @@
         public void LimitedAccess_V6IPNotInAllowedAccessIPs_ReturnTrue()
         {
             // Arrange
-            limitedCountriesConfigService.GetActiveRestrictedCountriesConfig()
+            limitedCountriesConfigService
+                .GetActiveRestrictedCountriesConfig()
                 .Returns(limitedCountriesConfig);
-            ipService.GetClientIp().Returns("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
-            cacheService.GetOrSet("Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6", Arg.Any<Func<IList<IpRange>>>(), Arg.Any<TimeSpan>())
-                .Returns(new List<IpRange> { new IpRange(2306291500588430132, 2306291500588430132, "HKK") });
 
-            cacheService.GetOrSet(Arg.Any<string>(), Arg.Any<Func<IList<string>>>(), Arg.Any<TimeSpan>())
+            ipService
+                .GetClientIp()
+                .Returns("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
+
+            cacheService.GetOrSet(
+                "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6_HKK", 
+                Arg.Any<Func<IList<IpRange>>>(), 
+                Arg.Any<TimeSpan>())
+                .Returns(new List<IpRange>
+                {
+                    new IpRange(2306291500588430132, 2306291500588430132, "HKK")
+                });
+
+            cacheService.GetOrSet(
+                "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey",
+                Arg.Any<Func<IList<string>>>(),
+                Arg.Any<TimeSpan>())
                .Returns(new List<string> { "2001:0db8:85a3:0000:0000:8a2e:0370:7335" });
 
             // Act
-            var actualLimitedAccess = limitedCountryAccessService.LimitedAccess();
+            var actualLimitedAccess = limitedCountryAccessService.IsLimitedAccess();
 
             // Assert
             Assert.IsTrue(actualLimitedAccess);
@@ -354,14 +338,23 @@
             limitedCountriesConfigService.GetActiveRestrictedCountriesConfig()
                 .Returns(limitedCountriesConfig);
             ipService.GetClientIp().Returns("127.0.0.1");
-            cacheService.GetOrSet("Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4", Arg.Any<Func<IList<IpRange>>>(), Arg.Any<TimeSpan>())
-                .Returns(new List<IpRange> { new IpRange(2130706433, 2130706433, "HKK") });
+            cacheService.GetOrSet(
+                "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4_HKK", 
+                Arg.Any<Func<IList<IpRange>>>(), 
+                Arg.Any<TimeSpan>())
+                .Returns(new List<IpRange>
+                {
+                    new IpRange(2130706433, 2130706433, "HKK")
+                });
 
-            cacheService.GetOrSet(Arg.Any<string>(), Arg.Any<Func<IList<string>>>(), Arg.Any<TimeSpan>())
+            cacheService.GetOrSet(
+                Arg.Any<string>(), 
+                Arg.Any<Func<IList<string>>>(), 
+                Arg.Any<TimeSpan>())
                .Returns(new List<string> { "127.0.0.2" });
 
             // Act
-            var actualLimitedAccess = limitedCountryAccessService.LimitedAccess();
+            var actualLimitedAccess = limitedCountryAccessService.IsLimitedAccess();
 
             // Assert
             Assert.IsTrue(actualLimitedAccess);

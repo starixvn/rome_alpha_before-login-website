@@ -19,7 +19,8 @@
         {
             IPAddress address;
 
-            return IPAddress.TryParse(clientIP, out address) && address.AddressFamily == AddressFamily.InterNetworkV6;
+            return IPAddress.TryParse(clientIP, out address) 
+                && address.AddressFamily == AddressFamily.InterNetworkV6;
         }
 
         public static ulong ConvertIPV4ToNumber(string ipAddress)

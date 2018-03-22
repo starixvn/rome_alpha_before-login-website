@@ -30,14 +30,7 @@ namespace Fanex.Alpha.Before.Customer.Configurations
             {
                 if (_instance == null)
                 {
-                    try
-                    {
-                        _instance = (AutomationTestSettings)ConfigurationManager.GetSection("AlphaSetting/AutomationTestSettings");
-                    }
-                    catch (Exception e)
-                    {
-                        throw new ConfigurationErrorsException("Error when parsing configuration section AlphaSetting - AutomationTestSettings", e);
-                    }
+                    _instance = (AutomationTestSettings)ConfigurationManager.GetSection("AlphaSetting/AutomationTestSettings");
                 }
 
                 return _instance;

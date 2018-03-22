@@ -10,7 +10,7 @@
     using Sunplus.Core.Common.IPs.DAL;
     using UAParser;
 
-    public class DeviceHelper
+    public static class DeviceHelper
     {
         public static Hashtable GetRequestInfo(HttpRequest request, string browserSize)
         {

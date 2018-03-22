@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Alpha.Before.Common.Services
 {
     using System;
+    using System.Collections.Generic;
     using Caching;
 
     public interface ICacheService
@@ -10,8 +11,6 @@
         void Set<T>(string key, T value, TimeSpan validFor);
 
         T GetOrSet<T>(string key, Func<T> factory, TimeSpan validFor);
-
-        void Remove(string key);
     }
 
     public class CacheServiceImpl : ICacheService
@@ -30,7 +29,7 @@
         public T GetOrSet<T>(string key, Func<T> factory, TimeSpan validFor)
         {
             var result = Get<T>(key);
-            if (result != null)
+            if (!EqualityComparer<T>.Default.Equals(result, default(T)))
             {
                 return result;
             }
@@ -39,7 +38,5 @@
             Set(key, result, validFor);
             return result;
         }
-
-        public void Remove(string key) => instance.Remove(key);
     }
 }

@@ -11,7 +11,6 @@
 
     public class LimitedCountryAccessService : ILimitedCountryAccessService
     {
-        private const string RestrictedCountriesCachedKey = "Fanex.Alpha.Before.Common.RestrictedCountriesCachedKey";
         private const string RestrictedIPRangesCachedKey = "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV";
         private const string AllowedAccessIPsCachedKey = "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey";
 
@@ -22,7 +21,7 @@
         private readonly bool trackRunTime;
 
         public LimitedCountryAccessService(
-            bool trackRunTime,
+            bool? trackRunTime = false,
             ILimitedCountryAccessRepository ipRepository = null,
             IPService ipService = null,
             ICacheService cacheService = null,
@@ -32,10 +31,10 @@
             this.ipService = ipService ?? new IpServiceImpl();
             this.cacheService = cacheService ?? new CacheServiceImpl();
             this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
-            this.trackRunTime = trackRunTime;
+            this.trackRunTime = trackRunTime.HasValue ? trackRunTime.Value : AppSetting.TrackRunTime;
         }
 
-        public bool LimitedAccess()
+        public bool IsLimitedAccess()
         {
             var activeRestrictedCountriesConfig = limitedCountriesConfigService.GetActiveRestrictedCountriesConfig();
             if (!activeRestrictedCountriesConfig.Any())
@@ -50,22 +49,31 @@
                 return true;
             }
 
-            var isIpV6 = IpServiceImpl.IsIPV6(clientIP);
-            var restrictedIPs = GetIPRangesByRestrictedCountry(activeRestrictedCountriesConfig, isIpV6);
-            var ipNumber = isIpV6
-                ? IpServiceImpl.ConvertIPV6ToNumber(clientIP)
-                : IpServiceImpl.ConvertIPV4ToNumber(clientIP);
-
-            var range = restrictedIPs.FirstOrDefault(ipRange => ipRange.IPFrom <= ipNumber && ipNumber <= ipRange.IPTo);
+            var range = GetRestrictedIPRange(activeRestrictedCountriesConfig, clientIP);
             if (range == null)
             {
                 return false;
             }
 
             var allowedAccessIps = GetsAllowedAccessIPs();
-            var result = !allowedAccessIps.Any(ip => ip == clientIP);
 
-            return result;
+            return !allowedAccessIps.Any(ip => ip == clientIP);
+        }
+
+        private IpRange GetRestrictedIPRange(
+            IEnumerable<LimitedCountriesConfigModel> activeRestrictedCountriesConfig, 
+            string clientIP)
+        {
+            var isIpV6 = IpServiceImpl.IsIPV6(clientIP);
+            var restrictedIPRangeList = GetIPRangesByRestrictedCountry(activeRestrictedCountriesConfig, isIpV6);
+            var ipNumber = isIpV6
+                ? IpServiceImpl.ConvertIPV6ToNumber(clientIP)
+                : IpServiceImpl.ConvertIPV4ToNumber(clientIP);
+
+            return restrictedIPRangeList
+                .FirstOrDefault(
+                ipRange => ipRange.IPFrom <= ipNumber
+                        && ipNumber <= ipRange.IPTo);
         }
 
         public IList<IpRange> GetIPRangesByRestrictedCountry(
@@ -73,14 +81,7 @@
             bool isIpV6)
         {
             var restrictedCountries = string.Join(",", activeLimitedCountriesConfig.Select(m => m.Name));
-            var cachedRestrictedCountries = cacheService.Get<string>(RestrictedCountriesCachedKey);
-            var cacheKey = RestrictedIPRangesCachedKey + (isIpV6 ? "6" : "4");
-
-            if (!string.Equals(cachedRestrictedCountries, restrictedCountries))
-            {
-                cacheService.Remove(cacheKey);
-                cacheService.Set(RestrictedCountriesCachedKey, restrictedCountries, TimeSpan.FromDays(30));
-            }
+            var cacheKey = $"{RestrictedIPRangesCachedKey}{(isIpV6 ? "6" : "4")}_{restrictedCountries}";
 
             Func<IList<IpRange>> getDataFromDatabaseFunc = () =>
             {
@@ -88,27 +89,23 @@
                 return ipRepository.GetIPRangesByCountry(criteria);
             };
 
-            var restrictedIpRanges = cacheService.GetOrSet(
+            return cacheService.GetOrSet(
                 cacheKey,
-                () => trackRunTime ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc, "GetIPRangesByRestrictedCountry") : getDataFromDatabaseFunc(),
+                () => trackRunTime
+                    ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc, "GetIPRangesByRestrictedCountry")
+                    : getDataFromDatabaseFunc(),
                 TimeSpan.FromDays(30));
-
-            return restrictedIpRanges;
         }
 
         public IList<string> GetsAllowedAccessIPs()
-        {
-            var allowedAccessIPs = cacheService.GetOrSet(
+            => cacheService.GetOrSet(
                 AllowedAccessIPsCachedKey,
                 () => ipRepository.GetsAllowedAccessIPs(new GetAllowedAccessIPsCriteria()),
-                 TimeSpan.FromMinutes(10));
-
-            return allowedAccessIPs;
-        }
+                TimeSpan.FromMinutes(10));
 
         private bool IsTestedIP(IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig, string clientIP)
-        {
-            return activeLimitedCountriesConfig.Any(m => m.IsTesting && m.TestingIp.Split(',').Contains(clientIP));
-        }
+            => activeLimitedCountriesConfig.Any(m
+                => m.IsTesting
+                && m.TestingIp.Split(',').Contains(clientIP));
     }
 }

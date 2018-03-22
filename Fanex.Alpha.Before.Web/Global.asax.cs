@@ -12,7 +12,6 @@ namespace Fanex.Alpha.Before.Web.View
     using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
-    using Common.Configurations;
     using Common.Configurations.LimitedCountryAccessService;
     using Common.Services.LimitedCountryAccessService;
     using Logging.Extensions.Database;
@@ -148,7 +147,7 @@ namespace Fanex.Alpha.Before.Web.View
         private static void InitIPsCache()
         {
             var activeRestrictedCountry = new LimitedCountriesConfigService().GetActiveRestrictedCountriesConfig();
-            new LimitedCountryAccessService(AppSetting.TrackRunTime).GetIPRangesByRestrictedCountry(activeRestrictedCountry, isIpV6: false);
+            new LimitedCountryAccessService().GetIPRangesByRestrictedCountry(activeRestrictedCountry, isIpV6: false);
         }
     }
 }
