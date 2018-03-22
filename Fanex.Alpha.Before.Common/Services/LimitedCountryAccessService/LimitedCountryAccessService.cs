@@ -21,7 +21,7 @@
         private readonly bool trackRunTime;
 
         public LimitedCountryAccessService(
-            bool? trackRunTime = false,
+            bool trackRunTime,
             ILimitedCountryAccessRepository ipRepository = null,
             IPService ipService = null,
             ICacheService cacheService = null,
@@ -31,7 +31,7 @@
             this.ipService = ipService ?? new IpServiceImpl();
             this.cacheService = cacheService ?? new CacheServiceImpl();
             this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
-            this.trackRunTime = trackRunTime.HasValue ? trackRunTime.Value : AppSetting.TrackRunTime;
+            this.trackRunTime = trackRunTime;
         }
 
         public bool IsLimitedAccess()

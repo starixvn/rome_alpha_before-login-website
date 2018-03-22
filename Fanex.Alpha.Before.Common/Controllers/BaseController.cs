@@ -1,12 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="BaseController.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-using Fanex.Alpha.Before.Common.Services.UnderMainternance;
-
-namespace Fanex.Alpha.Before.Common.Controllers
+﻿namespace Fanex.Alpha.Before.Common.Controllers
 {
     using System.Globalization;
     using System.Threading;
@@ -15,6 +7,7 @@ namespace Fanex.Alpha.Before.Common.Controllers
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Configurations.LimitedCountryAccessService;
     using Fanex.Alpha.Before.Common.Configurations.UnderMainternance;
+    using Fanex.Alpha.Before.Common.Services.UnderMainternance;
 
     public class BaseController : Controller
     {
@@ -31,7 +24,7 @@ namespace Fanex.Alpha.Before.Common.Controllers
             LimitedCountryAccessService limitedCountryAccessService)
         {
             _mainternanceService = mainternanceService ?? new UnderMainternanceService();
-            _limitedCountryAccessService = limitedCountryAccessService ?? new LimitedCountryAccessService();
+            _limitedCountryAccessService = limitedCountryAccessService ?? new LimitedCountryAccessService(AppSetting.TrackRunTime);
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
