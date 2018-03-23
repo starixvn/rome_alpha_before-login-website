@@ -382,13 +382,18 @@
     <Content Include="compilerconfig3.json">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
+    <Content Include="Configurations\Local.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\Local.StoreProcedure\RobotSpNames.xml" />
+    <Content Include="Configurations\Master.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\Master.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\MNL.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Configurations\MNL.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\MNL.StoreProcedure\RobotSpNames.xml" />
+    <Content Include="Configurations\PRO.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\RobotSpNames.xml" />
+    <Content Include="Configurations\UAT.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\UAT.StoreProcedure\RobotSpNames.xml" />
     <Content Include="assets\scripts\login\core.js" />
     <Content Include="assets\scripts\login\login.js" />

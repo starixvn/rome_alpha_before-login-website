@@ -1,16 +1,16 @@
-USE [CustDB]
+USE [IPDB]
 GO
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[Age_AllowedAccessIPsSel_xtest]
+ALTER PROCEDURE [dbo].[Age_AllowedAccessIPsSel]
 AS
 	/*
 		Created: Louis.Nguyen
 		Date: 2018-03-13
 		Task: Get office IPs or white list IPs
-		DB: DBCUST/CustDB
+		DB: DBCust.IPDB 
 		
 		Revisions:
 		
@@ -19,9 +19,9 @@ AS
 BEGIN
 	SET NOCOUNT ON 
 	
-	SELECT IP FROM IPDB.dbo.IPOffice WITH (NOLOCK) 	
+	SELECT IP FROM IPOffice WITH (NOLOCK) 	
 	UNION
-	SELECT IP FROM IPDB.dbo.IPWhiteList WITH (NOLOCK) WHERE IsActive = 1	
+	SELECT IP FROM IPWhiteList WITH (NOLOCK) WHERE IsActive = 1	
 END
 
 GRANT EXECUTE ON Age_AllowedAccessIPsSel_xtest TO bodbDownlineNet;  

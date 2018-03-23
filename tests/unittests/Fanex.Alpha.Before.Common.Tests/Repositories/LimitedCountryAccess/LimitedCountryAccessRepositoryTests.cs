@@ -20,7 +20,7 @@
         private IObjectDb objectDb;
         private CompareLogic compareLogic;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void Init()
         {
             limitedCountryAccessRepository = new LimitedCountryAccessRepository();
