@@ -238,19 +238,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-                //// Get Browser
-                Hashtable requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request, browserSize);
-                requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
-                var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
-
-                if (verifySignInResult.ErrorCode == 0)
-                {
-                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
-                }
-                else
-                {
-                    UpdateResultAfterLoginFail(signInResult, verifySignInResult);
-                }
+                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult);
             }
             catch (Exception ex)
             {
@@ -313,19 +301,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-                //// Get Browser
-                Hashtable requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request, browserSize);
-                requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
-                var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
-
-                if (verifySignInResult.ErrorCode == 0)
-                {
-                    UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
-                }
-                else
-                {
-                    UpdateResultAfterLoginFail(signInResult, verifySignInResult);
-                }
+                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult);
             }
             catch (Exception ex)
             {
@@ -611,6 +587,27 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex);
+            }
+        }
+
+        private void VerifyDownlineLogin(
+            string username,
+            string password,
+            string deviceId,
+            string browserSize,
+            SignInResult signInResult)
+        {
+            var requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request, browserSize);
+            requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
+
+            var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
+            if (verifySignInResult.ErrorCode == 0)
+            {
+                UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
+            }
+            else
+            {
+                UpdateResultAfterLoginFail(signInResult, verifySignInResult);
             }
         }
     }
