@@ -39,7 +39,7 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
                 parameters.Add("logintime", DateTime.Now);
                 parameters.Add("language", AppSession.LangKey);
                 parameters.Add("isnickname", false);
-                parameters.Add("nickname", string.Empty);                
+                parameters.Add("nickname", string.Empty);
                 parameters.Add("errcode", 0);
                 parameters.Add("errmsg", string.Empty);
                 parameters.Add("lastchangedpwddate", null);
@@ -47,7 +47,7 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
 
                 objectDB.AssignParamValues(parameters);
                 objectDB.ExecuteNonQuery();
-                var result = new VerifySignInResult()
+                var result = new VerifySignInResult
                 {
                     CustId = Converter.ToInt(objectDB.GetOuputParams()["custid"]),
                     Username = Converter.ToString2(objectDB.GetOuputParams()["username"]),
@@ -55,13 +55,13 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
                     IsNickname = Converter.ToBool(objectDB.GetOuputParams()["isnickname"]),
                     Nickname = Converter.ToString2(objectDB.GetOuputParams()["nickname"]),
                     LoginTime = Converter.ToDateTime(objectDB.GetOuputParams()["logintime"]),
-                    LastTimeToChangePassword = objectDB.GetOuputParams()["lastchangedpwddate"] != null ? 
-                        Converter.ToDateTime(objectDB.GetOuputParams()["lastchangedpwddate"]) : 
+                    LastTimeToChangePassword = objectDB.GetOuputParams()["lastchangedpwddate"] != null ?
+                        Converter.ToDateTime(objectDB.GetOuputParams()["lastchangedpwddate"]) :
                         DateTime.MinValue,
                     ErrorCode = Converter.ToInt(objectDB.GetOuputParams()["errcode"]),
                     ErrorMessage = Converter.ToString2(objectDB.GetOuputParams()["errmsg"])
                 };
-                
+
                 return result;
             }
         }

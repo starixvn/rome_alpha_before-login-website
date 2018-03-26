@@ -30,6 +30,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{77DDE5E0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Common.Tests", "tests\unittests\Fanex.Alpha.Before.Common.Tests\Fanex.Alpha.Before.Common.Tests.csproj", "{017ADB57-6D53-427C-B880-972352AD0091}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{34A9DCEA-400F-4EF0-B42A-6AD6095BE22D}"
+	ProjectSection(SolutionItems) = preProject
+		SonarQube\Alpha-Before-LoginCSharp.ruleset = SonarQube\Alpha-Before-LoginCSharp.ruleset
+		SonarQube\SolutionBinding.sqconfig = SonarQube\SolutionBinding.sqconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

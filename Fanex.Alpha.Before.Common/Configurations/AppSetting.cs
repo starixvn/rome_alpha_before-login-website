@@ -9,7 +9,7 @@
         private static string fpsActivator;
         private static string googleAnalyticId;
         private static bool isMBCSite;
-        private static bool trackRunTime;
+        private static readonly bool trackRunTime;
 
         static AppSetting()
         {

@@ -60,7 +60,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// <param name="txtPassWord">User password.</param>
         /// <param name="hidLanguage">Hidden language.</param>
         /// <param name="code">Encrypt code.</param>
-        /// <param name="__di">FPS validate code.</param>
         /// <returns>
         /// Return result.
         /// </returns>
@@ -120,7 +119,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// <summary>
         /// Function to send login status to FPS.
         /// </summary>
-        /// <param name="username">The Username.</param>
         /// <param name="loginResult">Login result.</param>
         private static void FPSTracking(SignInResult loginResult)
         {
@@ -238,7 +236,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
         private void RemoveDetecasSession()
         {
-            var detecasSessionKeys = Session.Keys.Cast<string>().Where(k => k.StartsWith("Detecas-")).ToList();
+            var detecasSessionKeys = Session.Keys.Cast<string>().Where(k => k.StartsWith("Detecas-", StringComparison.OrdinalIgnoreCase)).ToList();
             detecasSessionKeys.ForEach(k => Session.Remove(k));
         }
     }

@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="SonarQube - Alpha / Alpha Before Login Nexcel CSharp" ToolsVersion="14.0">
+  <Include Path="..\sonarqube\alpha-before-logincsharp.ruleset" Action="Default" />
+</RuleSet>

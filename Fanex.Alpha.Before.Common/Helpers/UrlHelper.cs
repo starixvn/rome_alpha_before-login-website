@@ -16,7 +16,7 @@ namespace Fanex.Alpha.Before.Common.Helpers
     /// <summary>
     /// URL helper.
     /// </summary>
-    public class UrlHelper
+    public static class UrlHelper
     {
         internal const string HttpSlashSlash = "http://";
         internal const string HttpSlashSlashS = "https://";
@@ -30,13 +30,13 @@ namespace Fanex.Alpha.Before.Common.Helpers
                 var domainGroupSection = DomainGroupSection.Instance.DomainGroup;
                 var baseUrl = GetBaseUrl();
                 var defaultGroup = "Others";
-                var siteGroup = new SiteGroupModel()
+                var siteGroup = new SiteGroupModel
                 {
                     SiteGroup = defaultGroup,
                     BeforeUrl = baseUrl,
                     AfterUrl = baseUrl
                 };
-                
+
                 if (domainGroupSection == null || domainGroupSection.Count == 0)
                 {
                     return siteGroup;
@@ -65,21 +65,23 @@ namespace Fanex.Alpha.Before.Common.Helpers
 
                     foreach (var domainSetting in domains)
                     {
-                        if (domainSetting.Id.IndexOf(host, System.StringComparison.OrdinalIgnoreCase) >= 0)
+                        if (domainSetting.Id.IndexOf(host, System.StringComparison.OrdinalIgnoreCase) == -1)
                         {
-                            siteGroup.SiteGroup = domainGroupElement.Name;
-                            siteGroup.BeforeUrl = domainSetting.BeforeUrl;
-                            siteGroup.AfterUrl = domainSetting.AfterUrl;
-                            
-                            if (AlphaCommonSection.Instance != null &&
-                               !string.IsNullOrEmpty(AlphaCommonSection.Instance.OfficeIPs) &&
-                                AlphaCommonSection.Instance.OfficeIPs.Split(',').Contains(IPHelper.ClientIP()))
-                            {
-                                siteGroup.SiteGroup = defaultGroup;
-                            }
-
-                            return siteGroup;
+                            continue;
                         }
+
+                        siteGroup.SiteGroup = domainGroupElement.Name;
+                        siteGroup.BeforeUrl = domainSetting.BeforeUrl;
+                        siteGroup.AfterUrl = domainSetting.AfterUrl;
+
+                        if (AlphaCommonSection.Instance != null &&
+                           !string.IsNullOrEmpty(AlphaCommonSection.Instance.OfficeIPs) &&
+                            AlphaCommonSection.Instance.OfficeIPs.Split(',').Contains(IPHelper.ClientIP()))
+                        {
+                            siteGroup.SiteGroup = defaultGroup;
+                        }
+
+                        return siteGroup;
                     }
                 }
 

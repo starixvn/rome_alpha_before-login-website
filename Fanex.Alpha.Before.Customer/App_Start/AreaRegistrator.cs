@@ -26,7 +26,6 @@ namespace Fanex.Alpha.Before.Customer.App_Start
         {
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(this.AreaName, context);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
 }

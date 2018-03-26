@@ -98,7 +98,7 @@ namespace Fanex.Alpha.Before.Web.View
         /// <param name="urlHelper">URL Helper.</param>
         /// <param name="keyValuePair">Key Value pair.</param>
         /// <returns>Return Result.</returns>
-        private string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
+        private static string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
         {
             return urlHelper.Action(
                 "Generate",
@@ -114,7 +114,7 @@ namespace Fanex.Alpha.Before.Web.View
                                 });
         }
 
-        protected void Application_Error(object sender, EventArgs e)
+        protected void Application_Error()
         {
             if (Request.IsLocal)
             {

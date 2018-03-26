@@ -11,22 +11,10 @@ namespace Fanex.Alpha.Before.Common.Models
     /// </summary>
     public class SiteGroupModel
     {
-        public string SiteGroup 
-        { 
-            get; 
-            set; 
-        }
+        public string SiteGroup { get; set; }
 
-        public string BeforeUrl 
-        { 
-            get;
-            set; 
-        }
+        public string BeforeUrl { get; set; }
 
-        public string AfterUrl 
-        { 
-            get; 
-            set;
-        }
+        public string AfterUrl { get; set; }
     }
 }

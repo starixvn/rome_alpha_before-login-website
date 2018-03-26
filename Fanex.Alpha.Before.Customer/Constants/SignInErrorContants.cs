@@ -6,10 +6,7 @@
 
 namespace Fanex.Alpha.Before.Customer.Constants
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
-    public class SignInErrorContants
+    public static class SignInErrorContants
     {
         public const int ErrorInvalidLogin = 101;
         public const int ErrorInvalidCaptcha = 102;

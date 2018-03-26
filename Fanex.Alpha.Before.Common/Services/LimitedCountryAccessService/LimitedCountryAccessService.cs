@@ -61,7 +61,7 @@
         }
 
         private IpRange GetRestrictedIPRange(
-            IEnumerable<LimitedCountriesConfigModel> activeRestrictedCountriesConfig, 
+            IEnumerable<LimitedCountriesConfigModel> activeRestrictedCountriesConfig,
             string clientIP)
         {
             var isIpV6 = IpServiceImpl.IsIPV6(clientIP);
@@ -103,7 +103,7 @@
                 () => ipRepository.GetsAllowedAccessIPs(new GetAllowedAccessIPsCriteria()),
                 TimeSpan.FromMinutes(10));
 
-        private bool IsTestedIP(IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig, string clientIP)
+        private static bool IsTestedIP(IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig, string clientIP)
             => activeLimitedCountriesConfig.Any(m
                 => m.IsTesting
                 && m.TestingIp.Split(',').Contains(clientIP));

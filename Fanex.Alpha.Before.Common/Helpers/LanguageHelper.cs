@@ -14,13 +14,9 @@ namespace Fanex.Alpha.Before.Common.Helpers
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class LanguageHelper
+    public static class LanguageHelper
     {
-        private static string[] languages = new string[] { "en-US", "th-TH", "zh-CN", "zh-TW", "ja-JP", "ko-KR", "vi-VN" };
-
-        public LanguageHelper()
-        {
-        }
+        private static readonly string[] languages = { "en-US", "th-TH", "zh-CN", "zh-TW", "ja-JP", "ko-KR", "vi-VN" };
 
         public static string DefaultLanguage
         {

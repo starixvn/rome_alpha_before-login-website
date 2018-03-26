@@ -12,7 +12,7 @@ namespace Fanex.Alpha.Before.Customer.Configurations
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class CustomerAppSetting
+    public static class CustomerAppSetting
     {
         public static string AfterLoginAuthorizationPage
         {

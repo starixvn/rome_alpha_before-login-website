@@ -9,7 +9,7 @@ namespace Fanex.Alpha.Before.Common.Constants
     /// <summary>
     /// Session Constants.
     /// </summary>
-    public class SessionConstants
+    public static class SessionConstants
     {
         public const string LANGUAGE = "Fanex.Alpha.Before.Common.Constants.SessionConstants.language";
         public const string ENCRYPTCODE = "Fanex.Alpha.Before.Common.Constants.SessionConstants.encryptcode";

@@ -97,16 +97,10 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
         }
 
         public static DateTime GetEndOfDate(this DateTime date)
-        {
-            date = new DateTime(date.Year, date.Month, date.Day).AddDays(1).AddSeconds(-1);
-            return date;
-        }
+            => new DateTime(date.Year, date.Month, date.Day).AddDays(1).AddSeconds(-1);
 
         public static DateTime GetStartOfDate(this DateTime date)
-        {
-            date = new DateTime(date.Year, date.Month, date.Day);
-            return date;
-        }
+            => new DateTime(date.Year, date.Month, date.Day);
 
         public static string ToMonthYear(this DateTime date)
         {

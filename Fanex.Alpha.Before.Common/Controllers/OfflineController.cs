@@ -17,7 +17,7 @@ namespace Fanex.Alpha.Before.Common.Controllers
     /// </summary>
     public class OfflineController : Controller
     {
-        private IUnderMainternanceService _mainternanceService;
+        private readonly IUnderMainternanceService _mainternanceService;
 
         public OfflineController() :
             this(null)

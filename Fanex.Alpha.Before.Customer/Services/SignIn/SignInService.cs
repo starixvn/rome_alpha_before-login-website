@@ -34,19 +34,19 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     /// </summary>
     public class SignInService : ISignInService
     {
-        private int _maxTimesToAllowLogInFail = 0;
-        private int _blockLoginMinute = 0;
-        private int _loginFailTimeToStartUsingCaptcha = 0;
-        private int _passwordMaxFailTimeForOneUser = 0;
-        private int _notInteractionTimeInMinutes = 0;
-        private string _baseDomain = string.Empty;
-        private string _loginTheme = string.Empty;
-        private LoginThemeSection _loginThemeSection;
-        private ISignInRepository _signInRepository;
-        private string _totalLoginFailedSessionKey = string.Format(SessionConstants.TOTALLOGINFAILEDCOUNT, IPHelper.ClientIP());
-        private string _currentLoginFailedSessionKey = string.Format(SessionConstants.CURRENTLOGINFAILEDCOUNT, IPHelper.ClientIP());
-        private string _latestLoginFailSessionKey = string.Format(SessionConstants.LOGINFAILEDTIME, IPHelper.ClientIP());
-        private string _lastLoginUserNameSessionKey = string.Format(SessionConstants.LASTLOGINUSERNAME, IPHelper.ClientIP());
+        private readonly int _maxTimesToAllowLogInFail;
+        private readonly int _blockLoginMinute;
+        private readonly int _loginFailTimeToStartUsingCaptcha;
+        private readonly int _passwordMaxFailTimeForOneUser;
+        private readonly int _notInteractionTimeInMinutes;
+        private readonly string _baseDomain = string.Empty;
+        private readonly string _loginTheme;
+
+        private readonly ISignInRepository _signInRepository;
+        private readonly string _totalLoginFailedSessionKey = string.Format(SessionConstants.TOTALLOGINFAILEDCOUNT, IPHelper.ClientIP());
+        private readonly string _currentLoginFailedSessionKey = string.Format(SessionConstants.CURRENTLOGINFAILEDCOUNT, IPHelper.ClientIP());
+        private readonly string _latestLoginFailSessionKey = string.Format(SessionConstants.LOGINFAILEDTIME, IPHelper.ClientIP());
+        private readonly string _lastLoginUserNameSessionKey = string.Format(SessionConstants.LASTLOGINUSERNAME, IPHelper.ClientIP());
 
         public SignInService() :
             this(null)
@@ -56,7 +56,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         public SignInService(SignInRepository signInRepository)
         {
             _signInRepository = signInRepository ?? new SignInRepository();
-            _loginThemeSection = LoginThemeSection.Instance;
+            var _loginThemeSection = LoginThemeSection.Instance;
 
             this._loginTheme = _loginThemeSection.DefaultTheme;
             if (DateTime.Now >= Converter.ToDateTime(_loginThemeSection.StartDateShowEventTheme) &&
@@ -85,7 +85,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         /// <returns>Return result.</returns>
         public SignInResult SignIn()
         {
-            var loginResult = new SignInResult()
+            var loginResult = new SignInResult
             {
                 LoginTemplate = _loginTheme,
                 Ip = IPHelper.ClientIP(),
@@ -151,7 +151,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string deviceId,
             string browserSize)
         {
-            var signInResult = new SignInResult()
+            var signInResult = new SignInResult
             {
                 Ip = IPHelper.ClientIP(),
                 LoginTemplate = _loginTheme,
@@ -276,7 +276,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             Justification = "Reviewed. Suppression is OK here.")]
         public SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
         {
-            var signInResult = new SignInResult()
+            var signInResult = new SignInResult
             {
                 Ip = IPHelper.ClientIP(),
                 LoginTemplate = _loginTheme,
@@ -305,10 +305,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-                var allowWords = allowUsernameContainWords.ToUpper().Split(',');
+                var allowWords = allowUsernameContainWords.ToUpperInvariant().Split(',');
                 if (!allowIps.Split(',').Contains(IPHelper.ClientIP()) ||
                     !allowCaptcha.Equals(captcha) ||
-                    !allowWords.All(s => username.ToUpper().Contains(s)))
+                    !allowWords.All(s => username.ToUpperInvariant().Contains(s)))
                 {
                     return signInResult;
                 }
@@ -503,16 +503,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         /// Setting language that user's choosing.
         /// </summary>
         /// <param name="language">The currently language.</param>
-        private void AssignSettingLanguage(string language)
+        private static void AssignSettingLanguage(string language)
         {
-            if (LanguageHelper.IsValidLanguage(language))
-            {
-                AppSession.Language = language;
-            }
-            else
-            {
-                AppSession.Language = LanguageHelper.DefaultLanguage;
-            }
+            AppSession.Language = LanguageHelper.IsValidLanguage(language) ? language : LanguageHelper.DefaultLanguage;
 
             LanguageHelper.SetLanguage(AppSession.Language);
         }
@@ -592,7 +585,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             string url = HttpContext.Current.Session["UMToken"] == null
                 ? string.Format("{0}{1}?params={2}", UrlHelper.SiteGroupSetting.AfterUrl, CustomerAppSetting.AfterLoginAuthorizationPage, parameter)
-                : string.Format("{0}{1}?UMToken={2}&params={3}", UrlHelper.SiteGroupSetting.AfterUrl, CustomerAppSetting.AfterLoginAuthorizationPage, HttpContext.Current.Session["UMToken"], parameter);
+                : string.Format(
+                    "{0}{1}?UMToken={2}&params={3}",
+                    UrlHelper.SiteGroupSetting.AfterUrl,
+                    CustomerAppSetting.AfterLoginAuthorizationPage,
+                    HttpContext.Current.Session["UMToken"],
+                    parameter);
 
             signInResult.ErrMsg = LoginLanguages.Labels.lblLoginSuccessful;
             signInResult.AfterLoginUrl = url;

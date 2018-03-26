@@ -13,10 +13,6 @@ namespace Fanex.Alpha.Before.Common.Configurations.Domain
     /// </summary>
     public class DomainElement : ConfigurationElement
     {
-        public DomainElement()
-        {
-        }
-
         [ConfigurationProperty("id", DefaultValue = "0", IsRequired = true, IsKey = true)]
         public string Id
         {

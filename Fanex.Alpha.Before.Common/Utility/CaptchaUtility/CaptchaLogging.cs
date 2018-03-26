@@ -12,7 +12,7 @@ namespace Fanex.Alpha.Before.Common.Utility.CaptchaUtility
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class CaptchaLogging
+    public static class CaptchaLogging
     {
         private const int _MAX_LIST_SIZE = 10000;
         private static List<CaptchaInfo> captchaList = new List<CaptchaInfo>();
