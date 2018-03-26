@@ -776,6 +776,7 @@
   <PropertyGroup>
     <PostBuildEvent>cd $(ProjectDir)
 cd ..
-build.cmd</PostBuildEvent>
+cd build
+assets.build.cmd</PostBuildEvent>
   </PropertyGroup>
 </Project>
