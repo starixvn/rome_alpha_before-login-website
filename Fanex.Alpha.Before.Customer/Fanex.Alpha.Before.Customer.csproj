@@ -248,9 +248,7 @@
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Criteria\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Fanex.Alpha.Before.Common\Fanex.Alpha.Before.Common.csproj">
       <Project>{DBB7C2A5-9919-4C5D-B69C-3EDF958E1741}</Project>

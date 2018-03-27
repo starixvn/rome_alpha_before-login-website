@@ -1,20 +1,10 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="OfflineController.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-using Fanex.Alpha.Before.Common.Services.UnderMainternance;
-
-namespace Fanex.Alpha.Before.Common.Controllers
+﻿namespace Fanex.Alpha.Before.Common.Controllers
 {
     using System.Web.Mvc;
     using System.Web.Security;
     using Configurations.UnderMainternance;
+    using Services.UnderMainternance;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class OfflineController : Controller
     {
         private readonly IUnderMainternanceService _mainternanceService;
@@ -24,7 +14,7 @@ namespace Fanex.Alpha.Before.Common.Controllers
         {
         }
 
-        public OfflineController(UnderMainternanceService mainternanceService)
+        public OfflineController(IUnderMainternanceService mainternanceService)
         {
             _mainternanceService = mainternanceService ?? new UnderMainternanceService();
         }

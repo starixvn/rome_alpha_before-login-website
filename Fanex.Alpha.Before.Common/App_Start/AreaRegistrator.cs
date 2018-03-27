@@ -6,9 +6,7 @@
 
 namespace Fanex.Alpha.Before.Common.App_Start
 {
-    using System.Web.Http;
     using System.Web.Mvc;
-    using System.Web.Optimization;
 
     /// <summary>
     /// Area Register.
