@@ -7,8 +7,5 @@
     <Setting Key="Age_LoginDownline_Sub" SpName="Age_LoginDownline_Sub_MNL" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
     <Setting Key="Age_LoginDownline_Admin" SpName="Age_LoginDownline_Admin_MNL" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
     <Setting Key="Age_LoginDownline_CheckSubUsername" SpName="Age_LoginDownline_CheckSubUsername" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
-
-    <Setting Key="Age_IPRangesByCountrySel" SpName="Age_IPRangesByCountrySel" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
-    <Setting Key="Age_AllowedAccessIPsSel" SpName="Age_AllowedAccessIPsSel" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
   </Function>
 </Functions>

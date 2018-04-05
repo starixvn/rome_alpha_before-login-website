@@ -1,3 +1,4 @@
+/*<info serverAlias="DBCust.IPDB" executers="bodbAdminNet,bodbDownlineNet" viewers="vnteam" isFunction="1" isNested=”1”></info>*/
 USE [IPDB]
 GO
 /****** Object:  UserDefinedFunction [dbo].[strSplit]    Script Date: 03/23/2018 09:22:09 ******/
