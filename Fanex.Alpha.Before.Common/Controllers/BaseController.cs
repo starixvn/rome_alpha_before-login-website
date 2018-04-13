@@ -5,8 +5,8 @@
     using System.Web.Mvc;
     using System.Web.Routing;
     using Fanex.Alpha.Before.Common.Configurations;
-    using Fanex.Alpha.Before.Common.Configurations.LimitedCountryAccessService;
     using Fanex.Alpha.Before.Common.Configurations.UnderMainternance;
+    using Fanex.Alpha.Before.Common.Services.LimitedCountryAccessService;
     using Fanex.Alpha.Before.Common.Services.UnderMainternance;
 
     public class BaseController : Controller

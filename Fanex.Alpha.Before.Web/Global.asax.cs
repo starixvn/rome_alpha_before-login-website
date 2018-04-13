@@ -6,14 +6,12 @@
 
 namespace Fanex.Alpha.Before.Web.View
 {
-    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
     using Common.Configurations;
-    using Common.Configurations.LimitedCountryAccessService;
     using Common.Services.LimitedCountryAccessService;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;

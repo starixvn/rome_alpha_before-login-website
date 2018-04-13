@@ -1,4 +1,4 @@
-﻿namespace Fanex.Alpha.Before.Common.Configurations.LimitedCountryAccessService
+﻿namespace Fanex.Alpha.Before.Common.Services.LimitedCountryAccessService
 {
     public interface ILimitedCountryAccessService
     {

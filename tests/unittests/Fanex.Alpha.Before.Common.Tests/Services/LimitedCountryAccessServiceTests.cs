@@ -8,7 +8,6 @@
     using Common.Repositories.LimitedCountryAccess;
     using Common.Services;
     using Common.Services.LimitedCountryAccessService;
-    using Configurations.LimitedCountryAccessService;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -23,6 +22,7 @@
         private IPService ipService;
         private ICacheService cacheService;
         private ILimitedCountriesConfigService limitedCountriesConfigService;
+        private  Action<string> logInfoAction;
 
         private IList<LimitedCountriesConfigModel> limitedCountriesConfig;
 
@@ -35,13 +35,45 @@
             ipService = Substitute.For<IPService>();
             cacheService = Substitute.For<ICacheService>();
             limitedCountriesConfigService = Substitute.For<ILimitedCountriesConfigService>();
+            logInfoAction = Substitute.For<Action<string>>();
 
-            limitedCountryAccessService = new LimitedCountryAccessService(false, ipRepository, ipService, cacheService, limitedCountriesConfigService);
+            limitedCountryAccessService = new LimitedCountryAccessService(false, ipRepository, ipService, cacheService, limitedCountriesConfigService, logInfoAction);
 
             limitedCountriesConfig = new List<LimitedCountriesConfigModel>
             {
                 new LimitedCountriesConfigModel("HKK", true, "127.0.0.0")
             };
+        }
+
+        [Test]
+        public void IsLimitedAccess_AccessWithIPv6_WriteInfo()
+        {
+            // Arrange
+            ipService
+               .GetClientIp()
+               .Returns("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
+            var expectedMessage = "Customer Access via IPV6: 2001:0db8:85a3:0000:0000:8a2e:0370:7334";
+
+            // Act
+            limitedCountryAccessService.IsLimitedAccess();
+
+            // Assert
+            logInfoAction.Received().Invoke(Arg.Is<string>(str => str == expectedMessage));
+        }
+
+        [Test]
+        public void IsLimitedAccess_AccessWithIPv4_NotWriteInfo()
+        {
+            // Arrange
+            ipService
+               .GetClientIp()
+               .Returns("127.0.0.1");
+
+            // Act
+            limitedCountryAccessService.IsLimitedAccess();
+
+            // Assert
+            logInfoAction.DidNotReceive();
         }
 
         [Test]

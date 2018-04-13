@@ -1,13 +1,13 @@
-﻿namespace Fanex.Alpha.Before.Common.Configurations.LimitedCountryAccessService
+﻿namespace Fanex.Alpha.Before.Common.Services.LimitedCountryAccessService
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Criteria.LimitedCountryAccess;
+    using Logging;
     using Models;
     using Repositories.LimitedCountryAccess;
     using Services;
-    using Services.LimitedCountryAccessService;
 
     public class LimitedCountryAccessService : ILimitedCountryAccessService
     {
@@ -18,6 +18,7 @@
         private readonly IPService ipService;
         private readonly ICacheService cacheService;
         private readonly ILimitedCountriesConfigService limitedCountriesConfigService;
+        private readonly Action<string> logInfoAction;
         private readonly bool trackRunTime;
 
         public LimitedCountryAccessService(
@@ -25,24 +26,30 @@
             ILimitedCountryAccessRepository ipRepository = null,
             IPService ipService = null,
             ICacheService cacheService = null,
-            ILimitedCountriesConfigService limitedCountriesConfigService = null)
+            ILimitedCountriesConfigService limitedCountriesConfigService = null,
+            Action<string> logInfoAction = null)
         {
             this.ipRepository = ipRepository ?? new LimitedCountryAccessRepository();
             this.ipService = ipService ?? new IpServiceImpl();
             this.cacheService = cacheService ?? new CacheServiceImpl();
             this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
+            this.logInfoAction = logInfoAction ?? LogService.Info;
             this.trackRunTime = trackRunTime;
         }
 
         public bool IsLimitedAccess()
         {
+            var clientIP = ipService.GetClientIp();
+            if (IpServiceImpl.IsIPV6(clientIP))
+            {
+                logInfoAction($"Customer Access via IPV6: {clientIP}");
+            }
+
             var activeRestrictedCountriesConfig = limitedCountriesConfigService.GetActiveRestrictedCountriesConfig();
             if (!activeRestrictedCountriesConfig.Any())
             {
                 return false;
             }
-
-            var clientIP = ipService.GetClientIp();
 
             if (IsTestedIP(activeRestrictedCountriesConfig, clientIP))
             {
