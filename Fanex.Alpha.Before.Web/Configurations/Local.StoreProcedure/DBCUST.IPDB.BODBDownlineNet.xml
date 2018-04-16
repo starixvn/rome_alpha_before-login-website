@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Functions SiteId="105" SiteName="Alpha">
+  <Function Name="Login">
+    <Setting Key="Age_IPRangesByCountrySel" SpName="Age_IPRangesByCountrySel" DbName="DBCUST.IPDB.BODBDownlineNet" Plain="0" />
+    <Setting Key="Age_AllowedAccessIPsSel" SpName="Age_AllowedAccessIPsSel" DbName="DBCUST.IPDB.BODBDownlineNet" Plain="0" />
+  </Function>
+</Functions>

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<AllowedAccessIPs>
+  <TableWinLoss>
+    <IP>127.0.0.1</IP>
+  </TableWinLoss>
+</AllowedAccessIPs>

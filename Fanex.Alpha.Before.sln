@@ -30,6 +30,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{77DDE5E0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Common.Tests", "tests\unittests\Fanex.Alpha.Before.Common.Tests\Fanex.Alpha.Before.Common.Tests.csproj", "{017ADB57-6D53-427C-B880-972352AD0091}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{34A9DCEA-400F-4EF0-B42A-6AD6095BE22D}"
+	ProjectSection(SolutionItems) = preProject
+		SonarQube\Alpha-Before-LoginCSharp.ruleset = SonarQube\Alpha-Before-LoginCSharp.ruleset
+		SonarQube\SolutionBinding.sqconfig = SonarQube\SolutionBinding.sqconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Infrastructure.Tests", "tests\unittests\Fanex.Alpha.Before.Infrastructure.Tests\Fanex.Alpha.Before.Infrastructure.Tests.csproj", "{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +64,10 @@ Global
 		{017ADB57-6D53-427C-B880-972352AD0091}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{017ADB57-6D53-427C-B880-972352AD0091}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{017ADB57-6D53-427C-B880-972352AD0091}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +77,7 @@ Global
 		{86AE59AE-4FEB-4EF7-A973-9FA75F2665E7} = {AD1FA013-9E02-4748-985B-D99366FD7FDD}
 		{D7C7BD95-04A3-49AA-B486-16DD746B76F8} = {AD1FA013-9E02-4748-985B-D99366FD7FDD}
 		{017ADB57-6D53-427C-B880-972352AD0091} = {77DDE5E0-A989-4D46-8A42-8EC254929B3D}
+		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5} = {77DDE5E0-A989-4D46-8A42-8EC254929B3D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Data.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35;packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.0\lib\NET35

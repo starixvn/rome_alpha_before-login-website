@@ -12,7 +12,7 @@ namespace Fanex.Alpha.Before.Common.App_Start
     /// <summary>
     /// Route config class.
     /// </summary>
-    public class RouteConfig
+    public static class RouteConfig
     {
         public static void RegisterRoutes(string areaName, AreaRegistrationContext context)
         {

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<IPRangesByCountry>
+  <TableWinLoss>
+    <IPFrom>1</IPFrom>
+    <IPTo>3</IPTo>
+    <CountryShort>HKK</CountryShort>
+  </TableWinLoss>
+</IPRangesByCountry>

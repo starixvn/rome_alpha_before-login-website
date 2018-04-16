@@ -6,12 +6,13 @@
 
 namespace Fanex.Alpha.Before.Web.View
 {
-    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
+    using Common.Configurations;
+    using Common.Services.LimitedCountryAccessService;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using ONEbook.UM.Configurations;
@@ -62,6 +63,7 @@ namespace Fanex.Alpha.Before.Web.View
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
 
+            CaptchaUtils.CaptchaManager.StorageProvider = new CookieStorageProvider();
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
             defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
             defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
@@ -78,6 +80,8 @@ namespace Fanex.Alpha.Before.Web.View
             {
                 ExceptionHandler.Handle(new UMClientException(message));
             });
+
+            InitIPsCache();
         }
 
         private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
@@ -92,7 +96,7 @@ namespace Fanex.Alpha.Before.Web.View
         /// <param name="urlHelper">URL Helper.</param>
         /// <param name="keyValuePair">Key Value pair.</param>
         /// <returns>Return Result.</returns>
-        private string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
+        private static string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
         {
             return urlHelper.Action(
                 "Generate",
@@ -108,7 +112,7 @@ namespace Fanex.Alpha.Before.Web.View
                                 });
         }
 
-        protected void Application_Error(object sender, EventArgs e)
+        protected void Application_Error()
         {
             if (Request.IsLocal)
             {
@@ -137,6 +141,12 @@ namespace Fanex.Alpha.Before.Web.View
             }
 
             return result;
+        }
+
+        private static void InitIPsCache()
+        {
+            var activeRestrictedCountry = new LimitedCountriesConfigService().GetActiveRestrictedCountriesConfig();
+            new LimitedCountryAccessService(AppSetting.TrackRunTime).GetIPRangesByRestrictedCountry(activeRestrictedCountry, isIpV6: false);
         }
     }
 }

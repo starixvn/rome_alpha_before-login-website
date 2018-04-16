@@ -29,14 +29,7 @@ namespace Fanex.Alpha.Before.Customer.Configurations
             {
                 if (_instance == null)
                 {
-                    try
-                    {
-                        _instance = (AlphaCommonSection)ConfigurationManager.GetSection("AlphaSetting/CommonSettings");
-                    }
-                    catch (Exception e)
-                    {
-                        throw new ConfigurationErrorsException("Error when parsing configuration section AlphaSetting - LoginTheme", e);
-                    }
+                    _instance = (AlphaCommonSection)ConfigurationManager.GetSection("AlphaSetting/CommonSettings");
                 }
 
                 return _instance;

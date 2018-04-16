@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0"
+         xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         DefaultTargets="MyTargets"
+         InitialTargets="MyTargets">
+  <UsingTask AssemblyFile="..\_tools\WebCompiler\WebCompiler.exe" TaskName="WebCompiler.CompilerBuildTask"/>
+  <UsingTask AssemblyFile="..\_tools\WebCompiler\WebCompiler.exe" TaskName="WebCompiler.CompilerCleanTask"/>
+  <UsingTask AssemblyFile="..\_tools\BundlerMinifier\BundlerMinifier.exe" TaskName="BundlerMinifier.BundlerBuildTask"/>
+  <UsingTask AssemblyFile="..\_tools\BundlerMinifier\BundlerMinifier.exe" TaskName="BundlerMinifier.BundlerCleanTask"/>
+
+  <Target Name="MyTargets">
+    <WebCompiler.CompilerCleanTask FileName="$(MSBuildProjectDirectory)\..\Fanex.Alpha.Before.Web\compilerconfig.json" />
+    <WebCompiler.CompilerBuildTask FileName="$(MSBuildProjectDirectory)\..\Fanex.Alpha.Before.Web\compilerconfig.json" />
+	<BundlerMinifier.BundlerCleanTask FileName="$(MSBuildProjectDirectory)\..\Fanex.Alpha.Before.Web\bundleconfig.json" />
+	<BundlerMinifier.BundlerBuildTask FileName="$(MSBuildProjectDirectory)\..\Fanex.Alpha.Before.Web\bundleconfig.json" />
+  </Target>
+  
+</Project>

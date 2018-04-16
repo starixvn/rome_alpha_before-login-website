@@ -18,7 +18,7 @@ namespace Fanex.Alpha.Before.Common.Utility.CaptchaUtility
     /// </summary>
     public class CaptchaImage
     {
-        private Random _random = new Random();
+        private readonly Random _random = new Random();
 
         public CaptchaImage(string ip, string username)
         {
@@ -33,7 +33,7 @@ namespace Fanex.Alpha.Before.Common.Utility.CaptchaUtility
             Username = username;
             Choice = type;
         }
-        
+
         public CaptchaType Choice
         {
             get;
@@ -58,7 +58,7 @@ namespace Fanex.Alpha.Before.Common.Utility.CaptchaUtility
         /// <returns>Return result.</returns>
         public CaptchaType GetChoice()
         {
-            CaptchaType result = CaptchaType.Text;
+            CaptchaType result;
             if (string.IsNullOrEmpty(Ip) || string.IsNullOrEmpty(Username))
             {
                 result = (CaptchaType)_random.Next(Enum.GetNames(typeof(CaptchaType)).Length);
@@ -66,14 +66,10 @@ namespace Fanex.Alpha.Before.Common.Utility.CaptchaUtility
             else
             {
                 CaptchaInfo info = CaptchaLogging.Find(Ip, Username);
-                if (info != null)
-                {
-                    result = info.Type;
-                }
-                else
-                {
-                    result = (CaptchaType)_random.Next(Enum.GetNames(typeof(CaptchaType)).Length);
-                }
+
+                result = info == null
+                    ? (CaptchaType)_random.Next(Enum.GetNames(typeof(CaptchaType)).Length)
+                    : info.Type;
             }
 
             return result;
@@ -159,7 +155,7 @@ namespace Fanex.Alpha.Before.Common.Utility.CaptchaUtility
             }
 
             // Random font name
-            string[] fonts = new string[] { "Century Schoolbook", "Lucida Console", "Georgia", "Courier", "Trebuchet MS", "Lucida Console", "Times New Roman" };
+            var fonts = new[] { "Century Schoolbook", "Lucida Console", "Georgia", "Courier", "Trebuchet MS", "Lucida Console", "Times New Roman" };
             string familyName = fonts[_random.Next(0, fonts.Length - 1)];
 
             // Set up the text font.
@@ -171,11 +167,11 @@ namespace Fanex.Alpha.Before.Common.Utility.CaptchaUtility
                 fontSize--;
                 font = new Font(familyName, fontSize, FontStyle.Bold);
                 size = g.MeasureString(text, font);
-            } 
+            }
             while (size.Width > rect.Width);
 
             // Set up the text format.
-            StringFormat format = new StringFormat()
+            StringFormat format = new StringFormat
             {
                 Alignment = StringAlignment.Center,
                 LineAlignment = StringAlignment.Center
@@ -188,8 +184,8 @@ namespace Fanex.Alpha.Before.Common.Utility.CaptchaUtility
             using (Matrix matrix = new Matrix())
             {
                 float v = 4F;
-                PointF[] points = 
-                { 
+                PointF[] points =
+                {
                                       new PointF(_random.Next(rect.Width) / v, _random.Next(rect.Height) / v),
                                       new PointF(rect.Width - (_random.Next(rect.Width) / v), _random.Next(rect.Height) / v),
                                       new PointF(this._random.Next(rect.Width) / v, rect.Height - (_random.Next(rect.Height) / v)),
@@ -208,10 +204,10 @@ namespace Fanex.Alpha.Before.Common.Utility.CaptchaUtility
                 int m = Math.Max(rect.Width + 100, rect.Height + 100);
                 for (int i = 0; i < (int)(rect.Width * rect.Height / 30F); i++)
                 {
-                    int x = _random.Next(rect.Width);
-                    int y = _random.Next(rect.Height);
-                    int w = _random.Next(m / 50);
-                    int h = _random.Next(m / 50);
+                    _random.Next(rect.Width);
+                    _random.Next(rect.Height);
+                    _random.Next(m / 50);
+                    _random.Next(m / 50);
                 }
             }
 

@@ -16,7 +16,7 @@ namespace Fanex.Alpha.Before.Common.Extensions
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class EncryptExtension
+    public static class EncryptExtension
     {
         public const string HEXDIGIT = "0123456789abcdef";
         private const string CfsKey = "&％#@?,:*!~^.";
@@ -44,7 +44,7 @@ namespace Fanex.Alpha.Before.Common.Extensions
 
             return hashCode.ToString();
         }
-        
+
         /// <summary>
         /// One-way encryption.
         /// </summary>
@@ -58,7 +58,7 @@ namespace Fanex.Alpha.Before.Common.Extensions
             {
                 for (int m = 1; m <= num2; m++)
                 {
-                    codeValue = string.Format("{0}{1}", codeValue, Strings.Chr(0x15));                    
+                    codeValue = string.Format("{0}{1}", codeValue, Strings.Chr(0x15));
                 }
             }
 
@@ -77,7 +77,7 @@ namespace Fanex.Alpha.Before.Common.Extensions
             }
 
             string str2 = string.Empty;
-            for (int k = 20; k <= (str.ToString().Length - 0x12); k += 2)
+            for (int k = 20; k <= (str.Length - 0x12); k += 2)
             {
                 str2 = string.Format("{0}{1}", str2, Strings.Mid(str, k, 1));
             }
@@ -118,7 +118,7 @@ namespace Fanex.Alpha.Before.Common.Extensions
             }
 
             string str2 = string.Empty;
-            for (int k = 20; k <= (str.ToString().Length - 0x12); k += 2)
+            for (int k = 20; k <= (str.Length - 0x12); k += 2)
             {
                 str2 = string.Format("{0}{1}", str2, Strings.Mid(str, k, 1));
             }
@@ -135,12 +135,10 @@ namespace Fanex.Alpha.Before.Common.Extensions
         {
             try
             {
-                byte[] rgbIV = new byte[0];
-                byte[] rgbKey = new byte[] { 0x21, 0x63, 0x54, 0x5a, 0x91, 0xac, 110, 0xcc };
-                byte[] buffer = new byte[strText.Length];
-                rgbIV = Encoding.UTF8.GetBytes(CfsKey);
+                var rgbKey = new byte[] { 0x21, 0x63, 0x54, 0x5a, 0x91, 0xac, 110, 0xcc };
+                var rgbIV = Encoding.UTF8.GetBytes(CfsKey);
                 DESCryptoServiceProvider provider = new DESCryptoServiceProvider();
-                buffer = Convert.FromBase64String(strText);
+                var buffer = Convert.FromBase64String(strText);
                 MemoryStream stream = new MemoryStream();
                 CryptoStream stream2 = new CryptoStream(stream, provider.CreateDecryptor(rgbKey, rgbIV), CryptoStreamMode.Write);
                 stream2.Write(buffer, 0, buffer.Length);
@@ -162,9 +160,8 @@ namespace Fanex.Alpha.Before.Common.Extensions
         {
             try
             {
-                byte[] rgbIV = new byte[0];
-                byte[] rgbKey = new byte[] { 0x21, 0x63, 0x54, 0x5a, 0x91, 0xac, 110, 0xcc };
-                rgbIV = Encoding.UTF8.GetBytes(CfsKey);
+                var rgbKey = new byte[] { 0x21, 0x63, 0x54, 0x5a, 0x91, 0xac, 110, 0xcc };
+                var rgbIV = Encoding.UTF8.GetBytes(CfsKey);
                 DESCryptoServiceProvider provider = new DESCryptoServiceProvider();
                 byte[] bytes = Encoding.UTF8.GetBytes(strText);
                 MemoryStream stream = new MemoryStream();
@@ -207,15 +204,9 @@ namespace Fanex.Alpha.Before.Common.Extensions
         /// <returns>Return result.</returns>
         public static string RandomString(int length, bool isUseZero)
         {
-            string chars;
-            if (isUseZero)
-            {
-                chars = "qwertyuipasdfghjklzxcvbnm123456789";
-            }
-            else
-            {
-                chars = "qwertyuiopasdfghjklzxcvbnm0123456789";
-            }
+            var chars = isUseZero
+                ? "qwertyuipasdfghjklzxcvbnm123456789"
+                : "qwertyuiopasdfghjklzxcvbnm0123456789";
 
             string rndStr = string.Empty;
             Random rnd = new Random(DateTime.Now.Second + DateTime.Now.Millisecond);
@@ -293,7 +284,7 @@ namespace Fanex.Alpha.Before.Common.Extensions
             }
 
             List<char> result = new List<char>();
-            
+
             for (int i = 0; i < c; i += 2)
             {
                 result.Add(b16_map[Convert.ToInt32(data.Substring(i, 2), 16)]);
@@ -346,7 +337,7 @@ namespace Fanex.Alpha.Before.Common.Extensions
 
             return ct;
         }
-        
+
         private static string CfsCode(string words)
         {
             string number = string.Empty;

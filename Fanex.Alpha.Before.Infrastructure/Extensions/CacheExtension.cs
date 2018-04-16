@@ -27,18 +27,23 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
             return _couchbaseClient.Get<T>(key);
         }
 
-        /// <summary>
-        /// Function to set cache info.
-        /// </summary>
-        /// <param name="key">Cache key.</param>
-        /// <param name="value">Cache value.</param>
-        /// <param name="expireTime">Expire time [Second].</param>
-        public static void Set(string key, object value, int expireTime = 1200)
+        public static void Set(string key, object value)
         {
             _couchbaseClient.ExecuteStore(
                 StoreMode.Set,
                 key,
                 value,
+                Couchbase.Operations.PersistTo.One,
+                Couchbase.Operations.ReplicateTo.Two);
+        }
+
+        public static void Set(string key, object value, TimeSpan validFor)
+        {
+            _couchbaseClient.ExecuteStore(
+                StoreMode.Set,
+                key,
+                value,
+                validFor,
                 Couchbase.Operations.PersistTo.One,
                 Couchbase.Operations.ReplicateTo.Two);
         }

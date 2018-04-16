@@ -1,22 +1,10 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="UnderMainternanceService.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-using System;
-using Fanex.Alpha.Before.Common.Configurations.UnderMainternance;
+﻿using Fanex.Alpha.Before.Common.Configurations.UnderMainternance;
 using Fanex.Alpha.Before.Common.Models;
-using Fanex.Alpha.Before.Infrastructure.Extensions;
-using ONEbook.UM.Models;
 using ONEbook.UM.Services;
 using ONEbook.UM.Services.Impl;
 
 namespace Fanex.Alpha.Before.Common.Services.UnderMainternance
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class UnderMainternanceService : IUnderMainternanceService
     {
         private readonly IMaintenanceService _maintenanceService;

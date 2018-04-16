@@ -1,67 +1,118 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="LimitedCountryAccessService.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.Alpha.Before.Common.Configurations.LimitedCountryAccessService
+﻿namespace Fanex.Alpha.Before.Common.Services.LimitedCountryAccessService
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
-    using Fanex.Alpha.Before.Common.Configurations.LimtedCountryAccess;
-    using Fanex.Alpha.Before.Common.Repositories.LimitedCountryAccessRepository;
-    using Logging.Extensions.Web;
+    using Criteria.LimitedCountryAccess;
+    using Logging;
+    using Models;
+    using Repositories.LimitedCountryAccess;
+    using Services;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class LimitedCountryAccessService : ILimitedCountryAccessService
     {
-        public LimitedCountryAccessService()
+        private const string RestrictedIPRangesCachedKey = "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV";
+        private const string AllowedAccessIPsCachedKey = "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey";
+
+        private readonly ILimitedCountryAccessRepository ipRepository;
+        private readonly IPService ipService;
+        private readonly ICacheService cacheService;
+        private readonly ILimitedCountriesConfigService limitedCountriesConfigService;
+        private readonly Action<string> logInfoAction;
+        private readonly bool trackRunTime;
+
+        public LimitedCountryAccessService(
+            bool trackRunTime,
+            ILimitedCountryAccessRepository ipRepository = null,
+            IPService ipService = null,
+            ICacheService cacheService = null,
+            ILimitedCountriesConfigService limitedCountriesConfigService = null,
+            Action<string> logInfoAction = null)
         {
+            this.ipRepository = ipRepository ?? new LimitedCountryAccessRepository();
+            this.ipService = ipService ?? new IpServiceImpl();
+            this.cacheService = cacheService ?? new CacheServiceImpl();
+            this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
+            this.logInfoAction = logInfoAction ?? LogService.Info;
+            this.trackRunTime = trackRunTime;
         }
 
-        /// <summary>
-        /// Checking Limited country access.
-        /// </summary>
-        /// <returns>Return blocking status.</returns>
-        public bool LimitedAccess()
+        public bool IsLimitedAccess()
         {
-            try
+            var clientIP = ipService.GetClientIp();
+            if (IpServiceImpl.IsIPV6(clientIP))
             {
-                var limitedCountryAccessSection = LimtedCountryAccessSection.Instance.LimitedCountries;
-                if (limitedCountryAccessSection == null ||
-                    limitedCountryAccessSection.Count == 0)
-                {
-                    return false;
-                }
-
-                var limitedCountriesActive = from m in limitedCountryAccessSection.Cast<LimitedCountriesElement>().Where(m => m.Active) select m;
-
-                if (!limitedCountriesActive.Any())
-                {
-                    return false;
-                }
-
-                var customerCountryCode = from m in limitedCountriesActive
-                                          where ((m.Name.ToUpper().Equals(
-                                          new LimitedCountryAccessRepository().CountryCodeByIp().ToUpper()) &&
-                                          DateTime.Now >= m.AffectedDate) || //// real blocking country ip
-                                                (m.TestingIp.Split(',').Contains(Helpers.IPHelper.ClientIP()) && //// testing ip
-                                                    m.IsTesting == true && DateTime.Now >= m.AffectedDate))
-                                          select m;
-
-                if (customerCountryCode.Any())
-                {
-                    return true;
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
+                logInfoAction($"Customer Access via IPV6: {clientIP}");
             }
 
-            return false;
+            var activeRestrictedCountriesConfig = limitedCountriesConfigService.GetActiveRestrictedCountriesConfig();
+            if (!activeRestrictedCountriesConfig.Any())
+            {
+                return false;
+            }
+
+            if (IsTestedIP(activeRestrictedCountriesConfig, clientIP))
+            {
+                return true;
+            }
+
+            var range = GetRestrictedIPRange(activeRestrictedCountriesConfig, clientIP);
+            if (range == null)
+            {
+                return false;
+            }
+
+            var allowedAccessIps = GetsAllowedAccessIPs();
+
+            return !allowedAccessIps.Any(ip => ip == clientIP);
         }
+
+        private IpRange GetRestrictedIPRange(
+            IEnumerable<LimitedCountriesConfigModel> activeRestrictedCountriesConfig,
+            string clientIP)
+        {
+            var isIpV6 = IpServiceImpl.IsIPV6(clientIP);
+            var restrictedIPRangeList = GetIPRangesByRestrictedCountry(activeRestrictedCountriesConfig, isIpV6);
+            var ipNumber = isIpV6
+                ? IpServiceImpl.ConvertIPV6ToNumber(clientIP)
+                : IpServiceImpl.ConvertIPV4ToNumber(clientIP);
+
+            return restrictedIPRangeList
+                .FirstOrDefault(
+                ipRange => ipRange.IPFrom <= ipNumber
+                        && ipNumber <= ipRange.IPTo);
+        }
+
+        public IList<IpRange> GetIPRangesByRestrictedCountry(
+            IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig,
+            bool isIpV6)
+        {
+            var restrictedCountries = string.Join(",", activeLimitedCountriesConfig.Select(m => m.Name));
+            var cacheKey = $"{RestrictedIPRangesCachedKey}{(isIpV6 ? "6" : "4")}_{restrictedCountries}";
+
+            Func<IList<IpRange>> getDataFromDatabaseFunc = () =>
+            {
+                var criteria = new GetIpRangesByCountryCriteria(isIpV6, restrictedCountries);
+                return ipRepository.GetIPRangesByCountry(criteria);
+            };
+
+            return cacheService.GetOrSet(
+                cacheKey,
+                () => trackRunTime
+                    ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc, "GetIPRangesByRestrictedCountry")
+                    : getDataFromDatabaseFunc(),
+                TimeSpan.FromDays(30));
+        }
+
+        public IList<string> GetsAllowedAccessIPs()
+            => cacheService.GetOrSet(
+                AllowedAccessIPsCachedKey,
+                () => ipRepository.GetsAllowedAccessIPs(new GetAllowedAccessIPsCriteria()),
+                TimeSpan.FromMinutes(10));
+
+        private static bool IsTestedIP(IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig, string clientIP)
+            => activeLimitedCountriesConfig.Any(m
+                => m.IsTesting
+                && m.TestingIp.Split(',').Contains(clientIP));
     }
 }

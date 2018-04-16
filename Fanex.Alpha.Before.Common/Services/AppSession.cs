@@ -12,7 +12,7 @@ namespace Fanex.Alpha.Before.Common.Configurations
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class AppSession
+    public static class AppSession
     {
         public static string Language
         {

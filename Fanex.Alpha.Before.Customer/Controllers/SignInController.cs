@@ -60,13 +60,18 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// <param name="txtPassWord">User password.</param>
         /// <param name="hidLanguage">Hidden language.</param>
         /// <param name="code">Encrypt code.</param>
-        /// <param name="__di">FPS validate code.</param>
         /// <returns>
         /// Return result.
         /// </returns>
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult Index(string txtUserName, string txtPassWord, string hidLanguage, string code, string deviceId = "N/A")
+        public ActionResult Index(
+            string txtUserName,
+            string txtPassWord,
+            string hidLanguage,
+            string code,
+            string browserSize,
+            string deviceId = "N/A")
         {
             bool validCaptcha = false;
             if (_signInService.IsShowReCaptcha())
@@ -81,7 +86,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 }
             }
 
-            var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code, deviceId);
+            var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code, deviceId, browserSize);
 
             if (loginResult != null && loginResult.ErrCode != -2)
             {
@@ -99,9 +104,9 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             return PartialView(viewPath, loginResult);
         }
 
-        public RedirectResult AutomationTest(string username, string password, string captcha, string deviceId)
+        public RedirectResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
         {
-            var loginResult = _signInService.AutomationTest(username, password, captcha, deviceId);
+            var loginResult = _signInService.AutomationTest(username, password, captcha, deviceId, browserSize);
 
             if (loginResult.ErrCode == -1)
             {
@@ -114,7 +119,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// <summary>
         /// Function to send login status to FPS.
         /// </summary>
-        /// <param name="username">The Username.</param>
         /// <param name="loginResult">Login result.</param>
         private static void FPSTracking(SignInResult loginResult)
         {
@@ -232,7 +236,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
         private void RemoveDetecasSession()
         {
-            var detecasSessionKeys = Session.Keys.Cast<string>().Where(k => k.StartsWith("Detecas-")).ToList();
+            var detecasSessionKeys = Session.Keys.Cast<string>().Where(k => k.StartsWith("Detecas-", StringComparison.OrdinalIgnoreCase)).ToList();
             detecasSessionKeys.ForEach(k => Session.Remove(k));
         }
     }
