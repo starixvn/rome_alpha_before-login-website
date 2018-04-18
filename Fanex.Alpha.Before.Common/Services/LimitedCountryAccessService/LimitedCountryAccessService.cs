@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Criteria.LimitedCountryAccess;
-    using Logging;
+    using Logging.Extensions.Web;
     using Models;
     using Repositories.LimitedCountryAccess;
     using Services;
@@ -18,7 +18,7 @@
         private readonly IPService ipService;
         private readonly ICacheService cacheService;
         private readonly ILimitedCountriesConfigService limitedCountriesConfigService;
-        private readonly Action<string> logInfoAction;
+        private readonly Action<Exception> logInfoAction;
         private readonly bool trackRunTime;
 
         public LimitedCountryAccessService(
@@ -27,22 +27,23 @@
             IPService ipService = null,
             ICacheService cacheService = null,
             ILimitedCountriesConfigService limitedCountriesConfigService = null,
-            Action<string> logInfoAction = null)
+            Action<Exception> logInfoAction = null)
         {
             this.ipRepository = ipRepository ?? new LimitedCountryAccessRepository();
             this.ipService = ipService ?? new IpServiceImpl();
             this.cacheService = cacheService ?? new CacheServiceImpl();
             this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
-            this.logInfoAction = logInfoAction ?? LogService.Info;
+            this.logInfoAction = logInfoAction ?? ExceptionHandler.Handle;
             this.trackRunTime = trackRunTime;
         }
 
         public bool IsLimitedAccess()
         {
             var clientIP = ipService.GetClientIp();
+
             if (IpServiceImpl.IsIPV6(clientIP))
             {
-                logInfoAction($"Customer Access via IPV6: {clientIP}");
+                logInfoAction(new Exception($"Customer Access via IPV6: {clientIP}"));
             }
 
             var activeRestrictedCountriesConfig = limitedCountriesConfigService.GetActiveRestrictedCountriesConfig();
@@ -99,7 +100,7 @@
             return cacheService.GetOrSet(
                 cacheKey,
                 () => trackRunTime
-                    ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc, "GetIPRangesByRestrictedCountry")
+                    ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc, cacheKey)
                     : getDataFromDatabaseFunc(),
                 TimeSpan.FromDays(30));
         }
