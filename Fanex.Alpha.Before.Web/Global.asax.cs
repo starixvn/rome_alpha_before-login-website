@@ -17,6 +17,7 @@ namespace Fanex.Alpha.Before.Web.View
     using Logging.Extensions.Web;
     using ONEbook.UM.Configurations;
     using ONEbook.UM.Models;
+    using System;
 
     /// <summary>
     /// MVC Application.
@@ -145,8 +146,15 @@ namespace Fanex.Alpha.Before.Web.View
 
         private static void InitIPsCache()
         {
-            var activeRestrictedCountry = new LimitedCountriesConfigService().GetActiveRestrictedCountriesConfig();
-            new LimitedCountryAccessService(AppSetting.TrackRunTime).GetIPRangesByRestrictedCountry(activeRestrictedCountry, isIpV6: false);
+            try
+            {
+                var activeRestrictedCountry = new LimitedCountriesConfigService().GetActiveRestrictedCountriesConfig();
+                new LimitedCountryAccessService(AppSetting.TrackRunTime).GetIPRangesByRestrictedCountry(activeRestrictedCountry, isIpV6: false);
+            }
+            catch(Exception ex)
+            {
+                ExceptionHandler.Handle(ex, System.Diagnostics.TraceEventType.Information);
+            }
         }
     }
 }
