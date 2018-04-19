@@ -24,7 +24,7 @@ namespace Fanex.Alpha.Before.Web.View
     /// <summary>
     /// MVC Application.
     /// For instructions on enabling IIS6 or IIS7 classic mode,
-    /// visit http://go.microsoft.com/?LinkId=9394801.
+    /// visit http://go.microsoft.com/?LinkId=9394801. 
     /// </summary>
     public class MvcApplication : System.Web.HttpApplication
     {
