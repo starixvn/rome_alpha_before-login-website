@@ -6,9 +6,6 @@
 
 namespace Fanex.Alpha.Before.Web.View
 {
-    using System.Collections.Generic;
-    using System.Web.Mvc;
-    using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
     using Common.Configurations;
@@ -17,7 +14,12 @@ namespace Fanex.Alpha.Before.Web.View
     using Logging.Extensions.Web;
     using ONEbook.UM.Configurations;
     using ONEbook.UM.Models;
+    using ONEbook.UM.Services.Impl;
     using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Web.Mvc;
+    using System.Web.Routing;
 
     /// <summary>
     /// MVC Application.
@@ -143,17 +145,21 @@ namespace Fanex.Alpha.Before.Web.View
 
             return result;
         }
-
+        
         private static void InitIPsCache()
         {
             try
             {
-                var activeRestrictedCountry = new LimitedCountriesConfigService().GetActiveRestrictedCountriesConfig();
-                new LimitedCountryAccessService(AppSetting.TrackRunTime).GetIPRangesByRestrictedCountry(activeRestrictedCountry, isIpV6: false);
+                var maintenanceService = new MaintenanceService();
+                if (!maintenanceService.IsUnderMaintenance())
+                {
+                    var activeRestrictedCountry = new LimitedCountriesConfigService().GetActiveRestrictedCountriesConfig();
+                    new LimitedCountryAccessService(AppSetting.TrackRunTime).GetIPRangesByRestrictedCountry(activeRestrictedCountry, isIpV6: false);
+                }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex, System.Diagnostics.TraceEventType.Information);
+                ExceptionHandler.Handle(ex, TraceEventType.Information);
             }
         }
     }
