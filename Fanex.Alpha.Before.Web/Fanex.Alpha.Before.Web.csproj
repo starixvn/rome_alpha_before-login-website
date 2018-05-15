@@ -385,6 +385,9 @@
     <Content Include="compilerconfig3.json">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
+    <Content Include="compilerconfig4.json">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </Content>
     <Content Include="Configurations\Local.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\Local.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\Master.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
@@ -730,6 +733,36 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL3.Web.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL3.Web.Setting.config" />
     <Content Include="Fanex.Alpha.Before.Web.ruleset" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL4.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL4.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL4.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL4.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL4.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi4.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi4.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi4.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi4.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi4.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local4.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local4.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local4.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local4.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local4.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO4.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO4.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO4.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO4.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO4.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT4.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT4.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT4.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT4.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT4.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT4.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT4.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT4.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT4.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT4.Web.Setting.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
