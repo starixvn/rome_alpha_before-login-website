@@ -44,12 +44,18 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            if (IsNeedMappingSslDomain())
+            {
+                Server.Transfer("https://" + Request.UserHostAddress);
+            }
+
             if (Request.QueryString["UMToken"] != null)
             {
                 Session["UMToken"] = Request.QueryString["UMToken"];
             }
 
             var loginResult = _signInService.SignIn();
+            
             return View(viewPath, loginResult);
         }
 
@@ -238,6 +244,22 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         {
             var detecasSessionKeys = Session.Keys.Cast<string>().Where(k => k.StartsWith("Detecas-", StringComparison.OrdinalIgnoreCase)).ToList();
             detecasSessionKeys.ForEach(k => Session.Remove(k));
+        }
+
+        private bool IsNeedMappingSslDomain()
+        {
+            var sslDomains = ConfigurationManager.AppSettings["SSLDomains"];
+
+            if (sslDomains != null)
+            {
+                var domains = sslDomains.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                if (domains.Any(domain => domain.Equals(Request.UserHostAddress, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
