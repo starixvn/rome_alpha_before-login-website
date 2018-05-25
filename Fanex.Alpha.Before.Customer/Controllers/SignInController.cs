@@ -18,6 +18,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using Fanex.Oneyed.RobotTrap.Handshakes;
     using Fanex.Oneyed.RobotTrap.Repositories;
     using Logging.Extensions.Web;
+    using System.Net;
+    using System.Collections.Generic;
 
     /// <summary>
     /// TODO: Update summary.
@@ -44,10 +46,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if (IsNeedMappingSslDomain())
-            {
-                Server.Transfer("https://" + Request.UserHostAddress);
-            }
+            IsNeedMappingSslDomain();
 
             if (Request.QueryString["UMToken"] != null)
             {
@@ -248,12 +247,28 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
         private bool IsNeedMappingSslDomain()
         {
+            var ip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+            var ips = (ip ?? string.Empty).Trim().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            var hosts = new List<string>();
+            foreach (var ipAddr in ips)
+            {
+                IPAddress addr = IPAddress.Parse(ipAddr);
+                IPHostEntry entry = Dns.GetHostEntry(addr);
+                var host = entry.HostName;
+                hosts.Add(host);
+            }
+
+            if (hosts.Any())
+            {
+                ExceptionHandler.Handle(new Exception(string.Join(",", hosts)), System.Diagnostics.TraceEventType.Information);
+            }
+
             var sslDomains = ConfigurationManager.AppSettings["SSLDomains"];
 
             if (sslDomains != null)
             {
                 var domains = sslDomains.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                if (domains.Any(domain => domain.Equals(Request.UserHostAddress, StringComparison.OrdinalIgnoreCase)))
+                if (domains.Any(domain => domain.Equals(Request.Headers["Host"], StringComparison.OrdinalIgnoreCase)))
                 {
                     return true;
                 }
