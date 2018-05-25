@@ -6,11 +6,6 @@
 
 namespace Fanex.Alpha.Before.Customer.Controllers
 {
-    using System;
-    using System.Configuration;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
     using CaptchaMvc.HtmlHelpers;
     using Fanex.Alpha.Before.Common.Controllers;
     using Fanex.Alpha.Before.Customer.Models;
@@ -18,8 +13,11 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using Fanex.Oneyed.RobotTrap.Handshakes;
     using Fanex.Oneyed.RobotTrap.Repositories;
     using Logging.Extensions.Web;
-    using System.Net;
-    using System.Collections.Generic;
+    using System;
+    using System.Configuration;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
 
     /// <summary>
     /// TODO: Update summary.
@@ -247,22 +245,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
         private bool IsNeedMappingSslDomain()
         {
-            var ip = Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
-            var ips = (ip ?? string.Empty).Trim().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            var hosts = new List<string>();
-            foreach (var ipAddr in ips)
-            {
-                IPAddress addr = IPAddress.Parse(ipAddr);
-                IPHostEntry entry = Dns.GetHostEntry(addr);
-                var host = entry.HostName;
-                hosts.Add(host);
-            }
-
-            if (hosts.Any())
-            {
-                ExceptionHandler.Handle(new Exception(string.Join(",", hosts)), System.Diagnostics.TraceEventType.Information);
-            }
-
             var sslDomains = ConfigurationManager.AppSettings["SSLDomains"];
 
             if (sslDomains != null)
