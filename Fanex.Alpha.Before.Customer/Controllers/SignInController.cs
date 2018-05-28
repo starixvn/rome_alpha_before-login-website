@@ -163,6 +163,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Flow()
         {
+            ExceptionHandler.Handle(new Exception("Is New Session at GET Flow: " + Session.IsNewSession), System.Diagnostics.TraceEventType.Information);
             if (IsDetecasSessionValid())
             {
                 return GetFlowView();
@@ -194,6 +195,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpPost]
         public ActionResult Flow(string detecasToken)
         {
+            ExceptionHandler.Handle(new Exception("Is New Session at POST Flow: " + Session.IsNewSession), System.Diagnostics.TraceEventType.Information);
             if (!IsDetecasSessionValid())
             {
                 return Redirect("~/Customer/SignIn");
@@ -206,7 +208,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             var afterLoginUrl = Session["Detecas-AfterLoginUrl"].ToString();
             var username = Session["Detecas-Username"].ToString();
             TryEvaluateRobot(username, detecasToken);
-            //RemoveDetecasSession();
+            RemoveDetecasSession();
 
             return string.IsNullOrEmpty(afterLoginUrl)
                 ? (ActionResult)RedirectToAction("Index")
