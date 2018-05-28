@@ -44,7 +44,11 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            IsNeedMappingSslDomain();
+            ExceptionHandler.Handle(new Exception("Request server port: " + Request.ServerVariables["SERVER_PORT"]), System.Diagnostics.TraceEventType.Information);
+            if(IsNeedMappingSslDomain())
+            {
+                return Redirect("https://" + Request.Headers["Host"]);
+            }
 
             if (Request.QueryString["UMToken"] != null)
             {
@@ -171,7 +175,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
         private bool IsDetecasSessionValid()
         {
-            ILogger.Logger.Info("Detecas-Username: " + Session["Detecas-Username"] + "<br />Detecas-AfterLoginUrl:" + Session["Detecas-AfterLoginUrl"]);
+            ExceptionHandler.Handle(new Exception("Detecas-Username: " + Session["Detecas-Username"] + "<br />Detecas-AfterLoginUrl:" + Session["Detecas-AfterLoginUrl"]), System.Diagnostics.TraceEventType.Information);
             return Session["Detecas-Username"] != null && !string.IsNullOrWhiteSpace(Session["Detecas-Username"].ToString())
                       && Session["Detecas-AfterLoginUrl"] != null && !string.IsNullOrWhiteSpace(Session["Detecas-AfterLoginUrl"].ToString());
         }
@@ -246,14 +250,20 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
         private bool IsNeedMappingSslDomain()
         {
+            var sslPorts = ConfigurationManager.AppSettings["SSLPorts"];
             var sslDomains = ConfigurationManager.AppSettings["SSLDomains"];
-
-            if (sslDomains != null)
+            if (sslPorts != null)
             {
-                var domains = sslDomains.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                if (domains.Any(domain => domain.Equals(Request.Headers["Host"], StringComparison.OrdinalIgnoreCase)))
+                var isPortNeedForSsl = sslPorts.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Any(port => port.Equals(Request.ServerVariables["SERVER_PORT"], StringComparison.OrdinalIgnoreCase));
+
+                if (!isPortNeedForSsl && sslDomains != null)
                 {
-                    return true;
+                    var domains = sslDomains.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (domains.Any(domain => domain.Equals(Request.Headers["Host"], StringComparison.OrdinalIgnoreCase)))
+                    {
+                        return true;
+                    }
                 }
             }
 
