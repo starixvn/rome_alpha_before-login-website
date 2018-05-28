@@ -206,7 +206,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             var afterLoginUrl = Session["Detecas-AfterLoginUrl"].ToString();
             var username = Session["Detecas-Username"].ToString();
             TryEvaluateRobot(username, detecasToken);
-            RemoveDetecasSession();
+            //RemoveDetecasSession();
 
             return string.IsNullOrEmpty(afterLoginUrl)
                 ? (ActionResult)RedirectToAction("Index")
