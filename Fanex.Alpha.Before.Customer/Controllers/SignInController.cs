@@ -18,6 +18,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
+    using System.Web.Security;
 
     /// <summary>
     /// TODO: Update summary.
@@ -103,6 +104,11 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 }
 
                 ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
+            }
+
+            if (loginResult.ErrCode == 0)
+            {
+                FormsAuthentication.SetAuthCookie(loginResult.Username, false);
             }
 
             Session["Detecas-Username"] = txtUserName;
