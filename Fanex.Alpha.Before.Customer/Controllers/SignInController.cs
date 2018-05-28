@@ -171,6 +171,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
         private bool IsDetecasSessionValid()
         {
+            ILogger.Logger.Info("Detecas-Username: " + Session["Detecas-Username"] + "<br />Detecas-AfterLoginUrl:" + Session["Detecas-AfterLoginUrl"]);
             return Session["Detecas-Username"] != null && !string.IsNullOrWhiteSpace(Session["Detecas-Username"].ToString())
                       && Session["Detecas-AfterLoginUrl"] != null && !string.IsNullOrWhiteSpace(Session["Detecas-AfterLoginUrl"].ToString());
         }
