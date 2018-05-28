@@ -45,7 +45,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            ExceptionHandler.Handle(new Exception("Request server port: " + Request.ServerVariables["SERVER_PORT"]), System.Diagnostics.TraceEventType.Information);
             if(IsNeedMappingSslDomain())
             {
                 return Redirect("https://" + Request.Headers["Host"]);
@@ -105,12 +104,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
                 ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
             }
-
-            if (loginResult.ErrCode == 0)
-            {
-                FormsAuthentication.SetAuthCookie(loginResult.Username, false);
-            }
-
+            
             Session["Detecas-Username"] = txtUserName;
             Session["Detecas-AfterLoginUrl"] = loginResult.AfterLoginUrl;
 
@@ -169,7 +163,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Flow()
         {
-            ExceptionHandler.Handle(new Exception("Is New Session at GET Flow: " + Session.IsNewSession), System.Diagnostics.TraceEventType.Information);
             if (IsDetecasSessionValid())
             {
                 return GetFlowView();
@@ -182,7 +175,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
         private bool IsDetecasSessionValid()
         {
-            ExceptionHandler.Handle(new Exception("Detecas-Username: " + Session["Detecas-Username"] + "<br />Detecas-AfterLoginUrl:" + Session["Detecas-AfterLoginUrl"]), System.Diagnostics.TraceEventType.Information);
             return Session["Detecas-Username"] != null && !string.IsNullOrWhiteSpace(Session["Detecas-Username"].ToString())
                       && Session["Detecas-AfterLoginUrl"] != null && !string.IsNullOrWhiteSpace(Session["Detecas-AfterLoginUrl"].ToString());
         }
@@ -201,7 +193,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpPost]
         public ActionResult Flow(string detecasToken)
         {
-            ExceptionHandler.Handle(new Exception("Is New Session at POST Flow: " + Session.IsNewSession), System.Diagnostics.TraceEventType.Information);
             if (!IsDetecasSessionValid())
             {
                 return Redirect("~/Customer/SignIn");
