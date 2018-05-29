@@ -45,10 +45,10 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            if(IsNeedMappingSslDomain())
-            {
-                return Redirect("https://" + Request.Headers["Host"]);
-            }
+            //if(IsNeedMappingSslDomain())
+            //{
+            //    return Redirect("https://" + Request.Headers["Host"]);
+            //}
 
             if (Request.QueryString["UMToken"] != null)
             {
