@@ -14,6 +14,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using Fanex.Oneyed.RobotTrap.Repositories;
     using Logging.Extensions.Web;
     using System;
+    using System.Collections.Specialized;
     using System.Configuration;
     using System.Linq;
     using System.Web;
@@ -108,6 +109,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             Session["Detecas-Username"] = txtUserName;
             Session["Detecas-AfterLoginUrl"] = loginResult.AfterLoginUrl;
 
+            WriteLog("Username: " + txtUserName + "<br />AfterURL: " + loginResult.AfterLoginUrl);
+
             return PartialView(viewPath, loginResult);
         }
 
@@ -163,6 +166,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Flow()
         {
+            WriteLog("GET Flow: <br/>Username: " + Session["Detecas-Username"] + "<br />AfterURL: " + Session["Detecas-AfterLoginUrl"]);
+
             if (IsDetecasSessionValid())
             {
                 return GetFlowView();
@@ -193,6 +198,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpPost]
         public ActionResult Flow(string detecasToken)
         {
+            WriteLog("POST Flow: <br/>Username: " + Session["Detecas-Username"] + "<br />AfterURL: " + Session["Detecas-AfterLoginUrl"]);
             if (!IsDetecasSessionValid())
             {
                 return Redirect("~/Customer/SignIn");
@@ -267,6 +273,11 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             return false;
+        }
+
+        private void WriteLog(string message)
+        {
+            ExceptionHandler.Handle(new Exception(message), System.Diagnostics.TraceEventType.Information);
         }
     }
 }
