@@ -443,6 +443,9 @@
     <Content Include="favicon2.ico">
       <DependentUpon>favicon.ico</DependentUpon>
     </Content>
+	<Content Include="favicon3.ico">
+      <DependentUpon>favicon.ico</DependentUpon>
+    </Content>
     <Content Include="Global.asax" />
     <Content Include="assets\scripts\libs\detecas\detecas-token.min.js" />
     <Content Include="speedtest.png" />
