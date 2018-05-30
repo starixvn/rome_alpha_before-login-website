@@ -46,10 +46,10 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            //if(IsNeedMappingSslDomain())
-            //{
-            //    return Redirect("https://" + Request.Headers["Host"]);
-            //}
+            if (IsNeedMappingSslDomain())
+            {
+                return Redirect("https://" + Request.Headers["Host"]);
+            }
 
             if (Request.QueryString["UMToken"] != null)
             {
@@ -109,8 +109,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             Session["Detecas-Username"] = txtUserName;
             Session["Detecas-AfterLoginUrl"] = loginResult.AfterLoginUrl;
 
-            WriteLog("Username: " + Session["Detecas-Username"] + "<br />AfterURL: " + Session["Detecas-AfterLoginUrl"]);
-
             return View(viewPath, loginResult);
         }
 
@@ -166,8 +164,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Flow()
         {
-            WriteLog("GET Flow: <br/>Username: " + Session["Detecas-Username"] + "<br />AfterURL: " + Session["Detecas-AfterLoginUrl"]);
-
             if (IsDetecasSessionValid())
             {
                 return GetFlowView();
@@ -198,7 +194,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpPost]
         public ActionResult Flow(string detecasToken)
         {
-            WriteLog("POST Flow: <br/>Username: " + Session["Detecas-Username"] + "<br />AfterURL: " + Session["Detecas-AfterLoginUrl"]);
             if (!IsDetecasSessionValid())
             {
                 return Redirect("~/Customer/SignIn");
@@ -273,11 +268,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             return false;
-        }
-
-        private void WriteLog(string message)
-        {
-            ExceptionHandler.Handle(new Exception(message), System.Diagnostics.TraceEventType.Information);
         }
     }
 }

@@ -75,9 +75,7 @@ namespace Fanex.Alpha.Before.Web.View
 
             var loggingConfiguration = new LoggingConfiguration()
                .HideSensitiveInfo(GetRegexToHideSensitiveInfo())
-               .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo)
-               .GetHttpHeaderInfo()
-               .GetHttpSessionInfo();
+               .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
 
             ExceptionHandler.UseConfig(loggingConfiguration);
 
