@@ -22,7 +22,7 @@
         private IPService ipService;
         private ICacheService cacheService;
         private ILimitedCountriesConfigService limitedCountriesConfigService;
-        private  Action<string> logInfoAction;
+        private  Action<Exception> logInfoAction;
 
         private IList<LimitedCountriesConfigModel> limitedCountriesConfig;
 
@@ -35,7 +35,7 @@
             ipService = Substitute.For<IPService>();
             cacheService = Substitute.For<ICacheService>();
             limitedCountriesConfigService = Substitute.For<ILimitedCountriesConfigService>();
-            logInfoAction = Substitute.For<Action<string>>();
+            logInfoAction = Substitute.For<Action<Exception>>();
 
             limitedCountryAccessService = new LimitedCountryAccessService(false, ipRepository, ipService, cacheService, limitedCountriesConfigService, logInfoAction);
 
@@ -58,7 +58,7 @@
             limitedCountryAccessService.IsLimitedAccess();
 
             // Assert
-            logInfoAction.Received().Invoke(Arg.Is<string>(str => str == expectedMessage));
+            logInfoAction.Received().Invoke(Arg.Is<Exception>(ex => ex.Message == expectedMessage));
         }
 
         [Test]

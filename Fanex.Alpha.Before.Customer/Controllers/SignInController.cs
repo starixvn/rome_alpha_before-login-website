@@ -6,11 +6,6 @@
 
 namespace Fanex.Alpha.Before.Customer.Controllers
 {
-    using System;
-    using System.Configuration;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
     using CaptchaMvc.HtmlHelpers;
     using Fanex.Alpha.Before.Common.Controllers;
     using Fanex.Alpha.Before.Customer.Models;
@@ -18,6 +13,13 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using Fanex.Oneyed.RobotTrap.Handshakes;
     using Fanex.Oneyed.RobotTrap.Repositories;
     using Logging.Extensions.Web;
+    using System;
+    using System.Collections.Specialized;
+    using System.Configuration;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Web.Security;
 
     /// <summary>
     /// TODO: Update summary.
@@ -44,12 +46,18 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            if (IsNeedMappingSslDomain())
+            {
+                return Redirect("https://" + Request.Headers["Host"]);
+            }
+
             if (Request.QueryString["UMToken"] != null)
             {
                 Session["UMToken"] = Request.QueryString["UMToken"];
             }
 
             var loginResult = _signInService.SignIn();
+            
             return View(viewPath, loginResult);
         }
 
@@ -97,11 +105,11 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
                 ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
             }
-
+            
             Session["Detecas-Username"] = txtUserName;
             Session["Detecas-AfterLoginUrl"] = loginResult.AfterLoginUrl;
 
-            return PartialView(viewPath, loginResult);
+            return View(viewPath, loginResult);
         }
 
         public RedirectResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
@@ -238,6 +246,28 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         {
             var detecasSessionKeys = Session.Keys.Cast<string>().Where(k => k.StartsWith("Detecas-", StringComparison.OrdinalIgnoreCase)).ToList();
             detecasSessionKeys.ForEach(k => Session.Remove(k));
+        }
+
+        private bool IsNeedMappingSslDomain()
+        {
+            var sslPorts = ConfigurationManager.AppSettings["SSLPorts"];
+            var sslDomains = ConfigurationManager.AppSettings["SSLDomains"];
+            if (sslPorts != null)
+            {
+                var isPortNeedForSsl = sslPorts.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Any(port => port.Equals(Request.ServerVariables["SERVER_PORT"], StringComparison.OrdinalIgnoreCase));
+
+                if (!isPortNeedForSsl && sslDomains != null)
+                {
+                    var domains = sslDomains.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (domains.Any(domain => domain.Equals(Request.Headers["Host"], StringComparison.OrdinalIgnoreCase)))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }
