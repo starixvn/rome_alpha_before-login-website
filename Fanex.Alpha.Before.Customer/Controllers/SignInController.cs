@@ -109,9 +109,9 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             Session["Detecas-Username"] = txtUserName;
             Session["Detecas-AfterLoginUrl"] = loginResult.AfterLoginUrl;
 
-            WriteLog("Username: " + txtUserName + "<br />AfterURL: " + loginResult.AfterLoginUrl);
+            WriteLog("Username: " + Session["Detecas-Username"] + "<br />AfterURL: " + Session["Detecas-AfterLoginUrl"]);
 
-            return PartialView(viewPath, loginResult);
+            return View(viewPath, loginResult);
         }
 
         public RedirectResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
