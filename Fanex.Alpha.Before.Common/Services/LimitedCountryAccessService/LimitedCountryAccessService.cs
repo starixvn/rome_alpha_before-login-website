@@ -1,13 +1,14 @@
 ﻿namespace Fanex.Alpha.Before.Common.Services.LimitedCountryAccessService
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Criteria.LimitedCountryAccess;
     using Logging.Extensions.Web;
     using Models;
     using Repositories.LimitedCountryAccess;
     using Services;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
 
     public class LimitedCountryAccessService : ILimitedCountryAccessService
     {
@@ -33,7 +34,7 @@
             this.ipService = ipService ?? new IpServiceImpl();
             this.cacheService = cacheService ?? new CacheServiceImpl();
             this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
-            this.logInfoAction = logInfoAction ?? ExceptionHandler.Handle;
+            this.logInfoAction = logInfoAction ?? HandleInfoException;
             this.trackRunTime = trackRunTime;
         }
 
@@ -115,5 +116,10 @@
             => activeLimitedCountriesConfig.Any(m
                 => m.IsTesting
                 && m.TestingIp.Split(',').Contains(clientIP));
+
+        private static void HandleInfoException(Exception ex)
+        {
+            ExceptionHandler.Handle(ex, TraceEventType.Information);
+        }
     }
 }
