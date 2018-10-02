@@ -773,15 +773,15 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\UATmaster.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2master.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT4master.ConnectionStrings.config" />
-    <None Include="Configurations\WebDeployment.ConfigTransform\UATmaster.Web.Setting.config">
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UATmaster.Web.Setting.config">
       <SubType>Designer</SubType>
-    </None>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2master.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2master.Web.config" />
-    <None Include="Configurations\WebDeployment.ConfigTransform\UAT2master.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2master.Web.Setting.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT4master.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT4master.Web.config" />
-    <None Include="Configurations\WebDeployment.ConfigTransform\UAT4master.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT4master.Web.Setting.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
