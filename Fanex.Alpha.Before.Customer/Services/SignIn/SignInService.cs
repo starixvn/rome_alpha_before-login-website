@@ -6,13 +6,8 @@
 
 namespace Fanex.Alpha.Before.Customer.Services.SignIn
 {
-    using System;
-    using System.Collections;
-    using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Web;
     using CasinoLibrary.Model.UserException;
+    using Cryptography.Aes;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Constants;
     using Fanex.Alpha.Before.Common.Extensions;
@@ -26,6 +21,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using Fanex.Common;
     using Logging.Extensions.Web;
     using RSACryptoPad;
+    using System;
+    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Web;
     using InfrastructureLanguages = Fanex.Alpha.Before.Infrastructure.Resources;
     using LoginLanguages = Fanex.Alpha.Before.Customer.Resources;
 
@@ -228,7 +228,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
                 try
                 {
-                    password = EncryptExtension.RC4(AppSession.EncryptCode, EncryptExtension.HexDecode(password));
+                    password = AesExtension.Decrypt(password, AppSession.EncryptCode);
                 }
                 catch (Exception ex)
                 {
@@ -545,17 +545,18 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             var path = System.Web.HttpContext.Current.Server.MapPath("~/IbcKeys/ibcpkey.snk");
             var parameter = string.Format(
-                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}",
+                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}&{10}",
                 verifySignInResult.CustId,
                 verifySignInResult.SubAccId,
                 verifySignInResult.LoginTime.Ticks,
-                EncryptExtension.HexEncode(EncryptExtension.RC4(verifySignInResult.LoginTime.Minute.ToString(), password)),
+                AesExtension.Encrypt(password, AppSession.EncryptCode),
                 verifySignInResult.Nickname,
                 verifySignInResult.IsNickname,
                 AppSession.Language,
                 numberCrossCookie,
                 deviceId,
-                browserSize);
+                browserSize,
+                AppSession.EncryptCode);
 
             parameter = new EncryptionThread().EncryptString(parameter, keySize, path);
 
