@@ -230,9 +230,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 {
                     password = AesExtension.Decrypt(password, AppSession.EncryptCode);
                 }
-                catch (Exception ex)
+                catch
                 {
-                    ExceptionHandler.Handle(ex);
                     signInResult.ErrCode = ErrorCodeConstants.ServerError;
                     signInResult.ErrMsg = string.Empty;
                     return signInResult;
