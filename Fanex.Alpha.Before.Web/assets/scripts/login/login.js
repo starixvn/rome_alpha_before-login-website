@@ -272,7 +272,7 @@ Sphinx.Login = {
         }
 
         Sphinx.Login.blockComponent();
-        Sphinx.Login.domElements.txtPassword.val(Sphinx.Login.domElements.txtPassword.val().ec(_page.captcha).hc());
+        Sphinx.Login.domElements.txtPassword.val(Sphinx.Login.encrypt(Sphinx.Login.domElements.txtPassword.val(), _page.captcha.toString()));
 
         var size = Sphinx.Login.getBrowserSize();
         $("#browserSize").val(size);
@@ -280,6 +280,22 @@ Sphinx.Login = {
         Sphinx.Login.domElements.formLogin.submit();
 
         return true;
+    },
+
+    encrypt: function (plainText, secretKey) {
+        var passPhrase = 'a5s8d2e9c172';
+        var key = CryptoJS.enc.Utf8.parse(passPhrase + secretKey);
+        var iv = key;
+
+        var pwd = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(plainText), key,
+        {
+            keySize: 128 / 8,
+            iv: iv,
+            mode: CryptoJS.mode.CBC,
+            padding: CryptoJS.pad.Pkcs7
+        });
+
+        return pwd;
     },
 
     blockComponent: function () {

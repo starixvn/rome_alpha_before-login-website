@@ -7,6 +7,7 @@
       "assets/scripts/libs/storage/store-with-json2.min.js",
       "assets/scripts/libs/detecas/Detecas.Base64.js",
       "assets/scripts/libs/detecas/Detecas.JSON.js",
+      "assets/scripts/libs/cryptojs/aes.js",
       "assets/scripts/login/core.js",
       "assets/scripts/login/place-holder.js",
       "assets/scripts/login/resources.js",
