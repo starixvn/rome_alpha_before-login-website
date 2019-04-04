@@ -125,9 +125,6 @@
     <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.6\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Oneyed.RobotTrap">
-      <HintPath>..\_Dependencies\FPS\Fanex.Oneyed.RobotTrap.dll</HintPath>
-    </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\HandHistoryLibrary.dll</HintPath>
       <Private>True</Private>
@@ -397,18 +394,13 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
     <Content Include="Configurations\Local.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\Local.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\Master.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\Master.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\MNL.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Configurations\MNL.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\MNL.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\PRO.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\UAT.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\UAT.StoreProcedure\RobotSpNames.xml" />
     <Content Include="assets\scripts\login\core.js" />
     <Content Include="assets\scripts\login\login.js" />
     <Content Include="assets\scripts\login\place-holder.js" />
@@ -455,7 +447,6 @@
       <DependentUpon>favicon.ico</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
-    <Content Include="assets\scripts\libs\detecas\detecas-token.min.js" />
     <Content Include="Scripts\aes.js" />
     <Content Include="speedtest.png" />
     <Content Include="Views\Common\ErrorPage\404Error.htm" />
@@ -554,7 +545,6 @@
     <Content Include="Views\Common\ErrorPage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Customer\Views\SignIn\Flow.cshtml" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.LimtedCountryAccessSection.config" />

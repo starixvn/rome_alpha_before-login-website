@@ -42,13 +42,6 @@
 
 
     $(function () {
-        if (parseInt(_page.errCode) === -1) {
-            $('#mainholder').css('display', 'none');
-            $('#divLoading').css('display', 'block');
-            $("body").css("background", "none");
-            window.location.href = '@Url.Content("~/Customer/SignIn/Flow")';
-        }
-
         (function (json, base64) {
 
             function getDeviceId() {
