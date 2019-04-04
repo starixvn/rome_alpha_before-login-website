@@ -9,8 +9,13 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using System;
     using System.Configuration;
     using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading.Tasks;
     using System.Web.Mvc;
     using CaptchaMvc.HtmlHelpers;
+    using Common.Configurations;
     using Fanex.Alpha.Before.Common.Controllers;
     using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
@@ -52,6 +57,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             var loginResult = _signInService.SignIn();
+            ViewBag.FPSToken = FPS.Client.Token.Generate();
 
             return View(viewPath, loginResult);
         }
@@ -76,6 +82,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             string browserSize,
             string deviceId = "N/A")
         {
+            ViewBag.FPSToken = FPS.Client.Token.Generate();
             bool validCaptcha = false;
             if (_signInService.IsShowReCaptcha())
             {
@@ -106,6 +113,39 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             return View(viewPath, loginResult);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ValidateGoogleCaptcha(string token)
+        {
+            try
+            {
+                var TARGETURL = string.Format(
+                   "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}",
+                   AppSetting.GoogleV3KeyForBackEnd,
+                   token);
+
+                var handler = new HttpClientHandler
+                {
+                    Proxy = new WebProxy(AppSetting.ProxyServer),
+                    UseProxy = true,
+                };
+
+                var client = new HttpClient(handler);
+                var byteArray = Encoding.ASCII.GetBytes(":");
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+                var response = await client.GetAsync(TARGETURL);
+                var content = response.Content;
+
+                var result = await content.ReadAsStringAsync();
+
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.ToString());
+            }
         }
 
         public RedirectResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)

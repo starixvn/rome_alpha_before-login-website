@@ -1,4 +1,4 @@
-@using CommonAppSetting = Fanex.Alpha.Before.Common.Configurations.AppSetting
+﻿@using CommonAppSetting = Fanex.Alpha.Before.Common.Configurations.AppSetting
 @if (Model is HandleErrorInfo)
 {
     Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(Model.Exception);
@@ -33,6 +33,8 @@ else if (Model.GetType() == typeof(Fanex.Alpha.Before.Customer.Models.SignInResu
                 @RenderBody()
                 <input name="code" id="code" type="hidden" value="@Model.Captcha" />
                 <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
+                <input id="__tk" name="__tk" value="@ViewBag.FPSToken" type="hidden" />
+                <input id="captcha_result" name="captcha_result" value="" type="hidden" />
             </form>
         </div>
 

@@ -282,6 +282,10 @@
     <Content Include="assets\bundles\captcha.min.js">
       <DependentUpon>captcha.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\captchav3.js" />
+    <Content Include="assets\bundles\captchav3.min.js">
+      <DependentUpon>captchav3.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\login.js" />
     <Content Include="assets\bundles\login.min.js">
       <DependentUpon>login.js</DependentUpon>
@@ -323,6 +327,7 @@
     <Content Include="assets\scripts\libs\jquery\jquery-1.11.3.js" />
     <Content Include="assets\scripts\libs\storage\store-with-json2.min.js" />
     <Content Include="assets\scripts\libs\cryptojs\aes.js" />
+    <Content Include="assets\scripts\login\captchav3.js" />
     <Content Include="assets\scripts\login\captcha.js" />
     <Content Include="assets\scripts\login\resources.js" />
     <Content Include="assets\scripts\um\um.js" />
