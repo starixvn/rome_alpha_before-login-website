@@ -1,4 +1,5 @@
 ﻿@using CommonAppSetting = Fanex.Alpha.Before.Common.Configurations.AppSetting
+
 @model Fanex.Alpha.Before.Customer.Models.SignInResult
 @{
     Layout = null;
@@ -13,11 +14,12 @@
 @Html.Hidden("ModelCaptcha", Model.Captcha)
 @Html.Hidden("CommonAppSettingFpsActivator", CommonAppSetting.FpsActivator)
 @Html.Hidden("RootUrl", Url.Content("~"))
-
+<style>
+    .grecaptcha-badge {
+        display: none !important;
+    }
+</style>
 <script type="text/javascript">
-    var detecasAnalysis = document.getElementById("detecas-analysis");
-    detecasAnalysis ? (detecasAnalysis.value = '{"startTime":1446686616296,"version":"0.0.0","enable":true}') : false;
-
     var _page = {
         errCode: 0,
         errMsg: '',
@@ -39,48 +41,68 @@
     _page.fpsActivator = document.getElementById("CommonAppSettingFpsActivator").value;
 
     window.rootUrl = document.getElementById("RootUrl").value;
-
-
-    $(function () {
-        if (parseInt(_page.errCode) === -1) {
-            $('#mainholder').css('display', 'none');
-            $('#divLoading').css('display', 'block');
-            $("body").css("background", "none");
-            window.location.href = '@Url.Content("~/Customer/SignIn/Flow")';
-        }
-
-        (function (json, base64) {
-
-            function getDeviceId() {
-                var diInput = document.getElementById("__di");
-                var collectedDeviceInfo = base64.decode(diInput.value);
-                collectedDeviceInfo = json.parse(collectedDeviceInfo);
-                return collectedDeviceInfo.deviceId;
-            }
-
-            function addDevideIdElement(deviceId) {
-                $("#formLogin").append('<input type="hidden" name="deviceId" id="deviceId" value="' + deviceId + '" />');
-            }
-
-            var completeTimeout = setTimeout(function () {
-                try {
-                    var deviceId = getDeviceId();
-                    addDevideIdElement(deviceId);
-                }
-                catch (err) {
-                    addDevideIdElement("N/A");
-                    window.console.log("fps error = " + err);
-                }
-            }, 2000); // Wait 2000 miliseconds only
-
-        })(Detecas.JSON, Detecas.Base64);
-    });
-
-    !function (e, t, a, c, n) {
-        var s = t.createElement(a),
-        o = t.getElementsByTagName(c)[0];
-        s.async = true, s.defer = true, s.src = n, o.appendChild(s)
-    }(window, document, "script", "body", document.getElementById("CommonAppSettingFpsActivator").value);
-
-
 </script>
+@if (CommonAppSetting.IsEnableGoogleV3)
+{
+    <script>
+        var googleV3key = '@CommonAppSetting.GoogleV3KeyForFrontEnd';
+        !function (e, t, a, c, n) {
+            var s = t.createElement(a),
+               o = t.getElementsByTagName(a)[0];
+            s.async = true, s.src = n, o.appendChild(s)
+        }
+        (window, document, 'script', 'body', 'https://www.google.com/recaptcha/api.js?render=' + googleV3key);
+
+        try {
+            var analysis = document.getElementById("detecas-analysis");
+            if (analysis) analysis.value = "js-enabled" + String.fromCharCode(64) + (new Date()).getTime();
+        }
+        catch (err) { };
+    </script>
+}
+
+@if (CommonAppSetting.IsEnableFPS)
+{
+    <script>
+        $(function () {
+            (function (json, base64) {
+
+                function getDeviceId() {
+                    var diInput = document.getElementById("__di");
+                    var collectedDeviceInfo = base64.decode(diInput.value);
+                    collectedDeviceInfo = json.parse(collectedDeviceInfo);
+                    return collectedDeviceInfo.deviceId;
+                }
+
+                function addDevideIdElement(deviceId) {
+                    $("#formLogin").append('<input type="hidden" name="deviceId" id="deviceId" value="' + deviceId + '" />');
+                }
+
+                var completeTimeout = setTimeout(function () {
+                    try {
+                        var deviceId = getDeviceId();
+                        addDevideIdElement(deviceId);
+                    }
+                    catch (err) {
+                        addDevideIdElement("N/A");
+                        window.console.log("fps error = " + err);
+                    }
+                }, 2000); // Wait 2000 miliseconds only
+
+            })(Detecas.JSON, Detecas.Base64);
+        });
+
+
+        !function (e, t, a, c, n) {
+            var s = t.createElement(a),
+            o = t.getElementsByTagName(c)[0];
+            s.async = true, s.defer = true, s.src = n, o.appendChild(s)
+        }
+        (window, document, "script", "body", document.getElementById("CommonAppSettingFpsActivator").value);
+    </script>
+}
+
+@if (CommonAppSetting.IsEnableGoogleV3)
+{
+    <script src="~/assets/bundles/captchav3.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
+}

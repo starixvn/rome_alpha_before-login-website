@@ -20,6 +20,11 @@
                 && ConfigurationManager.AppSettings["IsMBCSite"] == "1";
 
             trackRunTime = ConfigurationManager.AppSettings["TrackRunTime"] == "1";
+            GoogleV3KeyForFrontEnd = ConfigurationManager.AppSettings["GoogleV3KeyForFrontEnd"];
+            GoogleV3KeyForBackEnd = ConfigurationManager.AppSettings["GoogleV3KeyForBackEnd"];
+            IsEnableGoogleV3 = !string.IsNullOrEmpty(GoogleV3KeyForFrontEnd) && !string.IsNullOrEmpty(GoogleV3KeyForBackEnd);
+            IsEnableFPS = !string.IsNullOrEmpty(FpsActivator) && !string.IsNullOrEmpty(ConfigurationManager.AppSettings["FPS_API"]);
+            ProxyServer = ConfigurationManager.AppSettings["ProxyServer"];
         }
 
         public static string Version
@@ -30,6 +35,8 @@
             }
         }
 
+        public static string ProxyServer { get; }
+
         public static string FpsActivator
         {
             get
@@ -37,6 +44,14 @@
                 return fpsActivator;
             }
         }
+
+        public static bool IsEnableGoogleV3 { get; }
+
+        public static bool IsEnableFPS { get; }
+
+        public static string GoogleV3KeyForFrontEnd { get; }
+
+        public static string GoogleV3KeyForBackEnd { get; }
 
         public static string GoogleAnalyticId
         {

@@ -125,9 +125,6 @@
     <Reference Include="Fanex.Logging.Extensions.Web, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Logging.Extensions.Web.1.0.6\lib\net40\Fanex.Logging.Extensions.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Oneyed.RobotTrap">
-      <HintPath>..\_Dependencies\FPS\Fanex.Oneyed.RobotTrap.dll</HintPath>
-    </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\HandHistoryLibrary.dll</HintPath>
       <Private>True</Private>
@@ -285,6 +282,10 @@
     <Content Include="assets\bundles\captcha.min.js">
       <DependentUpon>captcha.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\captchav3.js" />
+    <Content Include="assets\bundles\captchav3.min.js">
+      <DependentUpon>captchav3.js</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\login.js" />
     <Content Include="assets\bundles\login.min.js">
       <DependentUpon>login.js</DependentUpon>
@@ -326,6 +327,7 @@
     <Content Include="assets\scripts\libs\jquery\jquery-1.11.3.js" />
     <Content Include="assets\scripts\libs\storage\store-with-json2.min.js" />
     <Content Include="assets\scripts\libs\cryptojs\aes.js" />
+    <Content Include="assets\scripts\login\captchav3.js" />
     <Content Include="assets\scripts\login\captcha.js" />
     <Content Include="assets\scripts\login\resources.js" />
     <Content Include="assets\scripts\um\um.js" />
@@ -397,18 +399,13 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
     <Content Include="Configurations\Local.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\Local.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\Master.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\Master.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\MNL.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Configurations\MNL.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\MNL.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\PRO.StoreProcedure\RobotSpNames.xml" />
     <Content Include="Configurations\UAT.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\UAT.StoreProcedure\RobotSpNames.xml" />
     <Content Include="assets\scripts\login\core.js" />
     <Content Include="assets\scripts\login\login.js" />
     <Content Include="assets\scripts\login\place-holder.js" />
@@ -455,7 +452,6 @@
       <DependentUpon>favicon.ico</DependentUpon>
     </Content>
     <Content Include="Global.asax" />
-    <Content Include="assets\scripts\libs\detecas\detecas-token.min.js" />
     <Content Include="Scripts\aes.js" />
     <Content Include="speedtest.png" />
     <Content Include="Views\Common\ErrorPage\404Error.htm" />
@@ -554,7 +550,6 @@
     <Content Include="Views\Common\ErrorPage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Customer\Views\SignIn\Flow.cshtml" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.LimtedCountryAccessSection.config" />
@@ -711,50 +706,14 @@
     <Content Include="Views\Shared\GoogleAnalytic.cshtml" />
     <Content Include="assets\styles\pages\um2.scss" />
     <Content Include="Views\Common\UnderMaintenance\Index.cshtml" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.ConnectionStrings.config" />
     <Content Include="Views\Common\UnderMaintenance\Index3.cshtml" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.LimtedCountryAccessSection.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local3.Web.Setting.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="Views\Common\ErrorPage\Index3.cshtml" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT3.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT3.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT3.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT3.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT3.Web.Setting.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT3.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT3.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT3.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT3.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT3.Web.Setting.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.Web.Setting.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL3.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL3.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL3.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL3.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL3.Web.Setting.config" />
     <Content Include="Fanex.Alpha.Before.Web.ruleset" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL4.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL4.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL4.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL4.Web.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL4.Web.Setting.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi4.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi4.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi4.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi4.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi4.Web.Setting.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local4.ConnectionStrings.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local4.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local4.LimtedCountryAccessSection.config" />

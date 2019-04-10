@@ -6,20 +6,20 @@
 
 namespace Fanex.Alpha.Before.Customer.Controllers
 {
+    using System;
+    using System.Configuration;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Web.Mvc;
     using CaptchaMvc.HtmlHelpers;
+    using Common.Configurations;
     using Fanex.Alpha.Before.Common.Controllers;
     using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
-    using Fanex.Oneyed.RobotTrap.Handshakes;
-    using Fanex.Oneyed.RobotTrap.Repositories;
     using Logging.Extensions.Web;
-    using System;
-    using System.Collections.Specialized;
-    using System.Configuration;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Web.Security;
 
     /// <summary>
     /// TODO: Update summary.
@@ -57,7 +57,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             var loginResult = _signInService.SignIn();
-            
+            ViewBag.FPSToken = FPS.Client.Token.Generate();
+
             return View(viewPath, loginResult);
         }
 
@@ -81,6 +82,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             string browserSize,
             string deviceId = "N/A")
         {
+            ViewBag.FPSToken = FPS.Client.Token.Generate();
             bool validCaptcha = false;
             if (_signInService.IsShowReCaptcha())
             {
@@ -101,15 +103,49 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 if (loginResult.ErrCode == -1)
                 {
                     FPSTracking(loginResult);
+
+                    return string.IsNullOrEmpty(loginResult.AfterLoginUrl) ?
+                        RedirectToAction("Index") :
+                        (ActionResult)Redirect(loginResult.AfterLoginUrl);
                 }
 
                 ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
             }
-            
-            Session["Detecas-Username"] = txtUserName;
-            Session["Detecas-AfterLoginUrl"] = loginResult.AfterLoginUrl;
 
             return View(viewPath, loginResult);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ValidateGoogleCaptcha(string token)
+        {
+            try
+            {
+                var TARGETURL = string.Format(
+                   "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}",
+                   AppSetting.GoogleV3KeyForBackEnd,
+                   token);
+
+                var handler = new HttpClientHandler
+                {
+                    Proxy = new WebProxy(AppSetting.ProxyServer),
+                    UseProxy = true,
+                };
+
+                var client = new HttpClient(handler);
+                var byteArray = Encoding.ASCII.GetBytes(":");
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+
+                var response = await client.GetAsync(TARGETURL);
+                var content = response.Content;
+
+                var result = await content.ReadAsStringAsync();
+
+                return Json(result);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.ToString());
+            }
         }
 
         public RedirectResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
@@ -161,100 +197,13 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult Flow()
-        {
-            if (IsDetecasSessionValid())
-            {
-                return GetFlowView();
-            }
-            else
-            {
-                return Redirect("~/Customer/SignIn");
-            }
-        }
-
-        private bool IsDetecasSessionValid()
-        {
-            return Session["Detecas-Username"] != null && !string.IsNullOrWhiteSpace(Session["Detecas-Username"].ToString())
-                      && Session["Detecas-AfterLoginUrl"] != null && !string.IsNullOrWhiteSpace(Session["Detecas-AfterLoginUrl"].ToString());
-        }
-
-        private ActionResult GetFlowView()
-        {
-            var handshaker = new Handshaker(Session);
-            var seedAndData = handshaker.GetSeedAndData();
-            var cookie = new HttpCookie("detecas-data") { Value = seedAndData.Value };
-
-            Response.Cookies.Add(cookie);
-
-            return View("Flow", (object)seedAndData.Key);
-        }
-
-        [HttpPost]
-        public ActionResult Flow(string detecasToken)
-        {
-            if (!IsDetecasSessionValid())
-            {
-                return Redirect("~/Customer/SignIn");
-            }
-
-            detecasToken = string.IsNullOrEmpty(detecasToken)
-                ? Request["detecas-token"]
-                : string.Empty;
-
-            var afterLoginUrl = Session["Detecas-AfterLoginUrl"].ToString();
-            var username = Session["Detecas-Username"].ToString();
-            TryEvaluateRobot(username, detecasToken);
-            RemoveDetecasSession();
-
-            return string.IsNullOrEmpty(afterLoginUrl)
-                ? (ActionResult)RedirectToAction("Index")
-                : (ActionResult)Redirect(afterLoginUrl);
-        }
-
-        private void TryEvaluateRobot(string username, string encryptedData)
-        {
-            try
-            {
-                EvaluateRobot(username, encryptedData);
-            }
-            catch
-            {
-            }
-        }
-
-        private void EvaluateRobot(string username, string encryptedData)
-        {
-            var robotBitMask = GetRobotBitMask(encryptedData);
-            if (robotBitMask > 0)
-            {
-                var repository = new RobotRepository();
-                repository.Create(username, Session.SessionID, robotBitMask);
-            }
-        }
-
-        private int GetRobotBitMask(string encryptedData)
-        {
-            var handshaker = new Handshaker(Session);
-            var isValidHandshake = handshaker.IsValid(encryptedData);
-
-            return isValidHandshake ? 0 : 1;
-        }
-
-        private void RemoveDetecasSession()
-        {
-            var detecasSessionKeys = Session.Keys.Cast<string>().Where(k => k.StartsWith("Detecas-", StringComparison.OrdinalIgnoreCase)).ToList();
-            detecasSessionKeys.ForEach(k => Session.Remove(k));
-        }
-
         private bool IsNeedMappingSslDomain()
         {
             var sslPorts = ConfigurationManager.AppSettings["SSLPorts"];
             var sslDomains = ConfigurationManager.AppSettings["SSLDomains"];
             if (sslPorts != null)
             {
-                var isPortNeedForSsl = sslPorts.Split(new [] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                var isPortNeedForSsl = sslPorts.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .Any(port => port.Equals(Request.ServerVariables["SERVER_PORT"], StringComparison.OrdinalIgnoreCase));
 
                 if (!isPortNeedForSsl && sslDomains != null)
