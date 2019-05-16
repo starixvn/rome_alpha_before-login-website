@@ -750,6 +750,11 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT4master.DomainGroupSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT4master.Web.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\UAT4master.Web.Setting.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.DomainGroupSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.LimtedCountryAccessSection.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.Web.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.Web.Setting.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
