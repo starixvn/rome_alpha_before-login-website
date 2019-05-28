@@ -10,6 +10,7 @@ namespace Fanex.Alpha.Before.Web.View
     using CaptchaMvc.Interface;
     using Common.Configurations;
     using Common.Services.LimitedCountryAccessService;
+    using Logging;
     using Logging.Extensions.Database;
     using Logging.Extensions.Web;
     using ONEbook.UM.Configurations;
@@ -17,7 +18,6 @@ namespace Fanex.Alpha.Before.Web.View
     using ONEbook.UM.Services.Impl;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Web.Mvc;
     using System.Web.Routing;
 
@@ -159,7 +159,7 @@ namespace Fanex.Alpha.Before.Web.View
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex, TraceEventType.Information);
+                LogService.Info(ex.ToString());
             }
         }
     }
