@@ -66,8 +66,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
 
             var currentLoginUrl = UrlHelper.SiteGroupSetting.BeforeUrl;
-            this._baseDomain = currentLoginUrl.Remove(0, currentLoginUrl.IndexOf('.') + 1);
-            this._baseDomain = this._baseDomain.Remove(this._baseDomain.Length - 1, 1);
+            this._baseDomain = new Uri(currentLoginUrl).Host;
             var alphaCommonSettings = AlphaCommonSection.Instance;
             if (alphaCommonSettings != null)
             {

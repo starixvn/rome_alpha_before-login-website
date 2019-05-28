@@ -12,6 +12,7 @@ namespace Fanex.Alpha.Before.Common.Helpers
     using Fanex.Alpha.Before.Common.Configurations.Domain;
     using Fanex.Alpha.Before.Common.Models;
     using Fanex.Alpha.Before.Customer.Configurations;
+    using System;
 
     /// <summary>
     /// URL helper.
@@ -26,7 +27,14 @@ namespace Fanex.Alpha.Before.Common.Helpers
         {
             get
             {
-                var host = System.Web.HttpContext.Current.Request.Headers["Host"];
+                var request = HttpContext.Current.Request;
+                var hostName = request.Headers["Host"];
+                var appPath = request.ApplicationPath;
+                var protocol = request.IsSecureConnection ? HttpSlashSlashS : HttpSlashSlash;
+                var hasAppPath = appPath.Length > 1;
+                var slash = hasAppPath ? "/" : string.Empty;
+                var requestURL = $"{protocol}{hostName}{appPath}{slash}";
+
                 var domainGroupSection = DomainGroupSection.Instance.DomainGroup;
                 var baseUrl = GetBaseUrl();
                 var defaultGroup = "Others";
@@ -65,7 +73,7 @@ namespace Fanex.Alpha.Before.Common.Helpers
 
                     foreach (var domainSetting in domains)
                     {
-                        if (domainSetting.Id.IndexOf(host, System.StringComparison.OrdinalIgnoreCase) == -1)
+                        if (requestURL.IndexOf(domainSetting.BeforeUrl, StringComparison.OrdinalIgnoreCase) == -1)
                         {
                             continue;
                         }

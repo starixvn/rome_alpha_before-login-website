@@ -56,7 +56,7 @@ namespace Fanex.Alpha.Before.Common.Configurations.Domain
         {
             if (BaseIndexOf(toteElement) >= 0)
             {
-                BaseRemove(toteElement.Id);
+                BaseRemove(toteElement.BeforeUrl);
             }
         }
 
@@ -87,7 +87,7 @@ namespace Fanex.Alpha.Before.Common.Configurations.Domain
 
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((DomainElement)element).Id;
+            return ((DomainElement)element).BeforeUrl;
         }
 
         protected override void BaseAdd(ConfigurationElement element)
