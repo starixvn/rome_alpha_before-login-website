@@ -6,20 +6,21 @@
 
 namespace Fanex.Alpha.Before.Web.View
 {
-    using CaptchaMvc.Infrastructure;
-    using CaptchaMvc.Interface;
-    using Common.Configurations;
-    using Common.Services.LimitedCountryAccessService;
-    using Logging;
-    using Logging.Extensions.Database;
-    using Logging.Extensions.Web;
-    using ONEbook.UM.Configurations;
-    using ONEbook.UM.Models;
-    using ONEbook.UM.Services.Impl;
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using CaptchaMvc.Infrastructure;
+    using CaptchaMvc.Interface;
+    using Common.Configurations;
+    using Common.Services.LimitedCountryAccessService;
+    using Fanex.Logging.Extensions.Database;
+    using global::Alpha.Logging;
+    using Logging;
+    using Logging.Extensions.Web;
+    using ONEbook.UM.Configurations;
+    using ONEbook.UM.Models;
+    using ONEbook.UM.Services.Impl;
 
     /// <summary>
     /// MVC Application.
@@ -73,11 +74,8 @@ namespace Fanex.Alpha.Before.Web.View
 
             MvcHandler.DisableMvcResponseHeader = true;
 
-            var loggingConfiguration = new LoggingConfiguration()
-               .HideSensitiveInfo(GetRegexToHideSensitiveInfo())
-               .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo);
-
-            ExceptionHandler.UseConfig(loggingConfiguration);
+            var sensitiveInfo = new List<string> { "password", "txtpassword" };
+            LoggingConfig.Init(sensitiveInfo, DatabaseInfoGetters.GetDbExceptionInfo);
 
             UMClientManager.WhenError((message) =>
             {
@@ -132,20 +130,7 @@ namespace Fanex.Alpha.Before.Web.View
             Response.Headers.Remove("X-AspNetMvc-Version");
         }
 
-        private static List<string> GetRegexToHideSensitiveInfo()
-        {
-            var result = new List<string>();
-            var sensitiveInfo = new[] { "password", "txtpassword" };
 
-            foreach (var info in sensitiveInfo)
-            {
-                result.Add($"(?:{info}=)(?<paramValue>[^&|^\\s]+)");
-                result.Add($"(\"{info}\":)(?<paramValue>[^,|^\r]+)");
-            }
-
-            return result;
-        }
-        
         private static void InitIPsCache()
         {
             try
