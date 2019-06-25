@@ -53,7 +53,9 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Fanex.Alpha.Before.Infrastructure\Fanex.Alpha.Before.Infrastructure.csproj">
       <Project>{d7c7bd95-04a3-49aa-b486-16dd746b76f8}</Project>
