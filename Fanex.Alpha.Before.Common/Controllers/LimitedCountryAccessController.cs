@@ -26,7 +26,7 @@
             }
             else
             {
-                return RedirectToAction("Index", "SignIn", new { area = "Customer" });
+                return Redirect(Helpers.UrlHelper.SiteGroupSetting.BeforeUrl);
             }
         }
     }
