@@ -46,14 +46,17 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_Dependencies\Captcha\CaptchaMvc.dll</HintPath>
     </Reference>
-    <Reference Include="CasinoLibrary, Version=2.0.2.34125, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.2.34125\lib\net40\CasinoLibrary.dll</HintPath>
+    <Reference Include="CasinoLibrary, Version=1.0.2.14, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoLibrary.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="CasinoSetting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.2.34125\lib\net40\CasinoSetting.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoSetting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="CasinoUtility, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.2.34125\lib\net40\CasinoUtility.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\CasinoUtility.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
@@ -81,7 +84,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="HandHistoryLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CasinoLibrary.2.0.2.34125\lib\net40\HandHistoryLibrary.dll</HintPath>
+      <HintPath>..\packages\CasinoLibrary.1.0.2.17\lib\net40\HandHistoryLibrary.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="IBCCrypt">
       <HintPath>..\_Dependencies\3rd\Casino\IBCCrypt.dll</HintPath>
