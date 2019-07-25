@@ -315,27 +315,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         {
             return CacheExtension.Get<int>(this._currentLoginFailedSessionKey) >= this._loginFailTimeToStartUsingCaptcha;
         }
-
-        /// <summary>
-        /// Close RNG Account.
-        /// </summary>
-        /// <param name="custId">Customer ID.</param>
-        private static void CloseRnGAccount(int custId)
-        {
-            try
-            {
-                CasinoLibrary.SBAgent.Customer rngCustomer = new CasinoLibrary.SBAgent.Customer();
-                // if (rngCustomer.CheckCustSetting(custId))
-                {
-                    rngCustomer.UpdateCustClosedWrongPwd(custId, true, IPHelper.ClientIP());
-                }
-            }
-            catch (ErrorException ex)
-            {
-                ExceptionHandler.Handle(new Exception(ex.Message, ex), TraceEventType.Information);
-            }
-        }
-
+        
         /// <summary>
         /// Get login totally failed.
         /// </summary>
@@ -493,12 +473,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             SignInResult signInResult,
             VerifySignInResult verifySignInResult)
         {
-            // Closed by wrong pwd 5 times, need to be synchronized to Casino DB
-            if ((verifySignInResult.ErrorCode == SignInErrorContants.Error109 || verifySignInResult.ErrorCode == SignInErrorContants.Error108) && verifySignInResult.SubAccId == 0)
-            {
-                CloseRnGAccount(verifySignInResult.CustId);
-            }
-
             signInResult.IsChangedPassword = verifySignInResult.LastTimeToChangePassword != DateTime.MinValue;
             if (signInResult.IsChangedPassword)
             {
