@@ -20,6 +20,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
     using Logging.Extensions.Web;
+    using Logging;
 
     /// <summary>
     /// TODO: Update summary.
@@ -193,7 +194,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                // LogService.Warn(ex.ToString());
             }
         }
 
