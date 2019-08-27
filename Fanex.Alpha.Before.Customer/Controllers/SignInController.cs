@@ -194,7 +194,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
             catch (Exception ex)
             {
-                // LogService.Warn(ex.ToString());
+                    ExceptionHandler.Handle(ex);
             }
         }
 
