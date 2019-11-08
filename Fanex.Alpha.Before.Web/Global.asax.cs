@@ -21,6 +21,7 @@ namespace Fanex.Alpha.Before.Web.View
     using ONEbook.UM.Configurations;
     using ONEbook.UM.Models;
     using ONEbook.UM.Services.Impl;
+    using System.Web.Hosting;
 
     /// <summary>
     /// MVC Application.
@@ -75,7 +76,7 @@ namespace Fanex.Alpha.Before.Web.View
             MvcHandler.DisableMvcResponseHeader = true;
 
             var sensitiveInfo = new List<string> { "password", "txtpassword" };
-            LoggingConfig.Init(sensitiveInfo, DatabaseInfoGetters.GetDbExceptionInfo);
+            LoggingConfig.Init(sensitiveInfo, DatabaseInfoGetters.GetDbExceptionInfo, $"{GetVirtualAppPath()}/assets/bundles/raven.min.js");
 
             UMClientManager.WhenError((message) =>
             {
@@ -146,6 +147,12 @@ namespace Fanex.Alpha.Before.Web.View
             {
                 LogService.Info(ex.ToString());
             }
+        }
+
+        private static string GetVirtualAppPath()
+        {
+            var virtualAppPath = HostingEnvironment.ApplicationVirtualPath;
+            return virtualAppPath.Equals("/") ? string.Empty : virtualAppPath;
         }
     }
 }

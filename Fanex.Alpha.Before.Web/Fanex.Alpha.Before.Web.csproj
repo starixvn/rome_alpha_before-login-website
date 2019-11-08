@@ -330,6 +330,7 @@
     <Content Include="assets\bundles\login.min.js">
       <DependentUpon>login.js</DependentUpon>
     </Content>
+    <Content Include="assets\bundles\raven.min.js" />
     <Content Include="assets\bundles\themes\default.css" />
     <Content Include="assets\bundles\themes\default.min.css">
       <DependentUpon>default.css</DependentUpon>
