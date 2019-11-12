@@ -23,7 +23,7 @@
         public void Index_Always_ReturnCorrectView()
         {
             // Act
-            var actualView = (ViewResult)limitedCountryAccessController.Index();
+            var actualView = (ViewResult)limitedCountryAccessController.IndexView();
 
             // Assert
             Assert.AreEqual("~/Views/Common/LimitedCountryAccess/Index.cshtml", actualView.ViewName);
