@@ -1,7 +1,7 @@
 ﻿@using CommonAppSetting = Fanex.Alpha.Before.Common.Configurations.AppSetting
 @if (Model is HandleErrorInfo)
 {
-    Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(Model.Exception);
+    Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(((HandleErrorInfo)Model).Exception);
 }
 else if (Model.GetType() == typeof(Fanex.Alpha.Before.Customer.Models.SignInResult))
 {
@@ -31,17 +31,17 @@ else if (Model.GetType() == typeof(Fanex.Alpha.Before.Customer.Models.SignInResu
         <div id="mainholder" class="block-login">
             <form id="formLogin" class="form-login" action="@Url.Content("~/")" method="POST" autocomplete="off">
                 @RenderBody()
-                <input name="code" id="code" type="hidden" value="@Model.Captcha" />
+                <input name="code" id="code" type="hidden" value="@data.Captcha" />
                 <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
                 <input id="__tk" name="__tk" value="@ViewBag.FPSToken" type="hidden" />
                 <input id="captcha_result" name="captcha_result" value="" type="hidden" />
             </form>
         </div>
 
-        @if (Model.IsChangedPassword)
+        @if (data.IsChangedPassword)
         {
             <div class="block-info">
-                @Model.ChangedPasswordTime
+                @data.ChangedPasswordTime
             </div>
         }
 
