@@ -22,12 +22,14 @@
         {
             if (limitedCountryAccessService.IsLimitedAccess())
             {
-                return View("~/Views/Common/LimitedCountryAccess/Index.cshtml");
+                return IndexView();
             }
             else
             {
                 return Redirect(Helpers.UrlHelper.SiteGroupSetting.BeforeUrl);
             }
         }
+
+        public ActionResult IndexView() => View("~/Views/Common/LimitedCountryAccess/Index.cshtml");
     }
 }
