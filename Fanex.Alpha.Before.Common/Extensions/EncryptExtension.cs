@@ -52,7 +52,7 @@ namespace Fanex.Alpha.Before.Common.Extensions
         /// <returns>Return encode value.</returns>
         public static string CfsEnCode(string codeValue)
         {
-            int num = 30;
+            const int num = 30;
             int num2 = num - codeValue.Length;
             if (num2 > 1)
             {

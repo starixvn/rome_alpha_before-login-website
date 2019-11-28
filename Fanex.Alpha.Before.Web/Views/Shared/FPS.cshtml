@@ -42,10 +42,10 @@
 
     window.rootUrl = document.getElementById("RootUrl").value;
 </script>
-@if (CommonAppSetting.IsEnableGoogleV3)
+@if (Model.GoogleReCaptcha.IsEnable)
 {
     <script>
-        var googleV3key = '@CommonAppSetting.GoogleV3KeyForFrontEnd';
+        var googleV3key = '@Model.GoogleReCaptcha.SiteKey';
         !function (e, t, a, c, n) {
             var s = t.createElement(a),
                o = t.getElementsByTagName(a)[0];
@@ -95,14 +95,14 @@
 
         !function (e, t, a, c, n) {
             var s = t.createElement(a),
-            o = t.getElementsByTagName(c)[0];
+                o = t.getElementsByTagName(c)[0];
             s.async = true, s.defer = true, s.src = n, o.appendChild(s)
         }
-        (window, document, "script", "body", document.getElementById("CommonAppSettingFpsActivator").value);
+            (window, document, "script", "body", document.getElementById("CommonAppSettingFpsActivator").value);
     </script>
 }
 
-@if (CommonAppSetting.IsEnableGoogleV3)
+@if (Model.GoogleReCaptcha.IsEnable)
 {
     <script src="~/assets/bundles/captchav3.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 }

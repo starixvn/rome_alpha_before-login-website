@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Fanex.Alpha.Before.Common.Models;
+
 namespace Fanex.Alpha.Before.Customer.Models
 {
     /// <summary>
@@ -78,6 +80,12 @@ namespace Fanex.Alpha.Before.Customer.Models
         }
 
         public string Username
+        {
+            get;
+            set;
+        }
+
+        public GoogleReCaptcha GoogleReCaptcha
         {
             get;
             set;

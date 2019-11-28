@@ -37,12 +37,13 @@ namespace Fanex.Alpha.Before.Common.Helpers
 
                 var domainGroupSection = DomainGroupSection.Instance.DomainGroup;
                 var baseUrl = GetBaseUrl();
-                var defaultGroup = "Others";
+                const string defaultGroup = "Others";
                 var siteGroup = new SiteGroupModel
                 {
                     SiteGroup = defaultGroup,
                     BeforeUrl = baseUrl,
-                    AfterUrl = baseUrl
+                    AfterUrl = baseUrl,
+                    GoogleReCaptcha = new GoogleReCaptcha()
                 };
 
                 if (domainGroupSection == null || domainGroupSection.Count == 0)
@@ -81,6 +82,7 @@ namespace Fanex.Alpha.Before.Common.Helpers
                         siteGroup.SiteGroup = domainGroupElement.Name;
                         siteGroup.BeforeUrl = domainSetting.BeforeUrl;
                         siteGroup.AfterUrl = domainSetting.AfterUrl;
+                        siteGroup.GoogleReCaptcha = new GoogleReCaptcha(domainSetting.SiteKey, domainSetting.SecretKey, domainSetting.Proxy);
 
                         if (AlphaCommonSection.Instance != null &&
                            !string.IsNullOrEmpty(AlphaCommonSection.Instance.OfficeIPs) &&

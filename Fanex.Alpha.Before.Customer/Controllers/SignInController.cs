@@ -15,12 +15,11 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using CaptchaMvc.HtmlHelpers;
-    using Common.Configurations;
     using Fanex.Alpha.Before.Common.Controllers;
+    using Fanex.Alpha.Before.Customer.Constants;
     using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
     using Logging.Extensions.Web;
-    using Logging;
 
     /// <summary>
     /// TODO: Update summary.
@@ -81,7 +80,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             string hidLanguage,
             string code,
             string browserSize,
-            string deviceId = "N/A")
+            string deviceId = "N/A",
+            string captcha_result = "")
         {
             ViewBag.FPSToken = FPS.Client.Token.Generate();
             bool validCaptcha = false;
@@ -97,9 +97,9 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 }
             }
 
-            var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code, deviceId, browserSize);
+            var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code, deviceId, browserSize, captcha_result);
 
-            if (loginResult != null && loginResult.ErrCode != -2)
+            if (loginResult != null && loginResult.ErrCode != SignInErrorContants.Error2)
             {
                 if (loginResult.ErrCode == -1)
                 {
@@ -119,16 +119,18 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpPost]
         public async Task<ActionResult> ValidateGoogleCaptcha(string token)
         {
+            var googleReCaptcha = Common.Helpers.UrlHelper.SiteGroupSetting.GoogleReCaptcha;
+
             try
             {
                 var TARGETURL = string.Format(
                    "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}",
-                   AppSetting.GoogleV3KeyForBackEnd,
+                   googleReCaptcha.SecretKey,
                    token);
 
                 var handler = new HttpClientHandler
                 {
-                    Proxy = new WebProxy(AppSetting.ProxyServer),
+                    Proxy = new WebProxy(googleReCaptcha.Proxy),
                     UseProxy = true,
                 };
 
@@ -169,7 +171,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         {
             try
             {
-                var loginAction = "login";
+                const string loginAction = "login";
                 var loginMessage = "successfully";
                 var fpsSubscirber = ConfigurationManager.AppSettings["FPS_Subscriber"];
                 var fpsErrorMessage = string.Empty;
@@ -194,7 +196,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
             catch (Exception ex)
             {
-                    ExceptionHandler.Handle(ex);
+                ExceptionHandler.Handle(ex);
             }
         }
 
