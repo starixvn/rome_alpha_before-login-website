@@ -54,47 +54,5 @@ namespace Fanex.Alpha.Before.Common.Configurations.Domain
                 this["after"] = value;
             }
         }
-
-        [ConfigurationProperty("sitekey")]
-        public string SiteKey
-        {
-            get
-            {
-                return (string)this["sitekey"];
-            }
-
-            set
-            {
-                this["sitekey"] = value;
-            }
-        }
-
-        [ConfigurationProperty("secretkey")]
-        public string SecretKey
-        {
-            get
-            {
-                return (string)this["secretkey"];
-            }
-
-            set
-            {
-                this["secretkey"] = value;
-            }
-        }
-
-        [ConfigurationProperty("proxy")]
-        public string Proxy
-        {
-            get
-            {
-                return (string)this["proxy"];
-            }
-
-            set
-            {
-                this["proxy"] = value;
-            }
-        }
     }
 }

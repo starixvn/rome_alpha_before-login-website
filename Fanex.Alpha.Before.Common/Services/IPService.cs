@@ -49,7 +49,6 @@
             }
 
             var ipNum = BitConverter.ToUInt64(addrBytes, 8);
-            ipNum <<= 64;
             ipNum += BitConverter.ToUInt64(addrBytes, 0);
 
             return ipNum;

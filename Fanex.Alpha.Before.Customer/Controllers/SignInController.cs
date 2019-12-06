@@ -145,9 +145,9 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
                 return Json(result);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return Json(ex.ToString());
+                return Json(string.Empty);
             }
         }
 

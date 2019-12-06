@@ -82,7 +82,7 @@ namespace Fanex.Alpha.Before.Common.Helpers
                         siteGroup.SiteGroup = domainGroupElement.Name;
                         siteGroup.BeforeUrl = domainSetting.BeforeUrl;
                         siteGroup.AfterUrl = domainSetting.AfterUrl;
-                        siteGroup.GoogleReCaptcha = new GoogleReCaptcha(domainSetting.SiteKey, domainSetting.SecretKey, domainSetting.Proxy);
+                        siteGroup.GoogleReCaptcha = new GoogleReCaptcha(domainGroupElement.SiteKey, domainGroupElement.SecretKey, domainGroupElement.Proxy);
 
                         if (AlphaCommonSection.Instance != null &&
                            !string.IsNullOrEmpty(AlphaCommonSection.Instance.OfficeIPs) &&
