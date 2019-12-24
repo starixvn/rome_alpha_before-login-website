@@ -1,10 +1,12 @@
 {
-  "ServerUri": "http://sonarqube.nexdev.net/",
+  "ServerUri": "https://sonarqube.nexdev.net/",
+  "Organization": null,
   "ProjectKey": "Alpha-Before-Login",
+  "ProjectName": "Alpha / Alpha Before Login",
   "Profiles": {
     "CSharp": {
       "ProfileKey": "cs-sonar-way-80515",
-      "ProfileTimestamp": "2017-08-15T14:27:29+07:00"
+      "ProfileTimestamp": "2019-10-01T13:55:11+07:00"
     }
   }
 }

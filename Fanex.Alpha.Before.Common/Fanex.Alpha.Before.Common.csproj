@@ -203,6 +203,7 @@
     <Compile Include="Criteria\LimitedCountryAccess\GetAllowedAccessIPsCriteria.cs" />
     <Compile Include="Criteria\LimitedCountryAccess\GetIpRangesByCountryCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Models\GoogleReCaptcha.cs" />
     <Compile Include="Models\IPRange.cs" />
     <Compile Include="Models\LimitedCountriesConfigModel.cs" />
     <Compile Include="Repositories\ObjectDbFactory.cs" />
@@ -314,9 +315,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\Google.Protobuf.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.CSharp.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.7.1.4347\analyzers\SonarAnalyzer.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -6,7 +6,10 @@
 
 namespace Fanex.Alpha.Before.Customer.Services.SignIn
 {
-    using CasinoLibrary.Model.UserException;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Web;
     using Cryptography.Aes;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Constants;
@@ -16,16 +19,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using Fanex.Alpha.Before.Customer.Constants;
     using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Repositories.SignIn;
+    using Fanex.Alpha.Before.Customer.Services.FPS;
     using Fanex.Alpha.Before.Infrastructure.Constants;
     using Fanex.Alpha.Before.Infrastructure.Extensions;
     using Fanex.Common;
     using Logging.Extensions.Web;
     using RSACryptoPad;
-    using System;
-    using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Web;
     using InfrastructureLanguages = Fanex.Alpha.Before.Infrastructure.Resources;
     using LoginLanguages = Fanex.Alpha.Before.Customer.Resources;
 
@@ -34,6 +33,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     /// </summary>
     public class SignInService : ISignInService
     {
+        private const string UTMS = "__utms";
+
         private readonly int _maxTimesToAllowLogInFail;
         private readonly int _blockLoginMinute;
         private readonly int _loginFailTimeToStartUsingCaptcha;
@@ -48,12 +49,14 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly string _latestLoginFailSessionKey = string.Format(SessionConstants.LOGINFAILEDTIME, IPHelper.ClientIP());
         private readonly string _lastLoginUserNameSessionKey = string.Format(SessionConstants.LASTLOGINUSERNAME, IPHelper.ClientIP());
 
+        private readonly IRobotDetector robotDetector;
+
         public SignInService() :
-            this(null)
+            this(null, null)
         {
         }
 
-        public SignInService(SignInRepository signInRepository)
+        public SignInService(SignInRepository signInRepository, IRobotDetector robotDetector)
         {
             _signInRepository = signInRepository ?? new SignInRepository();
             var _loginThemeSection = LoginThemeSection.Instance;
@@ -76,6 +79,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 this._notInteractionTimeInMinutes = alphaCommonSettings.NoInteractionTimeInMinutes;
                 this._passwordMaxFailTimeForOneUser = alphaCommonSettings.PasswordMaxFailTimeForOneUser;
             }
+
+            this.robotDetector = robotDetector ?? new RobotDetector();
         }
 
         /// <summary>
@@ -94,13 +99,14 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             try
             {
                 //// Check cross cookie compatibility
-                AppSession.CookieCode = EncryptExtension.RandomNumberString(6);
+                const int EncryptCookieCodeLength = 6;
+                AppSession.CookieCode = EncryptExtension.RandomNumberString(EncryptCookieCodeLength);
                 var randomCookieTicket = EncryptExtension.CfsEnCode(AppSession.CookieCode);
 
                 try
                 {
                     //// Set cookie with custid id
-                    HttpCookie cookie = new HttpCookie("__utms", randomCookieTicket);
+                    HttpCookie cookie = new HttpCookie(UTMS, randomCookieTicket);
                     cookie.Domain = this._baseDomain;
                     cookie.HttpOnly = true;
                     cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
@@ -116,7 +122,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 loginResult.Domain = this._baseDomain;
 
                 //// Use for encrypt pwd
-                AppSession.EncryptCode = EncryptExtension.RandomNumberString(4);
+                const int EncryptPasswordLength = 4;
+                AppSession.EncryptCode = EncryptExtension.RandomNumberString(EncryptPasswordLength);
                 loginResult.Captcha = AppSession.EncryptCode;
             }
             catch (Exception ex)
@@ -125,6 +132,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 loginResult.ErrMsg = Infrastructure.Resources.Labels.Error_Server;
                 ExceptionHandler.Handle(ex);
             }
+
+            loginResult.GoogleReCaptcha = UrlHelper.SiteGroupSetting.GoogleReCaptcha;
 
             return loginResult;
         }
@@ -148,13 +157,15 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             bool isValidCaptcha,
             string code,
             string deviceId,
-            string browserSize)
+            string browserSize,
+            string captchaResult)
         {
             var signInResult = new SignInResult
             {
                 Ip = IPHelper.ClientIP(),
                 LoginTemplate = _loginTheme,
-                Username = username
+                Username = username,
+                GoogleReCaptcha = UrlHelper.SiteGroupSetting.GoogleReCaptcha
             };
 
             try
@@ -188,7 +199,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                         ResetCurrentLoginFailed();
                         CacheExtension.Set(this._lastLoginUserNameSessionKey, username);
 
-                        signInResult.ErrCode = -2; ////no need to write log in fps and redirect to login page.
+                        signInResult.ErrCode = SignInErrorContants.Error2; ////no need to write log in fps and redirect to login page.
                         signInResult.Captcha = AppSession.EncryptCode;
 
                         return signInResult;
@@ -236,7 +247,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult);
+                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult, captchaResult);
             }
             catch (Exception ex)
             {
@@ -299,7 +310,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult);
+                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult, string.Empty);
             }
             catch (Exception ex)
             {
@@ -315,7 +326,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         {
             return CacheExtension.Get<int>(this._currentLoginFailedSessionKey) >= this._loginFailTimeToStartUsingCaptcha;
         }
-        
+
         /// <summary>
         /// Get login totally failed.
         /// </summary>
@@ -506,18 +517,19 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             SignInResult signInResult,
             VerifySignInResult verifySignInResult,
             string deviceId,
-            string browserSize)
+            string browserSize,
+            string captchaResult)
         {
             this.ResetLoginFailed();
 
-            bool numberCrossCookie = System.Web.HttpContext.Current.Request.Cookies.Get("__utms") == null
-                || System.Web.HttpContext.Current.Request.Cookies.Get("__utms").Value == AppSession.CookieCode;
+            bool numberCrossCookie = System.Web.HttpContext.Current.Request.Cookies.Get(UTMS) == null
+                || System.Web.HttpContext.Current.Request.Cookies.Get(UTMS).Value == AppSession.CookieCode;
             string crossCookieValue = EncryptExtension.CfsEnCode((verifySignInResult.CustId + verifySignInResult.LoginTime.Minute).ToString());
-            int keySize = 1024;
+            const int keySize = 1024;
 
             var path = System.Web.HttpContext.Current.Server.MapPath("~/IbcKeys/ibcpkey.snk");
             var parameter = string.Format(
-                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}&{10}",
+                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}&{10}&{11}&{12}",
                 verifySignInResult.CustId,
                 verifySignInResult.SubAccId,
                 verifySignInResult.LoginTime.Ticks,
@@ -528,7 +540,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 numberCrossCookie,
                 deviceId,
                 browserSize,
-                AppSession.EncryptCode);
+                AppSession.EncryptCode,
+                robotDetector.IsBrowserless(HttpContext.Current.Request) ? 1 : 0,
+                robotDetector.CaptchaScore(captchaResult));
 
             parameter = new EncryptionThread().EncryptString(parameter, keySize, path);
 
@@ -551,7 +565,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             try
             {
                 // Set cookie with custid id and seed
-                HttpCookie cookie = new HttpCookie("__utms", crossCookieValue);
+                HttpCookie cookie = new HttpCookie(UTMS, crossCookieValue);
                 cookie.Domain = this._baseDomain;
                 cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
                 cookie.HttpOnly = true;
@@ -568,7 +582,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string password,
             string deviceId,
             string browserSize,
-            SignInResult signInResult)
+            SignInResult signInResult,
+            string captchaResult)
         {
             var requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request, browserSize);
             requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
@@ -576,7 +591,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
             if (verifySignInResult.ErrorCode == 0)
             {
-                UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
+                UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize, captchaResult);
             }
             else
             {

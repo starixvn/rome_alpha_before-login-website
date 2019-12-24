@@ -16,5 +16,7 @@ namespace Fanex.Alpha.Before.Common.Models
         public string BeforeUrl { get; set; }
 
         public string AfterUrl { get; set; }
+
+        public GoogleReCaptcha GoogleReCaptcha { get; set; }
     }
 }
