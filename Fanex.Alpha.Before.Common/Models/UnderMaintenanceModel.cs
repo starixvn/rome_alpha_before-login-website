@@ -42,12 +42,10 @@
                 return false;
             }
 
-            int endHours;
-            int endMinutes;
             var doubleColonIndex = ToTimeText.IndexOf(':');
 
-            if (int.TryParse(ToTimeText.Substring(0, doubleColonIndex), out endHours)
-                && int.TryParse(ToTimeText.Substring(doubleColonIndex + 1, 2), out endMinutes))
+            if (int.TryParse(ToTimeText.Substring(0, doubleColonIndex), out int endHours)
+                && int.TryParse(ToTimeText.Substring(doubleColonIndex + 1, 2), out int endMinutes))
             {
                 if (ToTimeText.ToUpperInvariant().Contains("PM") && endHours < 12)
                 {

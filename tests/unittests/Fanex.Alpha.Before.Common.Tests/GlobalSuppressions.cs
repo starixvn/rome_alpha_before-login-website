@@ -17,4 +17,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Sonar Bug", "S1244:Floating point numbers should not be tested for equality", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Alpha.Before.Common.Tests.Services.LimitedCountryAccessServiceTests.GetIPRangesByRestrictedCountry_NotDifferentRestrictedCountriesConfig_NotCallCachedRestrictedCountries")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Scope = "type", Target = "Fanex.Alpha.Before.Common.Tests.Controllers.ErrorPageControllerTests")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Scope = "type", Target = "Fanex.Alpha.Before.Common.Tests.Controllers.LimitedCountryAccessControllerTests")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable", Scope = "type", Target = "Fanex.Alpha.Before.Common.Tests.Controllers.OfflineControllerTests")]
 

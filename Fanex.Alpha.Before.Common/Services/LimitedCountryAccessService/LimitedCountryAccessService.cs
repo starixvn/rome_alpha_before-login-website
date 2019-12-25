@@ -92,11 +92,11 @@
             var restrictedCountries = string.Join(",", activeLimitedCountriesConfig.Select(m => m.Name));
             var cacheKey = $"{RestrictedIPRangesCachedKey}{(isIpV6 ? "6" : "4")}_{restrictedCountries}";
 
-            Func<IList<IpRange>> getDataFromDatabaseFunc = () =>
+            IList<IpRange> getDataFromDatabaseFunc()
             {
                 var criteria = new GetIpRangesByCountryCriteria(isIpV6, restrictedCountries);
                 return ipRepository.GetIPRangesByCountry(criteria);
-            };
+            }
 
             return cacheService.GetOrSet(
                 cacheKey,
