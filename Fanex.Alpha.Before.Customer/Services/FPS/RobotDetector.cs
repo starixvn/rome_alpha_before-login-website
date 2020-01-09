@@ -40,9 +40,8 @@
                 {
                     return JsonConvert.DeserializeObject<TokenResponse>(captchaResult);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    ExceptionHandler.Handle(ex);
                 }
             }
 
