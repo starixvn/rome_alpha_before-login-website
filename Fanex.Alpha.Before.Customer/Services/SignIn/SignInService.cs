@@ -589,7 +589,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
 
             var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
-            if (verifySignInResult.ErrorCode == 0)
+            if (verifySignInResult.ErrorCode == 0 && robotDetector.CaptchaScore(captchaResult) != RobotDetector.ErrorGoogleReCaptchaScore)
             {
                 UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize, captchaResult);
             }

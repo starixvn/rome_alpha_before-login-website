@@ -10,6 +10,7 @@
     public class RobotDetector : IRobotDetector
     {
         private const decimal DefaultGoogleReCaptchaScore = 1;
+        public const decimal ErrorGoogleReCaptchaScore = 2;
 
         public bool IsBrowserless(HttpRequest request)
         {
@@ -27,9 +28,16 @@
 
         public decimal CaptchaScore(string captchaResult)
         {
-            var tokenResponse = ParseTokenResponse(captchaResult);
+            try
+            {
+                var tokenResponse = ParseTokenResponse(captchaResult);
 
-            return tokenResponse.Success ? tokenResponse.Score : DefaultGoogleReCaptchaScore;
+                return tokenResponse.Success ? tokenResponse.Score : DefaultGoogleReCaptchaScore;
+            }
+            catch (Exception)
+            {
+                return ErrorGoogleReCaptchaScore;
+            }            
         }
 
         private static TokenResponse ParseTokenResponse(string captchaResult)
