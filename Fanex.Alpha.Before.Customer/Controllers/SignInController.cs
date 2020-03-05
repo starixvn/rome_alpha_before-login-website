@@ -76,7 +76,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// <returns>
         /// Return result.
         /// </returns>
-        [HttpPost]
+        [HttpPost, ValidateAntiForgeryToken]
         [ValidateInput(false)]
         public ActionResult Index(
             string txtUserName,
