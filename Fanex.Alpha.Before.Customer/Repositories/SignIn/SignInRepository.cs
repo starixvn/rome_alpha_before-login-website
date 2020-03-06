@@ -50,7 +50,7 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
                 var result = new VerifySignInResult
                 {
                     CustId = Converter.ToInt(objectDB.GetOuputParams()["custid"]),
-                    Username = Converter.ToString2(objectDB.GetOuputParams()["username"]),
+                    Username = username,
                     SubAccId = Converter.ToInt(objectDB.GetOuputParams()["subaccid"]),
                     IsNickname = Converter.ToBool(objectDB.GetOuputParams()["isnickname"]),
                     Nickname = Converter.ToString2(objectDB.GetOuputParams()["nickname"]),

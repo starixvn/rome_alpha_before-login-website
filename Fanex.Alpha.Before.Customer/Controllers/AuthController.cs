@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="SignInController.cs" company="">
+// <copyright file="AuthController.cs" company="">
 // Copyright (c). All rights reserved.
 // </copyright>
 // -----------------------------------------------------------------------
@@ -21,24 +21,23 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using System.Net.Http;
     using System.Text;
     using System.Threading.Tasks;
-    using System.Web;
     using System.Web.Mvc;
 
     /// <summary>
     /// TODO: Update summary.
     /// </summary>
-    public class SignInController : BaseController
+    public class AuthController : BaseController
     {
         private readonly ISignInService _signInService;
         private readonly string viewPath = "~/Areas/Customer/Views/SignIn/Index.cshtml";
         private const string GoogleRecaptchaResultSessionKey = "GoogleRecaptchaResult";
 
-        public SignInController() :
+        public AuthController() :
             this(null)
         {
         }
 
-        public SignInController(SignInService signInService)
+        public AuthController(SignInService signInService)
         {
             _signInService = signInService ?? new SignInService();
         }
@@ -172,7 +171,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 return Redirect(loginResult.AfterLoginUrl);
             }
 
-            return Redirect("~/Customer/SignIn");
+            return Redirect("~/Auth/Index");
         }
 
         /// <summary>
