@@ -17,7 +17,7 @@
 
                     grecaptcha.execute(googleV3key, { action: 'login' }).then(function (token) {                        
                         $.ajax({
-                            url: Sphinx.rootUrl + "SignIn/ValidateGoogleCaptcha",
+                            url: Sphinx.rootUrl + "Auth/ValidateGoogleCaptcha",
                             type: "POST",
                             data: 'token=' + token,
                             success: function (result) {

@@ -218,7 +218,7 @@
     <Compile Include="Configurations\CustomerAppSetting.cs" />
     <Compile Include="Configurations\LoginThemeSection.cs" />
     <Compile Include="Constants\SignInErrorContants.cs" />
-    <Compile Include="Controllers\SignInController.cs" />
+    <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\SignInResult.cs" />
     <Compile Include="Models\TokenResponse.cs" />

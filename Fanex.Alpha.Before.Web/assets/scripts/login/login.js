@@ -103,7 +103,7 @@ Sphinx.Login = {
 
     getValidateImage: function () {
         var objDate = new Date();
-        $("#imgCode").attr('src', Sphinx.rootUrl + 'Customer/SignIn/NewCaptcha?code=' + objDate.getMilliseconds());
+        $("#imgCode").attr('src', Sphinx.rootUrl + 'NewCaptcha?code=' + objDate.getMilliseconds());
     },
 
     setLanguague: function (languageCode, firstLoad) {

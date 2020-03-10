@@ -45,14 +45,14 @@ namespace Fanex.Alpha.Before.Web.View
             var defaultParameter = new
             {
                 area = "Customer",
-                controller = "SignIn",
-                action = "Index",
+                controller = "auth",
+                action = "index",
                 id = UrlParameter.Optional
             };
 
             routes.MapRoute(
-                "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
+                "Default",
+                "{controller}/{action}/{id}",
                  defaultParameter);
         }
 
