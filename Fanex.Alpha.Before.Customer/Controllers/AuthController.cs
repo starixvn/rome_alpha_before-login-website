@@ -183,7 +183,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             try
             {
                 const string loginAction = "login";
-                var loginMessage = "successfully";
+                var loginMessage = string.Empty;
+                var username = loginResult?.Username;
                 var fpsSubscirber = ConfigurationManager.AppSettings["FPS_Subscriber"];
                 var fpsErrorMessage = string.Empty;
                 var fpsErrorCode = string.Empty;
@@ -196,9 +197,13 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 {
                     loginMessage = string.Format("{0}", loginResult.ErrMsg);
                 }
+                else
+                {
+                    loginMessage = "successfully";
+                }
 
                 new FPS.Client.Service().CheckTransaction(
-                    loginResult.Username,
+                    username,
                     loginAction,
                     loginMessage,
                     fpsSubscirber,
