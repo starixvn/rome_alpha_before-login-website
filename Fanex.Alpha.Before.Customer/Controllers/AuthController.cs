@@ -6,14 +6,6 @@
 
 namespace Fanex.Alpha.Before.Customer.Controllers
 {
-    using CaptchaMvc.HtmlHelpers;
-    using Fanex.Alpha.Before.Common.Controllers;
-    using Fanex.Alpha.Before.Customer.Constants;
-    using Fanex.Alpha.Before.Customer.Models;
-    using Fanex.Alpha.Before.Customer.Services.SignIn;
-    using KellermanSoftware.CompareNetObjects;
-    using Logging.Extensions.Web;
-    using Newtonsoft.Json;
     using System;
     using System.Configuration;
     using System.Linq;
@@ -22,6 +14,12 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using System.Text;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using CaptchaMvc.HtmlHelpers;
+    using Fanex.Alpha.Before.Common.Controllers;
+    using Fanex.Alpha.Before.Customer.Constants;
+    using Fanex.Alpha.Before.Customer.Models;
+    using Fanex.Alpha.Before.Customer.Services.SignIn;
+    using Logging.Extensions.Web;
 
     /// <summary>
     /// TODO: Update summary.
@@ -30,7 +28,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     {
         private readonly ISignInService _signInService;
         private readonly string viewPath = "~/Areas/Customer/Views/SignIn/Index.cshtml";
-        private const string GoogleRecaptchaResultSessionKey = "GoogleRecaptchaResult";
 
         public AuthController() :
             this(null)
@@ -83,14 +80,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             string hidLanguage,
             string code,
             string browserSize,
-            string deviceId = "N/A",
-            string captcha_result = "")
+            string deviceId = "N/A")
         {
-            if (!IsValidCaptchaRequest(captcha_result))
-            {
-                return Index();
-            }
-
             ViewBag.FPSToken = FPS.Client.Token.Generate();
             bool validCaptcha = false;
             if (_signInService.IsShowReCaptcha())
@@ -105,7 +96,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 }
             }
 
-            var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code, deviceId, browserSize, captcha_result);
+            var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code, deviceId, browserSize);
 
             if (loginResult != null && loginResult.ErrCode != SignInErrorContants.Error2)
             {
@@ -150,9 +141,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 var content = response.Content;
 
                 var result = await content.ReadAsStringAsync();
-                var tokenResponse = WebUtility.HtmlDecode(result);
-                
-                Session[GoogleRecaptchaResultSessionKey] = tokenResponse;
 
                 return Json(result);
             }
@@ -236,30 +224,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             return false;
-        }
-
-        private bool IsValidCaptchaRequest(string captcha_result)
-        {
-            if (Common.Helpers.UrlHelper.SiteGroupSetting.GoogleReCaptcha.IsEnable
-                && Session[GoogleRecaptchaResultSessionKey] != null
-                && !new CompareLogic().Compare(TokenResponseResult(captcha_result), TokenResponseResult((string)Session[GoogleRecaptchaResultSessionKey])).AreEqual)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private static TokenResponse TokenResponseResult(string captcha_result)
-        {
-            try
-            {
-                return JsonConvert.DeserializeObject<TokenResponse>(captcha_result);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
         }
     }
 }

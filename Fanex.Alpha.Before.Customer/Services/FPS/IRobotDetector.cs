@@ -1,11 +1,10 @@
 ﻿namespace Fanex.Alpha.Before.Customer.Services.FPS
 {
     using System.Web;
+    using global::FPS.Browserless.Core;
 
     public interface IRobotDetector
     {
-        bool IsBrowserless(HttpRequest request);
-
-        decimal CaptchaScore(string captchaResult);
+        BotFlagged IsRobot(HttpRequest request);
     }
 }

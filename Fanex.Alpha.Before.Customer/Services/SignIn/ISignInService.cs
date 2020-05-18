@@ -6,7 +6,6 @@
 
 namespace Fanex.Alpha.Before.Customer.Services.SignIn
 {
-    using System.Drawing;
     using Fanex.Alpha.Before.Customer.Models;
 
     /// <summary>
@@ -25,7 +24,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         /// <param name="isValidCaptcha">If set to <c>true</c> [is valid captcha].</param>
         /// <param name="code">The code string.</param>
         /// <returns>Sign In result.</returns>
-        SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha, string code, string deviceId, string browserSize, string captchaResult);
+        SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha, string code, string deviceId, string browserSize);
 
         SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize);
 
