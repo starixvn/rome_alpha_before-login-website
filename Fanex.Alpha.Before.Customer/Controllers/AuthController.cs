@@ -203,7 +203,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 }
 
                 new FPS.Client.Service().CheckTransaction(
-                    username,
+                    username?.Trim(),
                     loginAction,
                     loginMessage,
                     fpsSubscirber,
