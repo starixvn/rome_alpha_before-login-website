@@ -457,33 +457,215 @@
       <SubType>
       </SubType>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Master.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.ConnectionStrings.config">
+      <DependentUpon>backupMNL.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.DomainGroupSection.config">
+      <DependentUpon>backupMNL.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.LimtedCountryAccessSection.config">
+      <DependentUpon>backupMNL.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.Web.Setting.config">
+      <DependentUpon>backupMNL.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.ConnectionStrings.config">
+      <DependentUpon>backupMNL.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.DomainGroupSection.config">
+      <DependentUpon>backupMNL.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.LimtedCountryAccessSection.config">
+      <DependentUpon>backupMNL.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.Web.config">
+      <DependentUpon>backupMNL.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.Web.Setting.config">
+      <DependentUpon>backupMNL.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local.ConnectionStrings.config">
+      <DependentUpon>Local.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local.DomainGroupSection.config">
+      <DependentUpon>Local.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local.LimtedCountryAccessSection.config">
+      <DependentUpon>Local.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local.Web.Setting.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>Local.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.ConnectionStrings.config">
+      <DependentUpon>Local.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.DomainGroupSection.config">
+      <DependentUpon>Local.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.LimtedCountryAccessSection.config">
+      <DependentUpon>Local.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.Web.config">
+      <DependentUpon>Local.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.Web.Setting.config">
+      <DependentUpon>Local.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Master.ConnectionStrings.config">
+      <DependentUpon>Local.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Master.DomainGroupSection.config">
+      <DependentUpon>Local.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\Master.LimtedCountryAccessSection.config">
+      <DependentUpon>Local.Web.config</DependentUpon>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.Web.config">
       <SubType>Designer</SubType>
+      <DependentUpon>Local.Web.config</DependentUpon>
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\Master.Web.Setting.config">
       <SubType>Designer</SubType>
+      <DependentUpon>Local.Web.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.ConnectionStrings.config" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.ConnectionStrings.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.DomainGroupSection.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.LimtedCountryAccessSection.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.Setting.config">
       <SubType>Designer</SubType>
+      <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.Web.config">
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.ConnectionStrings.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.DomainGroupSection.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.LimtedCountryAccessSection.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.Web.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.Web.Setting.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.ConnectionStrings.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.DomainGroupSection.config">
       <SubType>Designer</SubType>
+      <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.Web.Setting.config">
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.LimtedCountryAccessSection.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.Web.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.ConnectionStrings.config">
+      <DependentUpon>SIT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.DomainGroupSection.config">
+      <DependentUpon>SIT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.LimtedCountryAccessSection.config">
+      <DependentUpon>SIT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.Web.Setting.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.Web.Setting.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>SIT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.ConnectionStrings.config">
+      <DependentUpon>SIT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.DomainGroupSection.config">
+      <DependentUpon>SIT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.LimtedCountryAccessSection.config">
+      <DependentUpon>SIT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.Web.config">
+      <DependentUpon>SIT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.Web.Setting.config">
+      <DependentUpon>SIT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.ConnectionStrings.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.DomainGroupSection.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.LimtedCountryAccessSection.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.Web.config">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local.Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local.Web.Setting.config">
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.Web.Setting.config">
       <SubType>Designer</SubType>
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.ConnectionStrings.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.DomainGroupSection.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.LimtedCountryAccessSection.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.Web.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.Web.Setting.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2master.ConnectionStrings.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2master.DomainGroupSection.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2master.Web.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2master.Web.Setting.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UATmaster.ConnectionStrings.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UATmaster.DomainGroupSection.config">
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UATmaster.Web.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>UAT.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\UATmaster.Web.Setting.config">
+      <SubType>Designer</SubType>
+      <DependentUpon>UAT.Web.config</DependentUpon>
     </Content>
     <Content Include="favicon.ico" />
     <Content Include="favicon2.ico">
@@ -499,11 +681,6 @@
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\LICENSE.txt" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon-notify.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon_note.png" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.Web.Setting.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.Web.config" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\CaptchaPartialView.cshtml" />
     <Content Include="Areas\Captcha\Views\Web.config" />
@@ -511,21 +688,12 @@
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Medium.ttf" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Regular.ttf" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\LimitedCountryAccess.less" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Master.LimtedCountryAccessSection.config" />
     <Content Include="LimtedCountryAccessSection.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local.LimtedCountryAccessSection.config" />
     <Content Include="DomainGroupSection.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.DomainGroupSection.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Master.DomainGroupSection.config" />
     <Content Include="Areas\Customer\Web.config" />
     <Content Include="Areas\Customer\Views\SignIn\Transfer.cshtml" />
     <Content Include="IbcKeys\ibckey.snk" />
@@ -586,9 +754,6 @@
     <Content Include="Views\Common\ErrorPage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.LimtedCountryAccessSection.config" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.Web.config" />
     <Content Include="Areas\Customer\Views\SignIn\Index.cshtml" />
     <Content Include="assets\scripts\libs\jquery\jquery-1.11.3.min.map" />
@@ -714,54 +879,14 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.Web.Setting.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.Web.Setting.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.Web.Setting.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="deployment.ignore" />
     <Content Include="Views\Shared\FPS.cshtml" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\SIT2.Web.Setting.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2.Web.Setting.config" />
     <Content Include="Views\Shared\GoogleAnalytic.cshtml" />
     <Content Include="assets\styles\pages\um2.scss" />
     <Content Include="Views\Common\UnderMaintenance\Index.cshtml" />
     <Content Include="Views\Common\UnderMaintenance\Index3.cshtml" />
     <Content Include="Views\Common\ErrorPage\Index3.cshtml" />
     <Content Include="Fanex.Alpha.Before.Web.ruleset" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UATmaster.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UATmaster.Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UATmaster.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2master.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UATmaster.Web.Setting.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2master.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2master.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\UAT2master.Web.Setting.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.ConnectionStrings.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.DomainGroupSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.LimtedCountryAccessSection.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.Web.config" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\Local2.Web.Setting.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\" />
