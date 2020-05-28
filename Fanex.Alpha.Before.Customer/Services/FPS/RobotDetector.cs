@@ -2,58 +2,29 @@
 {
     using System;
     using System.Web;
-    using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Logging.Extensions.Web;
+    using global::FPS.Browserless.Core;
     using global::FPS.Browserless.Detection.Client;
-    using Newtonsoft.Json;
 
     public class RobotDetector : IRobotDetector
     {
-        private const decimal DefaultGoogleReCaptchaScore = 1;
-        public const decimal ErrorGoogleReCaptchaScore = 2;
-
-        public bool IsBrowserless(HttpRequest request)
+        public BotFlagged IsRobot(HttpRequest request)
         {
             try
             {
-                return BrowserlessDetection.IsRobot(request);
+                return BotDetection.IsBot(request);
             }
+#pragma warning disable CS0168 // Variable is declared but never used
             catch (Exception ex)
+#pragma warning restore CS0168 // Variable is declared but never used
             {
-                ExceptionHandler.Handle(ex);
+                
+#pragma warning disable S125 // Sections of code should not be commented out
+// ExceptionHandler.Handle(ex);
+
+                return BotFlagged.IsClean;
+#pragma warning restore S125 // Sections of code should not be commented out
             }
-
-            return false;
-        }
-
-        public decimal CaptchaScore(string captchaResult)
-        {
-            try
-            {
-                var tokenResponse = ParseTokenResponse(captchaResult);
-
-                return tokenResponse.Success ? tokenResponse.Score : DefaultGoogleReCaptchaScore;
-            }
-            catch (Exception)
-            {
-                return ErrorGoogleReCaptchaScore;
-            }            
-        }
-
-        private static TokenResponse ParseTokenResponse(string captchaResult)
-        {
-            if (!string.IsNullOrWhiteSpace(captchaResult))
-            {
-                try
-                {
-                    return JsonConvert.DeserializeObject<TokenResponse>(captchaResult);
-                }
-                catch (Exception)
-                {
-                }
-            }
-
-            return new TokenResponse();
         }
     }
 }

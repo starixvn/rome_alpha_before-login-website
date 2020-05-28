@@ -157,8 +157,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             bool isValidCaptcha,
             string code,
             string deviceId,
-            string browserSize,
-            string captchaResult)
+            string browserSize)
         {
             var signInResult = new SignInResult
             {
@@ -247,7 +246,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult, captchaResult);
+                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult);
             }
             catch (Exception ex)
             {
@@ -310,7 +309,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult, string.Empty);
+                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult);
             }
             catch (Exception ex)
             {
@@ -517,8 +516,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             SignInResult signInResult,
             VerifySignInResult verifySignInResult,
             string deviceId,
-            string browserSize,
-            string captchaResult)
+            string browserSize)
         {
             this.ResetLoginFailed();
 
@@ -529,7 +527,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             var path = System.Web.HttpContext.Current.Server.MapPath("~/IbcKeys/ibcpkey.snk");
             var parameter = string.Format(
-                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}&{10}&{11}&{12}",
+                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}&{10}&{11}",
                 verifySignInResult.CustId,
                 verifySignInResult.SubAccId,
                 verifySignInResult.LoginTime.Ticks,
@@ -541,8 +539,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 deviceId,
                 browserSize,
                 AppSession.EncryptCode,
-                robotDetector.IsBrowserless(HttpContext.Current.Request) ? 1 : 0,
-                robotDetector.CaptchaScore(captchaResult));
+                robotDetector.IsRobot(HttpContext.Current.Request).ToString());
 
             parameter = new EncryptionThread().EncryptString(parameter, keySize, path);
 
@@ -582,16 +579,15 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string password,
             string deviceId,
             string browserSize,
-            SignInResult signInResult,
-            string captchaResult)
+            SignInResult signInResult)
         {
             var requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request, browserSize);
             requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
 
             var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
-            if (verifySignInResult.ErrorCode == 0 && robotDetector.CaptchaScore(captchaResult) != RobotDetector.ErrorGoogleReCaptchaScore)
+            if (verifySignInResult.ErrorCode == 0)
             {
-                UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize, captchaResult);
+                UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
             }
             else
             {
