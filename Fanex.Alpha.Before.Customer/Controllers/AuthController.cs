@@ -15,6 +15,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using CaptchaMvc.HtmlHelpers;
+    using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Controllers;
     using Fanex.Alpha.Before.Customer.Constants;
     using Fanex.Alpha.Before.Customer.Models;
@@ -170,6 +171,11 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         {
             try
             {
+                if (!AppSetting.IsEnableFPS)
+                {
+                    return;
+                }
+
                 const string loginAction = "login";
                 var loginMessage = string.Empty;
                 var username = loginResult?.Username;
@@ -198,15 +204,10 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                     out fpsErrorMessage,
                     out fpsErrorCode);
             }
-#pragma warning disable CS0168 // Variable is declared but never used
             catch (Exception ex)
-#pragma warning restore CS0168 // Variable is declared but never used
             {
-                
-#pragma warning disable S125 // Sections of code should not be commented out
-// ExceptionHandler.Handle(ex);
+                ExceptionHandler.Handle(ex, System.Diagnostics.TraceEventType.Warning);
             }
-#pragma warning restore S125 // Sections of code should not be commented out
         }
 
         private bool IsNeedMappingSslDomain()
