@@ -87,10 +87,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="FPS.Browserless.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FPS.Browserless.Detection.Client.8.0.1\lib\FPS.Browserless.Core.dll</HintPath>
+      <HintPath>..\packages\FPS.Browserless.Detection.Client.8.0.2\lib\FPS.Browserless.Core.dll</HintPath>
     </Reference>
     <Reference Include="FPS.Browserless.Detection.Client, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FPS.Browserless.Detection.Client.8.0.1\lib\FPS.Browserless.Detection.Client.dll</HintPath>
+      <HintPath>..\packages\FPS.Browserless.Detection.Client.8.0.2\lib\FPS.Browserless.Detection.Client.dll</HintPath>
     </Reference>
     <Reference Include="FPS.Client, Version=3.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Oneyed.FPSClient.3.3.1.0\lib\FPS.Client.dll</HintPath>
@@ -118,8 +118,8 @@
       <HintPath>..\packages\ILogger.1.0.0.0\lib\net40\ILogger.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=4.65.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
-      <HintPath>..\packages\CompareNETObjects.4.65.0\lib\net46\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
+    <Reference Include="KellermanSoftware.Compare-NET-Objects, Version=4.66.0.0, Culture=neutral, PublicKeyToken=d970ace04cc85217, processorArchitecture=MSIL">
+      <HintPath>..\packages\CompareNETObjects.4.66.0\lib\net46\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.9.0, Culture=neutral, PublicKeyToken=b32731d11ce58905">
       <HintPath>..\packages\log4net.1.2.9.1\lib\net40\log4net.dll</HintPath>

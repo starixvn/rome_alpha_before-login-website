@@ -206,7 +206,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex, System.Diagnostics.TraceEventType.Warning);
+                ExceptionHandler.Handle(ex);
             }
         }
 
