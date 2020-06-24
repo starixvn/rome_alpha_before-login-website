@@ -73,4 +73,10 @@
       "assets/styles/pages/error3.css"
     ]
   },
+  {
+    "outputFileName": "assets/bundles/robotcaptcha.css",
+    "inputFiles": [
+      "assets/styles/pages/robotcaptcha.css"
+    ]
+  }
 ]

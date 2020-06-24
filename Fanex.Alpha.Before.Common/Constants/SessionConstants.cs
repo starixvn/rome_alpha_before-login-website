@@ -20,5 +20,25 @@ namespace Fanex.Alpha.Before.Common.Constants
         public const string CURRENTLOGINFAILEDCOUNT = "Fanex.Alpha.Before.Common.Constants.SessionConstants.currentloginfailedcount.{0}";
         public const string LOGINFAILEDTIME = "Fanex.Alpha.Before.Common.Constants.SessionConstants.loginfailedtime.{0}";
         public const string LASTLOGINUSERNAME = "Fanex.Alpha.Before.Common.Constants.SessionConstants.lastloginusername.{0}";
+
+        #region Robot Captcha
+
+        public const string CUSTID = "RobotCaptcha.CustId";
+        public const string SUBACCID = "RobotCaptcha.SubAccId";
+        public const string SUBACCNAME = "RobotCaptcha.SubAccName";
+        public const string ISNICKNAME = "RobotCaptcha.IsNickname";
+        public const string NICKNAME = "RobotCaptcha.Nickname";
+        public const string ENCRYPTPASSWORD = "RobotCaptcha.EncryptPassword";
+        public const string SUPERID = "RobotCaptcha.SuperId";
+        public const string SITE = "RobotCaptcha.Site";
+        public const string ROLEID = "RobotCaptcha.RoleId";
+
+        public const string ROBOTRESULT = "RobotCaptcha.RobotResult";
+        public const string ROBOTCAPTCHAFAILEDCOUNT = "RobotCaptcha.RobotCaptchaFailedCount";
+
+        public const string DEVICEID = "RobotCaptcha.DeviceId";
+        public const string BROWSERSIZE = "RobotCaptcha.BrowserSize";
+
+        #endregion
     }
 }
