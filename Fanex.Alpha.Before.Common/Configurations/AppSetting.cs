@@ -25,6 +25,7 @@
             trackRunTime = ConfigurationManager.AppSettings["TrackRunTime"] == "1";
             IsEnableFPS = !string.IsNullOrEmpty(FpsActivator) && !string.IsNullOrEmpty(ConfigurationManager.AppSettings["FPS_API"]);
 
+            RobotEnableDetectBot = "1" == ConfigurationManager.AppSettings["Robot:EnableDetectBot"];
             RobotExcludeSuperIds = ToIntDictionary(ConfigurationManager.AppSettings["Robot:ExcludeSuperIds"]);
             RobotExcludeSites = ToDictionary(ConfigurationManager.AppSettings["Robot:ExcludeSites"]);
         }
@@ -66,6 +67,8 @@
         public static bool DisabledVietnamese => IsMBCSite;
 
         public static bool TrackRunTime => trackRunTime;
+
+        public static bool RobotEnableDetectBot { get; }
 
         public static IDictionary<int, bool> RobotExcludeSuperIds { get; }
 

@@ -11,7 +11,7 @@
     {
         public BotFlagged IsRobot(HttpRequest request)
         {
-            if (!AppSetting.IsEnableFPS)
+            if (!AppSetting.IsEnableFPS || !AppSetting.RobotEnableDetectBot)
             {
                 return BotFlagged.IsClean;
             }

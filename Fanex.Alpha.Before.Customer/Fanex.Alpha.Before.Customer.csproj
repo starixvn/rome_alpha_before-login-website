@@ -90,10 +90,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="FPS.Browserless.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FPS.Browserless.Detection.Client.8.0.3\lib\FPS.Browserless.Core.dll</HintPath>
+      <HintPath>..\packages\FPS.Browserless.Detection.Client.8.0.4\lib\FPS.Browserless.Core.dll</HintPath>
     </Reference>
     <Reference Include="FPS.Browserless.Detection.Client, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FPS.Browserless.Detection.Client.8.0.3\lib\FPS.Browserless.Detection.Client.dll</HintPath>
+      <HintPath>..\packages\FPS.Browserless.Detection.Client.8.0.4\lib\FPS.Browserless.Detection.Client.dll</HintPath>
     </Reference>
     <Reference Include="FPS.Client, Version=3.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Oneyed.FPSClient.3.3.1.0\lib\FPS.Client.dll</HintPath>
