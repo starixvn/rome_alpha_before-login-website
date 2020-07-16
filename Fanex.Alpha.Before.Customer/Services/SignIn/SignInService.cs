@@ -23,8 +23,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using Fanex.Alpha.Before.Infrastructure.Constants;
     using Fanex.Alpha.Before.Infrastructure.Extensions;
     using Fanex.Common;
+    using global::FPS.Browserless.Core;
     using Logging.Extensions.Web;
-    using RSACryptoPad;
     using InfrastructureLanguages = Fanex.Alpha.Before.Infrastructure.Resources;
     using LoginLanguages = Fanex.Alpha.Before.Customer.Resources;
 
@@ -33,8 +33,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     /// </summary>
     public class SignInService : ISignInService
     {
-        private const string UTMS = "__utms";
-
         private readonly int _maxTimesToAllowLogInFail;
         private readonly int _blockLoginMinute;
         private readonly int _loginFailTimeToStartUsingCaptcha;
@@ -106,7 +104,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 try
                 {
                     //// Set cookie with custid id
-                    HttpCookie cookie = new HttpCookie(UTMS, randomCookieTicket);
+                    HttpCookie cookie = new HttpCookie(EncryptURLHelper.UTMS, randomCookieTicket);
                     cookie.Domain = this._baseDomain;
                     cookie.HttpOnly = true;
                     cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
@@ -518,55 +516,54 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string deviceId,
             string browserSize)
         {
-            this.ResetLoginFailed();
+            ResetLoginFailed();
 
-            bool numberCrossCookie = System.Web.HttpContext.Current.Request.Cookies.Get(UTMS) == null
-                || System.Web.HttpContext.Current.Request.Cookies.Get(UTMS).Value == AppSession.CookieCode;
-            string crossCookieValue = EncryptExtension.CfsEnCode((verifySignInResult.CustId + verifySignInResult.LoginTime.Minute).ToString());
-            const int keySize = 1024;
+            var encryptPassword = AesExtension.Encrypt(password, AppSession.EncryptCode);
+            var crossCookieValue = EncryptExtension.CfsEnCode((verifySignInResult.CustId + verifySignInResult.LoginTime.Minute).ToString());
 
-            var path = System.Web.HttpContext.Current.Server.MapPath("~/IbcKeys/ibcpkey.snk");
-            var parameter = string.Format(
-                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}&{10}&{11}",
-                verifySignInResult.CustId,
-                verifySignInResult.SubAccId,
-                verifySignInResult.LoginTime.Ticks,
-                AesExtension.Encrypt(password, AppSession.EncryptCode),
-                verifySignInResult.Nickname,
-                verifySignInResult.IsNickname,
-                AppSession.Language,
-                numberCrossCookie,
-                deviceId,
-                browserSize,
-                AppSession.EncryptCode,
-                robotDetector.IsRobot(HttpContext.Current.Request).ToString());
+            string url;
+            var httpContext = HttpContext.Current;
+            var robotResult = robotDetector.IsRobot(httpContext.Request);
 
-            parameter = new EncryptionThread().EncryptString(parameter, keySize, path);
+            if (robotResult == BotFlagged.IsClean)
+            {
+                url = EncryptURLHelper.BuildAfterURL(httpContext, encryptPassword, verifySignInResult, deviceId, browserSize);
+            }
+            else
+            {
+                AppSession.AssignRobotCaptchaSession(
+                   verifySignInResult.CustId,
+                   verifySignInResult.Username,
+                   verifySignInResult.SubAccId,
+                   verifySignInResult.SubUserName,
+                   verifySignInResult.IsNickname,
+                   verifySignInResult.Nickname,
+                   encryptPassword,
+                   verifySignInResult.SuperId,
+                   verifySignInResult.Site,
+                   verifySignInResult.RoleId,
+                   robotResult.ToString(),
+                   deviceId,
+                   browserSize);
 
-            string url = HttpContext.Current.Session["UMToken"] == null
-                ? string.Format("{0}{1}?params={2}", UrlHelper.SiteGroupSetting.AfterUrl, CustomerAppSetting.AfterLoginAuthorizationPage, parameter)
-                : string.Format(
-                    "{0}{1}?UMToken={2}&params={3}",
-                    UrlHelper.SiteGroupSetting.AfterUrl,
-                    CustomerAppSetting.AfterLoginAuthorizationPage,
-                    HttpContext.Current.Session["UMToken"],
-                    parameter);
+                url = "RobotCaptcha/Index";
+            }
 
             signInResult.ErrMsg = LoginLanguages.Labels.lblLoginSuccessful;
             signInResult.AfterLoginUrl = url;
             signInResult.UTMS = crossCookieValue;
-            signInResult.Domain = this._baseDomain;
+            signInResult.Domain = _baseDomain;
             signInResult.ErrCode = -1;
             signInResult.Username = verifySignInResult.SubAccId == 0 ? verifySignInResult.Username : signInResult.Username;
 
             try
             {
                 // Set cookie with custid id and seed
-                HttpCookie cookie = new HttpCookie(UTMS, crossCookieValue);
-                cookie.Domain = this._baseDomain;
+                var cookie = new HttpCookie(EncryptURLHelper.UTMS, crossCookieValue);
+                cookie.Domain = _baseDomain;
                 cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
                 cookie.HttpOnly = true;
-                System.Web.HttpContext.Current.Response.SetCookie(cookie);
+                httpContext.Response.SetCookie(cookie);
             }
             catch (Exception ex)
             {
@@ -593,6 +590,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 UpdateResultAfterLoginFail(signInResult, verifySignInResult);
             }
-        }
+        }        
     }
 }

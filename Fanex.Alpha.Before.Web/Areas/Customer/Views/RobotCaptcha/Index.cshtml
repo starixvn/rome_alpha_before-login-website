@@ -1,0 +1,31 @@
+﻿@using Alpha.Captcha.Mvc
+@using CommonAppSetting = Fanex.Alpha.Before.Common.Configurations.AppSetting
+@{
+    Layout = null;
+    var version = CommonAppSetting.Version;
+    var errorMessage = (string)TempData["ErrorMessage"];
+}
+@model Alpha.Captcha.Models.CaptchaSetting
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Robot Captcha</title>
+    <link rel="stylesheet" href="@Url.Content("~/assets/bundles/robotcaptcha.min.css?v=" + version)" />
+</head>
+<body>
+    <div class="wrapper">
+        @Html.Captcha(Model)
+        @if (!string.IsNullOrWhiteSpace(errorMessage))
+        {
+            <p class="error">@errorMessage</p>
+        }
+    </div>
+    @{ Html.RenderPartial("~/Views/Shared/GoogleAnalytic.cshtml", CommonAppSetting.GoogleAnalyticId); }
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+</body>
+</html>

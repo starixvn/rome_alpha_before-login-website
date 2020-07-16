@@ -55,6 +55,14 @@ namespace Fanex.Alpha.Before.Customer.Models
             set; 
         }
 
+        public int SuperId { get; set; }
+
+        public string Site { get; set; }
+
+        public byte RoleId { get; set; }
+
+        public string SubUserName { get; set; }
+
         public int ErrorCode 
         { 
             get;

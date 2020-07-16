@@ -59,6 +59,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
             var loginResult = _signInService.SignIn();
             ViewBag.FPSToken = FPS.Client.Token.Generate();
+            AppSession.ResetRobotCaptchaSession();
 
             return View(viewPath, loginResult);
         }
@@ -84,6 +85,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             string deviceId = "N/A")
         {
             ViewBag.FPSToken = FPS.Client.Token.Generate();
+            AppSession.ResetRobotCaptchaSession();
             bool validCaptcha = false;
             if (_signInService.IsShowReCaptcha())
             {

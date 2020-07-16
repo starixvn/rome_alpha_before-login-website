@@ -133,8 +133,4 @@ For security reasons, this feature has been locked for {1} minutes</value>
   <data name="lblPasswordChanged" xml:space="preserve">
     <value>รหัสที่เปลี่ยนครั้งที่แล้วคือ {0} หากยังไม่สามารถเข้าใช้งานได้ กรุณาฝ่ายลูกค้าสัมพันธ์</value>
   </data>
-  <data name="iploginfailedmultipletimeserror" xml:space="preserve">
-    <value>Your IP exceeded the maximum number ({0} times) of attempts to authenticate with your credentials.
-For security reasons, this feature has been locked for {1} minutes</value>
-  </data>
 </root>

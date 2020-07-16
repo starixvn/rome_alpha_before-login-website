@@ -1,0 +1,82 @@
+﻿@import '../abstracts/_variables.scss';
+@import '../abstracts/_mixins.scss';
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: $font-family;
+    font-size: $font-size + 2;
+    background-color: $bg-color;
+    margin: 0;
+    padding-top: 10%;
+}
+
+input, button {
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.wrapper {
+    margin: auto;
+    max-width: 360px;
+    @include box-sizing;
+
+    .error {
+        color: $msg-error-color;
+    }
+}
+
+.captcha-container {
+    .captcha-row {
+        margin: 5px 0;
+    }
+
+    .captcha-icon-refresh {
+        background: url('../images/sprites.png') no-repeat;
+        display: inline-block;
+        background-position: -29px -2px;
+        cursor: pointer;
+        height: 16px;
+        width: 16px;
+        vertical-align: top;
+        margin: 17px 0 0 10px;
+
+        &:hover {
+            background-position: -29px -28px;
+        }
+    }
+
+    .captcha-input {
+        border: none;
+        border-bottom: 1px solid $border-color;
+        color: $text-box-color;
+        padding: 8px 0;
+        width: 250px;
+        @include border-radius(0);
+
+        &:focus {
+            border-bottom: 2px solid $border-color-dark;
+            color: $text-box-color-focus;
+        }
+    }
+
+    .captcha-button {
+        background-color: $btn-bg;
+        border: none;
+        color: $btn-color;
+        cursor: pointer;
+        height: 30px;
+        line-height: 30px;
+        padding: 0 20px;
+        text-transform: uppercase;
+        @include border-radius(0);
+
+        &:hover {
+            background-color: $btn-bg-hover;
+        }
+    }
+}

@@ -43,26 +43,34 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
                 parameters.Add("errcode", 0);
                 parameters.Add("errmsg", string.Empty);
                 parameters.Add("lastchangedpwddate", null);
+                parameters.Add("superid", 0);
+                parameters.Add("site", string.Empty);
+                parameters.Add("roleid", 0);
+                parameters.Add("subusername", string.Empty);
                 InsertRequestInfo(requestInfo, parameters);
 
                 objectDB.AssignParamValues(parameters);
                 objectDB.ExecuteNonQuery();
-                var result = new VerifySignInResult
-                {
-                    CustId = Converter.ToInt(objectDB.GetOuputParams()["custid"]),
-                    Username = username,
-                    SubAccId = Converter.ToInt(objectDB.GetOuputParams()["subaccid"]),
-                    IsNickname = Converter.ToBool(objectDB.GetOuputParams()["isnickname"]),
-                    Nickname = Converter.ToString2(objectDB.GetOuputParams()["nickname"]),
-                    LoginTime = Converter.ToDateTime(objectDB.GetOuputParams()["logintime"]),
-                    LastTimeToChangePassword = objectDB.GetOuputParams()["lastchangedpwddate"] != null ?
-                        Converter.ToDateTime(objectDB.GetOuputParams()["lastchangedpwddate"]) :
-                        DateTime.MinValue,
-                    ErrorCode = Converter.ToInt(objectDB.GetOuputParams()["errcode"]),
-                    ErrorMessage = Converter.ToString2(objectDB.GetOuputParams()["errmsg"])
-                };
+                var outputParams = objectDB.GetOuputParams();
 
-                return result;
+                return new VerifySignInResult
+                {
+                    CustId = Converter.ToInt(outputParams["custid"]),
+                    Username = username,
+                    SubAccId = Converter.ToInt(outputParams["subaccid"]),
+                    IsNickname = Converter.ToBool(outputParams["isnickname"]),
+                    Nickname = Converter.ToString2(outputParams["nickname"]),
+                    LoginTime = Converter.ToDateTime(outputParams["logintime"]),
+                    LastTimeToChangePassword = outputParams["lastchangedpwddate"] != null ?
+                        Converter.ToDateTime(outputParams["lastchangedpwddate"]) :
+                        DateTime.MinValue,
+                    ErrorCode = Converter.ToInt(outputParams["errcode"]),
+                    ErrorMessage = Converter.ToString2(outputParams["errmsg"]),
+                    SuperId = Converter.ToInt(outputParams["superid"]),
+                    Site = Converter.ToString2(outputParams["site"]),
+                    RoleId = Converter.To<Byte>(outputParams["roleid"]),
+                    SubUserName = Converter.ToString2(outputParams["subusername"])
+                };
             }
         }
 

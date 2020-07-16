@@ -43,8 +43,9 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
         {
             try
             {
-                T value = (T)HttpContext.Current.Session[sessionKey];
-                return value;
+                var value = HttpContext.Current.Session[sessionKey];
+
+                return value == null ? default(T) : (T)value;
             }
             catch (Exception ex)
             {
