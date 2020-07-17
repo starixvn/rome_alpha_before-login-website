@@ -18,7 +18,7 @@
 
             try
             {
-                return BotDetection.IsBot(request);
+                return BotDetection.IsBot(request, AppSetting.RobotFPSBlacklistDevice);
             }
             catch (Exception ex)
             {

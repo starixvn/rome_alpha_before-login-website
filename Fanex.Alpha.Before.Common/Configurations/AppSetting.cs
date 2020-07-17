@@ -28,6 +28,7 @@
             RobotEnableDetectBot = "1" == ConfigurationManager.AppSettings["Robot:EnableDetectBot"];
             RobotExcludeSuperIds = ToIntDictionary(ConfigurationManager.AppSettings["Robot:ExcludeSuperIds"]);
             RobotExcludeSites = ToDictionary(ConfigurationManager.AppSettings["Robot:ExcludeSites"]);
+            RobotFPSBlacklistDevice = ConfigurationManager.AppSettings["Robot:FPSBlacklistDevice"];
         }
 
         public static string Version
@@ -91,5 +92,7 @@
         public static bool IsIgnoreRobotCaptcha(int superId, string site)
             => RobotExcludeSuperIds.ContainsKey(superId)
             || RobotExcludeSites.ContainsKey(site.ToUpperInvariant());
+
+        public static string RobotFPSBlacklistDevice { get; }
     }
 }
