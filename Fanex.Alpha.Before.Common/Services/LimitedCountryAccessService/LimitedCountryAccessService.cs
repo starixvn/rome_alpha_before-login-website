@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Alpha.Before.Common.Services.LimitedCountryAccessService
 {
     using Criteria.LimitedCountryAccess;
+    using Fanex.Caching;
     using Logging.Extensions.Web;
     using Models;
     using Repositories.LimitedCountryAccess;
@@ -17,7 +18,7 @@
 
         private readonly ILimitedCountryAccessRepository ipRepository;
         private readonly IPService ipService;
-        private readonly ICacheService cacheService;
+        private readonly CacheService cacheService;
         private readonly ILimitedCountriesConfigService limitedCountriesConfigService;
         private readonly Action<Exception> logInfoAction;
         private readonly bool trackRunTime;
@@ -26,7 +27,7 @@
             bool trackRunTime,
             ILimitedCountryAccessRepository ipRepository = null,
             IPService ipService = null,
-            ICacheService cacheService = null,
+            CacheService cacheService = null,
             ILimitedCountriesConfigService limitedCountriesConfigService = null,
             Action<Exception> logInfoAction = null)
         {
@@ -103,14 +104,20 @@
                 () => trackRunTime
                     ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc, cacheKey)
                     : getDataFromDatabaseFunc(),
-                TimeSpan.FromDays(30));
+                new CacheItemOptions
+                {
+                    RelativeExpiration = TimeSpan.FromDays(30)
+                });
         }
 
         public IList<string> GetsAllowedAccessIPs()
             => cacheService.GetOrSet(
                 AllowedAccessIPsCachedKey,
                 () => ipRepository.GetsAllowedAccessIPs(new GetAllowedAccessIPsCriteria()),
-                TimeSpan.FromMinutes(10));
+                new CacheItemOptions
+                {
+                    RelativeExpiration = TimeSpan.FromMinutes(10)
+                });
 
         private static bool IsTestedIP(IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig, string clientIP)
             => activeLimitedCountriesConfig.Any(m

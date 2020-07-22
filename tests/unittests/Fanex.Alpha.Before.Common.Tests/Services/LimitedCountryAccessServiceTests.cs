@@ -1,15 +1,16 @@
 ﻿namespace Fanex.Alpha.Before.Common.Tests.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Common.Criteria.LimitedCountryAccess;
     using Common.Models;
     using Common.Repositories.LimitedCountryAccess;
     using Common.Services;
     using Common.Services.LimitedCountryAccessService;
+    using Fanex.Caching;
     using NSubstitute;
     using NUnit.Framework;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     [TestFixture]
     public class LimitedCountryAccessServiceTests
@@ -20,7 +21,7 @@
         private LimitedCountryAccessService limitedCountryAccessService;
         private ILimitedCountryAccessRepository ipRepository;
         private IPService ipService;
-        private ICacheService cacheService;
+        private CacheService cacheService;
         private ILimitedCountriesConfigService limitedCountriesConfigService;
         private  Action<Exception> logInfoAction;
 
@@ -33,7 +34,7 @@
 
             ipRepository = Substitute.For<ILimitedCountryAccessRepository>();
             ipService = Substitute.For<IPService>();
-            cacheService = Substitute.For<ICacheService>();
+            cacheService = Substitute.For<CacheService>();
             limitedCountriesConfigService = Substitute.For<ILimitedCountriesConfigService>();
             logInfoAction = Substitute.For<Action<Exception>>();
 
@@ -86,7 +87,7 @@
             cacheService.Received().GetOrSet(
                 AllowedAccessIPsCachedKey,
                 Arg.Any<Func<IList<string>>>(),
-                Arg.Any<TimeSpan>());
+                Arg.Any<CacheItemOptions>());
         }
 
         [Test]
@@ -99,7 +100,7 @@
             cacheService.Received().GetOrSet(
                 AllowedAccessIPsCachedKey,
                 Arg.Any<Func<IList<string>>>(),
-                Arg.Is<TimeSpan>(timeSpan => timeSpan.TotalMinutes == 10));
+                Arg.Is<CacheItemOptions>(o => o.RelativeExpiration == TimeSpan.FromMinutes(10)));
         }
 
         [Test]
@@ -118,7 +119,7 @@
             cacheService.Received().GetOrSet(
                 AllowedAccessIPsCachedKey,
                 Arg.Is<Func<IList<string>>>(f => f() == data),
-                Arg.Any<TimeSpan>());
+                Arg.Any<CacheItemOptions>());
         }
 
         [Test]
@@ -127,7 +128,7 @@
             // Arrange
             var data = new List<string> { "sampleIP" };
 
-            cacheService.GetOrSet(Arg.Any<string>(), Arg.Any<Func<IList<string>>>(), Arg.Any<TimeSpan>())
+            cacheService.GetOrSet(Arg.Any<string>(), Arg.Any<Func<IList<string>>>(), Arg.Any<CacheItemOptions>())
                .Returns(data);
 
             // Act
@@ -150,7 +151,7 @@
             cacheService.Received().GetOrSet(
                 expectedCacheKey,
                 Arg.Any<Func<IList<IpRange>>>(),
-                Arg.Any<TimeSpan>());
+                Arg.Any<CacheItemOptions>());
         }
 
         [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4_")]
@@ -164,7 +165,7 @@
             cacheService.Received().GetOrSet(
                 expectedCacheKey,
                 Arg.Any<Func<IList<IpRange>>>(),
-                Arg.Is<TimeSpan>(timeSpan => timeSpan.TotalDays == 30));
+                Arg.Is<CacheItemOptions>(o => o.RelativeExpiration == TimeSpan.FromDays(30)));
         }
 
         [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4_MNL,UK")]
@@ -190,7 +191,7 @@
             cacheService.Received().GetOrSet(
                 expectedCacheKey,
                 Arg.Is<Func<IList<IpRange>>>(f => f() == data),
-                Arg.Any<TimeSpan>());
+                Arg.Any<CacheItemOptions>());
         }
 
         [TestCase(false, "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4")]
@@ -203,7 +204,7 @@
                 new LimitedCountriesConfigModel("HKK", false, null)
             };
 
-            cacheService.GetOrSet(expectedCacheKey, Arg.Any<Func<IList<IpRange>>>(), Arg.Any<TimeSpan>())
+            cacheService.GetOrSet(expectedCacheKey, Arg.Any<Func<IList<IpRange>>>(), Arg.Any<CacheItemOptions>())
                 .Returns(data);
 
             // Act
@@ -258,7 +259,7 @@
                 .GetOrSet(
                 "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6_HKK",
                 Arg.Any<Func<IList<IpRange>>>(),
-                Arg.Any<TimeSpan>())
+                Arg.Any<CacheItemOptions>())
                 .Returns(
                 new List<IpRange> {
                     new IpRange(2306291500588430130, 2306291500588430131, "HKK")
@@ -287,7 +288,7 @@
                 .GetOrSet(
                 "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6",
                 Arg.Any<Func<IList<IpRange>>>(),
-                Arg.Any<TimeSpan>())
+                Arg.Any<CacheItemOptions>())
                 .Returns(new List<IpRange>
                 {
                     new IpRange(2306291500588430132, 2306291500588430132, "HKK")
@@ -296,7 +297,7 @@
             cacheService.GetOrSet(
                 Arg.Any<string>(),
                 Arg.Any<Func<IList<string>>>(),
-                Arg.Any<TimeSpan>())
+                Arg.Any<CacheItemOptions>())
                .Returns(new List<string> { "2001:0db8:85a3:0000:0000:8a2e:0370:7334" });
 
             // Act
@@ -321,7 +322,7 @@
             cacheService.GetOrSet(
                 "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV6_HKK",
                 Arg.Any<Func<IList<IpRange>>>(),
-                Arg.Any<TimeSpan>())
+                Arg.Any<CacheItemOptions>())
                 .Returns(new List<IpRange>
                 {
                     new IpRange(2306291500588430132, 2306291500588430132, "HKK")
@@ -330,7 +331,7 @@
             cacheService.GetOrSet(
                 "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey",
                 Arg.Any<Func<IList<string>>>(),
-                Arg.Any<TimeSpan>())
+                Arg.Any<CacheItemOptions>())
                .Returns(new List<string> { "2001:0db8:85a3:0000:0000:8a2e:0370:7335" });
 
             // Act
@@ -350,7 +351,7 @@
             cacheService.GetOrSet(
                 "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV4_HKK",
                 Arg.Any<Func<IList<IpRange>>>(),
-                Arg.Any<TimeSpan>())
+                Arg.Any<CacheItemOptions>())
                 .Returns(new List<IpRange>
                 {
                     new IpRange(2130706433, 2130706433, "HKK")
@@ -359,7 +360,7 @@
             cacheService.GetOrSet(
                 Arg.Any<string>(),
                 Arg.Any<Func<IList<string>>>(),
-                Arg.Any<TimeSpan>())
+                Arg.Any<CacheItemOptions>())
                .Returns(new List<string> { "127.0.0.2" });
 
             // Act
