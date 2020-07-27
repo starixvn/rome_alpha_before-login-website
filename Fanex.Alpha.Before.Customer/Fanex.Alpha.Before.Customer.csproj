@@ -43,7 +43,8 @@
       <HintPath>..\packages\Alpha.Captcha.1.0.9\lib\net461\Alpha.Captcha.dll</HintPath>
     </Reference>
     <Reference Include="Alpha.NetThrottling, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Alpha.NetThrottling.1.0.0-beta5\lib\net461\Alpha.NetThrottling.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\alpha-modules\Alpha.NetThrottling\bin\Debug\net461\Alpha.NetThrottling.dll</HintPath>
     </Reference>
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
@@ -274,7 +275,6 @@
     <Compile Include="Services\SignIn\SignInService.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="ThrottlingFilters\LoginFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.Alpha.Before.Common\Fanex.Alpha.Before.Common.csproj">

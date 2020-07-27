@@ -133,4 +133,7 @@ For security reasons, this feature has been locked for {1} minutes</value>
   <data name="lblPasswordChanged" xml:space="preserve">
     <value>Your password was last changed on {0}. Please contact to CSD at once if you still cannot login.</value>
   </data>
+  <data name="LoginTooOftenBlockedMessage" xml:space="preserve">
+    <value>Login Too Often! UserName: {0}</value>
+  </data>
 </root>

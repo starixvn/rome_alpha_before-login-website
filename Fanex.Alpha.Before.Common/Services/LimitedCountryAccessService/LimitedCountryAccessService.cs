@@ -2,6 +2,7 @@
 {
     using Criteria.LimitedCountryAccess;
     using Fanex.Caching;
+    using Fanex.Caching.Memory;
     using Logging.Extensions.Web;
     using Models;
     using Repositories.LimitedCountryAccess;
@@ -33,7 +34,7 @@
         {
             this.ipRepository = ipRepository ?? new LimitedCountryAccessRepository();
             this.ipService = ipService ?? new IpServiceImpl();
-            this.cacheService = cacheService ?? new CacheServiceImpl();
+            this.cacheService = cacheService ?? new CacheServiceImpl(new MemoryCache());
             this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
             this.logInfoAction = logInfoAction ?? HandleInfoException;
             this.trackRunTime = trackRunTime;

@@ -6,10 +6,6 @@
 
 namespace Fanex.Alpha.Before.Customer.Services.SignIn
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Web;
     using Cryptography.Aes;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Constants;
@@ -19,12 +15,20 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using Fanex.Alpha.Before.Customer.Constants;
     using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Repositories.SignIn;
+    using Fanex.Alpha.Before.Customer.Resources;
     using Fanex.Alpha.Before.Customer.Services.FPS;
     using Fanex.Alpha.Before.Infrastructure.Constants;
     using Fanex.Alpha.Before.Infrastructure.Extensions;
     using Fanex.Common;
+    using global::Alpha.NetThrottling;
+    using global::Alpha.NetThrottling.Models;
+    using global::Alpha.NetThrottling.Utils;
     using global::FPS.Browserless.Core;
     using Logging.Extensions.Web;
+    using System;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Web;
     using InfrastructureLanguages = Fanex.Alpha.Before.Infrastructure.Resources;
     using LoginLanguages = Fanex.Alpha.Before.Customer.Resources;
 
@@ -33,6 +37,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     /// </summary>
     public class SignInService : ISignInService
     {
+        private static ThrottlePolicy configurationLoginPolicy = Mapper.From(NetThrottlingConfiguration.Current.Keys["Login"]);
+
         private readonly int _maxTimesToAllowLogInFail;
         private readonly int _blockLoginMinute;
         private readonly int _loginFailTimeToStartUsingCaptcha;
@@ -48,13 +54,14 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly string _lastLoginUserNameSessionKey = string.Format(SessionConstants.LASTLOGINUSERNAME, IPHelper.ClientIP());
 
         private readonly IRobotDetector robotDetector;
+        private readonly ThrottlePolicy loginPolicy;
 
         public SignInService() :
-            this(null, null)
+            this(null, null, null)
         {
         }
 
-        public SignInService(SignInRepository signInRepository, IRobotDetector robotDetector)
+        public SignInService(SignInRepository signInRepository, IRobotDetector robotDetector, ThrottlePolicy loginPolicy)
         {
             _signInRepository = signInRepository ?? new SignInRepository();
             var _loginThemeSection = LoginThemeSection.Instance;
@@ -79,6 +86,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
 
             this.robotDetector = robotDetector ?? new RobotDetector();
+            this.loginPolicy = loginPolicy ?? configurationLoginPolicy;
         }
 
         /// <summary>
@@ -578,18 +586,38 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string browserSize,
             SignInResult signInResult)
         {
-            var requestInfo = DeviceHelper.GetRequestInfo(System.Web.HttpContext.Current.Request, browserSize);
-            requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
+            var request = HttpContext.Current.Request;
+            var filterIdentity = $"{username}_{request.GetClientIp()}";
+#pragma warning disable S4462 // Calls to "async" methods should not be blocking
+            var netThrottler = new NetThrottler();
+            var result = netThrottler.ThrottleAsync<ThrottleResult>(
+                async (success) =>
+                {
+                    var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize);
+                    requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
+                    var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
+                    if (verifySignInResult.ErrorCode == 0)
+                    {
+                        UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
+                        return await success(ThrottleResult.Allowed);
+                    }
+                    else
+                    {
+                        UpdateResultAfterLoginFail(signInResult, verifySignInResult);
+                        return ThrottleResult.Allowed;
+                    }
+                },
+                () => ThrottleResult.Blocked,
+                filterIdentity,
+                loginPolicy
+                ).Result;
+#pragma warning restore S4462 // Calls to "async" methods should not be blocking
 
-            var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
-            if (verifySignInResult.ErrorCode == 0)
+            if(result == ThrottleResult.Blocked)
             {
-                UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
+                signInResult.ErrCode = SignInErrorContants.Error2;
+                signInResult.ErrMsg = string.Format(Labels.LoginTooOftenBlockedMessage, username);
             }
-            else
-            {
-                UpdateResultAfterLoginFail(signInResult, verifySignInResult);
-            }
-        }        
+        }
     }
 }
