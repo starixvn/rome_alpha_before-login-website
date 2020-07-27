@@ -587,7 +587,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             SignInResult signInResult)
         {
             var request = HttpContext.Current.Request;
-            var filterIdentity = $"{username}_{request.GetClientIp()}";
+            var filterIdentity = $"{username.Trim().ToLowerInvariant()}_{request.GetClientIp()}";
 #pragma warning disable S4462 // Calls to "async" methods should not be blocking
             var netThrottler = new NetThrottler();
             var result = netThrottler.ThrottleAsync<ThrottleResult>(
