@@ -607,12 +607,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
                     if (verifySignInResult.ErrorCode == 0)
                     {
+                        UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
                         if (whitelistSuperIds.Contains(verifySignInResult.SuperId))
                         {
                             return ThrottleResult.Allowed;
                         }
-
-                        UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
+                        
                         return await success(ThrottleResult.Allowed);
                     }
                     else
