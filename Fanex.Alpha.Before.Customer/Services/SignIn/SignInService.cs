@@ -56,6 +56,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
         private readonly IRobotDetector robotDetector;
         private readonly ThrottlePolicy loginPolicy;
+        private readonly NetThrottler netThrottler;
 
         private static IEnumerable<int> whitelistSuperIds = ParseWhitelistSuperIds();
 
@@ -66,11 +67,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         }
 
         public SignInService() :
-            this(null, null, null)
+            this(null, null, null, null)
         {
         }
 
-        public SignInService(SignInRepository signInRepository, IRobotDetector robotDetector, ThrottlePolicy loginPolicy)
+        public SignInService(SignInRepository signInRepository, IRobotDetector robotDetector, NetThrottler netThrottler, ThrottlePolicy loginPolicy)
         {
             _signInRepository = signInRepository ?? new SignInRepository();
             var _loginThemeSection = LoginThemeSection.Instance;
@@ -95,6 +96,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
 
             this.robotDetector = robotDetector ?? new RobotDetector();
+            this.netThrottler = netThrottler ?? new NetThrottler();
             this.loginPolicy = loginPolicy ?? configurationLoginPolicy;
         }
 
@@ -598,8 +600,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             var request = HttpContext.Current.Request;
             var filterIdentity = $"{username.Trim().ToLowerInvariant()}_{request.GetClientIp()}";
 #pragma warning disable S4462 // Calls to "async" methods should not be blocking
-            var netThrottler = new NetThrottler();
-            var result = netThrottler.ThrottleAsync<ThrottleResult>(
+            var result = netThrottler.ThrottleAsync(
                 async (success) =>
                 {
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize);
@@ -612,7 +613,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                         {
                             return ThrottleResult.Allowed;
                         }
-                        
+
                         return await success(ThrottleResult.Allowed);
                     }
                     else
@@ -627,7 +628,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 ).Result;
 #pragma warning restore S4462 // Calls to "async" methods should not be blocking
 
-            if(result == ThrottleResult.Blocked)
+            if (result == ThrottleResult.Blocked)
             {
                 signInResult.ErrCode = SignInErrorContants.Error2;
                 signInResult.ErrMsg = string.Format(Labels.LoginTooOftenBlockedMessage, username);
