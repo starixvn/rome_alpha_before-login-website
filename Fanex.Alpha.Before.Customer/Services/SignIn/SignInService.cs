@@ -26,6 +26,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using global::FPS.Browserless.Core;
     using Logging.Extensions.Web;
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
@@ -55,6 +56,14 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
         private readonly IRobotDetector robotDetector;
         private readonly ThrottlePolicy loginPolicy;
+
+        private static IEnumerable<int> whitelistSuperIds = ParseWhitelistSuperIds();
+
+        static IEnumerable<int> ParseWhitelistSuperIds()
+        {
+            var custIds = WhitelistConfiguration.Current.CustIds;
+            return string.IsNullOrWhiteSpace(custIds) ? Enumerable.Empty<int>() : custIds.Split(',').Select(int.Parse).ToList();
+        }
 
         public SignInService() :
             this(null, null, null)
@@ -598,6 +607,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
                     if (verifySignInResult.ErrorCode == 0)
                     {
+                        if (whitelistSuperIds.Contains(verifySignInResult.SuperId))
+                        {
+                            return ThrottleResult.Allowed;
+                        }
+
                         UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
                         return await success(ThrottleResult.Allowed);
                     }
