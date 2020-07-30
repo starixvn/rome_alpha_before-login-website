@@ -14,6 +14,7 @@
 
     public class LimitedCountryAccessService : ILimitedCountryAccessService
     {
+        private static Cache defaultCache = new MemoryCache();
         private const string RestrictedIPRangesCachedKey = "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV";
         private const string AllowedAccessIPsCachedKey = "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey";
 
@@ -34,7 +35,7 @@
         {
             this.ipRepository = ipRepository ?? new LimitedCountryAccessRepository();
             this.ipService = ipService ?? new IpServiceImpl();
-            this.cacheService = cacheService ?? new CacheServiceImpl(new MemoryCache());
+            this.cacheService = cacheService ?? new CacheServiceImpl(defaultCache);
             this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
             this.logInfoAction = logInfoAction ?? HandleInfoException;
             this.trackRunTime = trackRunTime;
