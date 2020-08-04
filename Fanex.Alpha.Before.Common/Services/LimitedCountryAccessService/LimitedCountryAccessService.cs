@@ -1,6 +1,8 @@
 ﻿namespace Fanex.Alpha.Before.Common.Services.LimitedCountryAccessService
 {
     using Criteria.LimitedCountryAccess;
+    using Fanex.Caching;
+    using Fanex.Caching.Memory;
     using Logging.Extensions.Web;
     using Models;
     using Repositories.LimitedCountryAccess;
@@ -12,12 +14,13 @@
 
     public class LimitedCountryAccessService : ILimitedCountryAccessService
     {
+        private static Cache defaultCache = new MemoryCache();
         private const string RestrictedIPRangesCachedKey = "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV";
         private const string AllowedAccessIPsCachedKey = "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey";
 
         private readonly ILimitedCountryAccessRepository ipRepository;
         private readonly IPService ipService;
-        private readonly ICacheService cacheService;
+        private readonly CacheService cacheService;
         private readonly ILimitedCountriesConfigService limitedCountriesConfigService;
         private readonly Action<Exception> logInfoAction;
         private readonly bool trackRunTime;
@@ -26,13 +29,13 @@
             bool trackRunTime,
             ILimitedCountryAccessRepository ipRepository = null,
             IPService ipService = null,
-            ICacheService cacheService = null,
+            CacheService cacheService = null,
             ILimitedCountriesConfigService limitedCountriesConfigService = null,
             Action<Exception> logInfoAction = null)
         {
             this.ipRepository = ipRepository ?? new LimitedCountryAccessRepository();
             this.ipService = ipService ?? new IpServiceImpl();
-            this.cacheService = cacheService ?? new CacheServiceImpl();
+            this.cacheService = cacheService ?? new CacheServiceImpl(defaultCache);
             this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
             this.logInfoAction = logInfoAction ?? HandleInfoException;
             this.trackRunTime = trackRunTime;
@@ -103,14 +106,20 @@
                 () => trackRunTime
                     ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc, cacheKey)
                     : getDataFromDatabaseFunc(),
-                TimeSpan.FromDays(30));
+                new CacheItemOptions
+                {
+                    RelativeExpiration = TimeSpan.FromDays(30)
+                });
         }
 
         public IList<string> GetsAllowedAccessIPs()
             => cacheService.GetOrSet(
                 AllowedAccessIPsCachedKey,
                 () => ipRepository.GetsAllowedAccessIPs(new GetAllowedAccessIPsCriteria()),
-                TimeSpan.FromMinutes(10));
+                new CacheItemOptions
+                {
+                    RelativeExpiration = TimeSpan.FromMinutes(10)
+                });
 
         private static bool IsTestedIP(IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig, string clientIP)
             => activeLimitedCountriesConfig.Any(m

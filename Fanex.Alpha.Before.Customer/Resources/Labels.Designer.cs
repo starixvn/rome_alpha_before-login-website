@@ -105,5 +105,14 @@ namespace Fanex.Alpha.Before.Customer.Resources {
                 return ResourceManager.GetString("lblPasswordChanged", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login Too Often! UserName: {0}.
+        /// </summary>
+        public static string LoginTooOftenBlockedMessage {
+            get {
+                return ResourceManager.GetString("LoginTooOftenBlockedMessage", resourceCulture);
+            }
+        }
     }
 }

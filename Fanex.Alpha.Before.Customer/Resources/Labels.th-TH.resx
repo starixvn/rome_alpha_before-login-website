@@ -133,4 +133,7 @@ For security reasons, this feature has been locked for {1} minutes</value>
   <data name="lblPasswordChanged" xml:space="preserve">
     <value>รหัสที่เปลี่ยนครั้งที่แล้วคือ {0} หากยังไม่สามารถเข้าใช้งานได้ กรุณาฝ่ายลูกค้าสัมพันธ์</value>
   </data>
+  <data name="LoginTooOftenBlockedMessage" xml:space="preserve">
+    <value>เข้าระบบบ่อยเกิน UserName: {0}</value>
+  </data>
 </root>

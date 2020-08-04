@@ -133,4 +133,7 @@ For security reasons, this feature has been locked for {1} minutes</value>
   <data name="lblPasswordChanged" xml:space="preserve">
     <value>Mật khẩu đã được thay đổi  vào ngày {0}. Vui lòng liên hệ  với bộ phận CSD ngay lập tức nếu bạn vẫn không thể đăng nhập.</value>
   </data>
+  <data name="LoginTooOftenBlockedMessage" xml:space="preserve">
+    <value>Đăng nhập quá thường xuyên! UserName: {0}</value>
+  </data>
 </root>

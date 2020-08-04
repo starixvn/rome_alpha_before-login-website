@@ -59,9 +59,8 @@
     <Reference Include="Fanex.ActivityTracking.Web, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.ActivityTracking.Web.1.0.0.3\lib\net40\Fanex.ActivityTracking.Web.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Caching, Version=1.0.404.95, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Caching.Alpha.1.0.404.95\lib\net40\Fanex.Caching.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Caching, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Caching.2.1.0\lib\net461\Fanex.Caching.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Common">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
@@ -244,7 +243,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Labels.zh-TW.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\CacheService.cs" />
     <Compile Include="Services\FunctionRecorder.cs" />
     <Compile Include="Services\IPService.cs" />
     <Compile Include="Services\LimitedCountryAccessService\ILimitedCountriesConfigService.cs" />
