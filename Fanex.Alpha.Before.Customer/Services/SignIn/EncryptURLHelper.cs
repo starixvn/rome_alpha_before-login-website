@@ -79,7 +79,7 @@
 
             return umToken == null
                 ? url
-                : $"&UMToken={umToken}";
+                : $"{url}&UMToken={umToken}";
         }
     }
 }
