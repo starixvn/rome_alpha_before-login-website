@@ -2,7 +2,6 @@
 {
     using Criteria.LimitedCountryAccess;
     using Fanex.Caching;
-    using Fanex.Caching.Memory;
     using Logging.Extensions.Web;
     using Models;
     using Repositories.LimitedCountryAccess;
