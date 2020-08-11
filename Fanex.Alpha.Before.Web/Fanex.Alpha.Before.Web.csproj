@@ -71,8 +71,11 @@
       <HintPath>..\packages\Alpha.Logging.1.0.1.1\lib\net461\Alpha.Logging.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Alpha.NetThrottling, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Alpha.NetThrottling.1.0.1\lib\net461\Alpha.NetThrottling.dll</HintPath>
+    <Reference Include="Alpha.NetThrottling, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alpha.NetThrottling.1.0.3\lib\net461\Alpha.NetThrottling.dll</HintPath>
+    </Reference>
+    <Reference Include="Alpha.NetThrottling.Mvc, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alpha.NetThrottling.Mvc.1.0.3\lib\net461\Alpha.NetThrottling.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Alpha.SubAccount, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alpha.SubAccount.1.0.0\lib\net40\Alpha.SubAccount.dll</HintPath>
