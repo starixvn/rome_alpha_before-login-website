@@ -1,7 +1,7 @@
 ﻿namespace Fanex.Alpha.Before.Customer.Services.FPS
 {
+    using global::FPS.Browserless.Detection.Client;
     using System.Web;
-    using global::FPS.Browserless.Core;
 
     public interface IRobotDetector
     {

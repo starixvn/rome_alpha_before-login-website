@@ -23,7 +23,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using global::Alpha.NetThrottling;
     using global::Alpha.NetThrottling.Models;
     using global::Alpha.NetThrottling.Utils;
-    using global::FPS.Browserless.Core;
+    using global::FPS.Browserless.Detection.Client;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using System;
