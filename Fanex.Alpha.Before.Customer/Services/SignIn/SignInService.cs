@@ -25,6 +25,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using global::Alpha.NetThrottling.Utils;
     using global::FPS.Browserless.Core;
     using Logging.Extensions.Web;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
@@ -57,6 +58,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly IRobotDetector robotDetector;
         private readonly ThrottlePolicy loginPolicy;
         private readonly NetThrottler netThrottler;
+        private readonly Logging.ILogger logger;
+        private readonly HttpContext httpContext;
 
         private static IEnumerable<int> whitelistSuperIds = ParseWhitelistSuperIds();
 
@@ -67,11 +70,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         }
 
         public SignInService() :
-            this(null, null, null, null)
+            this(null, null, null, null, null, null)
         {
         }
 
-        public SignInService(SignInRepository signInRepository, IRobotDetector robotDetector, NetThrottler netThrottler, ThrottlePolicy loginPolicy)
+        public SignInService(SignInRepository signInRepository, IRobotDetector robotDetector, NetThrottler netThrottler, ThrottlePolicy loginPolicy, Logging.ILogger logger, HttpContext httpContext)
         {
             _signInRepository = signInRepository ?? new SignInRepository();
             var _loginThemeSection = LoginThemeSection.Instance;
@@ -98,6 +101,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             this.robotDetector = robotDetector ?? new RobotDetector();
             this.netThrottler = netThrottler ?? new NetThrottler();
             this.loginPolicy = loginPolicy ?? configurationLoginPolicy;
+            this.logger = logger ?? Logging.Logger.Log;
+            this.httpContext = httpContext ?? HttpContext.Current;
         }
 
         /// <summary>
@@ -127,7 +132,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     cookie.Domain = this._baseDomain;
                     cookie.HttpOnly = true;
                     cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
-                    System.Web.HttpContext.Current.Response.SetCookie(cookie);
+                    httpContext.Response.SetCookie(cookie);
                 }
                 catch (Exception ex)
                 {
@@ -188,13 +193,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 AppSession.EncryptCode = code;
 
-                //// Login Failed Count > 15
                 if (this.TotallyLoginFailed() > _maxTimesToAllowLogInFail)
-                { //// After 15'
+                {
                     if (this.LoginFailedTime().AddMinutes(_blockLoginMinute).CompareTo(DateTime.Now) > 0)
                     {
                         this.SetLoginFailedTime();
-                        var ipLockedError = string.Format(LoginLanguages.Labels.iploginfailedmultipletimeserror, _maxTimesToAllowLogInFail, _blockLoginMinute);
+                        var ipLockedError = string.Format(Labels.iploginfailedmultipletimeserror, signInResult.Ip, _maxTimesToAllowLogInFail, _blockLoginMinute);
                         signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
                         signInResult.ErrMsg = ipLockedError;
 
@@ -246,9 +250,14 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
                 if (IsShowReCaptcha() && !isValidCaptcha)
                 {
-                    this.IncreaseLoginFailedCount();
                     signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
-                    signInResult.ErrMsg = LoginLanguages.Labels.errInvalidCaptcha;
+                    signInResult.ErrMsg = Labels.errInvalidCaptcha;
+                    var loginFailedCount = this.IncreaseLoginFailedCount();
+                    if (loginFailedCount == _maxTimesToAllowLogInFail)
+                    {
+                        LogIpBlocked(signInResult);
+                    }
+
                     return signInResult;
                 }
 
@@ -447,7 +456,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         /// <summary>
         /// Increase Login Failed Count.
         /// </summary>
-        private void IncreaseLoginFailedCount()
+        private int IncreaseLoginFailedCount()
         {
             try
             {
@@ -455,10 +464,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 CacheExtension.Set(_totalLoginFailedSessionKey, loginFailCount);
                 var currentLoginFailCount = CurrentLoginFailed() + 1;
                 CacheExtension.Set(_currentLoginFailedSessionKey, currentLoginFailCount);
+                return loginFailCount;
             }
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex);
+                return 0;
             }
         }
 
@@ -478,6 +489,17 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
 
             return string.Empty;
+        }
+
+        private void LogIpBlocked(SignInResult signInResult)
+        {
+            var logInfo = new
+            {
+                signInResult.Ip,
+                httpContext.Request.UserAgent,
+                Result = signInResult
+            };
+            logger.Error($"IP blocked for login: {JsonConvert.SerializeObject(logInfo)}");
         }
 
         /// <summary>
@@ -503,15 +525,14 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             signInResult.IsChangedPassword = verifySignInResult.LastTimeToChangePassword != DateTime.MinValue;
             if (signInResult.IsChangedPassword)
             {
-                signInResult.ChangedPasswordTime = string.Format(LoginLanguages.Labels.lblPasswordChanged, verifySignInResult.LastTimeToChangePassword);
+                signInResult.ChangedPasswordTime = string.Format(Labels.lblPasswordChanged, verifySignInResult.LastTimeToChangePassword);
             }
 
             this.SetLoginFailedTime();
-            this.IncreaseLoginFailedCount();
-
-            if (this.TotallyLoginFailed() > _maxTimesToAllowLogInFail)
+            var loginFailedCount = IncreaseLoginFailedCount();
+            if (loginFailedCount > _maxTimesToAllowLogInFail)
             {
-                var ipLockedError = string.Format(LoginLanguages.Labels.iploginfailedmultipletimeserror, _maxTimesToAllowLogInFail, _blockLoginMinute);
+                var ipLockedError = string.Format(Labels.iploginfailedmultipletimeserror, signInResult.Ip, _maxTimesToAllowLogInFail, _blockLoginMinute);
                 signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
                 signInResult.ErrMsg = ipLockedError;
             }
@@ -519,6 +540,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 signInResult.ErrCode = verifySignInResult.ErrorCode;
                 signInResult.ErrMsg = signInResult.ErrMsg = verifySignInResult.ErrorMessage;
+                if (loginFailedCount == _maxTimesToAllowLogInFail)
+                {
+                    LogIpBlocked(signInResult);
+                }
             }
         }
 
@@ -541,7 +566,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             var crossCookieValue = EncryptExtension.CfsEnCode((verifySignInResult.CustId + verifySignInResult.LoginTime.Minute).ToString());
 
             string url;
-            var httpContext = HttpContext.Current;
             var robotResult = robotDetector.IsRobot(httpContext.Request);
 
             if (robotResult == BotFlagged.IsClean)
@@ -597,7 +621,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string browserSize,
             SignInResult signInResult)
         {
-            var request = HttpContext.Current.Request;
+            var request = httpContext.Request;
             var filterIdentity = $"{username.Trim().ToLowerInvariant()}_{request.GetClientIp()}";
 #pragma warning disable S4462 // Calls to "async" methods should not be blocking
             var result = netThrottler.ThrottleAsync(

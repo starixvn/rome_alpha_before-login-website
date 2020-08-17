@@ -124,8 +124,8 @@
     <value>유저네임과 비밀번호가 잘못 되었습니다.</value>
   </data>
   <data name="iploginfailedmultipletimeserror" xml:space="preserve">
-    <value>Your IP exceeded the maximum number ({0} times) of attempts to authenticate with your credentials.
-For security reasons, this feature has been locked for {1} minutes</value>
+    <value>Your IP ({0}) exceeded the maximum number ({1} times) of attempts to authenticate with your credentials.
+For security reasons, this feature has been locked for {2} minutes</value>
   </data>
   <data name="lblLoginSuccessful" xml:space="preserve">
     <value>Login Successfully</value>

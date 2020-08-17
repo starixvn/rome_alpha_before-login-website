@@ -79,8 +79,8 @@ namespace Fanex.Alpha.Before.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your IP exceeded the maximum number ({0} times) of attempts to authenticate with your credentials.
-        ///For security reasons, this feature has been locked for {1} minutes.
+        ///   Looks up a localized string similar to Your IP ({0}) exceeded the maximum number ({1} times) of attempts to authenticate with your credentials.
+        ///For security reasons, this feature has been locked for {2} minutes.
         /// </summary>
         public static string iploginfailedmultipletimeserror {
             get {
