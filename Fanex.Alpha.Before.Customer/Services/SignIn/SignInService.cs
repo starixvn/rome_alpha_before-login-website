@@ -235,7 +235,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     ResetCurrentLoginFailed();
                 }
 
-                AssignSettingLanguage(language);
                 if (string.IsNullOrEmpty(AppSession.EncryptCode))
                 {
                     signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
@@ -500,17 +499,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 Result = signInResult
             };
             logger.Error($"IP blocked for login: {JsonConvert.SerializeObject(logInfo)}");
-        }
-
-        /// <summary>
-        /// Setting language that user's choosing.
-        /// </summary>
-        /// <param name="language">The currently language.</param>
-        private static void AssignSettingLanguage(string language)
-        {
-            AppSession.Language = LanguageHelper.IsValidLanguage(language) ? language : LanguageHelper.DefaultLanguage;
-
-            LanguageHelper.SetLanguage(AppSession.Language);
         }
 
         /// <summary>

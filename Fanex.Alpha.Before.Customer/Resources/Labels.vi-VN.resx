@@ -133,7 +133,7 @@
     <value>Đăng nhập quá thường xuyên! UserName: {0}</value>
   </data>
   <data name="iploginfailedmultipletimeserror" xml:space="preserve">
-    <value>Your IP ({0}) exceeded the maximum number ({1} times) of attempts to authenticate with your credentials.
-For security reasons, this feature has been locked for {2} minutes</value>
+    <value>IP của bạn ({0}) đã vượt quá số lần quy định ({1} lần) trong việc xác thực thông tin đăng nhập.
+Vì lý do bảo mật, chức năng đăng nhập sẽ tạm khoá trong {2} phút.</value>
   </data>
 </root>

@@ -133,7 +133,7 @@
     <value>登录次数过于频繁,请稍后再试! UserName: {0}</value>
   </data>
   <data name="iploginfailedmultipletimeserror" xml:space="preserve">
-    <value>Your IP ({0}) exceeded the maximum number ({1} times) of attempts to authenticate with your credentials.
-For security reasons, this feature has been locked for {2} minutes</value>
+    <value>您的IP({0})身份凭证认证次数已超过限制({1}次)。
+出于安全原因，登录功能已锁定{2}分钟。</value>
   </data>
 </root>

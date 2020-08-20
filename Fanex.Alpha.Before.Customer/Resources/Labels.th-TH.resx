@@ -124,8 +124,7 @@
     <value>ชื่อ และ รหัสที่ใช้ในการเข้าระบบไม่ถูกต้อง</value>
   </data>
   <data name="iploginfailedmultipletimeserror" xml:space="preserve">
-    <value>Your IP ({0}) exceeded the maximum number ({1} times) of attempts to authenticate with your credentials.
-For security reasons, this feature has been locked for {2} minutes</value>
+    <value>หมายเลขไอพีของคุณ ({0}) ล้มเหลวในการล๊อคอินเกินกว่าจำนวนครั้งที่กำหนด ({1} ครั้ง)  ด้วยเหตุผลด้านความปลอดภัย ระบบล๊อคอินจะหยุดทำงานเป็นเวลา {2} นาที</value>
   </data>
   <data name="lblLoginSuccessful" xml:space="preserve">
     <value>Login Successfully</value>
