@@ -496,6 +496,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         {
             var logInfo = new
             {
+                Domain = httpContext.Request.Headers["Host"],
                 signInResult.Ip,
                 httpContext.Request.UserAgent,
                 Result = signInResult
