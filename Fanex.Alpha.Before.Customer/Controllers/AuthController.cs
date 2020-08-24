@@ -6,6 +6,14 @@
 
 namespace Fanex.Alpha.Before.Customer.Controllers
 {
+    using CaptchaMvc.HtmlHelpers;
+    using Fanex.Alpha.Before.Common.Configurations;
+    using Fanex.Alpha.Before.Common.Controllers;
+    using Fanex.Alpha.Before.Common.Helpers;
+    using Fanex.Alpha.Before.Customer.Constants;
+    using Fanex.Alpha.Before.Customer.Models;
+    using Fanex.Alpha.Before.Customer.Services.SignIn;
+    using Logging.Extensions.Web;
     using System;
     using System.Configuration;
     using System.Linq;
@@ -14,13 +22,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using System.Text;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using CaptchaMvc.HtmlHelpers;
-    using Fanex.Alpha.Before.Common.Configurations;
-    using Fanex.Alpha.Before.Common.Controllers;
-    using Fanex.Alpha.Before.Customer.Constants;
-    using Fanex.Alpha.Before.Customer.Models;
-    using Fanex.Alpha.Before.Customer.Services.SignIn;
-    using Logging.Extensions.Web;
 
     /// <summary>
     /// TODO: Update summary.
@@ -84,6 +85,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             string browserSize,
             string deviceId = "N/A")
         {
+            AssignSettingLanguage(hidLanguage);
             ViewBag.FPSToken = FPS.Client.Token.Generate();
             AppSession.ResetRobotCaptchaSession();
             bool validCaptcha = false;
@@ -232,6 +234,16 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Setting language that user's choosing.
+        /// </summary>
+        /// <param name="language">The currently language.</param>
+        private static void AssignSettingLanguage(string language)
+        {
+            AppSession.Language = LanguageHelper.IsValidLanguage(language) ? language : LanguageHelper.DefaultLanguage;
+            LanguageHelper.SetLanguage(AppSession.Language);
         }
     }
 }
