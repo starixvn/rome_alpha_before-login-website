@@ -128,10 +128,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 try
                 {
                     //// Set cookie with custid id
-                    HttpCookie cookie = new HttpCookie(EncryptURLHelper.UTMS, randomCookieTicket);
-                    cookie.Domain = this._baseDomain;
-                    cookie.HttpOnly = true;
-                    cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
+                    HttpCookie cookie = new HttpCookie(EncryptURLHelper.UTMS, randomCookieTicket)
+                    {
+                        Domain = this._baseDomain,
+                        HttpOnly = true,
+                        Expires = DateTime.Now.AddDays(1) // Max 24h
+                    };
                     httpContext.Response.SetCookie(cookie);
                 }
                 catch (Exception ex)
@@ -590,10 +592,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             try
             {
                 // Set cookie with custid id and seed
-                var cookie = new HttpCookie(EncryptURLHelper.UTMS, crossCookieValue);
-                cookie.Domain = _baseDomain;
-                cookie.Expires = DateTime.Now.AddDays(1); // Max 24h
-                cookie.HttpOnly = true;
+                var cookie = new HttpCookie(EncryptURLHelper.UTMS, crossCookieValue)
+                {
+                    Domain = _baseDomain,
+                    Expires = DateTime.Now.AddDays(1), // Max 24h
+                    HttpOnly = true
+                };
                 httpContext.Response.SetCookie(cookie);
             }
             catch (Exception ex)
