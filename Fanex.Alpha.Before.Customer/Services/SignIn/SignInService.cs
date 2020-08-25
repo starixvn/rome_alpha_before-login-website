@@ -501,7 +501,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 httpContext.Request.UserAgent,
                 Result = signInResult
             };
-            logger.Error($"IP blocked for login: {JsonConvert.SerializeObject(logInfo)}");
+            logger.Warn($"IP blocked for login: {JsonConvert.SerializeObject(logInfo)}");
         }
 
         /// <summary>
