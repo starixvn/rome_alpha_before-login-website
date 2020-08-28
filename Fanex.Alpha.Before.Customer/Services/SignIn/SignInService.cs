@@ -39,8 +39,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     /// </summary>
     public class SignInService : ISignInService
     {
-        private static ThrottlePolicy configurationLoginPolicy = Mapper.From(NetThrottlingConfiguration.Current.Keys["Login"]);
-
         private readonly int _maxTimesToAllowLogInFail;
         private readonly int _blockLoginMinute;
         private readonly int _loginFailTimeToStartUsingCaptcha;
@@ -56,7 +54,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly string _lastLoginUserNameSessionKey = string.Format(SessionConstants.LASTLOGINUSERNAME, IPHelper.ClientIP());
 
         private readonly IRobotDetector robotDetector;
-        private readonly ThrottlePolicy loginPolicy;
+        private readonly ThrottlePolicy loginThrottlePolicy;
         private readonly NetThrottler netThrottler;
         private readonly Logging.ILogger logger;
         private readonly HttpContext httpContext;
@@ -65,16 +63,16 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
         static IEnumerable<int> ParseWhitelistSuperIds()
         {
-            var custIds = WhitelistConfiguration.Current.CustIds;
+            var custIds = WhitelistConfiguration.Default.CustIds;
             return string.IsNullOrWhiteSpace(custIds) ? Enumerable.Empty<int>() : custIds.Split(',').Select(int.Parse).ToList();
         }
 
         public SignInService() :
-            this(null, null, null, null, null, null)
+            this(null, null, null, null, null)
         {
         }
 
-        public SignInService(SignInRepository signInRepository, IRobotDetector robotDetector, NetThrottler netThrottler, ThrottlePolicy loginPolicy, Logging.ILogger logger, HttpContext httpContext)
+        public SignInService(SignInRepository signInRepository, IRobotDetector robotDetector, IThrottleSetting throttleSetting, Logging.ILogger logger, HttpContext httpContext)
         {
             _signInRepository = signInRepository ?? new SignInRepository();
             var _loginThemeSection = LoginThemeSection.Instance;
@@ -99,8 +97,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
 
             this.robotDetector = robotDetector ?? new RobotDetector();
-            this.netThrottler = netThrottler ?? new NetThrottler();
-            this.loginPolicy = loginPolicy ?? configurationLoginPolicy;
+            throttleSetting = throttleSetting ?? new ThrottleSetting();
+            netThrottler = new NetThrottler(throttleSetting);
+            loginThrottlePolicy = new ThrottlePolicy(throttleSetting.GetKey("Login"));
             this.logger = logger ?? Logging.Logger.Log;
             this.httpContext = httpContext ?? HttpContext.Current;
         }
@@ -640,8 +639,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     }
                 },
                 () => ThrottleResult.Blocked,
-                filterIdentity,
-                loginPolicy
+                loginThrottlePolicy,
+                filterIdentity
                 ).Result;
 #pragma warning restore S4462 // Calls to "async" methods should not be blocking
 
