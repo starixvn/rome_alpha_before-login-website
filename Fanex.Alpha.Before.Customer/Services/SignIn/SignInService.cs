@@ -614,11 +614,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             SignInResult signInResult)
         {
             var request = httpContext.Request;
-            var filterIdentity = $"{username.Trim().ToLowerInvariant()}_{request.GetClientIp()}";
+            var cacheIdentity = CacheIdentity.From(username.Trim().ToLowerInvariant(), request.GetClientIp().ToString(), loginThrottlePolicy);
 #pragma warning disable S4462 // Calls to "async" methods should not be blocking
             var result = netThrottler.ThrottleAsync(
                 async (success) =>
                 {
+                    HttpContext.Current = httpContext;
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize);
                     requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
                     var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
@@ -630,7 +631,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                             return ThrottleResult.Allowed;
                         }
 
-                        return await success(ThrottleResult.Allowed);
+                        return await success(ThrottleResult.Allowed).ConfigureAwait(false);
                     }
                     else
                     {
@@ -640,7 +641,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 },
                 () => ThrottleResult.Blocked,
                 loginThrottlePolicy,
-                filterIdentity
+                cacheIdentity
                 ).Result;
 #pragma warning restore S4462 // Calls to "async" methods should not be blocking
 

@@ -21,7 +21,7 @@
         private LimitedCountryAccessService limitedCountryAccessService;
         private ILimitedCountryAccessRepository ipRepository;
         private IPService ipService;
-        private CacheService cacheService;
+        private ICacheService cacheService;
         private ILimitedCountriesConfigService limitedCountriesConfigService;
         private  Action<Exception> logInfoAction;
 
@@ -34,7 +34,7 @@
 
             ipRepository = Substitute.For<ILimitedCountryAccessRepository>();
             ipService = Substitute.For<IPService>();
-            cacheService = Substitute.For<CacheService>();
+            cacheService = Substitute.For<ICacheService>();
             limitedCountriesConfigService = Substitute.For<ILimitedCountriesConfigService>();
             logInfoAction = Substitute.For<Action<Exception>>();
 

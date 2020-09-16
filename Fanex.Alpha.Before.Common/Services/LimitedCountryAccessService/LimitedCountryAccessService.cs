@@ -18,7 +18,7 @@
 
         private readonly ILimitedCountryAccessRepository ipRepository;
         private readonly IPService ipService;
-        private readonly CacheService cacheService;
+        private readonly ICacheService cacheService;
         private readonly ILimitedCountriesConfigService limitedCountriesConfigService;
         private readonly Action<Exception> logInfoAction;
         private readonly bool trackRunTime;
@@ -27,13 +27,13 @@
             bool trackRunTime,
             ILimitedCountryAccessRepository ipRepository = null,
             IPService ipService = null,
-            CacheService cacheService = null,
+            ICacheService cacheService = null,
             ILimitedCountriesConfigService limitedCountriesConfigService = null,
             Action<Exception> logInfoAction = null)
         {
             this.ipRepository = ipRepository ?? new LimitedCountryAccessRepository();
             this.ipService = ipService ?? new IpServiceImpl();
-            this.cacheService = cacheService ?? new CacheServiceImpl();
+            this.cacheService = cacheService ?? new CacheService();
             this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
             this.logInfoAction = logInfoAction ?? HandleInfoException;
             this.trackRunTime = trackRunTime;
