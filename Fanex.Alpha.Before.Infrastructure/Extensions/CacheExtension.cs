@@ -6,51 +6,47 @@
 
 namespace Fanex.Alpha.Before.Infrastructure.Extensions
 {
+    using Fanex.Caching;
+    using Fanex.Caching.Redis;
+    using StackExchange.Redis;
     using System;
-    using Couchbase;
-    using Enyim.Caching.Memcached;
+    using System.Configuration;
 
     /// <summary>
     /// Caching service.
     /// </summary>
     public static class CacheExtension
     {
-        private static CouchbaseClient _couchbaseClient = new CouchbaseClient();
+        private static readonly ICacheService cacheService = InitCacheService();
 
-        public static object Get(string key)
+        private static ICacheService InitCacheService()
         {
-            return _couchbaseClient.Get(key);
+            var redisConfigurationString = ConfigurationManager.AppSettings["RedisConfigurationOptions:Alpha.Before"];
+            var configurationOptions = ConfigurationOptions.Parse(redisConfigurationString);
+            var redisCacheOptions = new RedisCacheOptions
+            {
+                ApplicationName = configurationOptions.ClientName,
+                ConnectionOptions = configurationOptions
+            };
+            return new CacheService(new RedisCache(redisCacheOptions));
         }
 
         public static T Get<T>(string key)
         {
-            return _couchbaseClient.Get<T>(key);
+            return cacheService.Get<T>(key);
         }
 
-        public static void Set(string key, object value)
+        public static void Set<T>(string key, T value)
         {
-            _couchbaseClient.ExecuteStore(
-                StoreMode.Set,
-                key,
-                value,
-                Couchbase.Operations.PersistTo.One,
-                Couchbase.Operations.ReplicateTo.Two);
-        }
-
-        public static void Set(string key, object value, TimeSpan validFor)
-        {
-            _couchbaseClient.ExecuteStore(
-                StoreMode.Set,
-                key,
-                value,
-                validFor,
-                Couchbase.Operations.PersistTo.One,
-                Couchbase.Operations.ReplicateTo.Two);
+            cacheService.Set(key, value, new CacheItemOptions
+            {
+                SlidingExpiration = TimeSpan.FromDays(1)
+            });
         }
 
         public static void Remove(string key)
         {
-            _couchbaseClient.Remove(key);
+            cacheService.Remove(key);
         }
     }
 }

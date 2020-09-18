@@ -196,7 +196,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
                 if (this.TotallyLoginFailed() > _maxTimesToAllowLogInFail)
                 {
-                    if (this.LoginFailedTime().AddMinutes(_blockLoginMinute).CompareTo(DateTime.Now) > 0)
+                    if (this.LoginFailedUtcTime().AddMinutes(_blockLoginMinute).CompareTo(DateTime.UtcNow) > 0)
                     {
                         this.SetLoginFailedTime();
                         var ipLockedError = string.Format(Labels.iploginfailedmultipletimeserror, signInResult.Ip, _maxTimesToAllowLogInFail, _blockLoginMinute);
@@ -230,8 +230,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 }
 
                 // If no action for the laset 5 minutes, login without captcha
-                if (this.LoginFailedTime() != DateTime.MinValue &&
-                    this.LoginFailedTime().AddMinutes(_notInteractionTimeInMinutes).CompareTo(DateTime.Now) < 0)
+                var loginFailedUtcTime = LoginFailedUtcTime();
+                if (loginFailedUtcTime != DateTime.MinValue &&
+                    loginFailedUtcTime.AddMinutes(_notInteractionTimeInMinutes).CompareTo(DateTime.UtcNow) < 0)
                 {
                     ResetCurrentLoginFailed();
                 }
@@ -349,7 +350,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
         public bool IsShowReCaptcha()
         {
-            return CacheExtension.Get<int>(this._currentLoginFailedSessionKey) >= this._loginFailTimeToStartUsingCaptcha;
+            return CacheExtension.Get<int>(_currentLoginFailedSessionKey) >= _loginFailTimeToStartUsingCaptcha;
         }
 
         /// <summary>
@@ -394,15 +395,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         /// Get login failed time.
         /// </summary>
         /// <returns>Return result.</returns>
-        private DateTime LoginFailedTime()
+        private DateTime LoginFailedUtcTime()
         {
             DateTime date = DateTime.MinValue;
             try
             {
-                if (CacheExtension.Get(_latestLoginFailSessionKey) != null)
-                {
-                    date = Converter.ToDateTime(CacheExtension.Get(_latestLoginFailSessionKey));
-                }
+                return CacheExtension.Get<DateTime>(_latestLoginFailSessionKey);
             }
             catch (Exception ex)
             {
@@ -481,7 +479,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         {
             try
             {
-                return CacheExtension.Get<string>(this._lastLoginUserNameSessionKey);
+                return CacheExtension.Get<string>(_lastLoginUserNameSessionKey);
             }
             catch (Exception ex)
             {
