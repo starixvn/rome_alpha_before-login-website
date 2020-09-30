@@ -8,6 +8,7 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
 {
     using Fanex.Caching;
     using Fanex.Caching.Redis;
+    using Fanex.Logging.Extensions.Web;
     using StackExchange.Redis;
     using System;
     using System.Configuration;
@@ -33,20 +34,42 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
 
         public static T Get<T>(string key)
         {
-            return cacheService.Get<T>(key);
+            try
+            {
+                return cacheService.Get<T>(key);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+                return default(T);
+            }
         }
 
         public static void Set<T>(string key, T value)
         {
-            cacheService.Set(key, value, new CacheItemOptions
+            try
             {
-                SlidingExpiration = TimeSpan.FromDays(1)
-            });
+                cacheService.Set(key, value, new CacheItemOptions
+                {
+                    SlidingExpiration = TimeSpan.FromDays(1)
+                });
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
         }
 
         public static void Remove(string key)
         {
-            cacheService.Remove(key);
+            try
+            {
+                cacheService.Remove(key);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
         }
     }
 }
