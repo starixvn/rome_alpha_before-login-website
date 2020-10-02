@@ -4,6 +4,7 @@
     using Fanex.Logging.Extensions.Web;
     using global::FPS.Browserless.Detection.Client;
     using System;
+    using System.Diagnostics;
     using System.Web;
 
     public class RobotDetector : IRobotDetector
@@ -21,7 +22,7 @@
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                ExceptionHandler.Handle(ex, TraceEventType.Warning);
                 return BotFlagged.IsClean;
             }
         }
