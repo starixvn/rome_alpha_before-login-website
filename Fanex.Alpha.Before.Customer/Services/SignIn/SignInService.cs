@@ -612,7 +612,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             SignInResult signInResult)
         {
             var request = httpContext.Request;
-            var cacheIdentity = CacheIdentity.From(username.Trim().ToLowerInvariant(), request.GetClientIp().ToString(), loginThrottlePolicy);
+            var cacheIdentity = CacheIdentity.From(
+                loginThrottlePolicy.Name,
+                UrlHelper.SiteGroupSetting.SiteGroup,
+                new[] { username.Trim().ToLowerInvariant(), request.GetClientIp().ToString() });
 #pragma warning disable S4462 // Calls to "async" methods should not be blocking
             var result = netThrottler.ThrottleAsync(
                 async (success) =>
