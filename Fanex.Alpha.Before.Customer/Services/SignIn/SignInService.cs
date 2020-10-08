@@ -616,11 +616,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 loginThrottlePolicy.Name,
                 UrlHelper.SiteGroupSetting.SiteGroup,
                 new[] { username.Trim().ToLowerInvariant(), request.GetClientIp().ToString() });
-#pragma warning disable S4462 // Calls to "async" methods should not be blocking
-            var result = netThrottler.ThrottleAsync(
-                async (success) =>
+            var result = netThrottler.Throttle(
+                (success) =>
                 {
-                    HttpContext.Current = httpContext;
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize);
                     requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
                     var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
@@ -632,7 +630,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                             return ThrottleResult.Allowed;
                         }
 
-                        return await success(ThrottleResult.Allowed).ConfigureAwait(false);
+                        return success(ThrottleResult.Allowed);
                     }
                     else
                     {
@@ -643,8 +641,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 () => ThrottleResult.Blocked,
                 loginThrottlePolicy,
                 cacheIdentity
-                ).Result;
-#pragma warning restore S4462 // Calls to "async" methods should not be blocking
+                );
 
             if (result == ThrottleResult.Blocked)
             {
