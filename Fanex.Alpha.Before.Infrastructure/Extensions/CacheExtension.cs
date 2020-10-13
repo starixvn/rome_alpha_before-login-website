@@ -1,10 +1,4 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CacheExtension.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.Alpha.Before.Infrastructure.Extensions
+﻿namespace Fanex.Alpha.Before.Infrastructure.Extensions
 {
     using Fanex.Caching;
     using Fanex.Caching.Redis;
@@ -13,9 +7,6 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
     using System;
     using System.Configuration;
 
-    /// <summary>
-    /// Caching service.
-    /// </summary>
     public static class CacheExtension
     {
         private static readonly ICacheService cacheService = InitCacheService();
@@ -32,7 +23,7 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
             return new CacheService(new RedisCache(redisCacheOptions));
         }
 
-        public static T Get<T>(string key)
+        public static T Get<T>(string key, T defaultValue)
         {
             try
             {
@@ -41,7 +32,7 @@ namespace Fanex.Alpha.Before.Infrastructure.Extensions
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex);
-                return default(T);
+                return defaultValue;
             }
         }
 
