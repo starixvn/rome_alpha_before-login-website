@@ -72,13 +72,13 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Alpha.NetThrottling, Version=1.0.12.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Alpha.NetThrottling.1.0.12-sitegroup-05\lib\net461\Alpha.NetThrottling.dll</HintPath>
+      <HintPath>..\packages\Alpha.NetThrottling.1.0.12\lib\net461\Alpha.NetThrottling.dll</HintPath>
     </Reference>
     <Reference Include="Alpha.SubAccount, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alpha.SubAccount.1.0.0\lib\net40\Alpha.SubAccount.dll</HintPath>
     </Reference>
     <Reference Include="Alpha.Web, Version=1.0.7.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Alpha.Web.1.0.7.5-sitegroup\lib\net461\Alpha.Web.dll</HintPath>
+      <HintPath>..\packages\Alpha.Web.1.0.7.5\lib\net461\Alpha.Web.dll</HintPath>
     </Reference>
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
