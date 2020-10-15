@@ -33,22 +33,9 @@
         private readonly string _currentLoginFailedSessionKey = string.Format(SessionConstants.CURRENTLOGINFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
         private readonly string _latestLoginFailSessionKey = string.Format(SessionConstants.LOGINFAILEDTIME, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
 
-        private readonly Lazy<string> getLastLoginUsernameLazy;
-        private readonly Lazy<int> getTotallyLoginFailed;
-        private readonly Lazy<int> getCurrentLoginFailed;
-        private readonly Lazy<DateTime> getLoginFailedTime;
-
-        public CacheService()
-        {
-            getLastLoginUsernameLazy = new Lazy<string>(() => CacheExtension.Get(_lastLoginUserNameSessionKey, string.Empty));
-            getTotallyLoginFailed = new Lazy<int>(() => CacheExtension.Get(_totalLoginFailedSessionKey, 0));
-            getCurrentLoginFailed = new Lazy<int>(() => CacheExtension.Get(_currentLoginFailedSessionKey, 0));
-            getLoginFailedTime = new Lazy<DateTime>(() => CacheExtension.Get(_latestLoginFailSessionKey, DateTime.MinValue));
-        }
-
         public string GetLastLoginUsername()
         {
-            return getLastLoginUsernameLazy.Value;
+            return CacheExtension.Get(_lastLoginUserNameSessionKey, string.Empty);
         }
 
         public void SetLastLoginUsername(string username)
@@ -58,17 +45,17 @@
 
         public int GetTotallyLoginFailed()
         {
-            return getTotallyLoginFailed.Value;
+            return CacheExtension.Get(_totalLoginFailedSessionKey, 0);
         }
 
         public int GetCurrentLoginFailed()
         {
-            return getCurrentLoginFailed.Value;
+            return CacheExtension.Get(_currentLoginFailedSessionKey, 0);
         }
 
         public DateTime GetLoginFailedTime()
         {
-            return getLoginFailedTime.Value;
+            return CacheExtension.Get(_latestLoginFailSessionKey, DateTime.MinValue);
         }
 
         public void SetLoginFailedTime()
