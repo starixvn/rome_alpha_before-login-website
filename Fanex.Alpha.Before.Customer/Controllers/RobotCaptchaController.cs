@@ -60,7 +60,7 @@
 
         private static bool IsNotRobot()
             => AppSession.RobotResult == null
-            || AppSession.RobotResult == BotFlagged.IsClean.ToString();
+            || AppSession.RobotResult == ((int)BotFlagged.IsClean).ToString();
 
         private static bool IsIgnoreRobotCaptcha()
             => AppSetting.IsIgnoreRobotCaptcha(AppSession.SuperId, AppSession.Site);
