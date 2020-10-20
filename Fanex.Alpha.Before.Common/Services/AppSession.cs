@@ -194,7 +194,7 @@ namespace Fanex.Alpha.Before.Common.Configurations
         {
             get
             {
-                return SessionExtension.Get<string>(SessionConstants.SITE);
+                return SessionExtension.Get<string>(SessionConstants.SITE) ?? string.Empty;
             }
 
             set
