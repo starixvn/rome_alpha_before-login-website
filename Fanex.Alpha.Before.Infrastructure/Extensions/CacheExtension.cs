@@ -1,56 +1,66 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="CacheExtension.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.Alpha.Before.Infrastructure.Extensions
+﻿namespace Fanex.Alpha.Before.Infrastructure.Extensions
 {
+    using Fanex.Caching;
+    using Fanex.Caching.Redis;
+    using Fanex.Logging.Extensions.Web;
+    using StackExchange.Redis;
     using System;
-    using Couchbase;
-    using Enyim.Caching.Memcached;
+    using System.Configuration;
 
-    /// <summary>
-    /// Caching service.
-    /// </summary>
     public static class CacheExtension
     {
-        private static CouchbaseClient _couchbaseClient = new CouchbaseClient();
+        private static readonly ICacheService cacheService = InitCacheService();
 
-        public static object Get(string key)
+        private static ICacheService InitCacheService()
         {
-            return _couchbaseClient.Get(key);
+            var redisConfigurationString = ConfigurationManager.AppSettings["RedisConfigurationOptions:Alpha.Before"];
+            var configurationOptions = ConfigurationOptions.Parse(redisConfigurationString);
+            var redisCacheOptions = new RedisCacheOptions
+            {
+                ApplicationName = configurationOptions.ClientName,
+                ConnectionOptions = configurationOptions
+            };
+            return new CacheService(new RedisCache(redisCacheOptions));
         }
 
-        public static T Get<T>(string key)
+        public static T Get<T>(string key, T defaultValue)
         {
-            return _couchbaseClient.Get<T>(key);
+            try
+            {
+                return cacheService.Get<T>(key);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+                return defaultValue;
+            }
         }
 
-        public static void Set(string key, object value)
+        public static void Set<T>(string key, T value)
         {
-            _couchbaseClient.ExecuteStore(
-                StoreMode.Set,
-                key,
-                value,
-                Couchbase.Operations.PersistTo.One,
-                Couchbase.Operations.ReplicateTo.Two);
-        }
-
-        public static void Set(string key, object value, TimeSpan validFor)
-        {
-            _couchbaseClient.ExecuteStore(
-                StoreMode.Set,
-                key,
-                value,
-                validFor,
-                Couchbase.Operations.PersistTo.One,
-                Couchbase.Operations.ReplicateTo.Two);
+            try
+            {
+                cacheService.Set(key, value, new CacheItemOptions
+                {
+                    SlidingExpiration = TimeSpan.FromDays(1)
+                });
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
         }
 
         public static void Remove(string key)
         {
-            _couchbaseClient.Remove(key);
+            try
+            {
+                cacheService.Remove(key);
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
         }
     }
 }

@@ -1,18 +1,18 @@
 ﻿namespace Fanex.Alpha.Before.Customer.Controllers
 {
-    using System;
-    using System.Globalization;
-    using System.Threading;
-    using System.Web.Mvc;
-    using System.Web.Security;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Controllers;
     using Fanex.Alpha.Before.Common.Helpers;
     using Fanex.Alpha.Before.Customer.Resources;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
+    using FPS.Browserless.Detection.Client;
     using global::Alpha.Captcha.Models;
     using global::Alpha.Captcha.Mvc;
-    using global::FPS.Browserless.Core;
+    using System;
+    using System.Globalization;
+    using System.Threading;
+    using System.Web.Mvc;
+    using System.Web.Security;
 
     public class RobotCaptchaController : BaseController
     {

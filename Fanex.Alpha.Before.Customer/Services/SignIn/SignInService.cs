@@ -8,7 +8,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 {
     using Cryptography.Aes;
     using Fanex.Alpha.Before.Common.Configurations;
-    using Fanex.Alpha.Before.Common.Constants;
     using Fanex.Alpha.Before.Common.Extensions;
     using Fanex.Alpha.Before.Common.Helpers;
     using Fanex.Alpha.Before.Customer.Configurations;
@@ -18,12 +17,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using Fanex.Alpha.Before.Customer.Resources;
     using Fanex.Alpha.Before.Customer.Services.FPS;
     using Fanex.Alpha.Before.Infrastructure.Constants;
-    using Fanex.Alpha.Before.Infrastructure.Extensions;
     using Fanex.Common;
     using global::Alpha.NetThrottling;
     using global::Alpha.NetThrottling.Models;
     using global::Alpha.NetThrottling.Utils;
-    using global::FPS.Browserless.Core;
+    using global::FPS.Browserless.Detection.Client;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using System;
@@ -31,16 +29,25 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
-    using InfrastructureLanguages = Fanex.Alpha.Before.Infrastructure.Resources;
-    using LoginLanguages = Fanex.Alpha.Before.Customer.Resources;
+    using InfrastructureLanguages = Infrastructure.Resources;
+    using LoginLanguages = Resources;
+
+    public interface ISignInService
+    {
+        SignInResult SignIn();
+
+        SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha, string code, string deviceId, string browserSize);
+
+        SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize);
+
+        bool IsShowReCaptcha();
+    }
 
     /// <summary>
     /// Sign in service.
     /// </summary>
     public class SignInService : ISignInService
     {
-        private static ThrottlePolicy configurationLoginPolicy = Mapper.From(NetThrottlingConfiguration.Current.Keys["Login"]);
-
         private readonly int _maxTimesToAllowLogInFail;
         private readonly int _blockLoginMinute;
         private readonly int _loginFailTimeToStartUsingCaptcha;
@@ -50,57 +57,57 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly string _loginTheme;
 
         private readonly ISignInRepository _signInRepository;
-        private readonly string _totalLoginFailedSessionKey = string.Format(SessionConstants.TOTALLOGINFAILEDCOUNT, IPHelper.ClientIP());
-        private readonly string _currentLoginFailedSessionKey = string.Format(SessionConstants.CURRENTLOGINFAILEDCOUNT, IPHelper.ClientIP());
-        private readonly string _latestLoginFailSessionKey = string.Format(SessionConstants.LOGINFAILEDTIME, IPHelper.ClientIP());
-        private readonly string _lastLoginUserNameSessionKey = string.Format(SessionConstants.LASTLOGINUSERNAME, IPHelper.ClientIP());
-
+        private readonly ICacheService cacheService;
         private readonly IRobotDetector robotDetector;
-        private readonly ThrottlePolicy loginPolicy;
-        private readonly NetThrottler netThrottler;
+        
         private readonly Logging.ILogger logger;
         private readonly HttpContext httpContext;
 
+        private static NetThrottler netThrottler = new NetThrottler();
+        private static ThrottlePolicy loginThrottlePolicy = new ThrottlePolicy(netThrottler.ThrottleSetting.GetKey("Login"));
         private static IEnumerable<int> whitelistSuperIds = ParseWhitelistSuperIds();
 
         static IEnumerable<int> ParseWhitelistSuperIds()
         {
-            var custIds = WhitelistConfiguration.Current.CustIds;
+            var custIds = WhitelistConfiguration.Default.CustIds;
             return string.IsNullOrWhiteSpace(custIds) ? Enumerable.Empty<int>() : custIds.Split(',').Select(int.Parse).ToList();
         }
 
         public SignInService() :
-            this(null, null, null, null, null, null)
+            this(null, null, null, null, null)
         {
         }
 
-        public SignInService(SignInRepository signInRepository, IRobotDetector robotDetector, NetThrottler netThrottler, ThrottlePolicy loginPolicy, Logging.ILogger logger, HttpContext httpContext)
+        public SignInService(SignInRepository signInRepository,
+            IRobotDetector robotDetector,
+            Logging.ILogger logger,
+            HttpContext httpContext,
+            ICacheService cacheService)
         {
             _signInRepository = signInRepository ?? new SignInRepository();
+            this.cacheService = cacheService ?? new CacheService();
             var _loginThemeSection = LoginThemeSection.Instance;
 
-            this._loginTheme = _loginThemeSection.DefaultTheme;
+            _loginTheme = _loginThemeSection.DefaultTheme;
             if (DateTime.Now >= Converter.ToDateTime(_loginThemeSection.StartDateShowEventTheme) &&
                 DateTime.Now <= Converter.ToDateTime(_loginThemeSection.EndDateShowEventTheme))
             {
-                this._loginTheme = _loginThemeSection.EventTheme;
+                _loginTheme = _loginThemeSection.EventTheme;
             }
 
             var currentLoginUrl = UrlHelper.SiteGroupSetting.BeforeUrl;
-            this._baseDomain = new Uri(currentLoginUrl).Host;
+            _baseDomain = new Uri(currentLoginUrl).Host;
             var alphaCommonSettings = AlphaCommonSection.Instance;
             if (alphaCommonSettings != null)
             {
-                this._maxTimesToAllowLogInFail = alphaCommonSettings.MaxTimesToAllowLoginFail;
-                this._blockLoginMinute = alphaCommonSettings.BlockLoginMinutes;
-                this._loginFailTimeToStartUsingCaptcha = alphaCommonSettings.LoginFailTimeToStartUsingCaptcha;
-                this._notInteractionTimeInMinutes = alphaCommonSettings.NoInteractionTimeInMinutes;
-                this._passwordMaxFailTimeForOneUser = alphaCommonSettings.PasswordMaxFailTimeForOneUser;
+                _maxTimesToAllowLogInFail = alphaCommonSettings.MaxTimesToAllowLoginFail;
+                _blockLoginMinute = alphaCommonSettings.BlockLoginMinutes;
+                _loginFailTimeToStartUsingCaptcha = alphaCommonSettings.LoginFailTimeToStartUsingCaptcha;
+                _notInteractionTimeInMinutes = alphaCommonSettings.NoInteractionTimeInMinutes;
+                _passwordMaxFailTimeForOneUser = alphaCommonSettings.PasswordMaxFailTimeForOneUser;
             }
 
             this.robotDetector = robotDetector ?? new RobotDetector();
-            this.netThrottler = netThrottler ?? new NetThrottler();
-            this.loginPolicy = loginPolicy ?? configurationLoginPolicy;
             this.logger = logger ?? Logging.Logger.Log;
             this.httpContext = httpContext ?? HttpContext.Current;
         }
@@ -130,7 +137,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     //// Set cookie with custid id
                     HttpCookie cookie = new HttpCookie(EncryptURLHelper.UTMS, randomCookieTicket)
                     {
-                        Domain = this._baseDomain,
+                        Domain = _baseDomain,
                         HttpOnly = true,
                         Expires = DateTime.Now.AddDays(1) // Max 24h
                     };
@@ -143,7 +150,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
                 loginResult.Language = LanguageHelper.CheckingLanguageFromCookie();
                 loginResult.UTMS = randomCookieTicket;
-                loginResult.Domain = this._baseDomain;
+                loginResult.Domain = _baseDomain;
 
                 //// Use for encrypt pwd
                 const int EncryptPasswordLength = 4;
@@ -195,11 +202,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 AppSession.EncryptCode = code;
 
-                if (this.TotallyLoginFailed() > _maxTimesToAllowLogInFail)
+                if (cacheService.GetTotallyLoginFailed() > _maxTimesToAllowLogInFail)
                 {
-                    if (this.LoginFailedTime().AddMinutes(_blockLoginMinute).CompareTo(DateTime.Now) > 0)
+                    if (cacheService.GetLoginFailedTime().AddMinutes(_blockLoginMinute).CompareTo(DateTime.UtcNow) > 0)
                     {
-                        this.SetLoginFailedTime();
+                        cacheService.SetLoginFailedTime();
                         var ipLockedError = string.Format(Labels.iploginfailedmultipletimeserror, signInResult.Ip, _maxTimesToAllowLogInFail, _blockLoginMinute);
                         signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
                         signInResult.ErrMsg = ipLockedError;
@@ -208,18 +215,19 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     }
                     else
                     {
-                        this.ResetLoginFailed();
+                        cacheService.ResetLoginFailed();
                     }
                 }
 
                 // If login with no action for the laset 5 minutes, login without captcha
-                if (!string.IsNullOrEmpty(this.LastLoginUserName()) &&
-                    !this.LastLoginUserName().Equals(username, StringComparison.OrdinalIgnoreCase))
+                var lastLoginUsername = cacheService.GetLastLoginUsername();
+                if (!string.IsNullOrEmpty(lastLoginUsername) &&
+                    !lastLoginUsername.Equals(username, StringComparison.OrdinalIgnoreCase))
                 {
                     if (IsShowReCaptcha() && !isValidCaptcha)
                     {
-                        ResetCurrentLoginFailed();
-                        CacheExtension.Set(this._lastLoginUserNameSessionKey, username);
+                        cacheService.ResetCurrentLoginFailed();
+                        cacheService.SetLastLoginUsername(username);
 
                         signInResult.ErrCode = SignInErrorContants.Error2; ////no need to write log in fps and redirect to login page.
                         signInResult.Captcha = AppSession.EncryptCode;
@@ -227,14 +235,15 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                         return signInResult;
                     }
 
-                    ResetCurrentLoginFailed();
+                    cacheService.ResetCurrentLoginFailed();
                 }
 
                 // If no action for the laset 5 minutes, login without captcha
-                if (this.LoginFailedTime() != DateTime.MinValue &&
-                    this.LoginFailedTime().AddMinutes(_notInteractionTimeInMinutes).CompareTo(DateTime.Now) < 0)
+                var loginFailedUtcTime = cacheService.GetLoginFailedTime();
+                if (loginFailedUtcTime != DateTime.MinValue &&
+                    loginFailedUtcTime.AddMinutes(_notInteractionTimeInMinutes).CompareTo(DateTime.UtcNow) < 0)
                 {
-                    ResetCurrentLoginFailed();
+                    cacheService.ResetCurrentLoginFailed();
                 }
 
                 if (string.IsNullOrEmpty(AppSession.EncryptCode))
@@ -253,10 +262,14 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 {
                     signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
                     signInResult.ErrMsg = Labels.errInvalidCaptcha;
-                    var loginFailedCount = this.IncreaseLoginFailedCount();
+                    var loginFailedCount = cacheService.IncreaseLoginFailedCount();
                     if (loginFailedCount == _maxTimesToAllowLogInFail)
                     {
                         LogIpBlocked(signInResult);
+                    }
+                    else
+                    {
+                        WriteLogLoginFailed(JsonConvert.SerializeObject(signInResult));
                     }
 
                     return signInResult;
@@ -282,7 +295,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 ExceptionHandler.Handle(ex);
             }
 
-            CacheExtension.Set(this._lastLoginUserNameSessionKey, username);
+            cacheService.SetLastLoginUsername(username);
 
             return signInResult;
         }
@@ -350,146 +363,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
         public bool IsShowReCaptcha()
         {
-            return CacheExtension.Get<int>(this._currentLoginFailedSessionKey) >= this._loginFailTimeToStartUsingCaptcha;
-        }
-
-        /// <summary>
-        /// Get login totally failed.
-        /// </summary>
-        /// <returns>Return result.</returns>
-        private int TotallyLoginFailed()
-        {
-            int count = 0;
-            try
-            {
-                count = CacheExtension.Get<int>(_totalLoginFailedSessionKey);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
-            return count;
-        }
-
-        /// <summary>
-        /// Get login current failed.
-        /// </summary>
-        /// <returns>Return result.</returns>
-        private int CurrentLoginFailed()
-        {
-            int count = 0;
-            try
-            {
-                count = CacheExtension.Get<int>(_currentLoginFailedSessionKey);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
-            return count;
-        }
-
-        /// <summary>
-        /// Get login failed time.
-        /// </summary>
-        /// <returns>Return result.</returns>
-        private DateTime LoginFailedTime()
-        {
-            DateTime date = DateTime.MinValue;
-            try
-            {
-                if (CacheExtension.Get(_latestLoginFailSessionKey) != null)
-                {
-                    date = Converter.ToDateTime(CacheExtension.Get(_latestLoginFailSessionKey));
-                }
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
-            return date;
-        }
-
-        private void SetLoginFailedTime()
-        {
-            try
-            {
-                CacheExtension.Set(_latestLoginFailSessionKey, DateTime.Now);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-        }
-
-        /// <summary>
-        /// Reset login failed.
-        /// </summary>
-        private void ResetLoginFailed()
-        {
-            try
-            {
-                CacheExtension.Remove(_totalLoginFailedSessionKey);
-                CacheExtension.Remove(_currentLoginFailedSessionKey);
-                CacheExtension.Remove(_latestLoginFailSessionKey);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-        }
-
-        private void ResetCurrentLoginFailed()
-        {
-            try
-            {
-                CacheExtension.Remove(_currentLoginFailedSessionKey);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-        }
-
-        /// <summary>
-        /// Increase Login Failed Count.
-        /// </summary>
-        private int IncreaseLoginFailedCount()
-        {
-            try
-            {
-                var loginFailCount = TotallyLoginFailed() + 1;
-                CacheExtension.Set(_totalLoginFailedSessionKey, loginFailCount);
-                var currentLoginFailCount = CurrentLoginFailed() + 1;
-                CacheExtension.Set(_currentLoginFailedSessionKey, currentLoginFailCount);
-                return loginFailCount;
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-                return 0;
-            }
-        }
-
-        /// <summary>
-        /// Last Login Username.
-        /// </summary>
-        /// <returns>Return result.</returns>
-        private string LastLoginUserName()
-        {
-            try
-            {
-                return CacheExtension.Get<string>(this._lastLoginUserNameSessionKey);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
-
-            return string.Empty;
+            return cacheService.GetCurrentLoginFailed() >= _loginFailTimeToStartUsingCaptcha;
         }
 
         private void LogIpBlocked(SignInResult signInResult)
@@ -519,8 +393,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 signInResult.ChangedPasswordTime = string.Format(Labels.lblPasswordChanged, verifySignInResult.LastTimeToChangePassword);
             }
 
-            this.SetLoginFailedTime();
-            var loginFailedCount = IncreaseLoginFailedCount();
+            cacheService.SetLoginFailedTime();
+            var loginFailedCount = cacheService.IncreaseLoginFailedCount();
             if (loginFailedCount > _maxTimesToAllowLogInFail)
             {
                 var ipLockedError = string.Format(Labels.iploginfailedmultipletimeserror, signInResult.Ip, _maxTimesToAllowLogInFail, _blockLoginMinute);
@@ -530,10 +404,14 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             else
             {
                 signInResult.ErrCode = verifySignInResult.ErrorCode;
-                signInResult.ErrMsg = signInResult.ErrMsg = verifySignInResult.ErrorMessage;
+                signInResult.ErrMsg = verifySignInResult.ErrorMessage;
                 if (loginFailedCount == _maxTimesToAllowLogInFail)
                 {
                     LogIpBlocked(signInResult);
+                }
+                else
+                {
+                    WriteLogLoginFailed(JsonConvert.SerializeObject(signInResult));
                 }
             }
         }
@@ -551,7 +429,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string deviceId,
             string browserSize)
         {
-            ResetLoginFailed();
+            cacheService.ResetLoginFailed();
 
             var encryptPassword = AesExtension.Encrypt(password, AppSession.EncryptCode);
             var crossCookieValue = EncryptExtension.CfsEnCode((verifySignInResult.CustId + verifySignInResult.LoginTime.Minute).ToString());
@@ -615,10 +493,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             SignInResult signInResult)
         {
             var request = httpContext.Request;
-            var filterIdentity = $"{username.Trim().ToLowerInvariant()}_{request.GetClientIp()}";
-#pragma warning disable S4462 // Calls to "async" methods should not be blocking
-            var result = netThrottler.ThrottleAsync(
-                async (success) =>
+            var cacheIdentity = CacheIdentity.From(
+                loginThrottlePolicy.Name,
+                UrlHelper.SiteGroupSetting.SiteGroup,
+                new[] { username.Trim().ToLowerInvariant(), request.GetClientIp().ToString() });
+            var result = netThrottler.Throttle(
+                (success) =>
                 {
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize);
                     requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
@@ -631,7 +511,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                             return ThrottleResult.Allowed;
                         }
 
-                        return await success(ThrottleResult.Allowed);
+                        return success(ThrottleResult.Allowed);
                     }
                     else
                     {
@@ -640,16 +520,20 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     }
                 },
                 () => ThrottleResult.Blocked,
-                filterIdentity,
-                loginPolicy
-                ).Result;
-#pragma warning restore S4462 // Calls to "async" methods should not be blocking
+                loginThrottlePolicy,
+                cacheIdentity
+                );
 
             if (result == ThrottleResult.Blocked)
             {
                 signInResult.ErrCode = SignInErrorContants.Error2;
                 signInResult.ErrMsg = string.Format(Labels.LoginTooOftenBlockedMessage, username);
             }
+        }
+
+        private void WriteLogLoginFailed(string message)
+        {
+            logger.Warn(message);
         }
     }
 }

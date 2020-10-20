@@ -2,7 +2,6 @@
 {
     using Criteria.LimitedCountryAccess;
     using Fanex.Caching;
-    using Fanex.Caching.Memory;
     using Logging.Extensions.Web;
     using Models;
     using Repositories.LimitedCountryAccess;
@@ -14,13 +13,12 @@
 
     public class LimitedCountryAccessService : ILimitedCountryAccessService
     {
-        private static Cache defaultCache = new MemoryCache();
         private const string RestrictedIPRangesCachedKey = "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV";
         private const string AllowedAccessIPsCachedKey = "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey";
 
         private readonly ILimitedCountryAccessRepository ipRepository;
         private readonly IPService ipService;
-        private readonly CacheService cacheService;
+        private readonly ICacheService cacheService;
         private readonly ILimitedCountriesConfigService limitedCountriesConfigService;
         private readonly Action<Exception> logInfoAction;
         private readonly bool trackRunTime;
@@ -29,13 +27,13 @@
             bool trackRunTime,
             ILimitedCountryAccessRepository ipRepository = null,
             IPService ipService = null,
-            CacheService cacheService = null,
+            ICacheService cacheService = null,
             ILimitedCountriesConfigService limitedCountriesConfigService = null,
             Action<Exception> logInfoAction = null)
         {
             this.ipRepository = ipRepository ?? new LimitedCountryAccessRepository();
             this.ipService = ipService ?? new IpServiceImpl();
-            this.cacheService = cacheService ?? new CacheServiceImpl(defaultCache);
+            this.cacheService = cacheService ?? new CacheService();
             this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
             this.logInfoAction = logInfoAction ?? HandleInfoException;
             this.trackRunTime = trackRunTime;
