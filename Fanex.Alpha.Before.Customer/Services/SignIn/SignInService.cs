@@ -267,10 +267,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     {
                         LogIpBlocked(signInResult);
                     }
-                    else
-                    {
-                        WriteLogLoginFailed(JsonConvert.SerializeObject(signInResult));
-                    }
 
                     return signInResult;
                 }
@@ -409,10 +405,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 {
                     LogIpBlocked(signInResult);
                 }
-                else
-                {
-                    WriteLogLoginFailed(JsonConvert.SerializeObject(signInResult));
-                }
             }
         }
 
@@ -529,11 +521,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 signInResult.ErrCode = SignInErrorContants.Error2;
                 signInResult.ErrMsg = string.Format(Labels.LoginTooOftenBlockedMessage, username);
             }
-        }
-
-        private void WriteLogLoginFailed(string message)
-        {
-            logger.Warn(message);
         }
     }
 }
