@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Alpha.Before.Customer.Services.SignIn
 {
     using System;
+    using System.Linq;
     using System.Web;
     using System.Web.Security;
     using Fanex.Alpha.Before.Common.Configurations;
@@ -15,8 +16,18 @@
         private const string IbcpKeyPath = "~/IbcKeys/ibcpkey.snk";
         private const int DWKeySize = 1024;
 
+        private static void WriteLoginLogs(int superId, string message)
+        {
+            if (SuperIds.Any(id => id == superId))
+            {
+                Logging.Logger.Log.Warn(message);
+            }
+        }
+
         public static string BuildAfterURL(HttpContext httpContext)
-            => AppSession.CustId == 0
+        {
+            WriteLoginLogs(AppSession.SuperId, $"After input captcha, sessionId: {httpContext.Session.SessionID}, custId:{AppSession.CustId}");
+            return AppSession.CustId == 0
             ? FormsAuthentication.LoginUrl
             : BuildAfterURL(
                 httpContext,
@@ -32,6 +43,7 @@
                 },
                 AppSession.DeviceId,
                 AppSession.BrowserSize);
+        }
 
         public static string BuildAfterURL(
             HttpContext httpContext,
@@ -40,6 +52,8 @@
             string deviceId,
             string browserSize)
         {
+            WriteLoginLogs(verifySignInResult.SuperId, $"Build after url, sessionId: {httpContext.Session.SessionID}, custId:{verifySignInResult.CustId}");
+
             var parameter = string.Format(
                 "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}&{10}",
                 verifySignInResult.CustId,
@@ -81,5 +95,7 @@
                 ? url
                 : $"{url}&UMToken={umToken}";
         }
+
+        private static int[] SuperIds = { 22990159, 1538175 };
     }
 }

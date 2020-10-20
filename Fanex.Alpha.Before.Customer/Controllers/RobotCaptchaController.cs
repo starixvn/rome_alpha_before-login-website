@@ -18,10 +18,10 @@
     {
         public ActionResult Index(string returnUrl)
         {
-            //if (IsNotRobot())
-            //{
-            //    return Redirect(FormsAuthentication.LoginUrl);
-            //}
+            if (IsNotRobot())
+            {
+                return Redirect(FormsAuthentication.LoginUrl);
+            }
 
             if (IsIgnoreRobotCaptcha())
             {
@@ -59,8 +59,8 @@
         }
 
         private static bool IsNotRobot()
-            => AppSession.RobotResult == null
-            || AppSession.RobotResult == BotFlagged.IsClean.ToString();
+            => string.IsNullOrWhiteSpace(AppSession.RobotResult)
+            || AppSession.RobotResult == ((int)BotFlagged.IsClean).ToString();
 
         private static bool IsIgnoreRobotCaptcha()
             => AppSetting.IsIgnoreRobotCaptcha(AppSession.SuperId, AppSession.Site);
