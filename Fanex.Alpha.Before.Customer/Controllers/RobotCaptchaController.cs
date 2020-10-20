@@ -5,10 +5,12 @@
     using Fanex.Alpha.Before.Common.Helpers;
     using Fanex.Alpha.Before.Customer.Resources;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
+    using Fanex.Logging.Extensions.Web;
     using FPS.Browserless.Detection.Client;
     using global::Alpha.Captcha.Models;
     using global::Alpha.Captcha.Mvc;
     using System;
+    using System.Diagnostics;
     using System.Globalization;
     using System.Threading;
     using System.Web.Mvc;
@@ -59,8 +61,12 @@
         }
 
         private static bool IsNotRobot()
-            => AppSession.RobotResult == null
-            || AppSession.RobotResult == ((int)BotFlagged.IsClean).ToString();
+        {
+            ExceptionHandler.Handle(new Exception($"AppSession.RobotResult: {AppSession.RobotResult}, BotFlagged.IsClean.ToString(): {BotFlagged.IsClean.ToString()}"), TraceEventType.Warning);
+
+            return AppSession.RobotResult == null
+            || AppSession.RobotResult == BotFlagged.IsClean.ToString();
+        }
 
         private static bool IsIgnoreRobotCaptcha()
             => AppSetting.IsIgnoreRobotCaptcha(AppSession.SuperId, AppSession.Site);
