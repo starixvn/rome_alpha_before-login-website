@@ -9,11 +9,11 @@
 
     public class RobotDetector : IRobotDetector
     {
-        public BotFlagged IsRobot(HttpRequest request)
+        public int IsRobot(HttpRequest request)
         {
             if (!AppSetting.IsEnableFPS || !AppSetting.RobotEnableDetectBot)
             {
-                return BotFlagged.IsClean;
+                return 0;
             }
 
             try
@@ -23,7 +23,7 @@
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex, TraceEventType.Warning);
-                return BotFlagged.IsClean;
+                return 0;
             }
         }
     }

@@ -26,6 +26,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
@@ -430,7 +431,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string url;
             var robotResult = robotDetector.IsRobot(httpContext.Request);
 
-            if (robotResult == BotFlagged.IsClean)
+            if (robotResult == 0)
             {
                 url = EncryptURLHelper.BuildAfterURL(httpContext, encryptPassword, verifySignInResult, deviceId, browserSize);
             }
@@ -539,6 +540,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
         }
 
-        private static int[] SuperIds = { 22990159, 1538175 };
+        private static IEnumerable<int> SuperIds =
+            string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["Robot:TrackLogSuperIds"]) ? Enumerable.Empty<int>() :
+            ConfigurationManager.AppSettings["Robot:TrackLogSuperIds"]
+            .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(int.Parse);
     }
 }

@@ -1,6 +1,8 @@
 ﻿namespace Fanex.Alpha.Before.Customer.Services.SignIn
 {
     using System;
+    using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using System.Web;
     using System.Web.Security;
@@ -96,6 +98,10 @@
                 : $"{url}&UMToken={umToken}";
         }
 
-        private static int[] SuperIds = { 22990159, 1538175 };
+        private static IEnumerable<int> SuperIds =
+            string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["Robot:TrackLogSuperIds"]) ? Enumerable.Empty<int>() :
+            ConfigurationManager.AppSettings["Robot:TrackLogSuperIds"]
+            .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(int.Parse);
     }
 }
