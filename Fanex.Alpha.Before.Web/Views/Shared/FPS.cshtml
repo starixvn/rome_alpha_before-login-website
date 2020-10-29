@@ -78,16 +78,40 @@
                     $("#formLogin").append('<input type="hidden" name="deviceId" id="deviceId" value="' + deviceId + '" />');
                 }
 
-                var completeTimeout = setTimeout(function () {
+                var loopTimes = 0;
+                var intervalSetDeviceId = setInterval(function () {
                     try {
-                        var deviceId = getDeviceId();
-                        addDevideIdElement(deviceId);
+                        if (loopTimes > 20) {
+                            clearInterval(intervalSetDeviceId);
+                            loopTimes = 0;
+                        }
+                        else {
+                            loopTimes++;
+                            var deviceId = getDeviceId();
+                            var deviceValue = $('#deviceId').val();
+
+                            var hasDeviceId = deviceId && deviceId !== '';
+                            var hasDeviceElement = deviceValue && deviceValue !== '';
+
+                            var diInput = document.getElementById("__di");
+                            var hasDI = diInput && diInput.value;
+
+                            if (hasDI && hasDeviceId && !hasDeviceElement) {
+                                clearInterval(intervalSetDeviceId);
+                                loopTimes = 0;
+                                addDevideIdElement(deviceId);
+                            }
+                        }
                     }
                     catch (err) {
-                        addDevideIdElement("N/A");
+                        if (loopTimes >= 20) {
+                            addDevideIdElement("N/A");
+                            loopTimes = 0;
+                        }
+
                         window.console.log("fps error = " + err);
                     }
-                }, 2000); // Wait 2000 miliseconds only
+                }, 200);
 
             })(Detecas.JSON, Detecas.Base64);
         });
