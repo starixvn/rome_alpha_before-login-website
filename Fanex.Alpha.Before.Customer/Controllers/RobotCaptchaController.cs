@@ -69,7 +69,7 @@
             => new CaptchaSetting
             {
                 FunctionName = "RobotCaptcha",
-                Level = CaptchaLevels.Low
+                CaptchaLevel = CaptchaLevels.Low
             };
     }
 }
