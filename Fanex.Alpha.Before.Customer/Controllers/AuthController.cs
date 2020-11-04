@@ -48,9 +48,10 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Index(string r = null)
         {
+            var hostName = Request.Headers["Host"];
             if (IsNeedMappingSslDomain())
             {
-                return Redirect("https://" + Request.Headers["Host"]);
+                return Redirect("https://" + hostName);
             }
 
             if (Request.QueryString["UMToken"] != null)
@@ -59,8 +60,11 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             var loginResult = _signInService.SignIn();
-            loginResult.ErrCode = string.IsNullOrWhiteSpace(r) ? loginResult.ErrCode : -2;
-            loginResult.ErrMsg = string.IsNullOrWhiteSpace(r) ? loginResult.ErrMsg : r;
+            var hasReferer = Request.UrlReferrer != null &&
+                Request.UrlReferrer.ToString().IndexOf(hostName.Substring(hostName.IndexOf(".", StringComparison.OrdinalIgnoreCase)), StringComparison.OrdinalIgnoreCase) != -1;
+            loginResult.ErrCode = hasReferer && !string.IsNullOrWhiteSpace(r) ? -2 : loginResult.ErrCode;
+            loginResult.ErrMsg = hasReferer && !string.IsNullOrWhiteSpace(r) ? r : loginResult.ErrMsg;
+
             ViewBag.FPSToken = FPS.Client.Token.Generate();
             AppSession.ResetRobotCaptchaSession();
 

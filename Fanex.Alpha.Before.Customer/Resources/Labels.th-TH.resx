@@ -135,7 +135,4 @@
   <data name="LoginTooOftenBlockedMessage" xml:space="preserve">
     <value>เข้าระบบบ่อยเกิน UserName: {0}</value>
   </data>
-  <data name="invalidsession" xml:space="preserve">
-    <value>วาระไม่ถูกต้อง</value>
-  </data>
 </root>

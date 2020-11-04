@@ -88,15 +88,6 @@ namespace Fanex.Alpha.Before.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid Session!.
-        /// </summary>
-        public static string invalidsession {
-            get {
-                return ResourceManager.GetString("invalidsession", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Your IP ({0}) exceeded maximum number ({1} times) of attempts to authenticate with your credentials. 
         ///For security reasons, login function has been locked for {2} minutes..
         /// </summary>

@@ -133,7 +133,4 @@ For security reasons, login function has been locked for {2} minutes.</value>
   <data name="lblPasswordChanged" xml:space="preserve">
     <value>Your password was last changed on {0}. Please contact to CSD at once if you still cannot login.</value>
   </data>
-  <data name="invalidsession" xml:space="preserve">
-    <value>Invalid Session!</value>
-  </data>
 </root>
