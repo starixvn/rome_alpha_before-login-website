@@ -70,11 +70,29 @@ namespace Fanex.Alpha.Before.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Waiting too long for Captcha&apos;s input.
+        /// </summary>
+        public static string inputCaptchaTooLong {
+            get {
+                return ResourceManager.GetString("inputCaptchaTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Wrong username or password.
         /// </summary>
         public static string invalidLogin {
             get {
                 return ResourceManager.GetString("invalidLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Session!.
+        /// </summary>
+        public static string invalidsession {
+            get {
+                return ResourceManager.GetString("invalidsession", resourceCulture);
             }
         }
         

@@ -20,7 +20,7 @@
         {
             if (IsNotRobot())
             {
-                return Redirect(FormsAuthentication.LoginUrl);
+                return Redirect($"{FormsAuthentication.LoginUrl}?r={Labels.invalidsession}");
             }
 
             if (IsIgnoreRobotCaptcha())
@@ -39,6 +39,11 @@
             if (ModelState.IsValid)
             {
                 return RedirectToAction(nameof(InputCaptchaSuccessfully));
+            }
+
+            if (AppSession.CustId == 0)
+            {
+                return Redirect($"{FormsAuthentication.LoginUrl}?r={Labels.inputCaptchaTooLong}");
             }
 
             TempData["ErrorMessage"] = Labels.errInvalidCaptcha;

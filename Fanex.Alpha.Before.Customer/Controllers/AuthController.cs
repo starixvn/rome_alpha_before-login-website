@@ -46,7 +46,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// </summary>
         /// <returns>Return view.</returns>
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string r = null)
         {
             if (IsNeedMappingSslDomain())
             {
@@ -59,6 +59,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             var loginResult = _signInService.SignIn();
+            loginResult.ErrCode = string.IsNullOrWhiteSpace(r) ? loginResult.ErrCode : -2;
+            loginResult.ErrMsg = string.IsNullOrWhiteSpace(r) ? loginResult.ErrMsg : r;
             ViewBag.FPSToken = FPS.Client.Token.Generate();
             AppSession.ResetRobotCaptchaSession();
 

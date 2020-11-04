@@ -40,3 +40,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S2148:Underscores should be used to make large numbers readable", Justification = "<Pending>", Scope = "member", Target = "~F:Fanex.Alpha.Before.Customer.Services.SignIn.SignInService.SuperIds")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S2148:Underscores should be used to make large numbers readable", Justification = "<Pending>", Scope = "member", Target = "~F:Fanex.Alpha.Before.Customer.Services.SignIn.EncryptURLHelper.SuperIds")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S1144:Unused private types or members should be removed", Justification = "<Pending>", Scope = "member", Target = "~F:Fanex.Alpha.Before.Customer.Services.SignIn.EncryptURLHelper.SuperIds")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S109:Magic numbers should not be used", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Alpha.Before.Customer.Controllers.AuthController.Index(System.String)~System.Web.Mvc.ActionResult")]
+

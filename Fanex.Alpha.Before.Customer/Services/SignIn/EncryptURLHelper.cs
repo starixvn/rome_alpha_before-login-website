@@ -10,6 +10,7 @@
     using Fanex.Alpha.Before.Common.Helpers;
     using Fanex.Alpha.Before.Customer.Configurations;
     using Fanex.Alpha.Before.Customer.Models;
+    using Fanex.Alpha.Before.Customer.Resources;
     using RSACryptoPad;
 
     public static class EncryptURLHelper
@@ -18,7 +19,7 @@
         private const string IbcpKeyPath = "~/IbcKeys/ibcpkey.snk";
         private const int DWKeySize = 1024;
 
-        private static void WriteLoginLogs(int superId, string message)
+        public static void WriteLoginLogs(int superId, string message)
         {
             if (SuperIds.Any(id => id == superId))
             {
@@ -30,7 +31,7 @@
         {
             WriteLoginLogs(AppSession.SuperId, $"After input captcha, sessionId: {httpContext.Session.SessionID}, custId:{AppSession.CustId}");
             return AppSession.CustId == 0
-            ? FormsAuthentication.LoginUrl
+            ? $"{FormsAuthentication.LoginUrl}?r={Labels.inputCaptchaTooLong}"
             : BuildAfterURL(
                 httpContext,
                 AppSession.EncryptPassword,
