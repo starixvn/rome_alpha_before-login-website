@@ -28,8 +28,6 @@
                 return Redirect(EncryptURLHelper.BuildAfterURL(HttpContext.ApplicationInstance.Context));
             }
 
-            AppSession.IncreaseRobotCaptchaFailedCount();
-
             return View("~/Areas/Customer/Views/RobotCaptcha/Index.cshtml", GetCaptchaSetting());
         }
 
@@ -47,6 +45,15 @@
             }
 
             TempData["ErrorMessage"] = Labels.errInvalidCaptcha;
+
+            AppSession.IncreaseRobotCaptchaFailedCount();
+
+            if (AppSession.RobotCaptchaFailedCount >= 5)
+            {
+                TempData["ErrorMessage"] = string.Empty;
+
+                return Redirect($"{FormsAuthentication.LoginUrl}?r={Labels.tooManyFailedCaptcha}");
+            }
 
             return RedirectToAction(nameof(Index));
         }

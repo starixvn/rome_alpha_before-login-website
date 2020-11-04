@@ -132,5 +132,14 @@ namespace Fanex.Alpha.Before.Customer.Resources {
                 return ResourceManager.GetString("LoginTooOftenBlockedMessage", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Too many attempts of invalid Captcha.
+        /// </summary>
+        public static string tooManyFailedCaptcha {
+            get {
+                return ResourceManager.GetString("tooManyFailedCaptcha", resourceCulture);
+            }
+        }
     }
 }

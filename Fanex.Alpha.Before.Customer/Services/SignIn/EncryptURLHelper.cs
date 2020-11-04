@@ -30,7 +30,7 @@
         public static string BuildAfterURL(HttpContext httpContext)
         {
             WriteLoginLogs(AppSession.SuperId, $"After input captcha, sessionId: {httpContext.Session.SessionID}, custId:{AppSession.CustId}");
-            return AppSession.CustId == 0
+            var url = AppSession.CustId == 0
             ? $"{FormsAuthentication.LoginUrl}?r={Labels.inputCaptchaTooLong}"
             : BuildAfterURL(
                 httpContext,
@@ -46,6 +46,10 @@
                 },
                 AppSession.DeviceId,
                 AppSession.BrowserSize);
+
+            AppSession.ResetRobotCaptchaSession();
+
+            return url;
         }
 
         public static string BuildAfterURL(
