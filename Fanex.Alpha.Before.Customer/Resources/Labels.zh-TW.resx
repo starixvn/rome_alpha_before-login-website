@@ -136,4 +136,7 @@
     <value>您的IP({0})身分憑證驗證次數已超過限制({1}次)。
 出於安全原因，登入功能已鎖定{2}分鐘。</value>
   </data>
+  <data name="invalidsession" xml:space="preserve">
+    <value>會議無效！</value>
+  </data>
 </root>

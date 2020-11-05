@@ -60,10 +60,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             var loginResult = _signInService.SignIn();
-            var hasReferer = Request.UrlReferrer != null &&
-                Request.UrlReferrer.ToString().IndexOf(hostName.Substring(hostName.IndexOf(".", StringComparison.OrdinalIgnoreCase)), StringComparison.OrdinalIgnoreCase) != -1;
-            loginResult.ErrCode = hasReferer && !string.IsNullOrWhiteSpace(r) ? -2 : loginResult.ErrCode;
-            loginResult.ErrMsg = hasReferer && !string.IsNullOrWhiteSpace(r) ? r : loginResult.ErrMsg;
+            loginResult.ErrCode = !string.IsNullOrWhiteSpace(r) ? -2 : loginResult.ErrCode;
+            loginResult.ErrMsg = !string.IsNullOrWhiteSpace(r) ? r : loginResult.ErrMsg;
 
             ViewBag.FPSToken = FPS.Client.Token.Generate();
             AppSession.ResetRobotCaptchaSession();

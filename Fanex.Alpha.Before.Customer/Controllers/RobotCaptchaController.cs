@@ -20,9 +20,7 @@
         {
             if (IsNotRobot())
             {
-                var message = Request.UrlReferrer == null ||
-                    Request.UrlReferrer.ToString().IndexOf(Request.Headers["Host"], StringComparison.OrdinalIgnoreCase) == -1 ?
-                    string.Empty : Labels.inputCaptchaTooLong;
+                var message = $"{Labels.invalidsession} / {Labels.inputCaptchaTooLong}";
 
                 return Redirect($"{FormsAuthentication.LoginUrl}?r={message}");
             }

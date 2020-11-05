@@ -136,4 +136,7 @@
     <value>您的IP({0})身份凭证认证次数已超过限制({1}次)。
 出于安全原因，登录功能已锁定{2}分钟。</value>
   </data>
+  <data name="invalidsession" xml:space="preserve">
+    <value>会议无效！</value>
+  </data>
 </root>
