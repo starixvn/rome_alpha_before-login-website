@@ -48,10 +48,9 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         [HttpGet]
         public ActionResult Index(string r = null)
         {
-            var hostName = Request.Headers["Host"];
             if (IsNeedMappingSslDomain())
             {
-                return Redirect("https://" + hostName);
+                return Redirect("https://" + Request.Headers["Host"]);
             }
 
             if (Request.QueryString["UMToken"] != null)
@@ -114,8 +113,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                     FPSTracking(loginResult);
 
                     return string.IsNullOrEmpty(loginResult.AfterLoginUrl) ?
-                        RedirectToAction("Index") :
-                        (ActionResult)Redirect(loginResult.AfterLoginUrl);
+                        Index() :
+                        Redirect(loginResult.AfterLoginUrl);
                 }
 
                 ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
@@ -159,7 +158,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
         }
 
-        public RedirectResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
+        public ActionResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
         {
             var loginResult = _signInService.AutomationTest(username, password, captcha, deviceId, browserSize);
 
@@ -168,7 +167,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 return Redirect(loginResult.AfterLoginUrl);
             }
 
-            return Redirect("~/Auth/Index");
+            return Index();
         }
 
         /// <summary>
