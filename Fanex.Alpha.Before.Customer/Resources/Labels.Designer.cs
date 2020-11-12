@@ -70,7 +70,7 @@ namespace Fanex.Alpha.Before.Customer.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Waiting too long for Captcha&apos;s input.
+        ///   Looks up a localized string similar to Waited too long for Captcha&apos;s input.
         /// </summary>
         public static string inputCaptchaTooLong {
             get {

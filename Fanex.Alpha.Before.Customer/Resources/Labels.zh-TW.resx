@@ -139,4 +139,10 @@
   <data name="invalidsession" xml:space="preserve">
     <value>會議無效！</value>
   </data>
+  <data name="inputCaptchaTooLong" xml:space="preserve">
+    <value>等待驗證碼輸入時間過久</value>
+  </data>
+  <data name="tooManyFailedCaptcha" xml:space="preserve">
+    <value>無效驗證碼嘗試次數過多</value>
+  </data>
 </root>

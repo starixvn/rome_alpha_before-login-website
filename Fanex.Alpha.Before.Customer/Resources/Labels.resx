@@ -137,7 +137,7 @@ For security reasons, login function has been locked for {2} minutes.</value>
     <value>Login Too Often! UserName: {0}</value>
   </data>
   <data name="inputCaptchaTooLong" xml:space="preserve">
-    <value>Waiting too long for Captcha's input</value>
+    <value>Waited too long for Captcha's input</value>
   </data>
   <data name="invalidsession" xml:space="preserve">
     <value>Invalid Session!</value>

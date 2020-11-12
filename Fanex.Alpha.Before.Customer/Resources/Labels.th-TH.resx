@@ -138,4 +138,10 @@
   <data name="invalidsession" xml:space="preserve">
     <value>วาระไม่ถูกต้อง</value>
   </data>
+  <data name="inputCaptchaTooLong" xml:space="preserve">
+    <value>ใช้เวลาใส่ Captcha นานเกินกำหนด</value>
+  </data>
+  <data name="tooManyFailedCaptcha" xml:space="preserve">
+    <value>จำนวนครั้งที่ผิดพลาดมากเกินกำหนด</value>
+  </data>
 </root>
