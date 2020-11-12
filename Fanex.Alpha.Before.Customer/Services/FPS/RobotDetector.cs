@@ -12,7 +12,7 @@
     {
         public int IsRobot(HttpRequest request)
         {
-            if (!AppSetting.IsEnableFPS || !AppSetting.RobotEnableDetectBot)
+            if (!AppSetting.RobotEnableDetectBot)
             {
                 return 0;
             }
