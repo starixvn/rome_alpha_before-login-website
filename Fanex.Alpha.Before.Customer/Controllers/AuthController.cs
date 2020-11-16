@@ -46,7 +46,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
         /// </summary>
         /// <returns>Return view.</returns>
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(string r = null)
         {
             if (IsNeedMappingSslDomain())
             {
@@ -59,6 +59,9 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             var loginResult = _signInService.SignIn();
+            loginResult.ErrCode = !string.IsNullOrWhiteSpace(r) ? SignInErrorContants.Error2 : loginResult.ErrCode;
+            loginResult.ErrMsg = !string.IsNullOrWhiteSpace(r) ? r : loginResult.ErrMsg;
+
             ViewBag.FPSToken = FPS.Client.Token.Generate();
             AppSession.ResetRobotCaptchaSession();
 
@@ -110,8 +113,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                     FPSTracking(loginResult);
 
                     return string.IsNullOrEmpty(loginResult.AfterLoginUrl) ?
-                        RedirectToAction("Index") :
-                        (ActionResult)Redirect(loginResult.AfterLoginUrl);
+                        Index() :
+                        Redirect(loginResult.AfterLoginUrl);
                 }
 
                 ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
@@ -155,7 +158,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
         }
 
-        public RedirectResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
+        public ActionResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
         {
             var loginResult = _signInService.AutomationTest(username, password, captcha, deviceId, browserSize);
 
@@ -164,7 +167,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 return Redirect(loginResult.AfterLoginUrl);
             }
 
-            return Redirect("~/Auth/Index");
+            return Index();
         }
 
         /// <summary>

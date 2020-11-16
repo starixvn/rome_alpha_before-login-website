@@ -6,6 +6,7 @@
     using System.Web.Routing;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Configurations.UnderMainternance;
+    using Fanex.Alpha.Before.Common.Helpers;
     using Fanex.Alpha.Before.Common.Services.LimitedCountryAccessService;
     using Fanex.Alpha.Before.Common.Services.UnderMainternance;
 
@@ -29,6 +30,12 @@
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            var lang = Request.Cookies["hidLanguage"]?.Value ?? AppSession.Language;
+            lang = LanguageHelper.IsValidLanguage(lang) ? lang : LanguageHelper.DefaultLanguage;
+
+            Thread.CurrentThread.CurrentCulture = new CultureInfo(lang);
+            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
+
             var underMaintenanceInfo = _mainternanceService.UnderMainternanceInfo();
 
             if (underMaintenanceInfo.HasError)
@@ -60,14 +67,6 @@
             }
 
             base.OnActionExecuting(filterContext);
-        }
-
-        protected override void ExecuteCore()
-        {
-            Thread.CurrentThread.CurrentCulture = new CultureInfo(AppSession.Language);
-            Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
-
-            base.ExecuteCore();
         }
     }
 }

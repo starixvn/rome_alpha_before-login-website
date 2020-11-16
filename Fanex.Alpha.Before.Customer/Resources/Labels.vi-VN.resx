@@ -136,4 +136,13 @@
     <value>IP của bạn ({0}) đã vượt quá số lần quy định ({1} lần) trong việc xác thực thông tin đăng nhập.
 Vì lý do bảo mật, chức năng đăng nhập sẽ tạm khoá trong {2} phút.</value>
   </data>
+  <data name="invalidsession" xml:space="preserve">
+    <value>Session không hợp lệ</value>
+  </data>
+  <data name="inputCaptchaTooLong" xml:space="preserve">
+    <value>Captcha hết hạn do đợi quá lâu mà không nhập</value>
+  </data>
+  <data name="tooManyFailedCaptcha" xml:space="preserve">
+    <value>Bạn đã nhập sai Captcha quá số lần quy định</value>
+  </data>
 </root>

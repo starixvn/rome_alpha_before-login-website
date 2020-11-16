@@ -5,6 +5,6 @@
 
     public interface IRobotDetector
     {
-        BotFlagged IsRobot(HttpRequest request);
+        int IsRobot(HttpRequest request);
     }
 }

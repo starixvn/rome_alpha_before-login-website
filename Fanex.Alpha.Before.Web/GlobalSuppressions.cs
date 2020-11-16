@@ -6,3 +6,5 @@
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3995:URI return values should not be strings", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Alpha.Before.Web.View.MvcApplication.ImageUrlFactory(CaptchaMvc.Infrastructure.DefaultCaptchaManager,System.Web.Mvc.UrlHelper,System.Collections.Generic.KeyValuePair{System.String,CaptchaMvc.Interface.ICaptchaValue})~System.String")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3995:URI return values should not be strings", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Alpha.Before.Web.View.MvcApplication.RefreshUrlFactory(System.Web.Mvc.UrlHelper,System.Collections.Generic.KeyValuePair{System.String,CaptchaMvc.Interface.ICaptchaValue})~System.String")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3902:\"Assembly.GetExecutingAssembly\" should not be called", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Alpha.Before.Web.View.MvcApplication.RegisterDependencies")]
+

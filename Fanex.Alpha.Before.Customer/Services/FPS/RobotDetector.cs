@@ -4,27 +4,39 @@
     using Fanex.Logging.Extensions.Web;
     using global::FPS.Browserless.Detection.Client;
     using System;
+    using System.Configuration;
     using System.Diagnostics;
     using System.Web;
 
     public class RobotDetector : IRobotDetector
     {
-        public BotFlagged IsRobot(HttpRequest request)
+        public int IsRobot(HttpRequest request)
         {
-            if (!AppSetting.IsEnableFPS || !AppSetting.RobotEnableDetectBot)
+            if (!AppSetting.RobotEnableDetectBot)
             {
-                return BotFlagged.IsClean;
+                return 0;
             }
 
             try
             {
+                if (IsRobotAlwaysFromConfig())
+                {
+                    return 1;
+                }
+
                 return BotDetection.IsBot(request, AppSetting.RobotFPSBotDetectionApiUrl);
             }
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex, TraceEventType.Warning);
-                return BotFlagged.IsClean;
+                return 0;
             }
+        }
+
+        private static bool IsRobotAlwaysFromConfig()
+        {
+            return !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["Robot:IsRobotAlways"]) &&
+                ConfigurationManager.AppSettings["Robot:IsRobotAlways"] == "1";
         }
     }
 }

@@ -107,6 +107,7 @@ Sphinx.Login = {
     },
 
     setLanguague: function (languageCode, firstLoad) {
+        Sphinx.Core.setCookie("hidLanguage", languageCode, 1);
         var domElements = Sphinx.Login.domElements;
 
         if (!firstLoad) {
@@ -151,7 +152,7 @@ Sphinx.Login = {
         domElements.lblShowPass.html(resource.ShowPassword);
 
         domElements.btnLogin.val(resource.Login);
-        domElements.formTitle.text(resource.Login);;
+        domElements.formTitle.text(resource.Login);
         document.title = resource.Login;
 
         Sphinx.Core.setUserData('LANGUAGE', languageCode);

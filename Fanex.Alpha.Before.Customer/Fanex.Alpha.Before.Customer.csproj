@@ -39,8 +39,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Alpha.Captcha, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Alpha.Captcha.1.0.9\lib\net461\Alpha.Captcha.dll</HintPath>
+    <Reference Include="Alpha.Captcha, Version=1.1.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alpha.Captcha.1.1.1.1\lib\net461\Alpha.Captcha.dll</HintPath>
     </Reference>
     <Reference Include="Alpha.NetThrottling, Version=1.0.12.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alpha.NetThrottling.1.0.12\lib\net461\Alpha.NetThrottling.dll</HintPath>
@@ -54,9 +54,8 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="CaptchaMvc, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fe46ad421dd3b0e6, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\_Dependencies\Captcha\CaptchaMvc.dll</HintPath>
+    <Reference Include="CaptchaMvc, Version=2.5.0.0, Culture=neutral, PublicKeyToken=fe46ad421dd3b0e6, processorArchitecture=MSIL">
+      <HintPath>..\packages\CaptchaMvc.Mvc5.1.5.0\lib\net45-full\CaptchaMvc.dll</HintPath>
     </Reference>
     <Reference Include="CasinoLibrary, Version=2.0.2.34125, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\CasinoLibrary.2.0.2.34125\lib\net40\CasinoLibrary.dll</HintPath>
@@ -108,7 +107,7 @@
       <HintPath>..\packages\Fanex.Products.1.0.0.5\lib\net461\Fanex.Products.dll</HintPath>
     </Reference>
     <Reference Include="FPS.Browserless.Detection.Client, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FPS.Browserless.Detection.Client.8.1.2\lib\FPS.Browserless.Detection.Client.dll</HintPath>
+      <HintPath>..\packages\FPS.Browserless.Detection.Client.8.1.4\lib\FPS.Browserless.Detection.Client.dll</HintPath>
     </Reference>
     <Reference Include="FPS.Client, Version=3.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Oneyed.FPSClient.3.3.1.0\lib\FPS.Client.dll</HintPath>
@@ -195,6 +194,9 @@
     </Reference>
     <Reference Include="RSACryptoPad">
       <HintPath>..\packages\RSACryptoPad.1.0.0.0\lib\net40\RSACryptoPad.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=3.2.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.3.2.2\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
     <Reference Include="StackExchange.Redis, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
       <HintPath>..\packages\StackExchange.Redis.2.1.58\lib\net461\StackExchange.Redis.dll</HintPath>

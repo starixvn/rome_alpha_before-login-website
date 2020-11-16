@@ -26,9 +26,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
+    using System.Web.Security;
     using InfrastructureLanguages = Infrastructure.Resources;
     using LoginLanguages = Resources;
 
@@ -429,7 +431,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string url;
             var robotResult = robotDetector.IsRobot(httpContext.Request);
 
-            if (robotResult == BotFlagged.IsClean)
+            if (robotResult == 0)
             {
                 url = EncryptURLHelper.BuildAfterURL(httpContext, encryptPassword, verifySignInResult, deviceId, browserSize);
             }
@@ -449,6 +451,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                    robotResult.ToString(),
                    deviceId,
                    browserSize);
+
+                WriteLoginLogs(verifySignInResult.SuperId, $"After set sessionId: {httpContext.Session.SessionID}, custId:{AppSession.CustId}");
 
                 url = "RobotCaptcha/Index";
             }
@@ -484,6 +488,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string browserSize,
             SignInResult signInResult)
         {
+            var verifySignInResult = new VerifySignInResult();
             var request = httpContext.Request;
             var cacheIdentity = CacheIdentity.From(
                 loginThrottlePolicy.Name,
@@ -494,7 +499,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 {
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize);
                     requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
-                    var verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
+                    verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
+                    WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
+
                     if (verifySignInResult.ErrorCode == 0)
                     {
                         UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
@@ -521,6 +528,22 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 signInResult.ErrCode = SignInErrorContants.Error2;
                 signInResult.ErrMsg = string.Format(Labels.LoginTooOftenBlockedMessage, username);
             }
+
+            WriteLoginLogs(verifySignInResult.SuperId, $"After checking login too often: {JsonConvert.SerializeObject(signInResult)}");
         }
+
+        private static void WriteLoginLogs(int superId, string message)
+        {
+            if (SuperIds.Any(id => id == superId))
+            {
+                Logging.Logger.Log.Warn(message);
+            }
+        }
+
+        private static IEnumerable<int> SuperIds =
+            string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["Robot:TrackLogSuperIds"]) ? Enumerable.Empty<int>() :
+            ConfigurationManager.AppSettings["Robot:TrackLogSuperIds"]
+            .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(int.Parse);
     }
 }

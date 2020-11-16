@@ -18,17 +18,17 @@
     {
         public ActionResult Index(string returnUrl)
         {
-            //if (IsNotRobot())
-            //{
-            //    return Redirect(FormsAuthentication.LoginUrl);
-            //}
+            if (IsNotRobot())
+            {
+                var message = $"{Labels.invalidsession} / {Labels.inputCaptchaTooLong}";
+
+                return Redirect($"{FormsAuthentication.LoginUrl}?r={message}");
+            }
 
             if (IsIgnoreRobotCaptcha())
             {
                 return Redirect(EncryptURLHelper.BuildAfterURL(HttpContext.ApplicationInstance.Context));
             }
-
-            AppSession.IncreaseRobotCaptchaFailedCount();
 
             return View("~/Areas/Customer/Views/RobotCaptcha/Index.cshtml", GetCaptchaSetting());
         }
@@ -41,7 +41,21 @@
                 return RedirectToAction(nameof(InputCaptchaSuccessfully));
             }
 
+            if (AppSession.CustId == 0)
+            {
+                return Redirect($"{FormsAuthentication.LoginUrl}?r={Labels.inputCaptchaTooLong}");
+            }
+
             TempData["ErrorMessage"] = Labels.errInvalidCaptcha;
+
+            AppSession.IncreaseRobotCaptchaFailedCount();
+
+            if (AppSession.RobotCaptchaFailedCount >= 5)
+            {
+                TempData["ErrorMessage"] = string.Empty;
+
+                return Redirect($"{FormsAuthentication.LoginUrl}?r={Labels.tooManyFailedCaptcha}");
+            }
 
             return RedirectToAction(nameof(Index));
         }
@@ -59,8 +73,8 @@
         }
 
         private static bool IsNotRobot()
-            => AppSession.RobotResult == null
-            || AppSession.RobotResult == BotFlagged.IsClean.ToString();
+            => string.IsNullOrWhiteSpace(AppSession.RobotResult)
+            || AppSession.RobotResult == ((int)BotFlagged.IsClean).ToString();
 
         private static bool IsIgnoreRobotCaptcha()
             => AppSetting.IsIgnoreRobotCaptcha(AppSession.SuperId, AppSession.Site);
@@ -69,7 +83,7 @@
             => new CaptchaSetting
             {
                 FunctionName = "RobotCaptcha",
-                Level = CaptchaLevels.Low
+                CaptchaLevel = CaptchaLevels.Low
             };
     }
 }

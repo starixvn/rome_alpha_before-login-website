@@ -136,4 +136,13 @@
     <value>您的IP({0})身份凭证认证次数已超过限制({1}次)。
 出于安全原因，登录功能已锁定{2}分钟。</value>
   </data>
+  <data name="invalidsession" xml:space="preserve">
+    <value>会议无效！</value>
+  </data>
+  <data name="inputCaptchaTooLong" xml:space="preserve">
+    <value>等待验证码输入时间过久</value>
+  </data>
+  <data name="tooManyFailedCaptcha" xml:space="preserve">
+    <value>无效验证码尝试次数过多</value>
+  </data>
 </root>
