@@ -38,7 +38,7 @@
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(InputCaptchaSuccessfully));
+                return InputCaptchaSuccessfully();
             }
 
             if (AppSession.CustId == 0)
@@ -60,6 +60,7 @@
             return RedirectToAction(nameof(Index));
         }
 
+        [ChildActionOnly]
         public ActionResult InputCaptchaSuccessfully()
             => Redirect(EncryptURLHelper.BuildAfterURL(HttpContext.ApplicationInstance.Context));
 
