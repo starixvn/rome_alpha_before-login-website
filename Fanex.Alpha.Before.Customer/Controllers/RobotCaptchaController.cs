@@ -38,6 +38,8 @@
         {
             if (ModelState.IsValid)
             {
+                AppSession.InputCaptchaSuccess = true;
+
                 return RedirectToAction(nameof(InputCaptchaSuccessfully));
             }
 
@@ -61,7 +63,14 @@
         }
 
         public ActionResult InputCaptchaSuccessfully()
-            => Redirect(EncryptURLHelper.BuildAfterURL(HttpContext.ApplicationInstance.Context));
+        {
+            if (AppSession.InputCaptchaSuccess)
+            {
+                return Redirect(EncryptURLHelper.BuildAfterURL(HttpContext.ApplicationInstance.Context));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
 
         protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
         {

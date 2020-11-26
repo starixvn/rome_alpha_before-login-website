@@ -268,6 +268,19 @@ namespace Fanex.Alpha.Before.Common.Configurations
             }
         }
 
+        public static bool InputCaptchaSuccess
+        {
+            get
+            {
+                return SessionExtension.Get<bool>(SessionConstants.INPUTCAPTCHASUCCESS);
+            }
+
+            set
+            {
+                SessionExtension.Set(SessionConstants.INPUTCAPTCHASUCCESS, value);
+            }
+        }
+
         public static void AssignRobotCaptchaSession(
             int custId,
             string username,
@@ -316,6 +329,7 @@ namespace Fanex.Alpha.Before.Common.Configurations
             RobotCaptchaFailedCount = 0;
             DeviceId = null;
             BrowserSize = null;
+            InputCaptchaSuccess = false;
         }
 
         public static void IncreaseRobotCaptchaFailedCount()
