@@ -28,10 +28,7 @@ namespace Fanex.Alpha.Before.Customer.Configurations
         {
             get
             {
-                if (_instance == null)
-                {
-                    _instance = (AutomationTestSettings)ConfigurationManager.GetSection("AlphaSetting/AutomationTestSettings");
-                }
+                _instance = _instance ?? (AutomationTestSettings)ConfigurationManager.GetSection("AlphaSetting/AutomationTestSettings");
 
                 return _instance;
             }

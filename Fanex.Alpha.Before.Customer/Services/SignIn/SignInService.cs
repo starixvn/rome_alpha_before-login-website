@@ -21,7 +21,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using global::Alpha.NetThrottling;
     using global::Alpha.NetThrottling.Models;
     using global::Alpha.NetThrottling.Utils;
-    using global::FPS.Browserless.Detection.Client;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using System;
@@ -30,7 +29,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
-    using System.Web.Security;
     using InfrastructureLanguages = Infrastructure.Resources;
     using LoginLanguages = Resources;
 

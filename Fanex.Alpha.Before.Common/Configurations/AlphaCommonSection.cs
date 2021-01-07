@@ -27,10 +27,7 @@ namespace Fanex.Alpha.Before.Customer.Configurations
         {
             get
             {
-                if (_instance == null)
-                {
-                    _instance = (AlphaCommonSection)ConfigurationManager.GetSection("AlphaSetting/CommonSettings");
-                }
+                _instance = _instance ?? (AlphaCommonSection)ConfigurationManager.GetSection("AlphaSetting/CommonSettings");
 
                 return _instance;
             }
