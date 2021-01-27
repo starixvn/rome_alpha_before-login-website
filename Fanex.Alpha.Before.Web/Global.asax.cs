@@ -78,12 +78,24 @@ namespace Fanex.Alpha.Before.Web.View
             var sensitiveInfo = new List<string> { "password", "txtpassword" };
             LoggingConfig.Init(sensitiveInfo, DatabaseInfoGetters.GetDbExceptionInfo, $"{GetVirtualAppPath()}/assets/bundles/raven.min.js");
 
-            UMClientManager.WhenError((message) =>
-            {
-                ExceptionHandler.Handle(new UMClientException(message));
-            });
+            HandleUMError();
 
             InitIPsCache();
+        }
+
+        private static void HandleUMError()
+        {
+            try
+            {
+                UMClientManager.WhenError((message) =>
+                {
+                    ExceptionHandler.Handle(new UMClientException(message));
+                });
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.Handle(ex);
+            }
         }
 
         private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
