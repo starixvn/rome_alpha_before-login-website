@@ -65,3 +65,5 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S2325:Methods and properties that don't access instance data should be static", Justification = "<Pending>", Scope = "member", Target = "~P:Fanex.Alpha.Before.Common.ActivityTracking.RobotCaptchaSession.RobotResult")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S2325:Methods and properties that don't access instance data should be static", Justification = "<Pending>", Scope = "member", Target = "~P:Fanex.Alpha.Before.Common.ActivityTracking.RobotCaptchaSession.RobotCaptchaFailedCount")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "S3240:Use the '??' operator here.", Justification = "<Pending>", Scope = "member", Target = "~P:Fanex.Alpha.Before.Customer.Configurations.AlphaCommonSection.Instance")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S112:General exceptions should never be thrown", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Alpha.Before.Common.Controllers.BaseController.OnActionExecuting(System.Web.Mvc.ActionExecutingContext)")]
+
