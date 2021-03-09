@@ -6,7 +6,8 @@
     {
         public ActionResult Index()
         {
-            ViewBag.ErrorMessage = Infrastructure.Resources.Labels.Error_Server;
+            ViewBag.ErrorMessage = Request != null ? Request.RequestContext.HttpContext.IsCustomErrorEnabled ?
+                Infrastructure.Resources.Labels.Error_Server : Server.GetLastError().ToString() : string.Empty;
             return View("~/Views/Common/ErrorPage/Index.cshtml");
         }
     }
