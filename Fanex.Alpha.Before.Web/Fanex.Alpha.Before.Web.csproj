@@ -530,6 +530,51 @@
       <SubType>
       </SubType>
     </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS.ConnectionStrings.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS.DomainGroupSection.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS.LimtedCountryAccessSection.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS.Web.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS.Web.Setting.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS2.ConnectionStrings.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS2.DomainGroupSection.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS2.LimtedCountryAccessSection.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS2.Web.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS2.Web.Setting.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS3.ConnectionStrings.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS3.DomainGroupSection.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS3.LimtedCountryAccessSection.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS3.Web.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS3.Web.Setting.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.ConnectionStrings.config">
       <DependentUpon>backupMNL.Web.config</DependentUpon>
     </Content>
