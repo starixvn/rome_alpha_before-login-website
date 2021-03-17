@@ -8,20 +8,25 @@ namespace Fanex.Alpha.Before.Web.View
 {
     using System;
     using System.Collections.Generic;
+    using System.Web.Hosting;
     using System.Web.Mvc;
     using System.Web.Routing;
     using CaptchaMvc.Infrastructure;
     using CaptchaMvc.Interface;
     using Common.Configurations;
     using Common.Services.LimitedCountryAccessService;
+    using Fanex.Caching;
     using Fanex.Logging.Extensions.Database;
     using global::Alpha.Logging;
     using Logging;
     using Logging.Extensions.Web;
+    using ONEbook.UM;
     using ONEbook.UM.Configurations;
+    using ONEbook.UM.Helpers;
     using ONEbook.UM.Models;
-    using ONEbook.UM.Services.Impl;
-    using System.Web.Hosting;
+    using ONEbook.UM.NETFramework;
+    using ONEbook.UM.Services;
+    using ONEbook.UM.Transport;
 
     /// <summary>
     /// MVC Application.
@@ -78,24 +83,18 @@ namespace Fanex.Alpha.Before.Web.View
             var sensitiveInfo = new List<string> { "password", "txtpassword" };
             LoggingConfig.Init(sensitiveInfo, DatabaseInfoGetters.GetDbExceptionInfo, $"{GetVirtualAppPath()}/assets/bundles/raven.min.js");
 
-            HandleUMError();
-
-            InitIPsCache();
-        }
-
-        private static void HandleUMError()
-        {
-            try
-            {
-                UMClientManager.WhenError((message) =>
+            var umConfig = new UMClientConfiguration().Initialize();
+            UMClientManager
+                .UseConfig(umConfig)
+                .UseCacheService(new UMCacheService(new CacheService()))
+                .UseRestClient(new UMRestClient(umConfig))
+                .UseHttpContext(new HttpContextHelper())
+                .AddErrorHandler((message) =>
                 {
                     ExceptionHandler.Handle(new UMClientException(message));
                 });
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
+
+            InitIPsCache();
         }
 
         private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
@@ -148,7 +147,11 @@ namespace Fanex.Alpha.Before.Web.View
         {
             try
             {
-                var maintenanceService = new MaintenanceService();
+                var maintenanceService = new MaintenanceService(
+                    UMClientManager.RestClient,
+                    UMClientManager.CacheService,
+                    UMClientManager.UMClientConfigs,
+                    UMClientManager.HttpContext);
                 if (!maintenanceService.IsUnderMaintenance())
                 {
                     var activeRestrictedCountry = new LimitedCountriesConfigService().GetActiveRestrictedCountriesConfig();
