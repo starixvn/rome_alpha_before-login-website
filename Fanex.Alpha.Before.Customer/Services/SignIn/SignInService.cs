@@ -274,7 +274,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
                 try
                 {
-                    password = AesExtension.Decrypt(password, AppSession.EncryptCode);
+                    password = AesService.Default.Decrypt(password, AppSession.EncryptCode);
                 }
                 catch
                 {
@@ -426,7 +426,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         {
             cacheService.ResetLoginFailed();
 
-            var encryptPassword = AesExtension.Encrypt(password, AppSession.EncryptCode);
+            var encryptPassword = AesService.Default.Encrypt(password, AppSession.EncryptCode);
             var crossCookieValue = EncryptExtension.CfsEnCode((verifySignInResult.CustId + verifySignInResult.LoginTime.Minute).ToString());
 
             string url;
