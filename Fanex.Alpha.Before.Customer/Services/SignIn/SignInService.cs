@@ -21,6 +21,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using global::Alpha.NetThrottling;
     using global::Alpha.NetThrottling.Models;
     using global::Alpha.NetThrottling.Utils;
+    using global::Alpha.SliderCaptcha.Mvc;
+    using global::Alpha.SliderCaptcha.Services;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using System;
@@ -31,6 +33,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using System.Web;
     using InfrastructureLanguages = Infrastructure.Resources;
     using LoginLanguages = Resources;
+    using SliderCaptcha = global::Alpha.SliderCaptcha;
 
     public interface ISignInService
     {
@@ -59,6 +62,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly ISignInRepository _signInRepository;
         private readonly ICacheService cacheService;
         private readonly IRobotDetector robotDetector;
+        private ICaptchaService captchaService;
         
         private readonly Logging.ILogger logger;
         private readonly HttpContext httpContext;
@@ -74,7 +78,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         }
 
         public SignInService() :
-            this(null, null, null, null, null)
+            this(null, null, null, null, null, null)
         {
         }
 
@@ -82,10 +86,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             IRobotDetector robotDetector,
             Logging.ILogger logger,
             HttpContext httpContext,
-            ICacheService cacheService)
+            ICacheService cacheService,
+            IServiceFactory serviceFactory)
         {
             _signInRepository = signInRepository ?? new SignInRepository();
             this.cacheService = cacheService ?? new CacheService();
+            serviceFactory = serviceFactory ?? SliderCaptcha.Mvc.Configuration.ServiceFactory;
             var _loginThemeSection = LoginThemeSection.Instance;
 
             _loginTheme = _loginThemeSection.DefaultTheme;
@@ -110,6 +116,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             this.robotDetector = robotDetector ?? new RobotDetector();
             this.logger = logger ?? Logging.Logger.Log;
             this.httpContext = httpContext ?? HttpContext.Current;
+            this.captchaService = serviceFactory.CaptchaService;
         }
 
         /// <summary>
