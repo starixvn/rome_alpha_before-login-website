@@ -74,6 +74,12 @@
     <Reference Include="Alpha.NetThrottling, Version=1.0.12.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alpha.NetThrottling.1.0.12\lib\net461\Alpha.NetThrottling.dll</HintPath>
     </Reference>
+    <Reference Include="Alpha.SliderCaptcha, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alpha.SliderCaptcha.1.0.0\lib\net461\Alpha.SliderCaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="Alpha.SliderCaptcha.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alpha.SliderCaptcha.Mvc.1.0.0\lib\net461\Alpha.SliderCaptcha.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Alpha.SubAccount, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alpha.SubAccount.1.0.0\lib\net40\Alpha.SubAccount.dll</HintPath>
     </Reference>
@@ -379,6 +385,39 @@
     <AdditionalFiles Include="..\SonarQube\alpha-before-login\CSharp\SonarLint.xml">
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\1.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\10.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\11.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\12.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\13.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\14.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\15.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\2.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\3.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\4.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\5.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\6.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\7.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\8.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\9.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\1\alpha.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\1\base.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\1\border.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\2\alpha.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\2\base.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\2\border.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\3\alpha.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\3\base.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\3\border.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\4\alpha.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\4\base.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\4\border.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\5\alpha.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\5\base.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\5\border.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\6\alpha.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\6\base.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\6\border.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Scripts\SylouCaptcha.js" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\atticon.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\audio.gif" />
@@ -439,6 +478,7 @@
     <Content Include="assets\bundles\um2.min.js">
       <DependentUpon>um2.js</DependentUpon>
     </Content>
+    <Content Include="assets\scripts\alpha.slider-captcha.js" />
     <Content Include="assets\scripts\libs\bootstrap\dropdown.js" />
     <Content Include="assets\scripts\libs\detecas\Detecas.Base64.js" />
     <Content Include="assets\scripts\libs\detecas\Detecas.JSON.js" />
@@ -453,6 +493,7 @@
     <Content Include="assets\scripts\login\fps.js" />
     <Content Include="assets\scripts\login\resources.js" />
     <Content Include="assets\scripts\um\um.js" />
+    <Content Include="assets\styles\alpha.slider-captcha.css" />
     <Content Include="assets\styles\images\crossword.png" />
     <Content Include="assets\styles\images\error3-bg.png" />
     <Content Include="assets\styles\images\sprites.png" />

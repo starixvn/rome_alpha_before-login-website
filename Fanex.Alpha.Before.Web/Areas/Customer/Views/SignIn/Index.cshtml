@@ -8,8 +8,8 @@
 
 @section styles
 {
-
     <link href="~/assets/bundles/themes/@(Model.LoginTemplate).min.css?ver=@AppSetting.Version" rel="stylesheet" />
+    <link href="~/assets/styles/alpha.slider-captcha.css?ver=@AppSetting.Version" rel="stylesheet" />
 }
 
 <div class="box-lang">
@@ -63,11 +63,7 @@
     </label>
 </div>
 
-@if (ViewBag.ShowReCaptcha == true)
-{
-    @Html.Captcha(4, "~/Areas/Captcha/Views/SylouCaptcha/CaptchaPartialView.cshtml", ViewData)
-}
-
+<input id="captcha" name="token" hidden>
 <input type="hidden" name="browserSize" id="browserSize" value="" />
 @if (AppSetting.IsShowTechnicalErrorMessage)
 {
@@ -82,6 +78,13 @@
     @section scripts
     {
         <script src="~/assets/bundles/captcha.js?ver=@Fanex.Alpha.Before.Common.Configurations.AppSetting.Version" type="text/javascript"></script>
+        <script src="~/assets/scripts/alpha.slider-captcha.js?ver=@Fanex.Alpha.Before.Common.Configurations.AppSetting.Version" type="text/javascript"></script>
+        <script>
+            const captchaInstance = sliderCaptcha('captcha', {
+                lang: "vi",
+                baseUri: "@Url.Content("~")"
+            });
+        </script>
     }
 }
 

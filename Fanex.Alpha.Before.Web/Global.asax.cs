@@ -27,6 +27,8 @@ namespace Fanex.Alpha.Before.Web.View
     using ONEbook.UM.NETFramework;
     using ONEbook.UM.Services;
     using ONEbook.UM.Transport;
+    using global::Alpha.SliderCaptcha;
+    using global::Alpha.SliderCaptcha.Mvc;
 
     /// <summary>
     /// MVC Application.
@@ -82,7 +84,7 @@ namespace Fanex.Alpha.Before.Web.View
 
             var sensitiveInfo = new List<string> { "password", "txtpassword" };
             LoggingConfig.Init(sensitiveInfo, DatabaseInfoGetters.GetDbExceptionInfo, $"{GetVirtualAppPath()}/assets/bundles/raven.min.js");
-
+            Configuration.Use(new CaptchaOptions("~/App_Data/Alpha.SliderCaptcha", 5));
             var umConfig = new UMClientConfiguration().Initialize();
             UMClientManager
                 .UseConfig(umConfig)
