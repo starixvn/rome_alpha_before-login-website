@@ -43,7 +43,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
         SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize);
 
-        bool IsShowReCaptcha();
+        bool IsShowReCaptcha(string username);
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly ISignInRepository _signInRepository;
         private readonly ICacheService cacheService;
         private readonly IRobotDetector robotDetector;
-        private ICaptchaService captchaService;
+        private readonly ICaptchaService captchaService;
         
         private readonly Logging.ILogger logger;
         private readonly HttpContext httpContext;
@@ -223,27 +223,18 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     }
                     else
                     {
-                        cacheService.ResetLoginFailed();
+                        cacheService.ResetLoginFailed(username);
                     }
                 }
 
-                // If login with no action for the laset 5 minutes, login without captcha
-                var lastLoginUsername = cacheService.GetLastLoginUsername();
-                if (!string.IsNullOrEmpty(lastLoginUsername) &&
-                    !lastLoginUsername.Equals(username, StringComparison.OrdinalIgnoreCase))
+                if (IsShowReCaptcha(username) && !isValidCaptcha)
                 {
-                    if (IsShowReCaptcha() && !isValidCaptcha)
-                    {
-                        cacheService.ResetCurrentLoginFailed();
-                        cacheService.SetLastLoginUsername(username);
+                    cacheService.ResetCurrentLoginFailed(username);
 
-                        signInResult.ErrCode = SignInErrorContants.Error2; ////no need to write log in fps and redirect to login page.
-                        signInResult.Captcha = AppSession.EncryptCode;
+                    signInResult.ErrCode = SignInErrorContants.Error2; ////no need to write log in fps and redirect to login page.
+                    signInResult.Captcha = AppSession.EncryptCode;
 
-                        return signInResult;
-                    }
-
-                    cacheService.ResetCurrentLoginFailed();
+                    return signInResult;
                 }
 
                 // If no action for the laset 5 minutes, login without captcha
@@ -251,7 +242,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 if (loginFailedUtcTime != DateTime.MinValue &&
                     loginFailedUtcTime.AddMinutes(_notInteractionTimeInMinutes).CompareTo(DateTime.UtcNow) < 0)
                 {
-                    cacheService.ResetCurrentLoginFailed();
+                    cacheService.ResetCurrentLoginFailed(username);
                 }
 
                 if (string.IsNullOrEmpty(AppSession.EncryptCode))
@@ -266,11 +257,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     signInResult.Captcha = AppSession.EncryptCode;
                 }
 
-                if (IsShowReCaptcha() && !isValidCaptcha)
+                if (IsShowReCaptcha(username) && !isValidCaptcha)
                 {
                     signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
                     signInResult.ErrMsg = Labels.errInvalidCaptcha;
-                    var loginFailedCount = cacheService.IncreaseLoginFailedCount();
+                    var loginFailedCount = cacheService.IncreaseLoginFailedCount(username);
                     if (loginFailedCount == _maxTimesToAllowLogInFail)
                     {
                         LogIpBlocked(signInResult);
@@ -299,8 +290,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     InfrastructureLanguages.Labels.Error_Server : ex.ToString();
                 ExceptionHandler.Handle(ex);
             }
-
-            cacheService.SetLastLoginUsername(username);
 
             return signInResult;
         }
@@ -367,9 +356,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             return signInResult;
         }
 
-        public bool IsShowReCaptcha()
+        public bool IsShowReCaptcha(string username)
         {
-            return cacheService.GetCurrentLoginFailed() >= _loginFailTimeToStartUsingCaptcha;
+            return cacheService.GetCurrentLoginFailed(username) >= _loginFailTimeToStartUsingCaptcha;
         }
 
         private void LogIpBlocked(SignInResult signInResult)
@@ -400,7 +389,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
 
             cacheService.SetLoginFailedTime();
-            var loginFailedCount = cacheService.IncreaseLoginFailedCount();
+            var loginFailedCount = cacheService.IncreaseLoginFailedCount(signInResult.Username);
             if (loginFailedCount > _maxTimesToAllowLogInFail)
             {
                 var ipLockedError = string.Format(Labels.iploginfailedmultipletimeserror, signInResult.Ip, _maxTimesToAllowLogInFail, _blockLoginMinute);
@@ -431,7 +420,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string deviceId,
             string browserSize)
         {
-            cacheService.ResetLoginFailed();
+            cacheService.ResetLoginFailed(signInResult.Username);
 
             var encryptPassword = AesService.Default.Encrypt(password, AppSession.EncryptCode);
             var crossCookieValue = EncryptExtension.CfsEnCode((verifySignInResult.CustId + verifySignInResult.LoginTime.Minute).ToString());

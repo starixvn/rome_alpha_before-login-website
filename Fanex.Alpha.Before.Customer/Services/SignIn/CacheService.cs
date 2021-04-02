@@ -7,40 +7,29 @@
 
     public interface ICacheService
     {
-        string GetLastLoginUsername();
-
-        void SetLastLoginUsername(string username);
-
         int GetTotallyLoginFailed();
 
-        int GetCurrentLoginFailed();
+        int GetCurrentLoginFailed(string username);
 
         DateTime GetLoginFailedTime();
 
         void SetLoginFailedTime();
 
-        void ResetLoginFailed();
+        void ResetLoginFailed(string username);
 
-        void ResetCurrentLoginFailed();
+        void ResetCurrentLoginFailed(string username);
 
-        int IncreaseLoginFailedCount();
+        int IncreaseLoginFailedCount(string username);
     }
 
-    public class CacheService: ICacheService
+    public class CacheService : ICacheService
     {
-        private readonly string _lastLoginUserNameSessionKey = string.Format(SessionConstants.LASTLOGINUSERNAME, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
         private readonly string _totalLoginFailedSessionKey = string.Format(SessionConstants.TOTALLOGINFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
-        private readonly string _currentLoginFailedSessionKey = string.Format(SessionConstants.CURRENTLOGINFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
         private readonly string _latestLoginFailSessionKey = string.Format(SessionConstants.LOGINFAILEDTIME, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
 
-        public string GetLastLoginUsername()
+        private static string GetCurrentLoginFailedSessionKey(string username)
         {
-            return CacheExtension.Get(_lastLoginUserNameSessionKey, string.Empty);
-        }
-
-        public void SetLastLoginUsername(string username)
-        {
-            CacheExtension.Set(_lastLoginUserNameSessionKey, username);
+            return string.Format(SessionConstants.CURRENTLOGINFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP(), username);
         }
 
         public int GetTotallyLoginFailed()
@@ -48,9 +37,9 @@
             return CacheExtension.Get(_totalLoginFailedSessionKey, 0);
         }
 
-        public int GetCurrentLoginFailed()
+        public int GetCurrentLoginFailed(string username)
         {
-            return CacheExtension.Get(_currentLoginFailedSessionKey, 0);
+            return CacheExtension.Get(GetCurrentLoginFailedSessionKey(username), 0);
         }
 
         public DateTime GetLoginFailedTime()
@@ -63,24 +52,24 @@
             CacheExtension.Set(_latestLoginFailSessionKey, DateTime.UtcNow);
         }
 
-        public void ResetLoginFailed()
+        public void ResetLoginFailed(string username)
         {
             CacheExtension.Remove(_totalLoginFailedSessionKey);
-            CacheExtension.Remove(_currentLoginFailedSessionKey);
+            CacheExtension.Remove(GetCurrentLoginFailedSessionKey(username));
             CacheExtension.Remove(_latestLoginFailSessionKey);
         }
 
-        public void ResetCurrentLoginFailed()
+        public void ResetCurrentLoginFailed(string username)
         {
-            CacheExtension.Remove(_currentLoginFailedSessionKey);
+            CacheExtension.Remove(GetCurrentLoginFailedSessionKey(username));
         }
 
-        public int IncreaseLoginFailedCount()
+        public int IncreaseLoginFailedCount(string username)
         {
             var loginFailCount = GetTotallyLoginFailed() + 1;
             CacheExtension.Set(_totalLoginFailedSessionKey, loginFailCount);
-            var currentLoginFailCount = GetCurrentLoginFailed() + 1;
-            CacheExtension.Set(_currentLoginFailedSessionKey, currentLoginFailCount);
+            var currentLoginFailCount = GetCurrentLoginFailed(username) + 1;
+            CacheExtension.Set(GetCurrentLoginFailedSessionKey(username), currentLoginFailCount);
             return loginFailCount;
         }
     }

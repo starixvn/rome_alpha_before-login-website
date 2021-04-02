@@ -17,7 +17,7 @@ namespace Fanex.Alpha.Before.Common.Constants
         public const string CAPTCHACODE = "Fanex.Alpha.Before.Common.Constants.SessionConstants.captchacode";
         public const string USERNAME = "Fanex.Alpha.Before.Common.Constants.SessionConstants.username";
         public const string TOTALLOGINFAILEDCOUNT = "totalloginfailedcount.{0}.{1}";
-        public const string CURRENTLOGINFAILEDCOUNT = "currentloginfailedcount.{0}.{1}";
+        public const string CURRENTLOGINFAILEDCOUNT = "currentloginfailedcount.{0}.{1}.{2}";
         public const string LOGINFAILEDTIME = "loginfailedtime.{0}.{1}";
         public const string LASTLOGINUSERNAME = "lastloginusername.{0}.{1}";
 

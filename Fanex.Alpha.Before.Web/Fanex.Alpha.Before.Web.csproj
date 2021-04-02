@@ -74,11 +74,11 @@
     <Reference Include="Alpha.NetThrottling, Version=1.0.12.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alpha.NetThrottling.1.0.12\lib\net461\Alpha.NetThrottling.dll</HintPath>
     </Reference>
-    <Reference Include="Alpha.SliderCaptcha, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Alpha.SliderCaptcha.1.0.0\lib\net461\Alpha.SliderCaptcha.dll</HintPath>
+    <Reference Include="Alpha.SliderCaptcha, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alpha.SliderCaptcha.1.0.0.1\lib\net461\Alpha.SliderCaptcha.dll</HintPath>
     </Reference>
-    <Reference Include="Alpha.SliderCaptcha.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Alpha.SliderCaptcha.Mvc.1.0.0\lib\net461\Alpha.SliderCaptcha.Mvc.dll</HintPath>
+    <Reference Include="Alpha.SliderCaptcha.Mvc, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alpha.SliderCaptcha.Mvc.1.0.0.1\lib\net461\Alpha.SliderCaptcha.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Alpha.SubAccount, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alpha.SubAccount.1.0.0\lib\net40\Alpha.SubAccount.dll</HintPath>
@@ -433,10 +433,6 @@
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\sprite_bk.gif" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\stop.png" />
     <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Index.css" />
-    <Content Include="assets\bundles\captcha.js" />
-    <Content Include="assets\bundles\captcha.min.js">
-      <DependentUpon>captcha.js</DependentUpon>
-    </Content>
     <Content Include="assets\bundles\captchav3.js" />
     <Content Include="assets\bundles\captchav3.min.js">
       <DependentUpon>captchav3.js</DependentUpon>

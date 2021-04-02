@@ -13,6 +13,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using Fanex.Alpha.Before.Customer.Constants;
     using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
+    using global::Alpha.SliderCaptcha.Mvc;
+    using global::Alpha.SliderCaptcha.Services;
     using Logging.Extensions.Web;
     using System;
     using System.Configuration;
@@ -22,6 +24,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using System.Text;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using SliderCaptcha = global::Alpha.SliderCaptcha;
 
     /// <summary>
     /// TODO: Update summary.
@@ -29,16 +32,19 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     public class AuthController : BaseController
     {
         private readonly ISignInService _signInService;
+        private readonly ICaptchaService captchaService;
         private readonly string viewPath = "~/Areas/Customer/Views/SignIn/Index.cshtml";
 
         public AuthController() :
-            this(null)
+            this(null, null)
         {
         }
 
-        public AuthController(SignInService signInService)
+        public AuthController(SignInService signInService, IServiceFactory serviceFactory)
         {
             _signInService = signInService ?? new SignInService();
+            serviceFactory = serviceFactory ?? SliderCaptcha.Mvc.Configuration.ServiceFactory;
+            captchaService = serviceFactory.CaptchaService;
         }
 
         /// <summary>
@@ -85,6 +91,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             string txtPassWord,
             string hidLanguage,
             string code,
+            string captchaToken,
             string browserSize,
             string deviceId = "N/A")
         {
@@ -92,11 +99,11 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             ViewBag.FPSToken = FPS.Client.Token.Generate();
             AppSession.ResetRobotCaptchaSession();
             bool validCaptcha = false;
-            if (_signInService.IsShowReCaptcha())
+            if (_signInService.IsShowReCaptcha(txtUserName))
             {
                 try
                 {
-                    validCaptcha = this.IsCaptchaValid(null);
+                    validCaptcha = captchaService.IsVerfied(captchaToken);
                 }
                 catch
                 {
@@ -117,7 +124,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                         Redirect(loginResult.AfterLoginUrl);
                 }
 
-                ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
+                ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha(txtUserName);
             }
 
             return View(viewPath, loginResult);

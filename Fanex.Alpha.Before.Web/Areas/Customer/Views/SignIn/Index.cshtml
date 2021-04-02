@@ -47,7 +47,7 @@
 }
 
 <div class="rowlg">
-    <input type="text" class="txt" placeholder="Username" id="txtUserName" name="txtUserName" tabindex="1" />
+    <input type="text" class="txt" placeholder="Username" id="txtUserName" name="txtUserName" value="@Model.Username" tabindex="1" />
     <i class="icon-user"></i>
 </div>
 
@@ -63,7 +63,7 @@
     </label>
 </div>
 
-<input id="captcha" name="token" hidden>
+<input id="captcha" name="captchaToken" hidden>
 <input type="hidden" name="browserSize" id="browserSize" value="" />
 @if (AppSetting.IsShowTechnicalErrorMessage)
 {
@@ -77,7 +77,6 @@
 {
     @section scripts
     {
-        <script src="~/assets/bundles/captcha.js?ver=@Fanex.Alpha.Before.Common.Configurations.AppSetting.Version" type="text/javascript"></script>
         <script src="~/assets/scripts/alpha.slider-captcha.js?ver=@Fanex.Alpha.Before.Common.Configurations.AppSetting.Version" type="text/javascript"></script>
         <script>
             const captchaInstance = sliderCaptcha('captcha', {

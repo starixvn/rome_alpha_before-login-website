@@ -37,6 +37,8 @@ namespace Fanex.Alpha.Before.Web.View
     /// </summary>
     public class MvcApplication : System.Web.HttpApplication
     {
+        private const int SliderCaptchaAcceptRange = 5;
+
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -84,7 +86,7 @@ namespace Fanex.Alpha.Before.Web.View
 
             var sensitiveInfo = new List<string> { "password", "txtpassword" };
             LoggingConfig.Init(sensitiveInfo, DatabaseInfoGetters.GetDbExceptionInfo, $"{GetVirtualAppPath()}/assets/bundles/raven.min.js");
-            Configuration.Use(new CaptchaOptions("~/App_Data/Alpha.SliderCaptcha", 5));
+            Configuration.Use(new CaptchaOptions("~/App_Data/Alpha.SliderCaptcha", SliderCaptchaAcceptRange));
             var umConfig = new UMClientConfiguration().Initialize();
             UMClientManager
                 .UseConfig(umConfig)
