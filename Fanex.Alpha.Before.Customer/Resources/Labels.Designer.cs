@@ -61,6 +61,15 @@ namespace Fanex.Alpha.Before.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to To ensure account security, safety verification is required for this registration..
+        /// </summary>
+        public static string BotDetectionMessage {
+            get {
+                return ResourceManager.GetString("BotDetectionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You input an invalid code..
         /// </summary>
         public static string errInvalidCaptcha {

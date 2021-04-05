@@ -1,17 +1,11 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SignInErrorContants.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.Alpha.Before.Customer.Constants
+﻿namespace Fanex.Alpha.Before.Customer.Constants
 {
     public static class SignInErrorContants
     {
-        public const int ErrorInvalidLogin = 101;
-        public const int ErrorInvalidCaptcha = 102;
-        public const int Error109 = 109;
-        public const int Error108 = 108;
-        public const int Error2 = -2;
+        public const int IPBlocked = 101;
+        public const int InvalidEncryptCode = 102;
+        public const int CaptchaRequired = -2;
+        public const int LoginTooOften = -3;
+        public const int Success = -1;
     }
 }

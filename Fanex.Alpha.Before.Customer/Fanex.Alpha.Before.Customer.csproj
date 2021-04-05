@@ -288,6 +288,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\RobotCaptchaController.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Models\SignInModel.cs" />
     <Compile Include="Models\SignInResult.cs" />
     <Compile Include="Models\VerifySignInResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

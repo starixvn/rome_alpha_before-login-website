@@ -73,14 +73,14 @@
     <input type="button" class="btnLogin" value="Login" id="btnLogin" tabindex="5" />
 </div>
 
-@if (ViewBag.ShowReCaptcha == true)
+@if (Model.ErrCode == Fanex.Alpha.Before.Customer.Constants.SignInErrorContants.CaptchaRequired)
 {
     @section scripts
     {
         <script src="~/assets/scripts/alpha.slider-captcha.js?ver=@Fanex.Alpha.Before.Common.Configurations.AppSetting.Version" type="text/javascript"></script>
         <script>
             const captchaInstance = sliderCaptcha('captcha', {
-                lang: "vi",
+                lang: "@Fanex.Alpha.Before.Common.Configurations.AppSession.Language",
                 baseUri: "@Url.Content("~")"
             });
         </script>
