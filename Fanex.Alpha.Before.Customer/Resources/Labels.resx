@@ -146,6 +146,6 @@ For security reasons, login function has been locked for {2} minutes.</value>
     <value>Too many attempts of invalid Captcha</value>
   </data>
   <data name="BotDetectionMessage" xml:space="preserve">
-    <value>To ensure account security, safety verification is required for this registration.</value>
+    <value>To ensure account security, safety verification is required for this login.</value>
   </data>
 </root>
