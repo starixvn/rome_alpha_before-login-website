@@ -74,11 +74,11 @@
     <Reference Include="Alpha.NetThrottling, Version=1.0.12.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alpha.NetThrottling.1.0.12\lib\net461\Alpha.NetThrottling.dll</HintPath>
     </Reference>
-    <Reference Include="Alpha.SliderCaptcha, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Alpha.SliderCaptcha.1.0.0.3\lib\net461\Alpha.SliderCaptcha.dll</HintPath>
+    <Reference Include="Alpha.SliderCaptcha, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alpha.SliderCaptcha.1.0.0.4\lib\net461\Alpha.SliderCaptcha.dll</HintPath>
     </Reference>
-    <Reference Include="Alpha.SliderCaptcha.Mvc, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Alpha.SliderCaptcha.Mvc.1.0.0.3\lib\net461\Alpha.SliderCaptcha.Mvc.dll</HintPath>
+    <Reference Include="Alpha.SliderCaptcha.Mvc, Version=1.0.0.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alpha.SliderCaptcha.Mvc.1.0.0.4\lib\net461\Alpha.SliderCaptcha.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Alpha.SubAccount, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alpha.SubAccount.1.0.0\lib\net40\Alpha.SubAccount.dll</HintPath>
