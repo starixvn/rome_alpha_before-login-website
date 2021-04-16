@@ -8,12 +8,28 @@
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Controllers;
     using Fanex.Alpha.Before.Common.Helpers;
+    using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Resources;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
     using FPS.Browserless.Detection.Client;
+    using global::Alpha.SliderCaptcha.Mvc;
+    using global::Alpha.SliderCaptcha.Services;
 
     public class RobotCaptchaController : BaseController
     {
+        private readonly ICaptchaService captchaService;
+
+        public RobotCaptchaController()
+            : this(null)
+        {
+        }
+
+        public RobotCaptchaController(IServiceFactory serviceFactory)
+        {
+            serviceFactory = serviceFactory ?? Configuration.ServiceFactory;
+            captchaService = serviceFactory.CaptchaService;
+        }
+
         public ActionResult Index(string returnUrl)
         {
             if (IsNotRobot())
@@ -32,12 +48,11 @@
         }
 
         [HttpPost]
-        public ActionResult Index()
+        public ActionResult Index(RobotCaptchaModel model)
         {
-            if (ModelState.IsValid)
+            if (captchaService.IsVerfied(model.Token))
             {
                 AppSession.InputCaptchaSuccess = true;
-
                 return RedirectToAction(nameof(InputCaptchaSuccessfully));
             }
 
