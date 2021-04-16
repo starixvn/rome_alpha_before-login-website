@@ -1,18 +1,10 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="Global.asax.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
-
-namespace Fanex.Alpha.Before.Web.View
+﻿namespace Fanex.Alpha.Before.Web.View
 {
     using System;
     using System.Collections.Generic;
     using System.Web.Hosting;
     using System.Web.Mvc;
     using System.Web.Routing;
-    using CaptchaMvc.Infrastructure;
-    using CaptchaMvc.Interface;
     using Common.Configurations;
     using Common.Services.LimitedCountryAccessService;
     using Fanex.Caching;
@@ -79,11 +71,6 @@ namespace Fanex.Alpha.Before.Web.View
 
             Fanex.Data.Configuration.DbSettingProviderManager.Current.Start();
 
-            CaptchaUtils.CaptchaManager.StorageProvider = new SessionStorageProvider();
-            var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;
-            defaultCaptchaManager.ImageUrlFactory = (helper, pair) => ImageUrlFactory(defaultCaptchaManager, helper, pair);
-            defaultCaptchaManager.RefreshUrlFactory = RefreshUrlFactory;
-
             MvcHandler.DisableMvcResponseHeader = true;
 
             var sensitiveInfo = new List<string> { "password", "txtpassword" };
@@ -101,34 +88,6 @@ namespace Fanex.Alpha.Before.Web.View
                 });
 
             InitIPsCache();
-        }
-
-        private string RefreshUrlFactory(UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
-        {
-            return urlHelper.Action("Refresh", "DefaultCaptcha", new { area = string.Empty });
-        }
-
-        /// <summary>
-        /// Image URL Factory.
-        /// </summary>
-        /// <param name="captchaManager">Captcha Manager.</param>
-        /// <param name="urlHelper">URL Helper.</param>
-        /// <param name="keyValuePair">Key Value pair.</param>
-        /// <returns>Return Result.</returns>
-        private static string ImageUrlFactory(DefaultCaptchaManager captchaManager, UrlHelper urlHelper, KeyValuePair<string, ICaptchaValue> keyValuePair)
-        {
-            return urlHelper.Action(
-                "Generate",
-                "DefaultCaptcha",
-                new RouteValueDictionary
-                                {
-                                    {
-                                        "area", string.Empty
-                                    },
-                                    {
-                                        captchaManager.TokenParameterName, keyValuePair.Key
-                                    }
-                                });
         }
 
         protected void Application_Error()

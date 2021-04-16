@@ -1,18 +1,16 @@
 ﻿namespace Fanex.Alpha.Before.Customer.Controllers
 {
+    using System;
+    using System.Globalization;
+    using System.Threading;
+    using System.Web.Mvc;
+    using System.Web.Security;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Controllers;
     using Fanex.Alpha.Before.Common.Helpers;
     using Fanex.Alpha.Before.Customer.Resources;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
     using FPS.Browserless.Detection.Client;
-    using global::Alpha.Captcha.Models;
-    using global::Alpha.Captcha.Mvc;
-    using System;
-    using System.Globalization;
-    using System.Threading;
-    using System.Web.Mvc;
-    using System.Web.Security;
 
     public class RobotCaptchaController : BaseController
     {
@@ -30,10 +28,10 @@
                 return Redirect(EncryptURLHelper.BuildAfterURL(HttpContext.ApplicationInstance.Context));
             }
 
-            return View("~/Areas/Customer/Views/RobotCaptcha/Index.cshtml", GetCaptchaSetting());
+            return View("~/Areas/Customer/Views/RobotCaptcha/Index.cshtml");
         }
 
-        [HttpPost, CaptchaValidation]
+        [HttpPost]
         public ActionResult Index()
         {
             if (ModelState.IsValid)
@@ -87,12 +85,5 @@
 
         private static bool IsIgnoreRobotCaptcha()
             => AppSetting.IsIgnoreRobotCaptcha(AppSession.SuperId, AppSession.Site);
-
-        private static CaptchaSetting GetCaptchaSetting()
-            => new CaptchaSetting
-            {
-                FunctionName = "RobotCaptcha",
-                CaptchaLevel = CaptchaLevels.Low
-            };
     }
 }

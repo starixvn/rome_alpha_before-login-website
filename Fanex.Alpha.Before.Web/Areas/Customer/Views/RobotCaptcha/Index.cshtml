@@ -1,11 +1,9 @@
-﻿@using Alpha.Captcha.Mvc
-@using CommonAppSetting = Fanex.Alpha.Before.Common.Configurations.AppSetting
+﻿@using CommonAppSetting = Fanex.Alpha.Before.Common.Configurations.AppSetting
 @{
     Layout = null;
     var version = CommonAppSetting.Version;
     var errorMessage = (string)TempData["ErrorMessage"];
 }
-@model Alpha.Captcha.Models.CaptchaSetting
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,15 +14,24 @@
     <meta name="author" content="">
     <title>Robot Captcha</title>
     <link rel="stylesheet" href="@Url.Content("~/assets/bundles/robotcaptcha.min.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/assets/styles/alpha.slider-captcha.css?v=" + version)" />
 </head>
 <body>
     <div class="wrapper">
-        @Html.Captcha(Model)
-        @if (!string.IsNullOrWhiteSpace(errorMessage))
-        {
-            <p class="error">@errorMessage</p>
-        }
+        <form method="post" id="captcha-form">
+            <div id="captcha" name="token"></div>
+        </form>
     </div>
+    <script src="~/assets/scripts/alpha.slider-captcha.js?ver=@version" type="text/javascript"></script>
+    <script>
+        window.scInstance = sliderCaptcha('captcha', {
+            lang: "@Fanex.Alpha.Before.Common.Configurations.AppSession.Language",
+            baseUri: "@Url.Content("~")",
+            callback: function () {
+                document.getElementById("captcha-form").submit();
+            }
+        });
+    </script>
     @{ Html.RenderPartial("~/Views/Shared/GoogleAnalytic.cshtml", CommonAppSetting.GoogleAnalyticId); }
     @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 </body>

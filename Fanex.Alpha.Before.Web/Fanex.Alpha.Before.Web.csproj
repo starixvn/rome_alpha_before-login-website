@@ -89,9 +89,6 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="CaptchaMvc, Version=2.5.0.0, Culture=neutral, PublicKeyToken=fe46ad421dd3b0e6, processorArchitecture=MSIL">
-      <HintPath>..\packages\CaptchaMvc.Mvc5.1.5.0\lib\net45-full\CaptchaMvc.dll</HintPath>
-    </Reference>
     <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
     </Reference>
@@ -418,21 +415,6 @@
     <Content Include="App_Data\Alpha.SliderCaptcha\sliders\6\alpha.png" />
     <Content Include="App_Data\Alpha.SliderCaptcha\sliders\6\base.png" />
     <Content Include="App_Data\Alpha.SliderCaptcha\sliders\6\border.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Scripts\SylouCaptcha.js" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\atticon.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\audio.gif" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\bt_bg.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\Button-Refresh-icon.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\b_right.gif" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\captchaReview.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\pbg.jpg" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\ptitlebg.jpg" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\refresh.gif" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\Reload-icon.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\sprite.gif" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\sprite_bk.gif" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\stop.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Index.css" />
     <Content Include="assets\bundles\captchav3.js" />
     <Content Include="assets\bundles\captchav3.min.js">
       <DependentUpon>captchav3.js</DependentUpon>
@@ -851,7 +833,6 @@
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon-notify.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon_note.png" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.Web.config" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\CaptchaPartialView.cshtml" />
     <Content Include="Areas\Captcha\Views\Web.config" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Bold.ttf" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Medium.ttf" />
@@ -1044,7 +1025,6 @@
     <Content Include="assets\styles\pages\um3.scss" />
     <Content Include="assets\styles\pages\error3.scss" />
     <Content Include="Areas\Customer\Views\RobotCaptcha\Index.cshtml" />
-    <Content Include="assets\styles\pages\robotcaptcha.scss" />
     <Content Include="App_Data\activitytracking.json" />
     <Content Include="App_Data\activitytracking.pro.json">
       <DependentUpon>activitytracking.json</DependentUpon>
@@ -1052,6 +1032,7 @@
     <Content Include="App_Data\activitytracking.uat.json">
       <DependentUpon>activitytracking.json</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\robotcaptcha.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">

@@ -172,18 +172,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
         private bool IsCaptchaRequired(SignInModel model)
         {
-            var robotResult = robotDetector.IsRobot(httpContext.Request);
-            if (robotResult != 0)
-            {
-                return true;
-            }
-
-            if (IsShowReCaptcha(model.Username))
-            {
-                return true;
-            }
-
-            return false;
+            return IsShowReCaptcha(model.Username);
         }
 
         public SignInResult SignIn(SignInModel model)
