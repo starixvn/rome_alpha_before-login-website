@@ -80,17 +80,21 @@ input[type="checkbox"], input[type="radio"] {
     @include box-sizing;
 }
 
+.block-container {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-40%);
+    margin: 10px 0;
+    width: 376px;
+}
+
 .block-login {
     @extend %block;
     background: $block-bg;
     padding: 40px 30px;
     min-height: 440px;
     @include box-shadow-multiple('0 0 60px rgba(0,0,0,.3)');
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    margin: 10px 0;
 
     .title {
         margin-top: 12px;
@@ -230,8 +234,8 @@ input[type="checkbox"], input[type="radio"] {
     }
 }
 
-.block-info {  
-    @extend %block; 
+.block-info {
+    @extend %block;
     margin-top: 16px;
     padding-left: 24px;
     position: relative;
@@ -245,7 +249,7 @@ input[type="checkbox"], input[type="radio"] {
         width: 18px;
         position: absolute;
         left: 0;
-        top: 2px;        
+        top: 2px;
     }
 }
 

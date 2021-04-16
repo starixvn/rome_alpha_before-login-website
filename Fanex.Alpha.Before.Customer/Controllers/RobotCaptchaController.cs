@@ -17,6 +17,7 @@
 
     public class RobotCaptchaController : BaseController
     {
+        private const int LimitRobotCaptchaFailedCount = 5;
         private readonly ICaptchaService captchaService;
 
         public RobotCaptchaController()
@@ -65,7 +66,7 @@
 
             AppSession.IncreaseRobotCaptchaFailedCount();
 
-            if (AppSession.RobotCaptchaFailedCount >= 5)
+            if (AppSession.RobotCaptchaFailedCount >= LimitRobotCaptchaFailedCount)
             {
                 TempData["ErrorMessage"] = string.Empty;
 

@@ -29,6 +29,7 @@
             baseUri: "@Url.Content("~")",
             callback: function () {
                 document.getElementById("captcha-form").submit();
+                this.cleanup();
             }
         });
     </script>

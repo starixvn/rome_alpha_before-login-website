@@ -205,11 +205,19 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-                if (IsCaptchaRequired(model) && !captchaService.IsVerfied(model.CaptchaToken))
+
+                if (IsCaptchaRequired(model))
                 {
-                    signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
-                    signInResult.ErrMsg = Labels.BotDetectionMessage;
-                    return signInResult;
+                    if (captchaService.IsVerfied(model.CaptchaToken))
+                    {
+                        signInResult.IsCaptchaVerified = true;
+                    }
+                    else
+                    {
+                        signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
+                        signInResult.ErrMsg = Labels.BotDetectionMessage;
+                        return signInResult;
+                    }
                 }
 
                 var password = AesExtension.Decrypt(model.Password, AppSession.EncryptCode);
@@ -324,7 +332,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
 
             var loginUserFailedCount = cacheService.IncreaseLoginUserFailedCount(signInResult.Username, _notInteractionTimeInMinutes);
-            if(loginUserFailedCount >= _loginFailTimeToStartUsingCaptcha)
+            if (loginUserFailedCount >= _loginFailTimeToStartUsingCaptcha)
             {
                 signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
                 signInResult.ErrMsg = verifySignInResult.ErrorMessage;
@@ -345,7 +353,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             string url;
             var robotResult = robotDetector.IsRobot(httpContext.Request);
-            if (robotResult == 0)
+            if (robotResult == 0 || signInResult.IsCaptchaVerified)
             {
                 url = EncryptURLHelper.BuildAfterURL(httpContext, encryptPassword, verifySignInResult, deviceId, browserSize);
             }
