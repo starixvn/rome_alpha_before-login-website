@@ -81,6 +81,8 @@ Sphinx.Login = {
         Sphinx.Login.domElements.formTitle = $('.login-text');
         Sphinx.Login.domElements.lblShowPass = $('#lbShowPass');
         Sphinx.Login.domElements.formLogin = $('#formLogin');
+        Sphinx.Login.domElements.divTechnicalErrorMsg = $('#divTechnicalErrorMsg');
+        Sphinx.Login.domElements.technicalErrorTime = $('#hiddenTechnicalErrorTime').val();
     },
     initComponent: function () {
         var domElements = Sphinx.Login.domElements;
@@ -118,6 +120,8 @@ Sphinx.Login = {
         var flag = domElements.flag;
         var language = Sphinx.Resources;
         var resource = language.getLanguage(languageCode);
+
+        domElements.divTechnicalErrorMsg.html(resource.messageAlwayShowOnLoginPage.replace("{0}", domElements.technicalErrorTime));
 
         var error = domElements.errorMsg.attr('errCode');
         if (Sphinx.Error.clientError(error)) {

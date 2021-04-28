@@ -1,5 +1,5 @@
 ﻿@using CaptchaMvc.HtmlHelpers;
-
+@using Fanex.Alpha.Before.Common.Configurations;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,7 +8,7 @@
 
 @section styles
 {
-    
+
     <link href="~/assets/bundles/themes/@(Model.LoginTemplate).min.css?ver=@AppSetting.Version" rel="stylesheet" />
 }
 
@@ -16,7 +16,7 @@
     <div class="dropdown">
         <span class="btn dropdown-toggle" type="button" id="langList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span class="flag" id="flag"></span>
-            <span id="lblLanguage">English</span> 
+            <span id="lblLanguage">English</span>
             <span class="caret"></span>
             <input type="hidden" value="en-US" id="hidLanguage" name="hidLanguage">
         </span>
@@ -37,13 +37,17 @@
 
 <h1 class="title login-text">Login</h1>
 
+@if (AppSetting.IsShowTechnicalErrorMessage)
+{
+    <div class="rowlg msg-error" id="divTechnicalErrorMsg"></div>
+}
 @if (Model.ErrCode != -1)
 {
     <div class="rowlg msg-error" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
 }
 
 <div class="rowlg">
-    <input type="text" class="txt" placeholder="Username"  id="txtUserName" name="txtUserName" tabindex="1" />
+    <input type="text" class="txt" placeholder="Username" id="txtUserName" name="txtUserName" tabindex="1" />
     <i class="icon-user"></i>
 </div>
 
@@ -54,7 +58,7 @@
 
 <div class="rowlg checkbox">
     <label>
-        <input name="chb-showpass" type="checkbox" id="chbShowPass" tabindex="3" /> 
+        <input name="chb-showpass" type="checkbox" id="chbShowPass" tabindex="3" />
         <span id="lbShowPass">Show password</span>
     </label>
 </div>
@@ -65,8 +69,12 @@
 }
 
 <input type="hidden" name="browserSize" id="browserSize" value="" />
+@if (AppSetting.IsShowTechnicalErrorMessage)
+{
+    <input type="hidden" id="hiddenTechnicalErrorTime" value="@AppSetting.TechnicalErrorTime" />
+}
 <div class="list-button">
-    <input type="button" class="btnLogin" value="Login" id="btnLogin" tabindex="5"/>
+    <input type="button" class="btnLogin" value="Login" id="btnLogin" tabindex="5" />
 </div>
 
 @if (ViewBag.ShowReCaptcha == true)
