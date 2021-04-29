@@ -65,7 +65,7 @@ Sphinx.Resources = (function () {
         resource.errValidCode = '您必须输入正确验证码';
         resource.browserWarning = "您的瀏覽器已過期，可能無法與我們的網站正常操作。為了提供更好的支援，我們強烈建議您升級至新的版本";
         resource.updateYourBrowser = "請點擊這里以升級您的瀏覽器";
-        resource.messageAlwayShowOnLoginPage = "The site encountered a technical error, we are working to resolve it. The estimated completion time is {0} (GMT +8). Please try again after that time. We are sorry for the inconvenience.";
+        resource.messageAlwayShowOnLoginPage = "目前網站面對技術有誤，我們正在處理當中。估計完成時間為{0}（GMT +8）。請您稍後再試，給您帶來的不便請見諒";
 
         return resource;
     };
@@ -88,7 +88,7 @@ Sphinx.Resources = (function () {
         resource.errValidCode = '您必須輸入正確驗證碼';
         resource.browserWarning = "您的浏览器已过期，可能无法与我们的网站正常操作。为了提供更好的支援，我们强烈建议您升级至新的版本";
         resource.updateYourBrowser = "请点击这里以升级您的浏览器";
-        resource.messageAlwayShowOnLoginPage = "The site encountered a technical error, we are working to resolve it. The estimated completion time is {0} (GMT +8). Please try again after that time. We are sorry for the inconvenience.";
+        resource.messageAlwayShowOnLoginPage = "目前网站面对技术有误，我们正在处理当中。估计完成时间为{0}（GMT +8）。请您稍后再试，给您带来的不便请见谅";
 
         return resource;
     };
@@ -134,7 +134,7 @@ Sphinx.Resources = (function () {
         resource.errValidCode = 'คุณต้องใส่หมายเลขที่ใช้ในการตรวจสอบ';
         resource.browserWarning = "เบราว์เซอร์ของท่านตกรุ่น ซึ่งอาจทำงานได้อย่างไม่เหมาะสมกับเวปไซค์ของทางบริษัท. เพื่อตอบสนองการใช้งานที่ดียิ่งขึ้น ทางเราใคร่ขอแนะนำให้ท่าน ทำการอัพเกรดให้เป็นเวอร์ชั่นที่ใหม่กว่าเดิม";
         resource.updateYourBrowser = "คลิ๊กตรงนี้เพื่อทำการอัพเกรด เบราว์เซอร์ของท่าน";
-        resource.messageAlwayShowOnLoginPage = "The site encountered a technical error, we are working to resolve it. The estimated completion time is {0} (GMT +8). Please try again after that time. We are sorry for the inconvenience.";
+        resource.messageAlwayShowOnLoginPage = "เว็บไซต์ตรวจพบข้อผิดพลาดทางเทคนิค เรากำลังดำเนินการแก้ไข โดยจะสิ้นสุดเวลาประมาณ {0} (GMT +8). โปรดลองใหม่อีกครั้งภายหลัง ขออภัยในความไม่สะดวก";
 
         return resource;
     };
