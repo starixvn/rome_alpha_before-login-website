@@ -29,6 +29,9 @@
             RobotExcludeSuperIds = ToIntDictionary(ConfigurationManager.AppSettings["Robot:ExcludeSuperIds"]);
             RobotExcludeSites = ToDictionary(ConfigurationManager.AppSettings["Robot:ExcludeSites"]);
             RobotFPSBotDetectionApiUrl = ConfigurationManager.AppSettings["Robot:FPSBotDetectionApiUrl"];
+
+            TechnicalErrorTime = ConfigurationManager.AppSettings["TechnicalErrorTime"];
+            IsShowTechnicalErrorMessage = !string.IsNullOrWhiteSpace(TechnicalErrorTime);
         }
 
         public static string Version
@@ -94,5 +97,9 @@
             || RobotExcludeSites.ContainsKey(site.ToUpperInvariant());
 
         public static string RobotFPSBotDetectionApiUrl { get; }
+
+        public static string TechnicalErrorTime { get; }
+
+        public static bool IsShowTechnicalErrorMessage { get; }
     }
 }
