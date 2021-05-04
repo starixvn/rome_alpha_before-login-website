@@ -144,4 +144,7 @@
   <data name="tooManyFailedCaptcha" xml:space="preserve">
     <value>จำนวนครั้งที่ผิดพลาดมากเกินกำหนด</value>
   </data>
+  <data name="BotDetectionMessage" xml:space="preserve">
+    <value>โปรดดำเนินการตามมาตรการตรวจสอบ เพื่อความปลอดภัยของบัญชีนี้</value>
+  </data>
 </root>
