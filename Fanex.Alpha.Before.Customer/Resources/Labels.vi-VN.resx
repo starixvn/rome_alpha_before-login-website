@@ -145,4 +145,7 @@ Vì lý do bảo mật, chức năng đăng nhập sẽ tạm khoá trong {2} ph
   <data name="tooManyFailedCaptcha" xml:space="preserve">
     <value>Bạn đã nhập sai Captcha quá số lần quy định</value>
   </data>
+  <data name="BotDetectionMessage" xml:space="preserve">
+    <value>Để đảm bảo an toàn cho tài khoản, bạn cần phải xác thực cho lần đăng nhập này.</value>
+  </data>
 </root>
