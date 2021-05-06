@@ -64,7 +64,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             var loginResult = _signInService.SignIn();
-            loginResult.ErrCode = !string.IsNullOrWhiteSpace(r) ? SignInErrorContants.CaptchaRequired : loginResult.ErrCode;
+            loginResult.ErrCode = !string.IsNullOrWhiteSpace(r) ? SignInErrorContants.ServerError : loginResult.ErrCode;
             loginResult.ErrMsg = !string.IsNullOrWhiteSpace(r) ? r : loginResult.ErrMsg;
 
             ViewBag.FPSToken = FPS.Client.Token.Generate();
