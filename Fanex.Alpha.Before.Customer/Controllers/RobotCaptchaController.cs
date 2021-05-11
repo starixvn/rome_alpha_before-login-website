@@ -31,6 +31,8 @@
             captchaService = serviceFactory.CaptchaService;
         }
 
+        private static string TooManyFailedLoginPageUrl => $"{FormsAuthentication.LoginUrl}?r={Labels.tooManyFailedCaptcha}";
+
         public ActionResult Index(string returnUrl)
         {
             if (IsNotRobot())
@@ -45,6 +47,7 @@
                 return Redirect(EncryptURLHelper.BuildAfterURL(HttpContext.ApplicationInstance.Context));
             }
 
+            ViewBag.tooManyFailedLoginPageUrl = TooManyFailedLoginPageUrl;
             return View("~/Areas/Customer/Views/RobotCaptcha/Index.cshtml");
         }
 
@@ -70,7 +73,7 @@
             {
                 TempData["ErrorMessage"] = string.Empty;
 
-                return Redirect($"{FormsAuthentication.LoginUrl}?r={Labels.tooManyFailedCaptcha}");
+                return Redirect(TooManyFailedLoginPageUrl);
             }
 
             return RedirectToAction(nameof(Index));
