@@ -24,7 +24,7 @@
     </div>
     <script src="~/assets/scripts/alpha.slider-captcha.js?ver=@version" type="text/javascript"></script>
     <script>
-        var tooManyFailedLoginPageUrl = "@ViewBag.tooManyFailedLoginPageUrl";
+        var tooManyFailedLoginPageUrl = "@Html.Raw(ViewBag.tooManyFailedLoginPageUrl)";
         sliderCaptcha('captcha', {
             lang: "@Fanex.Alpha.Before.Common.Configurations.AppSession.Language",
             baseUri: "@Url.Content("~")",
