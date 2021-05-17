@@ -1,5 +1,6 @@
 ﻿namespace Fanex.Alpha.Before.Common.Controllers
 {
+    using System;
     using System.Globalization;
     using System.Threading;
     using System.Web.Mvc;
@@ -40,12 +41,19 @@
 
             if (underMaintenanceInfo.HasError)
             {
-                filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                if (filterContext.RequestContext.HttpContext.IsCustomErrorEnabled)
                 {
-                    controller = "ErrorPage",
-                    action = "Index",
-                    area = "Common"
-                }));
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+                    {
+                        controller = "ErrorPage",
+                        action = "Index",
+                        area = "Common"
+                    }));
+                }
+                else
+                {
+                    throw new Exception("ONEbook.UM has error!!!");
+                }
             }
             else if (underMaintenanceInfo.IsUM)
             {

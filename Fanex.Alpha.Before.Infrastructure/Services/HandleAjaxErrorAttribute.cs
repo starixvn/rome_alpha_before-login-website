@@ -7,6 +7,7 @@
 namespace Fanex.Alpha.Before.Infrastructure.Services
 {
     using System;
+    using System.Web;
     using System.Web.Mvc;
     using Fanex.Alpha.Before.Infrastructure.Constants;
     using Fanex.Alpha.Before.Infrastructure.Resources;
@@ -34,7 +35,8 @@ namespace Fanex.Alpha.Before.Infrastructure.Services
                         Data = new
                         {
                             error = ErrorCodeConstants.ServerError,
-                            message = Labels.Error_Server,
+                            message = HttpContext.Current.Request.RequestContext.HttpContext.IsCustomErrorEnabled ?
+                                Labels.Error_Server : filterContext.Exception.ToString(),
                             innerException = filterContext.Exception.ToString()
                         }
                     };
