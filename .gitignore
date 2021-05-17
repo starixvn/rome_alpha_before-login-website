@@ -34,3 +34,4 @@ _ReSharper*/
 *.GhostDoc.xml
 bundles/
 **/assets/styles/**/*.css
+*.orig
