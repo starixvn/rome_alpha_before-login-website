@@ -13,7 +13,7 @@
     using Fanex.Alpha.Before.Customer.Services.SignIn;
     using FPS.Browserless.Detection.Client;
     using global::Alpha.SliderCaptcha.Mvc;
-    using global::Alpha.SliderCaptcha.Services;
+    using global::Alpha.SliderCaptcha.Core.Services;
 
     public class RobotCaptchaController : BaseController
     {

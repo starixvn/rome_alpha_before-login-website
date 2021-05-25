@@ -19,8 +19,8 @@
     using ONEbook.UM.NETFramework;
     using ONEbook.UM.Services;
     using ONEbook.UM.Transport;
-    using global::Alpha.SliderCaptcha;
     using global::Alpha.SliderCaptcha.Mvc;
+    using global::Alpha.SliderCaptcha.Core;
 
     /// <summary>
     /// MVC Application.

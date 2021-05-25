@@ -28,7 +28,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using global::Alpha.NetThrottling.Models;
     using global::Alpha.NetThrottling.Utils;
     using global::Alpha.SliderCaptcha.Mvc;
-    using global::Alpha.SliderCaptcha.Services;
+    using global::Alpha.SliderCaptcha.Core.Services;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using InfrastructureLanguages = Infrastructure.Resources;
