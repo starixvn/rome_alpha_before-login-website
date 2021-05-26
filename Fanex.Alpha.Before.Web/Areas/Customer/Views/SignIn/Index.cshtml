@@ -80,7 +80,12 @@
         <script>
             window.scInstance = sliderCaptcha('captcha', {
                 lang: "@Fanex.Alpha.Before.Common.Configurations.AppSession.Language",
-                baseUri: "@Url.Content("~")"
+                baseUri: "@Url.Content("~")",
+                callback: function (response) {
+                    if (response.Code === 0) {
+                        $('#errmsg').text('');
+                    }
+                }
             });
         </script>
     }

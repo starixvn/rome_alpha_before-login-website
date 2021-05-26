@@ -86,7 +86,7 @@ input[type="checkbox"], input[type="radio"] {
     left: 50%;
     transform: translate(-50%,-40%);
     margin: 10px 0;
-    width: 376px;
+    width: 100%;
 }
 
 .block-login {
@@ -357,6 +357,7 @@ input[type="checkbox"], input[type="radio"] {
 
    .block-login {
         @include box-shadow-multiple(none);
+        padding: 0;
 
         .rowlg {
             margin-bottom: 16px;
