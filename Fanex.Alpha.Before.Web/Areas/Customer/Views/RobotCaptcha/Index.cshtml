@@ -29,7 +29,7 @@
             lang: "@Fanex.Alpha.Before.Common.Configurations.AppSession.Language",
             baseUri: "@Url.Content("~")",
             callback: function (response, event) {
-                if (response.IsSuccess) {
+                if (response.Code === 0) {
                     if (localStorage) {
                         localStorage.removeItem(itemKey);
                     }
