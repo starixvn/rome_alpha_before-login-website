@@ -30,6 +30,10 @@
             }
         }
 
-        public ActionResult IndexView() => View("~/Views/Common/LimitedCountryAccess/Index.cshtml");
+        public ActionResult IndexView()
+        {
+            ViewData["DarkModeName"] = AppSession.DarkModeName;
+            return View("~/Views/Common/LimitedCountryAccess/Index.cshtml");
+        }
     }
 }

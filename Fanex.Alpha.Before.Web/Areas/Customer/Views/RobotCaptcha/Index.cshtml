@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Robot Captcha</title>
-    <link rel="stylesheet" href="@Url.Content("~/assets/bundles/robotcaptcha.min.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content(string.Format("~/assets/bundles/robotcaptcha{0}.min.css?v={1}", ViewData["DarkModeName"], version))" />
     <link rel="stylesheet" href="@Url.Content("~/assets/styles/alpha.slider-captcha.css?v=" + version)" />
 </head>
 <body>

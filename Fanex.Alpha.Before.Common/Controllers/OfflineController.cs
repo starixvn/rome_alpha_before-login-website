@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using System.Web.Security;
     using Configurations.UnderMainternance;
+    using Fanex.Alpha.Before.Common.Configurations;
     using Services.UnderMainternance;
 
     public class OfflineController : Controller
@@ -36,6 +37,8 @@
 
                 FormsAuthentication.RedirectToLoginPage();
             }
+
+            ViewData["DarkModeName"] = AppSession.DarkModeName;
 
             return View("~/Views/Common/UnderMaintenance/Index.cshtml", downTime);
         }

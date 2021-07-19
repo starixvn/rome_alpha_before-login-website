@@ -97,6 +97,19 @@ namespace Fanex.Alpha.Before.Common.Configurations
             }
         }
 
+        public static string DarkModeName
+        {
+            get
+            {
+                return SessionExtension.Get<string>(SessionConstants.DARKMODENAME) ?? string.Empty;
+            }
+
+            set
+            {
+                SessionExtension.Set(SessionConstants.DARKMODENAME, value);
+            }
+        }
+
         #region Robot Captcha
 
         public static int CustId

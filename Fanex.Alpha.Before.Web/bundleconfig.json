@@ -78,5 +78,25 @@
     "inputFiles": [
       "assets/styles/pages/robotcaptcha.css"
     ]
+  },
+
+  /************************** Dark Mode ************************/
+  {
+    "outputFileName": "assets/bundles/themes/default-dark.css",
+    "inputFiles": [
+      "assets/styles/themes/default-dark.css"
+    ]
+  },
+  {
+    "outputFileName": "assets/bundles/robotcaptcha-dark.css",
+    "inputFiles": [
+      "assets/styles/pages/robotcaptcha-dark.css"
+    ]
+  },
+  {
+    "outputFileName": "assets/bundles/themes/um-dark.css",
+    "inputFiles": [
+      "assets/styles/pages/um-dark.css"
+    ]
   }
 ]

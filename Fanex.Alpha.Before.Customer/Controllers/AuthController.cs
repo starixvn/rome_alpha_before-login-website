@@ -66,6 +66,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
             ViewBag.FPSToken = FPS.Client.Token.Generate();
             AppSession.ResetRobotCaptchaSession();
+            AssignDarkModeNameViewData();
 
             return View(SignInViewPath, loginResult);
         }
@@ -100,6 +101,8 @@ namespace Fanex.Alpha.Before.Customer.Controllers
                 FPSTracking(loginResult);
                 return Redirect(loginResult.AfterLoginUrl);
             }
+
+            AssignDarkModeNameViewData();
 
             return View(SignInViewPath, loginResult);
         }

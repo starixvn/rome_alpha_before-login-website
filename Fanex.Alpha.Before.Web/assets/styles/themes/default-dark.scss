@@ -1,0 +1,446 @@
+﻿@import '../abstracts/_variables-dark.scss';
+@import '../abstracts/_mixins.scss';
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: $font-family;
+    font-size: $font-size + 2;
+    background-color: $bg-color;
+    margin: 0;
+    padding-top: 10%;
+    color: #cbcbcb;
+}
+
+input, button {
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    position: relative;
+    top: 1px;
+    margin-right: 4px;
+}
+
+// icons
+%icon {
+    background: url(../images/sprites.png) no-repeat;
+    display: inline-block;
+}
+
+.icon-user {
+    @extend %icon;
+    background-position: -55px -31px;
+    height: 14px;
+    width: 14px;
+}
+
+.icon-lock {
+    @extend %icon;
+    background-position: -79px -27px;
+    height: 19px;
+    width: 14px;
+}
+
+.icon-refresh {
+    @extend %icon;
+    background-position: -29px -2px;
+    cursor: pointer;
+    height: 16px;
+    width: 16px;
+
+    &:hover {
+        background-position: -29px -28px;
+    }
+}
+
+.flag {
+    @extend %icon;
+    width: 23px;
+    height: 16px;
+    position: relative;
+    top: 4px;
+    margin-right: 4px;
+
+    &.flag-en {
+        background-position: 0 0px;
+    }
+
+    &.flag-cn {
+        background-position: 0 -17px;
+    }
+
+    &.flag-tw {
+        background-position: 0 -34px;
+    }
+
+    &.flag-jp {
+        background-position: 0 -51px;
+    }
+
+    &.flag-th {
+        background-position: 0 -68px;
+    }
+
+    &.flag-kr {
+        background-position: 0 -85px;
+    }
+
+    &.flag-vn {
+        background-position: 0 -102px;
+    }
+}
+
+%block {
+    margin: auto;
+    max-width: 360px;
+    width: 400px;
+    @include box-sizing;
+}
+
+.block-login {
+    @extend %block;
+    background: $block-bg;
+    padding: 40px 30px;
+    //@include box-shadow-multiple('0px 2px 2px rgba(0, 0, 0, 0.3)');
+    border: 1px solid #484848;
+
+    .title {
+        font-size: $font-size + 11;
+        color: #ececec;
+        margin-top: 16px;
+        margin-bottom: 16px;
+    }
+
+    .txt {
+        border: none;
+        outline: none;
+        width: 100%;
+        border-bottom: 1px solid #727272;
+        height: 36px;
+        padding: 8px 0 4px 28px;
+        color: $text-box-color;
+        @include border-radius(0);
+        background: transparent;
+
+        &:focus {
+            border-bottom-color: #fff;
+            color: #fff;
+
+            + .icon-user {
+                background-position: -55px -4px;
+            }
+
+            + .icon-lock {
+                background-position: -79px 0;
+            }
+        }
+    }
+
+    .list-button {
+        padding-top: 8px;
+        text-align: center;
+    }
+
+    .rowlg {
+        margin-bottom: 15px;
+        position: relative;
+
+        .icon-user, .icon-lock {
+            position: absolute;
+            left: 0;
+        }
+
+        .icon-user {
+            top: 11px;
+        }
+
+        .icon-lock {
+            top: 8px;
+        }
+
+        &.group-captcha {
+            display: table;
+            width: 100%;
+
+            .codeCaptcha {
+                position: relative;
+                width: 72px;
+            }
+
+            .codeCaptcha, .action-refresh, .txt-validation {
+                display: table-cell;
+                vertical-align: middle;
+            }
+
+            .action-refresh {
+                padding: 0 10px;
+                width: 40px;
+
+                .icon-refresh {
+                    position: relative;
+                    top: 4px;
+                }
+            }
+
+            .txt-validation {
+                padding-left: 0;
+            }
+        }
+    }
+
+    .btnLogin {
+        width: 100%;
+        background-color: $btn-bg;
+        color: $btn-color;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        text-transform: uppercase;
+        @include border-radius(0);
+
+        &:hover {
+            background-color: $btn-bg-hover;
+        }
+
+        &[disabled], .disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+
+            &:hover {
+                background-color: $btn-bg;
+            }
+        }
+    }
+}
+
+.box-lang {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    .dropdown-menu {
+        left: auto;
+        right: 0;
+        background-color: #2B2B2B;
+        border: 1px solid #474747;
+
+        > li > a {
+            padding: 4px 16px;
+            color: #E7E7E7;
+
+            &:hover {
+                background-color: #3c3c3c;
+            }
+        }
+    }
+
+    .btn:hover {
+        color: #cbcbcb;
+    }
+
+    .btn:active, .btn.active {
+        @include box-shadow-multiple(none);
+    }
+
+    .dropdown {
+        float: right;
+
+        .dropdown-menu {
+            @include border-radius(1px);
+            @include box-shadow-multiple('0px 2px 2px rgba(0, 0, 0, 0.3)');
+
+            li a {
+                padding-bottom: 6px;
+                padding-top: 6px;
+            }
+        }
+    }
+}
+
+.msg-error {
+    color: $msg-error-color;
+}
+
+.block-info {
+    @extend %block;
+    margin-top: 16px;
+    padding-left: 24px;
+    position: relative;
+
+    &:before {
+        @extend %icon;
+        background-position: -55px -83px;
+        content: '';
+        height: 16px;
+        width: 16px;
+        position: absolute;
+        left: 0;
+        top: 2px;
+    }
+}
+
+@media only screen and (max-device-width: 767px) {
+    body {
+        font-size: $font-size + 3;
+        padding-top: 0;
+        background-color: $block-bg;
+    }
+
+    .block-login {
+        padding: 0 30px;
+        width: 100%;
+        @include box-shadow-multiple(none);
+
+        .rowlg {
+            margin-bottom: 20px;
+
+            &.msg-error {
+                margin: 14px 0 8px;
+            }
+        }
+
+        .box-lang {
+            padding-top: 8px;
+            padding-bottom: 4px;
+        }
+
+        .title {
+            margin: 4px 0 12px;
+        }
+
+        .list-button {
+            padding-top: 0;
+        }
+    }
+
+    .block-info {
+        padding: 0 30px 8px 54px;
+        width: 100%;
+
+        &:before {
+            left: 30px;
+            top: 3px;
+        }
+    }
+
+    .block-warning {
+        position: relative;
+
+        .content {
+            padding: 12px 48px;
+            width: 100%;
+
+            &:before {
+                margin-left: 12px;
+            }
+
+            .icon-close {
+                right: 12px;
+            }
+        }
+    }
+}
+
+@media only screen and (max-device-width: 374px) {
+    body {
+        font-size: $font-size;
+    }
+
+    .block-login {
+        @include box-shadow-multiple(none);
+
+        .rowlg {
+            margin-bottom: 16px;
+
+            &.msg-error {
+                margin: 12px 0 4px;
+            }
+        }
+
+        .title {
+            margin: 4px 0 4px;
+            font-size: $font-size + 7;
+        }
+
+        .list-button {
+            padding-top: 0;
+        }
+    }
+
+    .block-info:before {
+        top: 1px;
+    }
+}
+
+
+.switch-mode-box {
+    display: inline-block;
+    vertical-align: middle;
+    top: 2px;
+    position: relative;
+
+    @media screen and (max-device-width: 768px) {
+        float: left;
+        top: 5px;
+    }
+
+    input[type=checkbox] {
+        height: 0;
+        width: 0;
+        visibility: hidden;
+    }
+
+    .switch-mode {
+        cursor: pointer;
+        //text-indent: -9999px;
+        width: 50px;
+        height: 22px;
+        background: #F0F0F0;
+        border: 1px solid #C7C7C7;
+        border-radius: 100px;
+        position: relative;
+        margin-bottom: 0;
+        display: inline-block;
+
+        @media screen and (max-device-width: 768px) {
+            width: calculateScale(50px);
+            height: calculateScale(22px);
+        }
+    }
+
+    .switch-mode:after {
+        content: url("../images/mode/light.svg");
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        transition: 0.3s;
+        width: 16px;
+        height: 16px;
+        border-radius: 10px;
+
+        @media screen and (max-device-width: 768px) {
+            width: calculateScale(16px);
+            height: calculateScale(16px);
+        }
+    }
+
+    .switch-mode.dark-mode {
+        background-color: #000;
+        border: 1px solid #303030;
+    }
+
+    .switch-mode.dark-mode:after {
+        left: calc(100% - 2px);
+        transform: translateX(-100%);
+        content: url("../images/mode/dark.svg");
+    }
+}

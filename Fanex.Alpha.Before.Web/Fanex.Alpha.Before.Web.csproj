@@ -424,9 +424,17 @@
       <DependentUpon>login.js</DependentUpon>
     </Content>
     <Content Include="assets\bundles\raven.min.js" />
+    <Content Include="assets\bundles\robotcaptcha-dark.css" />
+    <Content Include="assets\bundles\robotcaptcha-dark.min.css">
+      <DependentUpon>robotcaptcha-dark.css</DependentUpon>
+    </Content>
     <Content Include="assets\bundles\robotcaptcha.css" />
     <Content Include="assets\bundles\robotcaptcha.min.css">
       <DependentUpon>robotcaptcha.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\themes\default-dark.css" />
+    <Content Include="assets\bundles\themes\default-dark.min.css">
+      <DependentUpon>default-dark.css</DependentUpon>
     </Content>
     <Content Include="assets\bundles\themes\default.css" />
     <Content Include="assets\bundles\themes\default.min.css">
@@ -439,6 +447,10 @@
     <Content Include="assets\bundles\themes\event.css" />
     <Content Include="assets\bundles\themes\event.min.css">
       <DependentUpon>event.css</DependentUpon>
+    </Content>
+    <Content Include="assets\bundles\themes\um-dark.css" />
+    <Content Include="assets\bundles\themes\um-dark.min.css">
+      <DependentUpon>um-dark.css</DependentUpon>
     </Content>
     <Content Include="assets\bundles\themes\um.css" />
     <Content Include="assets\bundles\themes\um.min.css">
@@ -474,6 +486,8 @@
     <Content Include="assets\styles\alpha.slider-captcha.css" />
     <Content Include="assets\styles\images\crossword.png" />
     <Content Include="assets\styles\images\error3-bg.png" />
+    <Content Include="assets\styles\images\mode\dark.svg" />
+    <Content Include="assets\styles\images\mode\light.svg" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\sprites2.png" />
     <Content Include="assets\styles\images\sprites3.png" />
@@ -484,11 +498,23 @@
     <Content Include="assets\styles\pages\error3.min.css">
       <DependentUpon>error3.css</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\robotcaptcha-dark.css">
+      <DependentUpon>robotcaptcha-dark.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\robotcaptcha-dark.min.css">
+      <DependentUpon>robotcaptcha-dark.css</DependentUpon>
+    </Content>
     <Content Include="assets\styles\pages\robotcaptcha.css">
       <DependentUpon>robotcaptcha.scss</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\robotcaptcha.min.css">
       <DependentUpon>robotcaptcha.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\um-dark.css">
+      <DependentUpon>um-dark.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\pages\um-dark.min.css">
+      <DependentUpon>um-dark.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\um.css">
       <DependentUpon>um.scss</DependentUpon>
@@ -507,6 +533,12 @@
     </Content>
     <Content Include="assets\styles\pages\um3.min.css">
       <DependentUpon>um3.css</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\themes\default-dark.css">
+      <DependentUpon>default-dark.scss</DependentUpon>
+    </Content>
+    <Content Include="assets\styles\themes\default-dark.min.css">
+      <DependentUpon>default-dark.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\themes\default.css">
       <DependentUpon>default.scss</DependentUpon>
@@ -833,6 +865,8 @@
     <Content Include="Global.asax" />
     <Content Include="Scripts\aes.js" />
     <Content Include="speedtest.png" />
+    <Content Include="Views\Common\ErrorPage\Style\Images\error2-dark.png" />
+    <Content Include="Views\Common\ErrorPage\Style\Images\error2.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\LICENSE.txt" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon-notify.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon_note.png" />
@@ -857,8 +891,8 @@
     </Content>
     <Content Include="Views\Common\LimitedCountryAccess\Index.cshtml" />
     <Content Include="Views\Common\ErrorPage\Style\Error.less" />
-    <Content Include="Views\Common\ErrorPage\Style\Images\error2.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\seamless_pattern.png" />
+    <Content Include="Views\Common\LimitedCountryAccess\Style\style-dark.css" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\style.css" />
     <Content Include="Views\Common\UnderMaintenance\Index2.cshtml">
       <DependentUpon>Index.cshtml</DependentUpon>
@@ -1036,6 +1070,10 @@
       <DependentUpon>activitytracking.json</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\robotcaptcha.scss" />
+    <Content Include="assets\styles\abstracts\_variables-dark.scss" />
+    <Content Include="assets\styles\pages\robotcaptcha-dark.scss" />
+    <Content Include="assets\styles\pages\um-dark.scss" />
+    <Content Include="assets\styles\themes\default-dark.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -1049,6 +1087,7 @@
     <Content Include="Views\Common\UnderMaintenance\Index3.cshtml" />
     <Content Include="Views\Common\ErrorPage\Index3.cshtml" />
     <Content Include="Fanex.Alpha.Before.Web.ruleset" />
+    <Content Include="Views\Common\ErrorPage\Style\Error-dark.less" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\" />

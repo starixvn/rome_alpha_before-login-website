@@ -6,6 +6,7 @@
     using System.Data.Common;
     using System.Web;
     using System.Web.Mvc;
+    using Fanex.Alpha.Before.Common.Configurations;
 
     public class ErrorPageController : Controller
     {
@@ -39,6 +40,8 @@
                 string.Format(Infrastructure.Resources.Labels.Error_Server, errCode) : Server?.GetLastError()?.ToString() : string.Empty;
 
             Server?.ClearError();
+            ViewData["DarkModeName"] = AppSession.DarkModeName;
+
 
             return View("~/Views/Common/ErrorPage/Index.cshtml");
         }

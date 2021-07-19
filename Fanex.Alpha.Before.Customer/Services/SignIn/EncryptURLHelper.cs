@@ -62,7 +62,7 @@
             WriteLoginLogs(verifySignInResult.SuperId, $"Build after url, sessionId: {httpContext.Session.SessionID}, custId:{verifySignInResult.CustId}");
 
             var parameter = string.Format(
-                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}&{10}",
+                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}&{10}&{11}",
                 verifySignInResult.CustId,
                 verifySignInResult.SubAccId,
                 verifySignInResult.LoginTime.Ticks,
@@ -73,7 +73,8 @@
                 NumberCrossCookie(httpContext),
                 deviceId,
                 browserSize,
-                AppSession.EncryptCode);
+                AppSession.EncryptCode,
+                AppSession.DarkModeName);
 
             parameter = EncryptParameter(httpContext, parameter);
             var url = $"{UrlHelper.SiteGroupSetting.AfterUrl}{CustomerAppSetting.AfterLoginAuthorizationPage}?params={parameter}";

@@ -19,6 +19,7 @@ namespace Fanex.Alpha.Before.Common.Constants
         public const string LOGINUSERFAILEDCOUNT = "loginuserfailedcount.{0}.{1}.{2}";
         public const string LOGINIPFAILEDCOUNT = "loginipfailedcount.{0}.{1}";
         public const string LOGINIPBLOCKED = "loginipblocked.{0}.{1}";
+        public const string DARKMODENAME = "Fanex.Alpha.Before.Common.Constants.SessionConstants.darkmodename";
 
         #region Robot Captcha
 

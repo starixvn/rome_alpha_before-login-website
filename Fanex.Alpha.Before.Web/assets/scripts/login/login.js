@@ -64,7 +64,10 @@ Sphinx.Login = {
         hidLanguage: null,
         languageItems: null,
         lblShowPass: null,
-        formLogin: null
+        formLogin: null,
+        divTechnicalErrorMsg: null,
+        technicalErrorTime: null,
+        iconSwitchMode: null
     },
     cachedDomElements: function () {
         Sphinx.Login.domElements.txtUsername = $('#txtUserName');
@@ -83,6 +86,7 @@ Sphinx.Login = {
         Sphinx.Login.domElements.formLogin = $('#formLogin');
         Sphinx.Login.domElements.divTechnicalErrorMsg = $('#divTechnicalErrorMsg');
         Sphinx.Login.domElements.technicalErrorTime = $('#hiddenTechnicalErrorTime').val();
+        Sphinx.Login.domElements.iconSwitchMode = $('#icon-switch-mode');
     },
     initComponent: function () {
         var domElements = Sphinx.Login.domElements;
@@ -101,6 +105,7 @@ Sphinx.Login = {
         });
         domElements.btnLogin.click(Sphinx.Login.doLogin);
         domElements.chbShowPassword.click(Sphinx.Login.showPassword);
+        domElements.iconSwitchMode.click(Sphinx.Login.changeTheme)
     },
 
     getValidateImage: function () {
@@ -340,6 +345,20 @@ Sphinx.Login = {
         y = w.innerHeight || e.clientHeight || g.clientHeight;
 
         return x + 'x' + y;
+    },
+
+    changeTheme: function () {
+        const isDarkMode = $(this).hasClass("dark-mode");
+        Sphinx.Core.setCookie("ISDARKMODE", isDarkMode ? "0" : "1", 365 * 100);
+        window.location.href = Sphinx.Login.removeBookmarksInUrl(location.href);
+    },
+
+    removeBookmarksInUrl: function (url) {
+        var urlLength = url.length;
+
+        return url[urlLength - 1] === '#'
+            ? url.substr(0, urlLength - 1)
+            : url;
     }
 };
 
