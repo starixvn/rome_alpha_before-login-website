@@ -127,6 +127,28 @@ input[type="checkbox"], input[type="radio"] {
         color: $text-box-color;
         @include border-radius(0);
         background: transparent;
+        filter: none;
+
+        &:-webkit-autofill {
+            &::first-line {
+                font-size: $font-size + 2 !important;
+            }
+
+            &, &:hover, &:focus, &:active {
+                -webkit-box-shadow: 0 0 0px 1000px $block-bg inset;
+                -webkit-text-fill-color: #ffffff !important;
+
+                + .icon-user {
+                    background-position: -55px -4px;
+                }
+
+                + .icon-lock {
+                    background-position: -79px 0;
+                }
+            }
+        }
+
+
 
         &:focus {
             border-bottom-color: #fff;
