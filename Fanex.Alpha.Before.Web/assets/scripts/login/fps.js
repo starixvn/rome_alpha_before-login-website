@@ -13,7 +13,7 @@
     },
     urls: (strUrls) => {
         const urls = strUrls.split(';');
-        const request = urls.map(url => fetch(url + '/hc.html', { cache: "no-cache" }));
+        const request = urls.map(url => fetch(url + '/hc.html', { cache: "no-cache", timeout: 1000 }));
         Promise.any(request).then(res => {
             if (res.status == 200) {
                 const requestUrl = res.url;
