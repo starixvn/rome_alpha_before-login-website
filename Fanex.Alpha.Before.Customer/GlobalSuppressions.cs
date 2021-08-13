@@ -4,6 +4,8 @@
 // Project-level suppressions either have no target or are given 
 // a specific target and scoped to a namespace, type, member, etc.
 
+using System.Diagnostics.CodeAnalysis;
+
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S1067:Expressions should not be too complex", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Alpha.Before.Customer.Services.SignIn.SignInService.AutomationTest(System.String,System.String,System.String,System.String,System.String)~Fanex.Alpha.Before.Customer.Models.SignInResult")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S1541:Methods and properties should not be too complex", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Alpha.Before.Customer.Services.SignIn.SignInService.SignInWithRecaptcha(System.String,System.String,System.String,System.Boolean,System.String,System.String,System.String)~Fanex.Alpha.Before.Customer.Models.SignInResult")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Critical Code Smell", "S3776:Cognitive Complexity of methods should not be too high", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Alpha.Before.Customer.Services.SignIn.SignInService.SignInWithRecaptcha(System.String,System.String,System.String,System.Boolean,System.String,System.String,System.String)~Fanex.Alpha.Before.Customer.Models.SignInResult")]
@@ -47,3 +49,4 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "S3995:Change this return type to 'System.Uri'.", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Alpha.Before.Customer.Services.SignIn.EncryptURLHelper.BuildAfterURL(System.Web.HttpContext,System.String,Fanex.Alpha.Before.Customer.Models.VerifySignInResult,System.String,System.String)~System.String")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "S3240:Use the '??' operator here.", Justification = "<Pending>", Scope = "member", Target = "~P:Fanex.Alpha.Before.Customer.Configurations.AutomationTestSettings.Instance")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Build", "S3240:Use the '??' operator here.", Justification = "<Pending>", Scope = "member", Target = "~P:Fanex.Alpha.Before.Customer.Configurations.LoginThemeSection.Instance")]
+[assembly: SuppressMessage("Critical Code Smell", "S134:Control flow statements \"if\", \"switch\", \"for\", \"foreach\", \"while\", \"do\"  and \"try\" should not be nested too deeply", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.Alpha.Before.Customer.Services.SignIn.SignInService.SignIn(Fanex.Alpha.Before.Customer.Models.SignInModel)~Fanex.Alpha.Before.Customer.Models.SignInResult")]

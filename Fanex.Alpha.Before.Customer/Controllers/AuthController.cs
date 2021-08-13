@@ -31,19 +31,16 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     public class AuthController : BaseController
     {
         private readonly ISignInService _signInService;
-        private readonly ICaptchaService captchaService;
         private const string SignInViewPath = "~/Areas/Customer/Views/SignIn/Index.cshtml";
 
         public AuthController() :
-            this(null, null)
+            this(null)
         {
         }
 
-        public AuthController(SignInService signInService, IServiceFactory serviceFactory)
+        public AuthController(SignInService signInService)
         {
             _signInService = signInService ?? new SignInService();
-            serviceFactory = serviceFactory ?? SliderCaptcha.Mvc.Configuration.ServiceFactory;
-            captchaService = serviceFactory.CaptchaService;
         }
 
         /// <summary>

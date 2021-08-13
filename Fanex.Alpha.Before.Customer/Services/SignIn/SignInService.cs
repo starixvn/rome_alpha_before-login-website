@@ -9,6 +9,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using System;
     using System.Collections.Generic;
     using System.Configuration;
+    using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
@@ -27,12 +28,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using global::Alpha.NetThrottling;
     using global::Alpha.NetThrottling.Models;
     using global::Alpha.NetThrottling.Utils;
-    using global::Alpha.SliderCaptcha.Mvc;
+    using global::Alpha.SliderCaptcha.Core;
     using global::Alpha.SliderCaptcha.Core.Services;
+    using global::Alpha.SliderCaptcha.Mvc;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
     using InfrastructureLanguages = Infrastructure.Resources;
-    using SliderCaptcha = global::Alpha.SliderCaptcha;
 
     public interface ISignInService
     {
@@ -59,6 +60,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly ISignInRepository _signInRepository;
         private readonly ICacheService cacheService;
         private readonly IRobotDetector robotDetector;
+        private readonly CaptchaOptions captchaOptions;
         private readonly ICaptchaService captchaService;
 
         private readonly Logging.ILogger logger;
@@ -75,7 +77,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         }
 
         public SignInService() :
-            this(null, null, null, null, null, null)
+            this(null, null, null, null, null, null, null)
         {
         }
 
@@ -84,11 +86,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             Logging.ILogger logger,
             HttpContext httpContext,
             ICacheService cacheService,
+            CaptchaOptions captchaOptions,
             IServiceFactory serviceFactory)
         {
             _signInRepository = signInRepository ?? new SignInRepository();
             this.cacheService = cacheService ?? new CacheService();
-            serviceFactory = serviceFactory ?? SliderCaptcha.Mvc.Configuration.ServiceFactory;
             var _loginThemeSection = LoginThemeSection.Instance;
 
             _loginTheme = _loginThemeSection.DefaultTheme;
@@ -113,7 +115,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             this.robotDetector = robotDetector ?? new RobotDetector();
             this.logger = logger ?? Logging.Logger.Log;
             this.httpContext = httpContext ?? HttpContext.Current;
-            this.captchaService = serviceFactory.CaptchaService;
+
+            this.captchaOptions = captchaOptions ?? SliderCaptchaHandler.CaptchaOptions;
+            serviceFactory = serviceFactory ?? SliderCaptchaHandler.ServiceFactory;
+            captchaService = serviceFactory.CaptchaService;
         }
 
         public SignInResult SignIn()
@@ -208,12 +213,19 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
                 if (IsCaptchaRequired(model))
                 {
-                    if (captchaService.IsVerfied(model.CaptchaToken))
+                    var isVerifiedResult = captchaService.IsVerfied(model.CaptchaToken);
+                    if (isVerifiedResult.IsSuccess)
                     {
                         signInResult.IsCaptchaVerified = true;
                     }
                     else
                     {
+                        if (captchaOptions.LogEnabled)
+                        {
+                            var exception = new Exception($"signin captcha: key={model.Username} code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
+                            ExceptionHandler.Handle(exception, TraceEventType.Warning);
+                        }
+
                         signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
                         signInResult.ErrMsg = Labels.BotDetectionMessage;
                         return signInResult;

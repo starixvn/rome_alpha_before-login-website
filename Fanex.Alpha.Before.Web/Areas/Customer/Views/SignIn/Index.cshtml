@@ -74,13 +74,22 @@
 
 @if (Model.ErrCode == Fanex.Alpha.Before.Customer.Constants.SignInErrorContants.CaptchaRequired)
 {
+    @Html.Hidden("NoInteractionTimeInMinutes", Fanex.Alpha.Before.Customer.Configurations.AlphaCommonSection.Instance.NoInteractionTimeInMinutes)
+
     @section scripts
     {
         <script src="~/assets/scripts/alpha.slider-captcha.js?ver=@Fanex.Alpha.Before.Common.Configurations.AppSetting.Version" type="text/javascript"></script>
         <script>
+            var noInteractionTimeInMinutes = parseInt(document.getElementById("NoInteractionTimeInMinutes").value);
+            setTimeout(
+                function () {
+                    window.location.href = window.location.href;
+                }, noInteractionTimeInMinutes * 60 * 1000);
+
             window.scInstance = sliderCaptcha('captcha', {
                 lang: "@Fanex.Alpha.Before.Common.Configurations.AppSession.Language",
                 baseUri: "@Url.Content("~")",
+                keyElement: document.getElementById('txtUserName'),
                 callback: function (response) {
                     if (response.Code === 0) {
                         $('#errmsg').text('');

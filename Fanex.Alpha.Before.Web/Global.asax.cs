@@ -29,10 +29,6 @@
     /// </summary>
     public class MvcApplication : System.Web.HttpApplication
     {
-        private const int SliderCaptchaAcceptRange = 5;
-        private const int SliderCaptchaTimeoutMinutes = 5;
-        private const int SliderCaptchaVerifiedMinutes = 5;
-
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
@@ -75,7 +71,7 @@
 
             var sensitiveInfo = new List<string> { "password", "txtpassword" };
             LoggingConfig.Init(sensitiveInfo, DatabaseInfoGetters.GetDbExceptionInfo, $"{GetVirtualAppPath()}/assets/bundles/raven.min.js");
-            Configuration.Use(new CaptchaOptions("~/App_Data/Alpha.SliderCaptcha", SliderCaptchaAcceptRange, SliderCaptchaTimeoutMinutes, SliderCaptchaVerifiedMinutes));
+            SliderCaptchaHandler.Use();
             var umConfig = new UMClientConfiguration().Initialize();
             UMClientManager
                 .UseConfig(umConfig)

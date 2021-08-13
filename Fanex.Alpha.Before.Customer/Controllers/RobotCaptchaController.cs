@@ -1,6 +1,7 @@
 ﻿namespace Fanex.Alpha.Before.Customer.Controllers
 {
     using System;
+    using System.Diagnostics;
     using System.Globalization;
     using System.Threading;
     using System.Web.Mvc;
@@ -11,23 +12,27 @@
     using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Resources;
     using Fanex.Alpha.Before.Customer.Services.SignIn;
+    using Fanex.Logging.Extensions.Web;
     using FPS.Browserless.Detection.Client;
-    using global::Alpha.SliderCaptcha.Mvc;
+    using global::Alpha.SliderCaptcha.Core;
     using global::Alpha.SliderCaptcha.Core.Services;
+    using global::Alpha.SliderCaptcha.Mvc;
 
     public class RobotCaptchaController : BaseController
     {
         private const int LimitRobotCaptchaFailedCount = 5;
         private readonly ICaptchaService captchaService;
+        private readonly CaptchaOptions captchaOptions;
 
         public RobotCaptchaController()
-            : this(null)
+            : this(null, null)
         {
         }
 
-        public RobotCaptchaController(IServiceFactory serviceFactory)
+        public RobotCaptchaController(CaptchaOptions captchaOptions, IServiceFactory serviceFactory)
         {
-            serviceFactory = serviceFactory ?? Configuration.ServiceFactory;
+            this.captchaOptions = captchaOptions ?? SliderCaptchaHandler.CaptchaOptions;
+            serviceFactory = serviceFactory ?? SliderCaptchaHandler.ServiceFactory;
             captchaService = serviceFactory.CaptchaService;
         }
 
@@ -54,10 +59,17 @@
         [HttpPost]
         public ActionResult Index(RobotCaptchaModel model)
         {
-            if (captchaService.IsVerfied(model.Token))
+            var isVerifiedResult = captchaService.IsVerfied(model.Token);
+            if (isVerifiedResult.IsSuccess)
             {
                 AppSession.InputCaptchaSuccess = true;
                 return RedirectToAction(nameof(InputCaptchaSuccessfully));
+            }
+
+            if (captchaOptions.LogEnabled)
+            {
+                var exception = new Exception($"robot captcha: key={AppSession.Username}, code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
+                ExceptionHandler.Handle(exception, TraceEventType.Warning);
             }
 
             if (AppSession.CustId == 0)
