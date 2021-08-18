@@ -16,10 +16,11 @@
         const request = urls.map(url => fetch(url + '/hc.html', { cache: "no-cache", timeout: 1000 }));
         Promise.any(request).then(res => {
             if (res.status == 200) {
-                const requestUrl = res.url;
-                const domain = (new URL(requestUrl));
-                __fpsImporter.url(domain.origin).then(() => {
-                    Detecas.Config.host = domain.origin;
+                let str = res.url;
+                let index = str.lastIndexOf('/');
+                let url = str.substring(0, index);;
+                __fpsImporter.url(url).then(() => {
+                    Detecas.Config.host = url;
                 });
             }
         });
