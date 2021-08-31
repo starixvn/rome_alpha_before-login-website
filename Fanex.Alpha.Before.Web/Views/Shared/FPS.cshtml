@@ -63,68 +63,7 @@
 
 @if (CommonAppSetting.IsEnableFPS)
 {
-    <script>
-        $(function () {
-            (function (json, base64) {
-
-                function getDeviceId() {
-                    var diInput = document.getElementById("__di");
-                    var collectedDeviceInfo = base64.decode(diInput.value);
-                    collectedDeviceInfo = json.parse(collectedDeviceInfo);
-                    return collectedDeviceInfo.deviceId;
-                }
-
-                function addDevideIdElement(deviceId) {
-                    $("#formLogin").append('<input type="hidden" name="deviceId" id="deviceId" value="' + deviceId + '" />');
-                }
-
-                var loopTimes = 0;
-                var intervalSetDeviceId = setInterval(function () {
-                    try {
-                        if (loopTimes > 20) {
-                            clearInterval(intervalSetDeviceId);
-                            loopTimes = 0;
-                        }
-                        else {
-                            loopTimes++;
-                            var deviceId = getDeviceId();
-                            var deviceValue = $('#deviceId').val();
-
-                            var hasDeviceId = deviceId && deviceId !== '';
-                            var hasDeviceElement = deviceValue && deviceValue !== '';
-
-                            var diInput = document.getElementById("__di");
-                            var hasDI = diInput && diInput.value;
-
-                            if (hasDI && hasDeviceId && !hasDeviceElement) {
-                                clearInterval(intervalSetDeviceId);
-                                loopTimes = 0;
-                                addDevideIdElement(deviceId);
-                            }
-                        }
-                    }
-                    catch (err) {
-                        if (loopTimes >= 20) {
-                            clearInterval(intervalSetDeviceId);
-                            addDevideIdElement("N/A");
-                            loopTimes = 0;
-                        }
-
-                        window.console.log("fps error = " + err);
-                    }
-                }, 200);
-
-            })(Detecas.JSON, Detecas.Base64);
-        });
-
-
-        !function (e, t, a, c, n) {
-            var s = t.createElement(a),
-                o = t.getElementsByTagName(c)[0];
-            s.async = true, s.defer = true, s.src = n, o.appendChild(s)
-        }
-            (window, document, "script", "body", document.getElementById("CommonAppSettingFpsActivator").value);
-    </script>
+<script src="~/assets/scripts/login/fps.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 }
 
 @if (Model.GoogleReCaptcha.IsEnable)

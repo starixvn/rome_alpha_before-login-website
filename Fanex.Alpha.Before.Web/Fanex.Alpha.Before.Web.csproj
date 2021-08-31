@@ -425,6 +425,7 @@
     <Content Include="assets\scripts\libs\cryptojs\aes.js" />
     <Content Include="assets\scripts\login\captchav3.js" />
     <Content Include="assets\scripts\login\captcha.js" />
+    <Content Include="assets\scripts\login\fps.js" />
     <Content Include="assets\scripts\login\resources.js" />
     <Content Include="assets\scripts\um\um.js" />
     <Content Include="assets\styles\images\crossword.png" />
