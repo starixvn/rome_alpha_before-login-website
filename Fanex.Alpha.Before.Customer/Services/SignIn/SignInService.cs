@@ -232,7 +232,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     }
                 }
 
-                var password = AesExtension.Decrypt(model.Password, AppSession.EncryptCode);
+                var password = AesService.Default.Decrypt(model.Password, AppSession.EncryptCode);
                 VerifyDownlineLogin(model.Username, password, model.DeviceId, model.BrowserSize, signInResult);
             }
             catch (Exception ex)
