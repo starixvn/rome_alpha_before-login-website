@@ -19,8 +19,7 @@ var __fpsImporter = {
         try {
             var xhr = new XMLHttpRequest();
             var hcUrl = _url + '/hc.html?livepage=' + new Date() * 1;
-            xhr.open('get', hcUrl, false);
-            xhr.timeout = 1000;
+            xhr.open('get', hcUrl, false);            
             xhr.send();
 
             if (xhr.readyState == 4) {
@@ -42,6 +41,7 @@ var __fpsImporter = {
         });
     },
     urls: function urls(_urls) {
+
         try {
             var requests = _urls.map(function (url) {
                 return fetch(url + '/hc.html', {
@@ -50,7 +50,7 @@ var __fpsImporter = {
                 });
             });
 
-            Promise.any(requests).then(function (res) {
+            Promise.race(requests).then(function (res) {
                 if (res.status == 200) {
                     var str = res.url;
                     var index = str.lastIndexOf('/');
