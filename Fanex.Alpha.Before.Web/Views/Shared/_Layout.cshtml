@@ -27,25 +27,23 @@ else if (Model.GetType() == typeof(Fanex.Alpha.Before.Customer.Models.SignInResu
                 Loading... please wait
             </h2>
         </div>
-        <div class="block-container">
-            <div id="mainholder" class="block-login">
-                <form id="formLogin" class="form-login" action="@Url.Content("~/")" method="POST" autocomplete="off">
-                    @RenderBody()
-                    <input name="code" id="code" type="hidden" value="@data.Captcha" />
-                    <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
-                    <input id="__tk" name="__tk" value="@ViewBag.FPSToken" type="hidden" />
-                    <input id="captcha_result" name="captcha_result" value="" type="hidden" />
-                    @Html.AntiForgeryToken()
-                </form>
-            </div>
-            @if (data.IsChangedPassword)
-            {
-                <div class="block-info">
-                    @data.ChangedPasswordTime
-                </div>
-            }
+        <div id="mainholder" class="block-login">
+            <form id="formLogin" class="form-login" action="@Url.Content("~/")" method="POST" autocomplete="off">
+                @RenderBody()
+                <input name="code" id="code" type="hidden" value="@data.Captcha" />
+                <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
+                <input id="__tk" name="__tk" value="@ViewBag.FPSToken" type="hidden" />
+                <input id="captcha_result" name="captcha_result" value="" type="hidden" />
+                @Html.AntiForgeryToken()
+            </form>
         </div>
-        
+        @if (data.IsChangedPassword)
+        {
+            <div class="block-info">
+                @data.ChangedPasswordTime
+            </div>
+        }
+
         <script src="~/assets/bundles/login.min.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 
         @Html.Partial("FPS", data)

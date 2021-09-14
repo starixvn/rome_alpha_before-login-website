@@ -11,7 +11,7 @@ body {
     font-size: $font-size + 2;
     background-color: $bg-color;
     margin: 0;
-    padding-top: 10%;
+    padding-top: 8%;
 }
 
 input, button {
@@ -93,15 +93,6 @@ input[type="checkbox"], input[type="radio"] {
     max-width: 376px;
     width: 400px;    
     @include box-sizing;
-}
-
-.block-container {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%,-40%);
-    margin: 10px 0;
-    width: 100%;
 }
 
 .block-login {
