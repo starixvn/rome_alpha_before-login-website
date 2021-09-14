@@ -347,8 +347,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             if (loginUserFailedCount >= _loginFailTimeToStartUsingCaptcha)
             {
                 signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
-                signInResult.ErrMsg = verifySignInResult.ErrorMessage;
             }
+
+            signInResult.ErrMsg = verifySignInResult.ErrorMessage;
         }
 
         private void UpdateResultAfterLoginSuccessfully(
