@@ -330,6 +330,7 @@
     <Compile Include="Services\FPS\IRobotDetector.cs" />
     <Compile Include="Services\FPS\RobotDetector.cs" />
     <Compile Include="Services\SignIn\CacheService.cs" />
+    <Compile Include="Services\SignIn\CaptchaServiceFactory.cs" />
     <Compile Include="Services\SignIn\EncryptURLHelper.cs" />
     <Compile Include="Services\SignIn\SignInService.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
