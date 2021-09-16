@@ -90,5 +90,7 @@ namespace Fanex.Alpha.Before.Customer.Models
             get;
             set;
         }
+
+        public bool IsCaptchaVerified { get; set; }
     }
 }

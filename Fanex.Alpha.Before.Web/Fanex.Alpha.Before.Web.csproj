@@ -74,6 +74,12 @@
     <Reference Include="Alpha.NetThrottling, Version=1.0.12.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alpha.NetThrottling.1.0.12\lib\net461\Alpha.NetThrottling.dll</HintPath>
     </Reference>
+    <Reference Include="Alpha.SliderCaptcha, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alpha.SliderCaptcha.1.0.0.9-beta08\lib\net461\Alpha.SliderCaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="Alpha.SliderCaptcha.Mvc, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Alpha.SliderCaptcha.Mvc.1.0.0.9-beta08\lib\net461\Alpha.SliderCaptcha.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Alpha.SubAccount, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alpha.SubAccount.1.0.0\lib\net40\Alpha.SubAccount.dll</HintPath>
     </Reference>
@@ -82,9 +88,6 @@
     </Reference>
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="CaptchaMvc, Version=2.5.0.0, Culture=neutral, PublicKeyToken=fe46ad421dd3b0e6, processorArchitecture=MSIL">
-      <HintPath>..\packages\CaptchaMvc.Mvc5.1.5.0\lib\net45-full\CaptchaMvc.dll</HintPath>
     </Reference>
     <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
@@ -110,9 +113,8 @@
     <Reference Include="Fanex.Common, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.1.0.1\lib\net40\Fanex.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Cryptography.Aes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Cryptography.Aes.1.0.0.0\lib\net461\Fanex.Cryptography.Aes.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Fanex.Cryptography.Aes, Version=1.0.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Cryptography.Aes.1.0.0.5\lib\net461\Fanex.Cryptography.Aes.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data, Version=0.5.404.63, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Data.0.5.404.63\lib\net40\Fanex.Data.dll</HintPath>
@@ -217,9 +219,17 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="ONEbook.UM, Version=2.0.2.8, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.UM.2.0.2.8\lib\net40\ONEbook.UM.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="ONEbook.UM, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.UM.3.1.0\lib\net461\ONEbook.UM.dll</HintPath>
+    </Reference>
+    <Reference Include="ONEbook.UM.AspNetMVC, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.UM.AspNetMVC.3.1.0\lib\net461\ONEbook.UM.AspNetMVC.dll</HintPath>
+    </Reference>
+    <Reference Include="ONEBook.UM.NETFramework, Version=3.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEBook.UM.NETFramework.3.1.4\lib\net461\ONEBook.UM.NETFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="ONEbook.UM.Transport, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.UM.Transport.3.1.0\lib\net461\ONEbook.UM.Transport.dll</HintPath>
     </Reference>
     <Reference Include="Pipelines.Sockets.Unofficial, Version=1.0.0.0, Culture=neutral, PublicKeyToken=42ea0a778e13fbe2, processorArchitecture=MSIL">
       <HintPath>..\packages\Pipelines.Sockets.Unofficial.2.1.16\lib\net461\Pipelines.Sockets.Unofficial.dll</HintPath>
@@ -270,8 +280,12 @@
     <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration.ConfigurationManager, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.5.0.0\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Diagnostics.PerformanceCounter, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.PerformanceCounter.4.7.0\lib\net461\System.Diagnostics.PerformanceCounter.dll</HintPath>
     </Reference>
@@ -288,6 +302,7 @@
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net" />
     <Reference Include="System.Net.Http, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -301,12 +316,24 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.AccessControl, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.5.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Permissions.5.0.0\lib\net461\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Channels.4.7.1\lib\net461\System.Threading.Channels.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -317,31 +344,32 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    <Reference Include="System.Web.Mvc, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.6\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.6\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.6\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -354,25 +382,39 @@
     <AdditionalFiles Include="..\SonarQube\alpha-before-login\CSharp\SonarLint.xml">
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Scripts\SylouCaptcha.js" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\atticon.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\audio.gif" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\bt_bg.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\Button-Refresh-icon.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\b_right.gif" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\captchaReview.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\pbg.jpg" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\ptitlebg.jpg" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\refresh.gif" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\Reload-icon.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\sprite.gif" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\sprite_bk.gif" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Images\stop.png" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\Styles\Index.css" />
-    <Content Include="assets\bundles\captcha.js" />
-    <Content Include="assets\bundles\captcha.min.js">
-      <DependentUpon>captcha.js</DependentUpon>
-    </Content>
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\1.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\10.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\11.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\12.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\13.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\14.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\15.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\2.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\3.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\4.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\5.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\6.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\7.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\8.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\9.jpg" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\1\alpha.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\1\base.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\1\border.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\2\alpha.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\2\base.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\2\border.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\3\alpha.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\3\base.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\3\border.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\4\alpha.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\4\base.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\4\border.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\5\alpha.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\5\base.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\5\border.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\6\alpha.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\6\base.png" />
+    <Content Include="App_Data\Alpha.SliderCaptcha\sliders\6\border.png" />
     <Content Include="assets\bundles\captchav3.js" />
     <Content Include="assets\bundles\captchav3.min.js">
       <DependentUpon>captchav3.js</DependentUpon>
@@ -414,6 +456,7 @@
     <Content Include="assets\bundles\um2.min.js">
       <DependentUpon>um2.js</DependentUpon>
     </Content>
+    <Content Include="assets\scripts\alpha.slider-captcha.js" />
     <Content Include="assets\scripts\libs\bootstrap\dropdown.js" />
     <Content Include="assets\scripts\libs\detecas\Detecas.Base64.js" />
     <Content Include="assets\scripts\libs\detecas\Detecas.JSON.js" />
@@ -428,6 +471,7 @@
     <Content Include="assets\scripts\login\fps.js" />
     <Content Include="assets\scripts\login\resources.js" />
     <Content Include="assets\scripts\um\um.js" />
+    <Content Include="assets\styles\alpha.slider-captcha.css" />
     <Content Include="assets\styles\images\crossword.png" />
     <Content Include="assets\styles\images\error3-bg.png" />
     <Content Include="assets\styles\images\sprites.png" />
@@ -789,8 +833,6 @@
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon-notify.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon_note.png" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.Web.config" />
-    <Content Include="Areas\Captcha\Views\SylouCaptcha\CaptchaPartialView.cshtml" />
-    <Content Include="Areas\Captcha\Views\Web.config" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Bold.ttf" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Medium.ttf" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Regular.ttf" />
@@ -982,7 +1024,6 @@
     <Content Include="assets\styles\pages\um3.scss" />
     <Content Include="assets\styles\pages\error3.scss" />
     <Content Include="Areas\Customer\Views\RobotCaptcha\Index.cshtml" />
-    <Content Include="assets\styles\pages\robotcaptcha.scss" />
     <Content Include="App_Data\activitytracking.json" />
     <Content Include="App_Data\activitytracking.pro.json">
       <DependentUpon>activitytracking.json</DependentUpon>
@@ -990,6 +1031,7 @@
     <Content Include="App_Data\activitytracking.uat.json">
       <DependentUpon>activitytracking.json</DependentUpon>
     </Content>
+    <Content Include="assets\styles\pages\robotcaptcha.scss" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">

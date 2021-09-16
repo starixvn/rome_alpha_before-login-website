@@ -1,5 +1,4 @@
-﻿@using CaptchaMvc.HtmlHelpers;
-@using Fanex.Alpha.Before.Common.Configurations;
+﻿@using Fanex.Alpha.Before.Common.Configurations;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -8,8 +7,8 @@
 
 @section styles
 {
-
     <link href="~/assets/bundles/themes/@(Model.LoginTemplate).min.css?ver=@AppSetting.Version" rel="stylesheet" />
+    <link href="~/assets/styles/alpha.slider-captcha.css?ver=@AppSetting.Version" rel="stylesheet" />
 }
 
 <div class="box-lang">
@@ -47,7 +46,7 @@
 }
 
 <div class="rowlg">
-    <input type="text" class="txt" placeholder="Username" id="txtUserName" name="txtUserName" tabindex="1" />
+    <input type="text" class="txt" placeholder="Username" id="txtUserName" name="txtUserName" value="@Model.Username" tabindex="1" />
     <i class="icon-user"></i>
 </div>
 
@@ -63,11 +62,7 @@
     </label>
 </div>
 
-@if (ViewBag.ShowReCaptcha == true)
-{
-    @Html.Captcha(4, "~/Areas/Captcha/Views/SylouCaptcha/CaptchaPartialView.cshtml", ViewData)
-}
-
+<div id="captcha" name="captchaToken"></div>
 <input type="hidden" name="browserSize" id="browserSize" value="" />
 @if (AppSetting.IsShowTechnicalErrorMessage)
 {
@@ -77,11 +72,31 @@
     <input type="button" class="btnLogin" value="Login" id="btnLogin" tabindex="5" />
 </div>
 
-@if (ViewBag.ShowReCaptcha == true)
+@if (Model.ErrCode == Fanex.Alpha.Before.Customer.Constants.SignInErrorContants.CaptchaRequired)
 {
+    @Html.Hidden("NoInteractionTimeInMinutes", Fanex.Alpha.Before.Customer.Configurations.AlphaCommonSection.Instance.NoInteractionTimeInMinutes)
+
     @section scripts
     {
-        <script src="~/assets/bundles/captcha.js?ver=@Fanex.Alpha.Before.Common.Configurations.AppSetting.Version" type="text/javascript"></script>
+        <script src="~/assets/scripts/alpha.slider-captcha.js?ver=@Fanex.Alpha.Before.Common.Configurations.AppSetting.Version" type="text/javascript"></script>
+        <script>
+            var noInteractionTimeInMinutes = parseInt(document.getElementById("NoInteractionTimeInMinutes").value);
+            setTimeout(
+                function () {
+                    window.location.href = window.location.href;
+                }, noInteractionTimeInMinutes * 60 * 1000);
+
+            window.scInstance = sliderCaptcha('captcha', {
+                lang: "@Fanex.Alpha.Before.Common.Configurations.AppSession.Language",
+                baseUri: "@Url.Content("~")",
+                keyElement: document.getElementById('txtUserName'),
+                callback: function (response) {
+                    if (response.Code === 0) {
+                        $('#errmsg').text('');
+                    }
+                }
+            });
+        </script>
     }
 }
 

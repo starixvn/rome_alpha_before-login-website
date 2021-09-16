@@ -16,7 +16,6 @@
     public class LimitedCountryAccessServiceTests
     {
         private const string AllowedAccessIPsCachedKey = "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey";
-        private const string RestrictedCountriesCachedKey = "Fanex.Alpha.Before.Common.RestrictedCountriesCachedKey";
 
         private LimitedCountryAccessService limitedCountryAccessService;
         private ILimitedCountryAccessRepository ipRepository;

@@ -6,6 +6,13 @@
 
 namespace Fanex.Alpha.Before.Customer.Services.SignIn
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using System.Web;
     using Cryptography.Aes;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Extensions;
@@ -21,26 +28,20 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using global::Alpha.NetThrottling;
     using global::Alpha.NetThrottling.Models;
     using global::Alpha.NetThrottling.Utils;
+    using global::Alpha.SliderCaptcha.Core;
+    using global::Alpha.SliderCaptcha.Core.Services;
+    using global::Alpha.SliderCaptcha.Mvc;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
-    using System.Web;
     using InfrastructureLanguages = Infrastructure.Resources;
-    using LoginLanguages = Resources;
 
     public interface ISignInService
     {
         SignInResult SignIn();
 
-        SignInResult SignInWithRecaptcha(string username, string password, string language, bool isValidCaptcha, string code, string deviceId, string browserSize);
+        SignInResult SignIn(SignInModel model);
 
         SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize);
-
-        bool IsShowReCaptcha();
     }
 
     /// <summary>
@@ -59,7 +60,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly ISignInRepository _signInRepository;
         private readonly ICacheService cacheService;
         private readonly IRobotDetector robotDetector;
-        
+        private readonly CaptchaOptions captchaOptions;
+        private readonly ICaptchaService captchaService;
+
         private readonly Logging.ILogger logger;
         private readonly HttpContext httpContext;
 
@@ -74,7 +77,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         }
 
         public SignInService() :
-            this(null, null, null, null, null)
+            this(null, null, null, null, null, null, null)
         {
         }
 
@@ -82,7 +85,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             IRobotDetector robotDetector,
             Logging.ILogger logger,
             HttpContext httpContext,
-            ICacheService cacheService)
+            ICacheService cacheService,
+            CaptchaOptions captchaOptions,
+            IServiceFactory serviceFactory)
         {
             _signInRepository = signInRepository ?? new SignInRepository();
             this.cacheService = cacheService ?? new CacheService();
@@ -110,12 +115,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             this.robotDetector = robotDetector ?? new RobotDetector();
             this.logger = logger ?? Logging.Logger.Log;
             this.httpContext = httpContext ?? HttpContext.Current;
+
+            this.captchaOptions = captchaOptions ?? SliderCaptchaHandler.CaptchaOptions;
+            serviceFactory = serviceFactory ?? SliderCaptchaHandler.ServiceFactory;
+            captchaService = serviceFactory.CaptchaService;
         }
 
-        /// <summary>
-        /// Sign In default method.
-        /// </summary>
-        /// <returns>Return result.</returns>
         public SignInResult SignIn()
         {
             var loginResult = new SignInResult
@@ -170,120 +175,65 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             return loginResult;
         }
 
-        /// <summary>
-        /// Sign In method.
-        /// </summary>
-        /// <param name="username">The username.</param>
-        /// <param name="password">User's password.</param>
-        /// <param name="language">Current language.</param>
-        /// <param name="isValidCaptcha">The captcha.</param>
-        /// <param name="code">The code string.</param>
-        /// <returns>Return login result.</returns>
-        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
-        public SignInResult SignInWithRecaptcha(
-            string username,
-            string password,
-            string language,
-            bool isValidCaptcha,
-            string code,
-            string deviceId,
-            string browserSize)
+        private bool IsCaptchaRequired(SignInModel model)
+        {
+            return IsShowReCaptcha(model.Username);
+        }
+
+        public SignInResult SignIn(SignInModel model)
         {
             var signInResult = new SignInResult
             {
                 Ip = IPHelper.ClientIP(),
                 LoginTemplate = _loginTheme,
-                Username = username,
-                GoogleReCaptcha = UrlHelper.SiteGroupSetting.GoogleReCaptcha
+                Username = model.Username,
+                GoogleReCaptcha = UrlHelper.SiteGroupSetting.GoogleReCaptcha,
+                Captcha = model.Code
             };
 
             try
             {
-                AppSession.EncryptCode = code;
-
-                if (cacheService.GetTotallyLoginFailed() > _maxTimesToAllowLogInFail)
-                {
-                    if (cacheService.GetLoginFailedTime().AddMinutes(_blockLoginMinute).CompareTo(DateTime.UtcNow) > 0)
-                    {
-                        cacheService.SetLoginFailedTime();
-                        var ipLockedError = string.Format(Labels.iploginfailedmultipletimeserror, signInResult.Ip, _maxTimesToAllowLogInFail, _blockLoginMinute);
-                        signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
-                        signInResult.ErrMsg = ipLockedError;
-
-                        return signInResult;
-                    }
-                    else
-                    {
-                        cacheService.ResetLoginFailed();
-                    }
-                }
-
-                // If login with no action for the laset 5 minutes, login without captcha
-                var lastLoginUsername = cacheService.GetLastLoginUsername();
-                if (!string.IsNullOrEmpty(lastLoginUsername) &&
-                    !lastLoginUsername.Equals(username, StringComparison.OrdinalIgnoreCase))
-                {
-                    if (IsShowReCaptcha() && !isValidCaptcha)
-                    {
-                        cacheService.ResetCurrentLoginFailed();
-                        cacheService.SetLastLoginUsername(username);
-
-                        signInResult.ErrCode = SignInErrorContants.Error2; ////no need to write log in fps and redirect to login page.
-                        signInResult.Captcha = AppSession.EncryptCode;
-
-                        return signInResult;
-                    }
-
-                    cacheService.ResetCurrentLoginFailed();
-                }
-
-                // If no action for the laset 5 minutes, login without captcha
-                var loginFailedUtcTime = cacheService.GetLoginFailedTime();
-                if (loginFailedUtcTime != DateTime.MinValue &&
-                    loginFailedUtcTime.AddMinutes(_notInteractionTimeInMinutes).CompareTo(DateTime.UtcNow) < 0)
-                {
-                    cacheService.ResetCurrentLoginFailed();
-                }
+                AppSession.EncryptCode = model.Code;
 
                 if (string.IsNullOrEmpty(AppSession.EncryptCode))
                 {
-                    signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
-                    signInResult.ErrMsg = LoginLanguages.Labels.errInvalidCaptcha;
-
-                    return signInResult;
-                }
-                else
-                {
-                    signInResult.Captcha = AppSession.EncryptCode;
-                }
-
-                if (IsShowReCaptcha() && !isValidCaptcha)
-                {
-                    signInResult.ErrCode = SignInErrorContants.ErrorInvalidCaptcha;
+                    signInResult.ErrCode = SignInErrorContants.InvalidEncryptCode;
                     signInResult.ErrMsg = Labels.errInvalidCaptcha;
-                    var loginFailedCount = cacheService.IncreaseLoginFailedCount();
-                    if (loginFailedCount == _maxTimesToAllowLogInFail)
+                    return signInResult;
+                }
+
+                if (cacheService.IsLoginIPBlocked())
+                {
+                    var ipLockedError = string.Format(Labels.iploginfailedmultipletimeserror, signInResult.Ip, _maxTimesToAllowLogInFail, _blockLoginMinute);
+                    signInResult.ErrCode = SignInErrorContants.IPBlocked;
+                    signInResult.ErrMsg = ipLockedError;
+                    return signInResult;
+                }
+
+
+                if (IsCaptchaRequired(model))
+                {
+                    var isVerifiedResult = captchaService.IsVerfied(model.CaptchaToken);
+                    if (isVerifiedResult.IsSuccess)
                     {
-                        LogIpBlocked(signInResult);
+                        signInResult.IsCaptchaVerified = true;
                     }
+                    else
+                    {
+                        if (captchaOptions.LogEnabled)
+                        {
+                            var exception = new Exception($"signin captcha: key={model.Username} code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
+                            ExceptionHandler.Handle(exception, TraceEventType.Warning);
+                        }
 
-                    return signInResult;
+                        signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
+                        signInResult.ErrMsg = Labels.BotDetectionMessage;
+                        return signInResult;
+                    }
                 }
 
-                try
-                {
-                    password = AesExtension.Decrypt(password, AppSession.EncryptCode);
-                }
-                catch
-                {
-                    signInResult.ErrCode = ErrorCodeConstants.ServerError;
-                    signInResult.ErrMsg = string.Empty;
-                    return signInResult;
-                }
-
-                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult);
+                var password = AesService.Default.Decrypt(model.Password, AppSession.EncryptCode);
+                VerifyDownlineLogin(model.Username, password, model.DeviceId, model.BrowserSize, signInResult);
             }
             catch (Exception ex)
             {
@@ -293,18 +243,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 ExceptionHandler.Handle(ex);
             }
 
-            cacheService.SetLastLoginUsername(username);
-
             return signInResult;
         }
 
-        /// <summary>
-        /// Support for automation test tool.
-        /// </summary>
-        /// <param name="username">Username login.</param>
-        /// <param name="password">User's password.</param>
-        /// <param name="captcha">Captcha value.</param>
-        /// <returns>Return result.</returns>
         [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
             "SP2101:MethodMustNotContainMoreLinesThan",
             Justification = "Reviewed. Suppression is OK here.")]
@@ -360,9 +301,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             return signInResult;
         }
 
-        public bool IsShowReCaptcha()
+        private bool IsShowReCaptcha(string username)
         {
-            return cacheService.GetCurrentLoginFailed() >= _loginFailTimeToStartUsingCaptcha;
+            return cacheService.GetLoginUserFailedCount(username) >= _loginFailTimeToStartUsingCaptcha;
         }
 
         private void LogIpBlocked(SignInResult signInResult)
@@ -377,11 +318,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             logger.Warn($"IP blocked for login: {JsonConvert.SerializeObject(logInfo)}");
         }
 
-        /// <summary>
-        /// Update result login after login Fail.
-        /// </summary>
-        /// <param name="signInResult">Sign In result.</param>
-        /// <param name="verifySignInResult">Verify sign in result.</param>
         private void UpdateResultAfterLoginFail(
             SignInResult signInResult,
             VerifySignInResult verifySignInResult)
@@ -392,31 +328,30 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 signInResult.ChangedPasswordTime = string.Format(Labels.lblPasswordChanged, verifySignInResult.LastTimeToChangePassword);
             }
 
-            cacheService.SetLoginFailedTime();
-            var loginFailedCount = cacheService.IncreaseLoginFailedCount();
-            if (loginFailedCount > _maxTimesToAllowLogInFail)
+            var loginIPFailedCount = cacheService.IncreaseLoginIPFailedCount();
+            if (loginIPFailedCount > _maxTimesToAllowLogInFail)
             {
-                var ipLockedError = string.Format(Labels.iploginfailedmultipletimeserror, signInResult.Ip, _maxTimesToAllowLogInFail, _blockLoginMinute);
-                signInResult.ErrCode = SignInErrorContants.ErrorInvalidLogin;
-                signInResult.ErrMsg = ipLockedError;
-            }
-            else
-            {
-                signInResult.ErrCode = verifySignInResult.ErrorCode;
-                signInResult.ErrMsg = verifySignInResult.ErrorMessage;
-                if (loginFailedCount == _maxTimesToAllowLogInFail)
+                if (loginIPFailedCount == _maxTimesToAllowLogInFail + 1)
                 {
                     LogIpBlocked(signInResult);
                 }
+
+                cacheService.SetLoginIPBlocked(_blockLoginMinute);
+                var ipLockedError = string.Format(Labels.iploginfailedmultipletimeserror, signInResult.Ip, _maxTimesToAllowLogInFail, _blockLoginMinute);
+                signInResult.ErrCode = SignInErrorContants.IPBlocked;
+                signInResult.ErrMsg = ipLockedError;
+                return;
             }
+
+            var loginUserFailedCount = cacheService.IncreaseLoginUserFailedCount(signInResult.Username, _notInteractionTimeInMinutes);
+            if (loginUserFailedCount >= _loginFailTimeToStartUsingCaptcha)
+            {
+                signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
+            }
+
+            signInResult.ErrMsg = verifySignInResult.ErrorMessage;
         }
 
-        /// <summary>
-        /// Update result login after login successfully.
-        /// </summary>
-        /// <param name="password">User password.</param>
-        /// <param name="signInResult">Login result.</param>
-        /// <param name="verifySignInResult">Verify sign in result.</param>
         private void UpdateResultAfterLoginSuccessfully(
             string password,
             SignInResult signInResult,
@@ -424,15 +359,14 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string deviceId,
             string browserSize)
         {
-            cacheService.ResetLoginFailed();
+            cacheService.ResetLoginSession(signInResult.Username);
 
-            var encryptPassword = AesExtension.Encrypt(password, AppSession.EncryptCode);
+            var encryptPassword = AesService.Default.Encrypt(password, AppSession.EncryptCode);
             var crossCookieValue = EncryptExtension.CfsEnCode((verifySignInResult.CustId + verifySignInResult.LoginTime.Minute).ToString());
 
             string url;
             var robotResult = robotDetector.IsRobot(httpContext.Request);
-
-            if (robotResult == 0)
+            if (robotResult == 0 || signInResult.IsCaptchaVerified)
             {
                 url = EncryptURLHelper.BuildAfterURL(httpContext, encryptPassword, verifySignInResult, deviceId, browserSize);
             }
@@ -458,11 +392,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 url = "RobotCaptcha/Index";
             }
 
-            signInResult.ErrMsg = LoginLanguages.Labels.lblLoginSuccessful;
+            signInResult.ErrMsg = Labels.lblLoginSuccessful;
             signInResult.AfterLoginUrl = url;
             signInResult.UTMS = crossCookieValue;
             signInResult.Domain = _baseDomain;
-            signInResult.ErrCode = -1;
+            signInResult.ErrCode = SignInErrorContants.Success;
             signInResult.Username = verifySignInResult.SubAccId == 0 ? verifySignInResult.Username : signInResult.Username;
 
             try
@@ -526,7 +460,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             if (result == ThrottleResult.Blocked)
             {
-                signInResult.ErrCode = SignInErrorContants.Error2;
+                signInResult.ErrCode = SignInErrorContants.LoginTooOften;
                 signInResult.ErrMsg = string.Format(Labels.LoginTooOftenBlockedMessage, username);
             }
 

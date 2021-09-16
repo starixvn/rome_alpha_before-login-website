@@ -1,11 +1,9 @@
-﻿@using Alpha.Captcha.Mvc
-@using CommonAppSetting = Fanex.Alpha.Before.Common.Configurations.AppSetting
+﻿@using CommonAppSetting = Fanex.Alpha.Before.Common.Configurations.AppSetting
 @{
     Layout = null;
     var version = CommonAppSetting.Version;
     var errorMessage = (string)TempData["ErrorMessage"];
 }
-@model Alpha.Captcha.Models.CaptchaSetting
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,15 +14,48 @@
     <meta name="author" content="">
     <title>Robot Captcha</title>
     <link rel="stylesheet" href="@Url.Content("~/assets/bundles/robotcaptcha.min.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content("~/assets/styles/alpha.slider-captcha.css?v=" + version)" />
 </head>
 <body>
     <div class="wrapper">
-        @Html.Captcha(Model)
-        @if (!string.IsNullOrWhiteSpace(errorMessage))
-        {
-            <p class="error">@errorMessage</p>
-        }
+        <form method="post" id="captcha-form">
+            <div id="captcha" name="token"></div>
+        </form>
     </div>
+    <script src="~/assets/scripts/alpha.slider-captcha.js?ver=@version" type="text/javascript"></script>
+    <script>
+        var tooManyFailedLoginPageUrl = "@Html.Raw(ViewBag.tooManyFailedLoginPageUrl)";
+        sliderCaptcha('captcha', {
+            lang: "@Fanex.Alpha.Before.Common.Configurations.AppSession.Language",
+            baseUri: "@Url.Content("~")",
+            callback: function (response, event) {
+                if (response.Code === 0) {
+                    if (localStorage) {
+                        localStorage.removeItem(itemKey);
+                    }
+                    document.getElementById("captcha-form").submit();
+                } else {
+                    var itemKey = "captcha-fail-count";
+                    if (!localStorage) {
+                        event.preventDefault = true;
+                        location.href = event.instance.baseUrl;
+                        return;
+                    }
+
+                    var count = parseInt(localStorage.getItem(itemKey)) || 0;
+                    count++;
+                    if (count >= 5) {
+                        event.preventDefault = true;
+                        localStorage.removeItem(itemKey);
+                        location.href = tooManyFailedLoginPageUrl;
+                        return;
+                    }
+
+                    localStorage.setItem(itemKey, count);
+                }
+            }
+        });
+    </script>
     @{ Html.RenderPartial("~/Views/Shared/GoogleAnalytic.cshtml", CommonAppSetting.GoogleAnalyticId); }
     @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
 </body>

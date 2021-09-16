@@ -11,7 +11,7 @@ body {
     font-size: $font-size + 2;
     background: url(../images/crossword.png) $bg-color;
     margin: 0;
-    padding-top: 10%;
+    padding-top: 8%;
     color: $text-color;
 }
 
@@ -84,7 +84,7 @@ input[type="checkbox"], input[type="radio"] {
 
 %block {
     margin: auto;
-    max-width: 360px;
+    max-width: 376px;
     width: 400px;
     @include box-sizing;
 }
@@ -349,6 +349,7 @@ input[type="checkbox"], input[type="radio"] {
 
     .block-login {
         @include box-shadow-multiple(none);
+        padding: 0;
 
         .rowlg {
             margin-bottom: 16px;

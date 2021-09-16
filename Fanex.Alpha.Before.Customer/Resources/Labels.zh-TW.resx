@@ -145,4 +145,7 @@
   <data name="tooManyFailedCaptcha" xml:space="preserve">
     <value>無效驗證碼嘗試次數過多</value>
   </data>
+  <data name="BotDetectionMessage" xml:space="preserve">
+    <value>為確保帳號安全 ， 本次登錄需要進行安全驗證 。</value>
+  </data>
 </root>

@@ -1,87 +1,81 @@
 ﻿namespace Fanex.Alpha.Before.Customer.Services.SignIn
 {
+    using System;
     using Fanex.Alpha.Before.Common.Constants;
     using Fanex.Alpha.Before.Common.Helpers;
     using Fanex.Alpha.Before.Infrastructure.Extensions;
-    using System;
+    using Fanex.Caching;
 
     public interface ICacheService
     {
-        string GetLastLoginUsername();
+        bool IsLoginIPBlocked();
 
-        void SetLastLoginUsername(string username);
+        void SetLoginIPBlocked(int blockLoginMinute);
 
-        int GetTotallyLoginFailed();
+        int GetLoginIPFailedCount();
 
-        int GetCurrentLoginFailed();
+        int GetLoginUserFailedCount(string username);
 
-        DateTime GetLoginFailedTime();
+        void ResetLoginSession(string username);
 
-        void SetLoginFailedTime();
+        int IncreaseLoginIPFailedCount();
 
-        void ResetLoginFailed();
-
-        void ResetCurrentLoginFailed();
-
-        int IncreaseLoginFailedCount();
+        int IncreaseLoginUserFailedCount(string username, int notInteractionTimeInMinutes);
     }
 
-    public class CacheService: ICacheService
+    public class CacheService : ICacheService
     {
-        private readonly string _lastLoginUserNameSessionKey = string.Format(SessionConstants.LASTLOGINUSERNAME, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
-        private readonly string _totalLoginFailedSessionKey = string.Format(SessionConstants.TOTALLOGINFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
-        private readonly string _currentLoginFailedSessionKey = string.Format(SessionConstants.CURRENTLOGINFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
-        private readonly string _latestLoginFailSessionKey = string.Format(SessionConstants.LOGINFAILEDTIME, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
+        private readonly string _loginIPFailedCountSessionKey = string.Format(SessionConstants.LOGINIPFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
+        private readonly string _loginIPBlockedSessionKey = string.Format(SessionConstants.LOGINIPBLOCKED, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
 
-        public string GetLastLoginUsername()
+        private static string GetLoginUserFailedCountSessionKey(string username)
         {
-            return CacheExtension.Get(_lastLoginUserNameSessionKey, string.Empty);
+            return string.Format(SessionConstants.LOGINUSERFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP(), username);
         }
 
-        public void SetLastLoginUsername(string username)
+        public bool IsLoginIPBlocked()
         {
-            CacheExtension.Set(_lastLoginUserNameSessionKey, username);
+            return CacheExtension.Contain(_loginIPBlockedSessionKey);
         }
 
-        public int GetTotallyLoginFailed()
+        public void SetLoginIPBlocked(int blockLoginMinute)
         {
-            return CacheExtension.Get(_totalLoginFailedSessionKey, 0);
+            CacheExtension.Remove(_loginIPFailedCountSessionKey);
+            CacheExtension.Set(_loginIPBlockedSessionKey, DateTime.UtcNow, new CacheItemOptions
+            {
+                AbsoluteExpiration = DateTime.UtcNow.AddMinutes(blockLoginMinute)
+            });
         }
 
-        public int GetCurrentLoginFailed()
+        public int GetLoginIPFailedCount()
         {
-            return CacheExtension.Get(_currentLoginFailedSessionKey, 0);
+            return CacheExtension.Get(_loginIPFailedCountSessionKey, 0);
         }
 
-        public DateTime GetLoginFailedTime()
+        public int GetLoginUserFailedCount(string username)
         {
-            return CacheExtension.Get(_latestLoginFailSessionKey, DateTime.MinValue);
+            return CacheExtension.Get(GetLoginUserFailedCountSessionKey(username), 0);
         }
 
-        public void SetLoginFailedTime()
+        public void ResetLoginSession(string username)
         {
-            CacheExtension.Set(_latestLoginFailSessionKey, DateTime.UtcNow);
+            CacheExtension.Remove(_loginIPFailedCountSessionKey);
+            CacheExtension.Remove(_loginIPBlockedSessionKey);
+            CacheExtension.Remove(GetLoginUserFailedCountSessionKey(username));
         }
 
-        public void ResetLoginFailed()
+        public int IncreaseLoginIPFailedCount()
         {
-            CacheExtension.Remove(_totalLoginFailedSessionKey);
-            CacheExtension.Remove(_currentLoginFailedSessionKey);
-            CacheExtension.Remove(_latestLoginFailSessionKey);
+            var loginIPFailedCount = GetLoginIPFailedCount() + 1;
+            CacheExtension.Set(_loginIPFailedCountSessionKey, loginIPFailedCount);
+            return loginIPFailedCount;
         }
 
-        public void ResetCurrentLoginFailed()
+        public int IncreaseLoginUserFailedCount(string username, int notInteractionTimeInMinutes)
         {
-            CacheExtension.Remove(_currentLoginFailedSessionKey);
-        }
-
-        public int IncreaseLoginFailedCount()
-        {
-            var loginFailCount = GetTotallyLoginFailed() + 1;
-            CacheExtension.Set(_totalLoginFailedSessionKey, loginFailCount);
-            var currentLoginFailCount = GetCurrentLoginFailed() + 1;
-            CacheExtension.Set(_currentLoginFailedSessionKey, currentLoginFailCount);
-            return loginFailCount;
+            var loginUserFailedCount = GetLoginUserFailedCount(username) + 1;
+            CacheExtension.Set(GetLoginUserFailedCountSessionKey(username), loginUserFailedCount, TimeSpan.FromMinutes(notInteractionTimeInMinutes));
+            return loginUserFailedCount;
         }
     }
 }

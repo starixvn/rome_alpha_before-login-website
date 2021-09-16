@@ -27,7 +27,6 @@ else if (Model.GetType() == typeof(Fanex.Alpha.Before.Customer.Models.SignInResu
                 Loading... please wait
             </h2>
         </div>
-
         <div id="mainholder" class="block-login">
             <form id="formLogin" class="form-login" action="@Url.Content("~/")" method="POST" autocomplete="off">
                 @RenderBody()
@@ -38,7 +37,6 @@ else if (Model.GetType() == typeof(Fanex.Alpha.Before.Customer.Models.SignInResu
                 @Html.AntiForgeryToken()
             </form>
         </div>
-
         @if (data.IsChangedPassword)
         {
             <div class="block-info">

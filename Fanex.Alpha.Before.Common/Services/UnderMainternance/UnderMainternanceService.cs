@@ -1,7 +1,7 @@
 ﻿using Fanex.Alpha.Before.Common.Configurations.UnderMainternance;
 using Fanex.Alpha.Before.Common.Models;
+using ONEbook.UM;
 using ONEbook.UM.Services;
-using ONEbook.UM.Services.Impl;
 
 namespace Fanex.Alpha.Before.Common.Services.UnderMainternance
 {
@@ -15,7 +15,11 @@ namespace Fanex.Alpha.Before.Common.Services.UnderMainternance
 
         public UnderMainternanceService(IMaintenanceService maintenanceService)
         {
-            _maintenanceService = maintenanceService ?? new MaintenanceService();
+            _maintenanceService = maintenanceService ?? new MaintenanceService(
+                UMClientManager.RestClient,
+                UMClientManager.CacheService,
+                UMClientManager.UMClientConfigs,
+                UMClientManager.HttpContext);
         }
 
         /// <summary>

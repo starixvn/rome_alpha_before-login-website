@@ -6,14 +6,6 @@
 
 namespace Fanex.Alpha.Before.Customer.Controllers
 {
-    using CaptchaMvc.HtmlHelpers;
-    using Fanex.Alpha.Before.Common.Configurations;
-    using Fanex.Alpha.Before.Common.Controllers;
-    using Fanex.Alpha.Before.Common.Helpers;
-    using Fanex.Alpha.Before.Customer.Constants;
-    using Fanex.Alpha.Before.Customer.Models;
-    using Fanex.Alpha.Before.Customer.Services.SignIn;
-    using Logging.Extensions.Web;
     using System;
     using System.Configuration;
     using System.Linq;
@@ -22,6 +14,16 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using System.Text;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Fanex.Alpha.Before.Common.Configurations;
+    using Fanex.Alpha.Before.Common.Controllers;
+    using Fanex.Alpha.Before.Common.Helpers;
+    using Fanex.Alpha.Before.Customer.Constants;
+    using Fanex.Alpha.Before.Customer.Models;
+    using Fanex.Alpha.Before.Customer.Services.SignIn;
+    using global::Alpha.SliderCaptcha.Mvc;
+    using global::Alpha.SliderCaptcha.Core.Services;
+    using Logging.Extensions.Web;
+    using SliderCaptcha = global::Alpha.SliderCaptcha;
 
     /// <summary>
     /// TODO: Update summary.
@@ -29,7 +31,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     public class AuthController : BaseController
     {
         private readonly ISignInService _signInService;
-        private readonly string viewPath = "~/Areas/Customer/Views/SignIn/Index.cshtml";
+        private const string SignInViewPath = "~/Areas/Customer/Views/SignIn/Index.cshtml";
 
         public AuthController() :
             this(null)
@@ -59,13 +61,13 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             var loginResult = _signInService.SignIn();
-            loginResult.ErrCode = !string.IsNullOrWhiteSpace(r) ? SignInErrorContants.Error2 : loginResult.ErrCode;
+            loginResult.ErrCode = !string.IsNullOrWhiteSpace(r) ? SignInErrorContants.ServerError : loginResult.ErrCode;
             loginResult.ErrMsg = !string.IsNullOrWhiteSpace(r) ? r : loginResult.ErrMsg;
 
             ViewBag.FPSToken = FPS.Client.Token.Generate();
             AppSession.ResetRobotCaptchaSession();
 
-            return View(viewPath, loginResult);
+            return View(SignInViewPath, loginResult);
         }
 
         /// <summary>
@@ -85,42 +87,21 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             string txtPassWord,
             string hidLanguage,
             string code,
+            string captchaToken,
             string browserSize,
             string deviceId = "N/A")
         {
             AssignSettingLanguage(hidLanguage);
             ViewBag.FPSToken = FPS.Client.Token.Generate();
-            AppSession.ResetRobotCaptchaSession();
-            bool validCaptcha = false;
-            if (_signInService.IsShowReCaptcha())
+            var model = new SignInModel(txtUserName, txtPassWord, hidLanguage, code, captchaToken, browserSize, deviceId);
+            var loginResult = _signInService.SignIn(model);
+            if (loginResult.ErrCode == SignInErrorContants.Success && !string.IsNullOrEmpty(loginResult.AfterLoginUrl))
             {
-                try
-                {
-                    validCaptcha = this.IsCaptchaValid(null);
-                }
-                catch
-                {
-                    validCaptcha = false;
-                }
+                FPSTracking(loginResult);
+                return Redirect(loginResult.AfterLoginUrl);
             }
 
-            var loginResult = _signInService.SignInWithRecaptcha(txtUserName, txtPassWord, hidLanguage, validCaptcha, code, deviceId, browserSize);
-
-            if (loginResult != null && loginResult.ErrCode != SignInErrorContants.Error2)
-            {
-                if (loginResult.ErrCode == -1)
-                {
-                    FPSTracking(loginResult);
-
-                    return string.IsNullOrEmpty(loginResult.AfterLoginUrl) ?
-                        Index() :
-                        Redirect(loginResult.AfterLoginUrl);
-                }
-
-                ViewBag.ShowReCaptcha = _signInService.IsShowReCaptcha();
-            }
-
-            return View(viewPath, loginResult);
+            return View(SignInViewPath, loginResult);
         }
 
         [HttpPost]

@@ -1,21 +1,43 @@
 ﻿namespace Fanex.Alpha.Before.Customer.Controllers
 {
-    using Fanex.Alpha.Before.Common.Configurations;
-    using Fanex.Alpha.Before.Common.Controllers;
-    using Fanex.Alpha.Before.Common.Helpers;
-    using Fanex.Alpha.Before.Customer.Resources;
-    using Fanex.Alpha.Before.Customer.Services.SignIn;
-    using FPS.Browserless.Detection.Client;
-    using global::Alpha.Captcha.Models;
-    using global::Alpha.Captcha.Mvc;
     using System;
+    using System.Diagnostics;
     using System.Globalization;
     using System.Threading;
     using System.Web.Mvc;
     using System.Web.Security;
+    using Fanex.Alpha.Before.Common.Configurations;
+    using Fanex.Alpha.Before.Common.Controllers;
+    using Fanex.Alpha.Before.Common.Helpers;
+    using Fanex.Alpha.Before.Customer.Models;
+    using Fanex.Alpha.Before.Customer.Resources;
+    using Fanex.Alpha.Before.Customer.Services.SignIn;
+    using Fanex.Logging.Extensions.Web;
+    using FPS.Browserless.Detection.Client;
+    using global::Alpha.SliderCaptcha.Core;
+    using global::Alpha.SliderCaptcha.Core.Services;
+    using global::Alpha.SliderCaptcha.Mvc;
 
     public class RobotCaptchaController : BaseController
     {
+        private const int LimitRobotCaptchaFailedCount = 5;
+        private readonly ICaptchaService captchaService;
+        private readonly CaptchaOptions captchaOptions;
+
+        public RobotCaptchaController()
+            : this(null, null)
+        {
+        }
+
+        public RobotCaptchaController(CaptchaOptions captchaOptions, IServiceFactory serviceFactory)
+        {
+            this.captchaOptions = captchaOptions ?? SliderCaptchaHandler.CaptchaOptions;
+            serviceFactory = serviceFactory ?? SliderCaptchaHandler.ServiceFactory;
+            captchaService = serviceFactory.CaptchaService;
+        }
+
+        private static string TooManyFailedLoginPageUrl => $"{FormsAuthentication.LoginUrl}?r={Labels.tooManyFailedCaptcha}";
+
         public ActionResult Index(string returnUrl)
         {
             if (IsNotRobot())
@@ -30,17 +52,24 @@
                 return Redirect(EncryptURLHelper.BuildAfterURL(HttpContext.ApplicationInstance.Context));
             }
 
-            return View("~/Areas/Customer/Views/RobotCaptcha/Index.cshtml", GetCaptchaSetting());
+            ViewBag.tooManyFailedLoginPageUrl = TooManyFailedLoginPageUrl;
+            return View("~/Areas/Customer/Views/RobotCaptcha/Index.cshtml");
         }
 
-        [HttpPost, CaptchaValidation]
-        public ActionResult Index()
+        [HttpPost]
+        public ActionResult Index(RobotCaptchaModel model)
         {
-            if (ModelState.IsValid)
+            var isVerifiedResult = captchaService.IsVerfied(model.Token);
+            if (isVerifiedResult.IsSuccess)
             {
                 AppSession.InputCaptchaSuccess = true;
-
                 return RedirectToAction(nameof(InputCaptchaSuccessfully));
+            }
+
+            if (captchaOptions.LogEnabled)
+            {
+                var exception = new Exception($"robot captcha: key={AppSession.Username}, code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
+                ExceptionHandler.Handle(exception, TraceEventType.Warning);
             }
 
             if (AppSession.CustId == 0)
@@ -52,11 +81,11 @@
 
             AppSession.IncreaseRobotCaptchaFailedCount();
 
-            if (AppSession.RobotCaptchaFailedCount >= 5)
+            if (AppSession.RobotCaptchaFailedCount >= LimitRobotCaptchaFailedCount)
             {
                 TempData["ErrorMessage"] = string.Empty;
 
-                return Redirect($"{FormsAuthentication.LoginUrl}?r={Labels.tooManyFailedCaptcha}");
+                return Redirect(TooManyFailedLoginPageUrl);
             }
 
             return RedirectToAction(nameof(Index));
@@ -87,12 +116,5 @@
 
         private static bool IsIgnoreRobotCaptcha()
             => AppSetting.IsIgnoreRobotCaptcha(AppSession.SuperId, AppSession.Site);
-
-        private static CaptchaSetting GetCaptchaSetting()
-            => new CaptchaSetting
-            {
-                FunctionName = "RobotCaptcha",
-                CaptchaLevel = CaptchaLevels.Low
-            };
     }
 }

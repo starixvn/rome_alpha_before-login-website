@@ -1,11 +1,11 @@
 ﻿namespace Fanex.Alpha.Before.Infrastructure.Extensions
 {
+    using System;
+    using System.Configuration;
     using Fanex.Caching;
     using Fanex.Caching.Redis;
     using Fanex.Logging.Extensions.Web;
     using StackExchange.Redis;
-    using System;
-    using System.Configuration;
 
     public static class CacheExtension
     {
@@ -38,17 +38,27 @@
 
         public static void Set<T>(string key, T value)
         {
+            Set<T>(key, value, TimeSpan.FromDays(1));
+        }
+
+        public static void Set<T>(string key, T value, CacheItemOptions options)
+        {
             try
             {
-                cacheService.Set(key, value, new CacheItemOptions
-                {
-                    SlidingExpiration = TimeSpan.FromDays(1)
-                });
+                cacheService.Set(key, value, options);
             }
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex);
             }
+        }
+
+        public static void Set<T>(string key, T value, TimeSpan timeSpan)
+        {
+            Set<T>(key, value, new CacheItemOptions
+            {
+                SlidingExpiration = timeSpan
+            });
         }
 
         public static void Remove(string key)
@@ -61,6 +71,11 @@
             {
                 ExceptionHandler.Handle(ex);
             }
+        }
+
+        public static bool Contain(string key)
+        {
+            return cacheService.Contain(key);
         }
     }
 }

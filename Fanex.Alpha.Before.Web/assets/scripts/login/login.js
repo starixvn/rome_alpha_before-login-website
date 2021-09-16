@@ -120,6 +120,9 @@ Sphinx.Login = {
         var flag = domElements.flag;
         var language = Sphinx.Resources;
         var resource = language.getLanguage(languageCode);
+        if (window.scInstance) {
+            window.scInstance.changeLanguage(languageCode);
+        }
 
         domElements.divTechnicalErrorMsg.html(resource.messageAlwayShowOnLoginPage.replace("{0}", domElements.technicalErrorTime));
 
