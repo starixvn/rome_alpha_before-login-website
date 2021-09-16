@@ -23,6 +23,8 @@
             return new CacheService(new RedisCache(redisCacheOptions));
         }
 
+        public static ICacheService CacheService => cacheService;
+
         public static T Get<T>(string key, T defaultValue)
         {
             try

@@ -21,6 +21,7 @@
     using ONEbook.UM.Transport;
     using global::Alpha.SliderCaptcha.Mvc;
     using global::Alpha.SliderCaptcha.Core;
+    using Fanex.Alpha.Before.Customer.Services.SignIn;
 
     /// <summary>
     /// MVC Application.
@@ -71,11 +72,11 @@
 
             var sensitiveInfo = new List<string> { "password", "txtpassword" };
             LoggingConfig.Init(sensitiveInfo, DatabaseInfoGetters.GetDbExceptionInfo, $"{GetVirtualAppPath()}/assets/bundles/raven.min.js");
-            SliderCaptchaHandler.Use();
+            SliderCaptchaHandler.Use(new CaptchaServiceFactory());
             var umConfig = new UMClientConfiguration().Initialize();
             UMClientManager
                 .UseConfig(umConfig)
-                .UseCacheService(new UMCacheService(new CacheService()))
+                .UseCacheService(new UMCacheService(new Caching.CacheService()))
                 .UseRestClient(new UMRestClient(umConfig))
                 .UseHttpContext(new HttpContextHelper())
                 .AddErrorHandler((message) =>
