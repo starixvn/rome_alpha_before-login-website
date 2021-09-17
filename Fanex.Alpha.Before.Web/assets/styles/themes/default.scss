@@ -402,11 +402,11 @@ input[type="checkbox"], input[type="radio"] {
 
     .switch-mode {
         cursor: pointer;
-        width: 50px;
-        height: 22px;
-        background: #F0F0F0;
-        border: 1px solid #C7C7C7;
-        border-radius: 100px;
+        //width: 50px;
+        //height: 22px;
+        //background: #F0F0F0;
+        //border: 1px solid #C7C7C7;
+        //border-radius: 100px;
         position: relative;
         margin-bottom: 0;
         display: inline-block;
@@ -419,12 +419,12 @@ input[type="checkbox"], input[type="radio"] {
 
     .switch-mode:after {
         content: url("../images/mode/light.svg");
-        position: absolute;
-        top: 2px;
-        left: 2px;
+        ///position: absolute;
+        //top: 2px;
+        //left: 2px;
         transition: 0.3s;
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
         border-radius: 10px;
 
         @media screen and (max-device-width: 768px) {
@@ -434,8 +434,8 @@ input[type="checkbox"], input[type="radio"] {
     }
 
     .switch-mode.dark-mode {
-        background-color: #000;
-        border: 1px solid #303030;
+        //background-color: #000;
+        //border: 1px solid #303030;
     }
 
     .switch-mode.dark-mode:after {
