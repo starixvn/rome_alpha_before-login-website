@@ -214,6 +214,58 @@ input[type="checkbox"], input[type="radio"] {
                 padding-left: 0;
             }
         }
+
+        &.checkbox {
+            label {
+                input {
+                    display: none;
+                }
+
+                input:checked + span {
+                    &:after {
+                        background: #36587D;
+                        border-color: #36587D;
+                    }
+                    &:before{
+                        opacity: 1;
+                    }
+                } 
+
+                span {
+                    padding-left: 29px;
+                    position: relative;
+                    cursor: pointer;
+
+                    &:after {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 16px;
+                        height: 16px;
+                        content: "";
+                        border: 2px solid #EDEDED;
+                        border-radius: 2px;
+                        z-index: 1;
+                    }
+
+                    &:before {
+                        transform: rotate( -45deg); 
+                        content: "";
+                        position: absolute;
+                        top: 5px;
+                        left: 4px;
+                        border: 2px solid #fff;
+                        border-top: none;
+                        border-right: none;
+                        height: 4px;
+                        width: 9px;
+                        z-index: 2;      
+                        opacity: 0;
+
+                    }
+                }
+            }
+        }
     }
 
     .btnLogin {
