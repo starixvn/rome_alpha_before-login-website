@@ -285,11 +285,13 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\RobotCaptchaController.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="GlobalSuppressions2.cs" />
     <Compile Include="Models\RobotCaptchaModel.cs" />
     <Compile Include="Models\SignInModel.cs" />
     <Compile Include="Models\SignInResult.cs" />
     <Compile Include="Models\VerifySignInResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\KickoutCustomerRepository.cs" />
     <Compile Include="Repositories\SignIn\ISignInRepository.cs" />
     <Compile Include="Repositories\SignIn\SignInRepository.cs" />
     <Compile Include="Resources\Labels.Designer.cs">
@@ -329,6 +331,7 @@
     </Compile>
     <Compile Include="Services\FPS\IRobotDetector.cs" />
     <Compile Include="Services\FPS\RobotDetector.cs" />
+    <Compile Include="Services\KickoutCustomerService.cs" />
     <Compile Include="Services\SignIn\CacheService.cs" />
     <Compile Include="Services\SignIn\CaptchaServiceFactory.cs" />
     <Compile Include="Services\SignIn\EncryptURLHelper.cs" />

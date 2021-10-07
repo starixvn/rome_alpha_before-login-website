@@ -13,6 +13,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Web;
+    using System.Web.Hosting;
     using Cryptography.Aes;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Extensions;
@@ -62,6 +63,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly IRobotDetector robotDetector;
         private readonly CaptchaOptions captchaOptions;
         private readonly ICaptchaService captchaService;
+        private readonly IKickoutCustomerService kickoutCustomerService;
 
         private readonly Logging.ILogger logger;
         private readonly HttpContext httpContext;
@@ -77,7 +79,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         }
 
         public SignInService() :
-            this(null, null, null, null, null, null, null)
+            this(null, null, null, null, null, null, null, null)
         {
         }
 
@@ -87,7 +89,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             HttpContext httpContext,
             ICacheService cacheService,
             CaptchaOptions captchaOptions,
-            IServiceFactory serviceFactory)
+            IServiceFactory serviceFactory,
+            IKickoutCustomerService kickoutCustomerService)
         {
             _signInRepository = signInRepository ?? new SignInRepository();
             this.cacheService = cacheService ?? new CacheService();
@@ -119,6 +122,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             this.captchaOptions = captchaOptions ?? SliderCaptchaHandler.CaptchaOptions;
             serviceFactory = serviceFactory ?? SliderCaptchaHandler.ServiceFactory;
             captchaService = serviceFactory.CaptchaService;
+            this.kickoutCustomerService = kickoutCustomerService ?? new KickoutCustomerService();
         }
 
         public SignInResult SignIn()
@@ -413,6 +417,16 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             catch (Exception ex)
             {
                 ExceptionHandler.Handle(ex);
+            }
+
+            if (verifySignInResult.IsKickoutDueToProtectedMode)
+            {
+                HostingEnvironment.QueueBackgroundWorkItem(ctor => kickoutCustomerService.KickoutDueToProtectedMode(
+                    verifySignInResult.CustId,
+                    verifySignInResult.RoleId,
+                    verifySignInResult.ServerId,
+                    signInResult.Ip,
+                    verifySignInResult.SubAccId));
             }
         }
 

@@ -74,5 +74,9 @@ namespace Fanex.Alpha.Before.Customer.Models
             get;
             set; 
         }
+
+        public int ServerId { get; set; }
+
+        public bool IsKickoutDueToProtectedMode { get; set; }
     }
 }
