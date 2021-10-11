@@ -121,7 +121,7 @@
     <value>您没有使用此功能的权限</value>
   </data>
   <data name="Error_Server" xml:space="preserve">
-    <value>哎哟..因为系统故障所以您会身在此处，请向管理层联系吧</value>
+    <value>Sorry, there was an unexpected issue on the server. Please seek help from our customer support. [5004]</value>
   </data>
   <data name="NoPermission" xml:space="preserve">
     <value>You don't have permission on this function!</value>

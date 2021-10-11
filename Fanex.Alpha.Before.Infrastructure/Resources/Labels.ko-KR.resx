@@ -121,7 +121,7 @@
     <value>해당 기능에 대한 권한이 없습니다.</value>
   </data>
   <data name="Error_Server" xml:space="preserve">
-    <value>죄송합니다. 시스템에러가 발생했습니다. 관리자에게 문의 바랍니다.</value>
+    <value>Sorry, there was an unexpected issue on the server. Please seek help from our customer support. [5004]</value>
   </data>
   <data name="NoPermission" xml:space="preserve">
     <value>You don't have permission on this function!</value>
