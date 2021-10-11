@@ -13,9 +13,12 @@
 }
 
 <div class="box-lang">
-    <div class="switch-mode-box">
-        <span class="switch-mode @(string.IsNullOrWhiteSpace(darkModeName) ? string.Empty : "dark-mode")" id="icon-switch-mode"></span>
-    </div>
+    @if (AppSetting.IsMBCSite)
+    {
+        <div class="switch-mode-box">
+            <span class="switch-mode @(string.IsNullOrWhiteSpace(darkModeName) ? string.Empty : "dark-mode")" id="icon-switch-mode"></span>
+        </div>
+    }
     <div class="dropdown">
         <span class="btn dropdown-toggle" type="button" id="langList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span class="flag" id="flag"></span>
