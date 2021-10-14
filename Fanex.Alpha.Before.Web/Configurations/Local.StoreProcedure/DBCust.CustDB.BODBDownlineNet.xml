@@ -2,7 +2,7 @@
 <Functions SiteId="105" SiteName="Alpha">
   <Function Name="Login">
     <Setting Key="Age_LoginClaimDownline" SpName="Age_LoginClaimDownline" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
-    <Setting Key="Age_LoginVerifyDownline" SpName="Age_LoginVerifyDownline_uat2" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
+    <Setting Key="Age_LoginVerifyDownline" SpName="Age_LoginVerifyDownline" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
     <Setting Key="Age_LoginDownline" SpName="Age_LoginDownline" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
     <Setting Key="Age_LoginDownline_Sub" SpName="Age_LoginDownline_Sub" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
     <Setting Key="Age_LoginDownline_Admin" SpName="Age_LoginDownline_Admin" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />

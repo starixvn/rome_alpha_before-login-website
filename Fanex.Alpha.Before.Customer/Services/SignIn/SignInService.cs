@@ -12,8 +12,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Web;
-    using System.Web.Hosting;
     using Cryptography.Aes;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Extensions;
@@ -421,7 +421,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
             if (verifySignInResult.IsKickoutDueToProtectedMode)
             {
-                HostingEnvironment.QueueBackgroundWorkItem(ctor => kickoutCustomerService.KickoutDueToProtectedMode(
+                Task.Run(() => kickoutCustomerService.KickoutDueToProtectedMode(
                     verifySignInResult.CustId,
                     verifySignInResult.RoleId,
                     verifySignInResult.ServerId,
