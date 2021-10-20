@@ -241,7 +241,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 }
 
                 var password = AesService.Default.Decrypt(model.Password, AppSession.EncryptCode);
-                VerifyDownlineLogin(model.Username, password, model.DeviceId, model.BrowserSize, signInResult);
+                var isDarkMode = AppSetting.IsMBCSite
+                   ? !string.IsNullOrWhiteSpace(AppSession.DarkModeName)
+                   : default(bool?);
+                VerifyDownlineLogin(model.Username, password, model.DeviceId, model.BrowserSize, signInResult, isDarkMode);
             }
             catch (Exception ex)
             {
@@ -296,7 +299,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult);
+                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult, null);
             }
             catch (Exception ex)
             {
@@ -439,7 +442,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string password,
             string deviceId,
             string browserSize,
-            SignInResult signInResult)
+            SignInResult signInResult,
+            bool? isDarkMode)
         {
             var verifySignInResult = new VerifySignInResult();
             var request = httpContext.Request;
@@ -453,7 +457,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize);
                     requestInfo["countrycode"] = GetCountryCode(IPHelper.ClientIP());
                     requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
-                    verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
+                    verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo, isDarkMode);
                     WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
 
                     if (verifySignInResult.ErrorCode == 0)

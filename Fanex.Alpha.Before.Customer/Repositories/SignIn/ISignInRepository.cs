@@ -14,6 +14,6 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
     /// </summary>
     public interface ISignInRepository
     {
-        VerifySignInResult VerifyDownlineLogin(string username, string password, Hashtable requestInfo);
+        VerifySignInResult VerifyDownlineLogin(string username, string password, Hashtable requestInfo, bool? isDarkMode);
     }
 }
