@@ -421,6 +421,7 @@ div {
         padding: 0 30px;
         width: 100%;
         @include box-shadow-multiple(none);
+        border: none;
 
         .rowlg {
             margin-bottom: 20px;
