@@ -47,6 +47,7 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
                 parameters.Add("site", string.Empty);
                 parameters.Add("roleid", 0);
                 parameters.Add("subusername", string.Empty);
+                parameters.Add("iskickout", false);
                 InsertRequestInfo(requestInfo, parameters);
 
                 objectDB.AssignParamValues(parameters);
@@ -69,7 +70,9 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
                     SuperId = Converter.ToInt(outputParams["superid"]),
                     Site = Converter.ToString2(outputParams["site"]),
                     RoleId = Converter.To<Byte>(outputParams["roleid"]),
-                    SubUserName = Converter.ToString2(outputParams["subusername"])
+                    SubUserName = Converter.ToString2(outputParams["subusername"]),
+                    ServerId = Converter.ToInt(outputParams["serverid"]),
+                    IsKickoutDueToProtectedMode = Converter.ToBool(outputParams["iskickout"])
                 };
             }
         }

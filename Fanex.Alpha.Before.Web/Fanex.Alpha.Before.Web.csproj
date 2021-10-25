@@ -546,12 +546,16 @@
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
     <Content Include="Configurations\Local.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\Local.StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml" />
     <Content Include="Configurations\Master.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\Master.StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml" />
     <Content Include="Configurations\MNL.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Configurations\MNL.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\MNL.StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\PRO.StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml" />
     <Content Include="Configurations\UAT.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
     <Content Include="assets\scripts\login\core.js" />
     <Content Include="assets\scripts\login\login.js" />
@@ -563,6 +567,7 @@
       <SubType>
       </SubType>
     </Content>
+    <Content Include="Configurations\UAT.StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS.ConnectionStrings.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
