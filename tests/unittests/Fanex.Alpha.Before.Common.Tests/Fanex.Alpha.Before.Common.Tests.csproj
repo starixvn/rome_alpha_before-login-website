@@ -92,8 +92,8 @@
       <HintPath>..\..\..\packages\NUnit.3.6.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ONEbook.UM, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\ONEbook.UM.3.1.0\lib\net461\ONEbook.UM.dll</HintPath>
+    <Reference Include="ONEbook.UM, Version=3.1.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ONEbook.UM.3.1.3-beta01\lib\net461\ONEbook.UM.dll</HintPath>
     </Reference>
     <Reference Include="ONEbook.UM.AspNetMVC, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\ONEbook.UM.AspNetMVC.3.1.0\lib\net461\ONEbook.UM.AspNetMVC.dll</HintPath>
