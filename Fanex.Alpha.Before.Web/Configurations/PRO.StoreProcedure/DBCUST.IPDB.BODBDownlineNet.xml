@@ -3,5 +3,6 @@
   <Function Name="Login">
     <Setting Key="Age_IPRangesByCountrySel" SpName="Age_IPRangesByCountrySel" DbName="DBCUST.IPDB.BODBDownlineNet" Plain="0" />
     <Setting Key="Age_AllowedAccessIPsSel" SpName="Age_AllowedAccessIPsSel" DbName="DBCUST.IPDB.BODBDownlineNet" Plain="0" />
+    <Setting Key="Acc_GetIPInfo_Full" SpName="Acc_GetIPInfo_Full" DbName="DBCust.IPDB.BODBDownlineNet" Plain="0"/>
   </Function>
 </Functions>

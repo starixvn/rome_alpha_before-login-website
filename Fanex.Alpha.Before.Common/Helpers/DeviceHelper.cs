@@ -4,10 +4,7 @@
     using System.Collections;
     using System.Diagnostics;
     using System.Web;
-    using Fanex.Common;
     using Logging.Extensions.Web;
-    using Sunplus.Core.Common.IPs;
-    using Sunplus.Core.Common.IPs.DAL;
     using UAParser;
 
     public static class DeviceHelper
@@ -15,16 +12,6 @@
         public static Hashtable GetRequestInfo(HttpRequest request, string browserSize)
         {
             Hashtable requestInfo = InitClientRequestInfo(request);
-
-            try
-            {
-                IPTable infoIp = IpUtils.LocationFromIP(Converter.ToString2(requestInfo["loginip"]));
-                requestInfo["countrycode"] = infoIp.CountryLong.Equals("reserved", StringComparison.OrdinalIgnoreCase) ? null : infoIp.CountryLong;
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex, TraceEventType.Information);
-            }
 
             try
             {
