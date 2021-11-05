@@ -70,7 +70,7 @@ namespace Fanex.Alpha.Before.Infrastructure.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sorry, there was an unexpected issue on the server. Please seek help from our customer support. [5004].
+        ///   Looks up a localized string similar to Sorry, there was an unexpected issue on the server. Please seek help from our customer support. [{0}].
         /// </summary>
         public static string Error_Server {
             get {

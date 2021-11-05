@@ -121,7 +121,7 @@
     <value>您没有使用此功能的权限</value>
   </data>
   <data name="Error_Server" xml:space="preserve">
-    <value>很抱歉，服务器发生意外错误，请联系我们的客服协助处理。[5004]</value>
+    <value>很抱歉，服务器发生意外错误，请联系我们的客服协助处理。[{0}]</value>
   </data>
   <data name="NoPermission" xml:space="preserve">
     <value>You don't have permission on this function!</value>

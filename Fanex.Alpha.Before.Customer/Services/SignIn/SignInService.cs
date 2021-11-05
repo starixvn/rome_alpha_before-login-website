@@ -170,7 +170,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 loginResult.ErrCode = ErrorCodeConstants.ServerError;
                 loginResult.ErrMsg = HttpContext.Current.Request.RequestContext.HttpContext.IsCustomErrorEnabled ?
-                    Infrastructure.Resources.Labels.Error_Server : ex.ToString();
+                    string.Format(Infrastructure.Resources.Labels.Error_Server, 5004) : ex.ToString();
                 ExceptionHandler.Handle(ex);
             }
 
@@ -243,7 +243,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 signInResult.ErrCode = ErrorCodeConstants.ServerError;
                 signInResult.ErrMsg = HttpContext.Current.Request.RequestContext.HttpContext.IsCustomErrorEnabled ?
-                    InfrastructureLanguages.Labels.Error_Server : ex.ToString();
+                    string.Format(Infrastructure.Resources.Labels.Error_Server, 5004) : ex.ToString();
                 ExceptionHandler.Handle(ex);
             }
 
@@ -298,7 +298,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 signInResult.ErrCode = ErrorCodeConstants.ServerError;
                 signInResult.ErrMsg = HttpContext.Current.Request.RequestContext.HttpContext.IsCustomErrorEnabled ?
-                    InfrastructureLanguages.Labels.Error_Server : ex.ToString();
+                    string.Format(Infrastructure.Resources.Labels.Error_Server, 5004) : ex.ToString();
                 ExceptionHandler.Handle(ex);
             }
 
