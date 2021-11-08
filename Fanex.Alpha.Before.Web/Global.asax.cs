@@ -89,10 +89,10 @@
 
         protected void Application_Error()
         {
-            if (Request.IsLocal)
-            {
-                return;
-            }
+            //if (Request.IsLocal)
+            //{
+            //    return;
+            //}
 
             ExceptionHandler.Handle(Server.GetLastError());
         }
