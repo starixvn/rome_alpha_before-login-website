@@ -230,13 +230,16 @@
     <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\LimitedCountryAccessController.cs" />
     <Compile Include="Controllers\OfflineController.cs" />
+    <Compile Include="Criteria\GetIPInformationCriteria.cs" />
     <Compile Include="Criteria\LimitedCountryAccess\GetAllowedAccessIPsCriteria.cs" />
     <Compile Include="Criteria\LimitedCountryAccess\GetIpRangesByCountryCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ActivityTracking\RobotCaptchaSession.cs" />
     <Compile Include="Models\GoogleReCaptcha.cs" />
+    <Compile Include="Models\IPInformationModel.cs" />
     <Compile Include="Models\IPRange.cs" />
     <Compile Include="Models\LimitedCountriesConfigModel.cs" />
+    <Compile Include="Repositories\IpAccessRepository.cs" />
     <Compile Include="Repositories\ObjectDbFactory.cs" />
     <Compile Include="Resources\Labels.ja-JP.Designer.cs">
       <AutoGen>True</AutoGen>

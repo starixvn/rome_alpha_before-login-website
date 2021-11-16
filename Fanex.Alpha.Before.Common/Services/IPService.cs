@@ -4,22 +4,41 @@
     using System.Collections.Generic;
     using System.Net;
     using System.Net.Sockets;
+    using Fanex.Alpha.Before.Common.Criteria;
+    using Fanex.Alpha.Before.Common.Models;
+    using Fanex.Alpha.Before.Common.Repositories;
 
     public interface IPService
     {
         string GetClientIp();
+
+        IPInformationModel GetIPInformation(string ip);
     }
 
     public class IpServiceImpl : IPService
     {
+        private readonly IIpAccessRepository repository;
+
         [ThreadStatic]
         private static bool IsLittleEndian = BitConverter.IsLittleEndian;
+
+        public IpServiceImpl() : this(null)
+        {
+        }
+
+        public IpServiceImpl(IIpAccessRepository repository)
+        {
+            this.repository = repository ?? new IpAccessRepository();
+        }
+
+        public IPInformationModel GetIPInformation(string ip)
+            => repository.GetIPInformation(new GetIPInformationCriteria(ip));
 
         public static bool IsIPV6(string clientIP)
         {
             IPAddress address;
 
-            return IPAddress.TryParse(clientIP, out address) 
+            return IPAddress.TryParse(clientIP, out address)
                 && address.AddressFamily == AddressFamily.InterNetworkV6;
         }
 

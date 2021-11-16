@@ -11,9 +11,9 @@
     {
         public ActionResult Index()
         {
-            var ex = Server.GetLastError();
+            var ex = Server?.GetLastError();
             var inner = ex?.InnerException;
-            var errCode = Request["code"];
+            var errCode = Request?["code"];
 
             if (string.IsNullOrWhiteSpace(errCode))
             {
@@ -36,9 +36,9 @@
             }
 
             ViewBag.ErrorMessage = Request != null ? Request.RequestContext.HttpContext.IsCustomErrorEnabled ?
-                string.Format(Infrastructure.Resources.Labels.Error_Server, errCode) : Server.GetLastError()?.ToString() : string.Empty;
+                string.Format(Infrastructure.Resources.Labels.Error_Server, errCode) : Server?.GetLastError()?.ToString() : string.Empty;
 
-            Server.ClearError();
+            Server?.ClearError();
 
             return View("~/Views/Common/ErrorPage/Index.cshtml");
         }

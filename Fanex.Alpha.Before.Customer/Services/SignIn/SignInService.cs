@@ -18,6 +18,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Extensions;
     using Fanex.Alpha.Before.Common.Helpers;
+    using Fanex.Alpha.Before.Common.Services;
     using Fanex.Alpha.Before.Customer.Configurations;
     using Fanex.Alpha.Before.Customer.Constants;
     using Fanex.Alpha.Before.Customer.Models;
@@ -58,6 +59,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly string _baseDomain = string.Empty;
         private readonly string _loginTheme;
 
+        private readonly IPService ipService;
         private readonly ISignInRepository _signInRepository;
         private readonly ICacheService cacheService;
         private readonly IRobotDetector robotDetector;
@@ -79,7 +81,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         }
 
         public SignInService() :
-            this(null, null, null, null, null, null, null, null)
+            this(null, null, null, null, null, null, null, null, null)
         {
         }
 
@@ -90,8 +92,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             ICacheService cacheService,
             CaptchaOptions captchaOptions,
             IServiceFactory serviceFactory,
-            IKickoutCustomerService kickoutCustomerService)
+            IKickoutCustomerService kickoutCustomerService,
+            IPService ipService)
         {
+            this.ipService = ipService ?? new IpServiceImpl();
             _signInRepository = signInRepository ?? new SignInRepository();
             this.cacheService = cacheService ?? new CacheService();
             var _loginThemeSection = LoginThemeSection.Instance;
@@ -447,6 +451,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 (success) =>
                 {
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize);
+                    requestInfo["countrycode"] = GetCountryCode(IPHelper.ClientIP());
                     requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
                     verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
                     WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
@@ -479,6 +484,18 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
 
             WriteLoginLogs(verifySignInResult.SuperId, $"After checking login too often: {JsonConvert.SerializeObject(signInResult)}");
+        }
+
+        private string GetCountryCode(string ip)
+        {
+            var countryCode = "Unknown";
+            var ipInformation = ipService.GetIPInformation(ip);
+            if (ipInformation != null)
+            {
+                countryCode = ipInformation.CountryLong == "Reserved" ? null : ipInformation.CountryLong;
+            }
+
+            return countryCode;
         }
 
         private static void WriteLoginLogs(int superId, string message)
