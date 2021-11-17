@@ -148,4 +148,7 @@
   <data name="BotDetectionMessage" xml:space="preserve">
     <value>为确保帐号安全 ， 本次登录需要进行安全验证 。</value>
   </data>
+  <data name="GoBackToLoginPage" xml:space="preserve">
+    <value>请返回&lt;a href="{0}"&gt;"登录页面"&lt;/a&gt;</value>
+  </data>
 </root>

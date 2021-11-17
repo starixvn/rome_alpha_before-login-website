@@ -147,4 +147,7 @@
   <data name="BotDetectionMessage" xml:space="preserve">
     <value>โปรดดำเนินการตามมาตรการตรวจสอบ เพื่อความปลอดภัยของบัญชีนี้</value>
   </data>
+  <data name="GoBackToLoginPage" xml:space="preserve">
+    <value>กลับไปยัง&lt;a href="{0}"&gt;หน้าล็อกอิน&lt;/a&gt;</value>
+  </data>
 </root>

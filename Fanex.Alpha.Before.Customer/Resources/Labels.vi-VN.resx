@@ -148,4 +148,7 @@ Vì lý do bảo mật, chức năng đăng nhập sẽ tạm khoá trong {2} ph
   <data name="BotDetectionMessage" xml:space="preserve">
     <value>Để đảm bảo an toàn cho tài khoản, bạn cần phải xác thực cho lần đăng nhập này.</value>
   </data>
+  <data name="GoBackToLoginPage" xml:space="preserve">
+    <value>Quay lại trang &lt;a href="{0}"&gt;đăng nhập&lt;/a&gt;</value>
+  </data>
 </root>

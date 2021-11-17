@@ -148,4 +148,7 @@
   <data name="BotDetectionMessage" xml:space="preserve">
     <value>為確保帳號安全 ， 本次登錄需要進行安全驗證 。</value>
   </data>
+  <data name="GoBackToLoginPage" xml:space="preserve">
+    <value>請返回&lt;a href="{0}"&gt;"登錄頁面"&lt;/a&gt;</value>
+  </data>
 </root>
