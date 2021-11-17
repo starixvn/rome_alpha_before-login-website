@@ -18,7 +18,7 @@
             <h3 style="color: #555">
                 @ViewBag.ErrorMessage
             </h3>
-            <h3>@Html.Raw(string.Format(Labels.GoBackToLoginPage, "//" + Request.Headers["Host"] + HostingEnvironment.ApplicationVirtualPath))</h3>
+            <h3>@Html.Raw(string.Format(Labels.GoBackToLoginPage, "//" + Request.Url.Host + HostingEnvironment.ApplicationVirtualPath))</h3>
         </div>
     </center>
 </body>
