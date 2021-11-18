@@ -79,6 +79,15 @@ namespace Fanex.Alpha.Before.Customer.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Go back to &lt;a href=&quot;{0}&quot;&gt;login page&lt;/a&gt;.
+        /// </summary>
+        public static string GoBackToLoginPage {
+            get {
+                return ResourceManager.GetString("GoBackToLoginPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Waited too long for Captcha&apos;s input.
         /// </summary>
         public static string inputCaptchaTooLong {

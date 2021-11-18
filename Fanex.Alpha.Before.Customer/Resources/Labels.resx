@@ -148,4 +148,7 @@ For security reasons, login function has been locked for {2} minutes.</value>
   <data name="BotDetectionMessage" xml:space="preserve">
     <value>To ensure account security, safety verification is required for this login.</value>
   </data>
+  <data name="GoBackToLoginPage" xml:space="preserve">
+    <value>Go back to &lt;a href="{0}"&gt;login page&lt;/a&gt;</value>
+  </data>
 </root>
