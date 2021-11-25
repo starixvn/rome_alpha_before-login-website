@@ -75,10 +75,10 @@
       <HintPath>..\packages\Alpha.NetThrottling.1.0.12\lib\net461\Alpha.NetThrottling.dll</HintPath>
     </Reference>
     <Reference Include="Alpha.SliderCaptcha, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Alpha.SliderCaptcha.1.0.0.9-beta09\lib\net461\Alpha.SliderCaptcha.dll</HintPath>
+      <HintPath>..\packages\Alpha.SliderCaptcha.1.0.0.9\lib\net461\Alpha.SliderCaptcha.dll</HintPath>
     </Reference>
     <Reference Include="Alpha.SliderCaptcha.Mvc, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Alpha.SliderCaptcha.Mvc.1.0.0.9-beta08\lib\net461\Alpha.SliderCaptcha.Mvc.dll</HintPath>
+      <HintPath>..\packages\Alpha.SliderCaptcha.Mvc.1.0.0.9\lib\net461\Alpha.SliderCaptcha.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Alpha.SubAccount, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Alpha.SubAccount.1.0.0\lib\net40\Alpha.SubAccount.dll</HintPath>
@@ -220,16 +220,16 @@
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="ONEbook.UM, Version=3.1.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.UM.3.1.3-beta01\lib\net461\ONEbook.UM.dll</HintPath>
+      <HintPath>..\packages\ONEbook.UM.3.1.3\lib\net461\ONEbook.UM.dll</HintPath>
     </Reference>
     <Reference Include="ONEbook.UM.AspNetMVC, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.UM.AspNetMVC.3.1.2-beta04\lib\net461\ONEbook.UM.AspNetMVC.dll</HintPath>
+      <HintPath>..\packages\ONEbook.UM.AspNetMVC.3.1.2\lib\net461\ONEbook.UM.AspNetMVC.dll</HintPath>
     </Reference>
     <Reference Include="ONEBook.UM.NETFramework, Version=3.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEBook.UM.NETFramework.3.1.5\lib\net461\ONEBook.UM.NETFramework.dll</HintPath>
     </Reference>
-    <Reference Include="ONEbook.UM.Transport, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ONEbook.UM.Transport.3.1.0\lib\net461\ONEbook.UM.Transport.dll</HintPath>
+    <Reference Include="ONEbook.UM.Transport, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ONEbook.UM.Transport.3.1.1\lib\net461\ONEbook.UM.Transport.dll</HintPath>
     </Reference>
     <Reference Include="Pipelines.Sockets.Unofficial, Version=1.0.0.0, Culture=neutral, PublicKeyToken=42ea0a778e13fbe2, processorArchitecture=MSIL">
       <HintPath>..\packages\Pipelines.Sockets.Unofficial.2.1.16\lib\net461\Pipelines.Sockets.Unofficial.dll</HintPath>
