@@ -486,8 +486,11 @@
     <Content Include="assets\styles\alpha.slider-captcha.css" />
     <Content Include="assets\styles\images\crossword.png" />
     <Content Include="assets\styles\images\error3-bg.png" />
+    <Content Include="assets\styles\images\mode\dark-hover.svg" />
     <Content Include="assets\styles\images\mode\dark.svg" />
+    <Content Include="assets\styles\images\mode\light-hover.svg" />
     <Content Include="assets\styles\images\mode\light.svg" />
+    <Content Include="assets\styles\images\sprites4.png" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\sprites2.png" />
     <Content Include="assets\styles\images\sprites3.png" />
