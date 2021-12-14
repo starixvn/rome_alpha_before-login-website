@@ -61,38 +61,40 @@ input[type="checkbox"], input[type="radio"] {
 
 .flag {
     @extend %icon;
-    width: 23px;
-    height: 16px;
+    width: 24px;
+    height: 24px;
     position: relative;
-    top: 4px;
+    top: 7px;
     margin-right: 4px;
+    border-radius: 50%;
+    background: url(../images/sprites4.png) no-repeat;
 
     &.flag-en {
-        background-position: 0 0px;
+        background-position: -8px -2px;
     }
 
     &.flag-cn {
-        background-position: 0 -17px;
+        background-position: -8px -30px;
     }
 
     &.flag-tw {
-        background-position: 0 -34px;
+        background-position: -8px -58px;
     }
 
     &.flag-jp {
-        background-position: 0 -51px;
+        background-position: -8px -86px;
     }
 
     &.flag-th {
-        background-position: 0 -68px;
+        background-position: -8px -114px;
     }
 
     &.flag-kr {
-        background-position: 0 -85px;
+        background-position: -8px -142px;
     }
 
     &.flag-vn {
-        background-position: 0 -102px;
+        background-position: -8px -170px;
     }
 }
 
@@ -508,7 +510,7 @@ div {
 .switch-mode-box {
     display: inline-block;
     vertical-align: middle;
-    top: 2px;
+    top: 6px;
     position: relative;
 
     @media screen and (max-device-width: 768px) {
@@ -522,48 +524,28 @@ div {
         visibility: hidden;
     }
 
-    .switch-mode {
+    .switch-mode.dark-mode {
         cursor: pointer;
-        //text-indent: -9999px;
-        //width: 50px;
-        //height: 22px;
-        //background: #F0F0F0;
-        //border: 1px solid #C7C7C7;
-        //border-radius: 100px;
         position: relative;
         margin-bottom: 0;
         display: inline-block;
 
-        @media screen and (max-device-width: 768px) {
-            width: calculateScale(50px);
-            height: calculateScale(22px);
+        &:after {
+            content: url("../images/mode/light.svg");
+            width: 24px;
+            height: 24px;
+            border-radius: 10px;
         }
-    }
 
-    .switch-mode:after {
-        content: url("../images/mode/light.svg");
-        //position: absolute;
-        //top: 2px;
-        //left: 2px;
-        //transition: 0.3s;
-        width: 24px;
-        height: 24px;
-        border-radius: 10px;
+        &:hover {
+            &:after {
+                content: url("../images/mode/light-hover.svg");
+            }
+        }
 
         @media screen and (max-device-width: 768px) {
             width: calculateScale(16px);
             height: calculateScale(16px);
         }
-    }
-
-    .switch-mode.dark-mode {
-        //background-color: #000;
-        //border: 1px solid #303030;
-    }
-
-    .switch-mode.dark-mode:after {
-        left: calc(100% - 2px);
-        transform: translateX(-100%);
-        content: url("../images/mode/dark.svg");
     }
 }
