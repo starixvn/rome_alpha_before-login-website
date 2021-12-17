@@ -38,6 +38,7 @@ namespace Fanex.Alpha.Before.Common.Constants
 
         public const string DEVICEID = "RobotCaptcha.DeviceId";
         public const string BROWSERSIZE = "RobotCaptcha.BrowserSize";
+        public const string ASSETAPPPATH = "RobotCaptcha.AssetAppPath";
 
         public const string INPUTCAPTCHASUCCESS = "RobotCaptcha.InputCaptchaSuccess";
 

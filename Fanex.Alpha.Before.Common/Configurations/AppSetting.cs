@@ -32,6 +32,7 @@
 
             TechnicalErrorTime = ConfigurationManager.AppSettings["TechnicalErrorTime"];
             IsShowTechnicalErrorMessage = !string.IsNullOrWhiteSpace(TechnicalErrorTime);
+            AssetAppPaths = ConfigurationManager.AppSettings["AssetAppPaths"] ?? string.Empty;
         }
 
         public static string Version
@@ -101,5 +102,7 @@
         public static string TechnicalErrorTime { get; }
 
         public static bool IsShowTechnicalErrorMessage { get; }
+
+        public static string AssetAppPaths { get; }
     }
 }

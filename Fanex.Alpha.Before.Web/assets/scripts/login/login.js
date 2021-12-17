@@ -105,7 +105,7 @@ Sphinx.Login = {
         });
         domElements.btnLogin.click(Sphinx.Login.doLogin);
         domElements.chbShowPassword.click(Sphinx.Login.showPassword);
-        domElements.iconSwitchMode.click(Sphinx.Login.changeTheme)
+        domElements.iconSwitchMode.click(Sphinx.Login.changeTheme);
     },
 
     getValidateImage: function () {
@@ -289,6 +289,7 @@ Sphinx.Login = {
 
         var size = Sphinx.Login.getBrowserSize();
         $("#browserSize").val(size);
+        $("#assetAppPath").val(Sphinx.AssetAppPaths.getAvailableAssetAppPaths());
 
         Sphinx.Login.domElements.formLogin.submit();
 
@@ -363,5 +364,6 @@ Sphinx.Login = {
 };
 
 $(document).ready(function () {
+    Sphinx.AssetAppPaths.init();
     Sphinx.Login.init();
 });

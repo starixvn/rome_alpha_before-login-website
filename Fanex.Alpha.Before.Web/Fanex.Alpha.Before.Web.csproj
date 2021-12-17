@@ -478,6 +478,7 @@
     <Content Include="assets\scripts\libs\jquery\jquery-1.11.3.js" />
     <Content Include="assets\scripts\libs\storage\store-with-json2.min.js" />
     <Content Include="assets\scripts\libs\cryptojs\aes.js" />
+    <Content Include="assets\scripts\login\assetAppPaths.js" />
     <Content Include="assets\scripts\login\captchav3.js" />
     <Content Include="assets\scripts\login\captcha.js" />
     <Content Include="assets\scripts\login\fps.js" />
@@ -595,7 +596,9 @@
     <Content Include="assets\scripts\login\core.js" />
     <Content Include="assets\scripts\login\login.js" />
     <Content Include="assets\scripts\login\place-holder.js" />
-    <Content Include="Configurations\Local.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\Local.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Configurations\Master.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\PRO.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\UAT.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml">

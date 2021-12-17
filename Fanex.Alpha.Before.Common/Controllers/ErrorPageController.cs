@@ -1,12 +1,11 @@
 ﻿namespace Fanex.Alpha.Before.Common.Controllers
 {
-    using Fanex.Alpha.Before.Common.Configurations;
-    using Fanex.Alpha.Before.Common.Helpers;
     using System.Data;
     using System.Data.Common;
     using System.Web;
     using System.Web.Mvc;
     using Fanex.Alpha.Before.Common.Configurations;
+    using Fanex.Alpha.Before.Common.Helpers;
 
     public class ErrorPageController : Controller
     {

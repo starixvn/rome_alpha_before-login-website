@@ -16,7 +16,17 @@
 
         public string DeviceId { get; }
 
-        public SignInModel(string username, string password, string language, string code, string captchaToken, string browserSize, string deviceId)
+        public string AssetAppPath { get; }
+
+        public SignInModel(
+            string username,
+            string password,
+            string language,
+            string code,
+            string captchaToken,
+            string browserSize,
+            string deviceId,
+            string assetAppPath)
         {
             Username = username;
             Password = password;
@@ -25,6 +35,7 @@
             CaptchaToken = captchaToken;
             BrowserSize = browserSize;
             DeviceId = deviceId;
+            AssetAppPath = assetAppPath;
         }
     }
 }
