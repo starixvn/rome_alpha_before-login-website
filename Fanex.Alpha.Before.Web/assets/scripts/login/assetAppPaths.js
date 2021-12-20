@@ -6,10 +6,14 @@ Sphinx.AssetAppPaths = {
     healthCheckPage: "/bundles/common/hc.css?v=",
     initGlobalAssetAppPaths: function () {
         Sphinx.AssetAppPaths.globalAssetAppPaths = [];
-        var urls = $('#hiddenAssetAppPaths').val().split(',');
+        var urlsValue = $('#hiddenAssetAppPaths').val();
 
-        for (var i = 0, max = urls.length; i < max; i++) {
-            Sphinx.AssetAppPaths.globalAssetAppPaths.push({ url: urls[i], isOK: false });
+        if (urlsValue.length) {
+            var urls = urlsValue.split(',');
+
+            for (var i = 0, max = urls.length; i < max; i++) {
+                Sphinx.AssetAppPaths.globalAssetAppPaths.push({ url: urls[i], isOK: false });
+            }
         }
     },
     doHealthCheck: function (urlObject) {

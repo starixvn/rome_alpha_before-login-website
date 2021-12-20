@@ -575,12 +575,6 @@
     <Content Include="compilerconfig2.json">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
-    <Content Include="compilerconfig3.json">
-      <DependentUpon>compilerconfig.json</DependentUpon>
-    </Content>
-    <Content Include="compilerconfig4.json">
-      <DependentUpon>compilerconfig.json</DependentUpon>
-    </Content>
     <Content Include="Configurations\Local.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
     <Content Include="Configurations\Local.StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml" />
     <Content Include="Configurations\Master.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
@@ -1064,7 +1058,6 @@
     <Content Include="assets\styles\abstracts\_variables2.scss" />
     <Content Include="assets\styles\pages\um.scss" />
     <Content Include="assets\styles\abstracts\_variables3.scss" />
-    <Content Include="assets\styles\themes\default3.scss" />
     <Content Include="assets\styles\pages\um3.scss" />
     <Content Include="assets\styles\pages\error3.scss" />
     <Content Include="Areas\Customer\Views\RobotCaptcha\Index.cshtml" />

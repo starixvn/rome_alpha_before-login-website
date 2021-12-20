@@ -240,7 +240,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 }
 
                 var password = AesService.Default.Decrypt(model.Password, AppSession.EncryptCode);
-                var isDarkMode = AppSetting.IsMBCSite
+                var isDarkMode = DarkModeHelper.IsOfferDarkMode()
                    ? !string.IsNullOrWhiteSpace(AppSession.DarkModeName)
                    : default(bool?);
                 var assetAppPath = AssetAppPathHelper.IsValidAssetAppPath(model.AssetAppPath)

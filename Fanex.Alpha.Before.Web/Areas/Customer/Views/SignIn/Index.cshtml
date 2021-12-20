@@ -13,7 +13,7 @@
 }
 
 <div class="box-lang">
-    @if (AppSetting.IsMBCSite)
+    @if (Model.IsOfferDarkMode)
     {
         <div class="switch-mode-box">
             <span class="switch-mode @(string.IsNullOrWhiteSpace(darkModeName) ? string.Empty : "dark-mode")" id="icon-switch-mode"></span>
