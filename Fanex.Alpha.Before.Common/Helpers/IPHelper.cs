@@ -7,6 +7,7 @@
 namespace Fanex.Alpha.Before.Common.Helpers
 {
     using Fanex.Logging.Extensions.Web;
+    using System;
     using System.Web;
 
     /// <summary>
@@ -24,14 +25,15 @@ namespace Fanex.Alpha.Before.Common.Helpers
                 ExceptionHandler.Handle(new System.Exception("Before login: ip is null or empty"), System.Diagnostics.TraceEventType.Error);
             }
 
-            if (!string.IsNullOrWhiteSpace(ip) && !ip.Equals("::1") && string.IsNullOrWhiteSpace(ip.Split(',')[0]))
+            var ips = string.IsNullOrWhiteSpace(ip) || ip.Equals("::1") ?
+                new[] { "127.0.0.1" } : ip.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (string.IsNullOrWhiteSpace(ips[0]))
             {
                 ExceptionHandler.Handle(new System.Exception("Before login: HTTP_X_FORWARDED_FOR ip is null or empty"), System.Diagnostics.TraceEventType.Error);
             }
 
-            ip = string.IsNullOrWhiteSpace(ip) || ip.Equals("::1") || string.IsNullOrWhiteSpace(ip.Split(',')[0]) ? "127.0.0.1" : ip.Split(',')[0];
-
-            return ip;
+            return ips[0].Trim();
         }
     }
 }
