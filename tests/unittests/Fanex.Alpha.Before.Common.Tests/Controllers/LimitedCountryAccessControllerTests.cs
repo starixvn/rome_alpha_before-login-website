@@ -3,6 +3,8 @@
     using System.Web.Mvc;
     using Common.Controllers;
     using Common.Services.LimitedCountryAccessService;
+    using Fanex.Logging;
+    using Fanex.Logging.RabbitMQ;
     using NSubstitute;
     using NUnit.Framework;
 
@@ -15,6 +17,10 @@
         [SetUp]
         public void Init()
         {
+            LogManager
+                .SetDefaultLogCategory("Alpha-MBC-BF-Local")
+                .Use(new RabbitMQLogging("host=ha.nexdev.net:5672;virtualHost=/Fanex_Logging;username=fanexlogging;password=YKQrMtla7oYZGlP8apPtSw=="));
+
             limitedCountryAccessService = Substitute.For<ILimitedCountryAccessService>();
             limitedCountryAccessController = new LimitedCountryAccessController(limitedCountryAccessService);
         }

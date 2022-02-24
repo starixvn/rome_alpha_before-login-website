@@ -32,6 +32,8 @@
 
             TechnicalErrorTime = ConfigurationManager.AppSettings["TechnicalErrorTime"];
             IsShowTechnicalErrorMessage = !string.IsNullOrWhiteSpace(TechnicalErrorTime);
+
+            IsOfferDarkMode = "1" == ConfigurationManager.AppSettings["IsOfferDarkMode"];
             AssetAppPaths = ConfigurationManager.AppSettings["AssetAppPaths"] ?? string.Empty;
         }
 
@@ -102,6 +104,8 @@
         public static string TechnicalErrorTime { get; }
 
         public static bool IsShowTechnicalErrorMessage { get; }
+
+        public static bool IsOfferDarkMode { get; }
 
         public static string AssetAppPaths { get; }
     }
