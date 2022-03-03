@@ -4,6 +4,8 @@
 // </copyright>
 // -----------------------------------------------------------------------
 
+using Fanex.Alpha.Before.Common.Configurations;
+using Fanex.Alpha.Before.Common.Helpers;
 using Fanex.Alpha.Before.Common.Models;
 
 namespace Fanex.Alpha.Before.Customer.Models
@@ -92,5 +94,9 @@ namespace Fanex.Alpha.Before.Customer.Models
         }
 
         public bool IsCaptchaVerified { get; set; }
+
+        public string AssetAppPaths { get; } = AppSetting.AssetAppPaths;
+
+        public bool IsOfferDarkMode { get; } = DarkModeHelper.IsOfferDarkMode;
     }
 }

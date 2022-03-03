@@ -34,5 +34,17 @@
   {
     "outputFile": "assets/styles/pages/robotcaptcha.css",
     "inputFile": "assets/styles/pages/robotcaptcha.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/robotcaptcha-dark.css",
+    "inputFile": "assets/styles/pages/robotcaptcha-dark.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/um-dark.css",
+    "inputFile": "assets/styles/pages/um-dark.scss"
+  },
+  {
+    "outputFile": "assets/styles/themes/default-dark.css",
+    "inputFile": "assets/styles/themes/default-dark.scss"
   }
 ]

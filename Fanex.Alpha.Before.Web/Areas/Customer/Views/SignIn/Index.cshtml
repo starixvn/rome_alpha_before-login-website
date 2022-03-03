@@ -1,17 +1,24 @@
 ﻿@using Fanex.Alpha.Before.Common.Configurations;
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var darkModeName = (string)ViewData["DarkModeName"];
 }
 
 @model Fanex.Alpha.Before.Customer.Models.SignInResult
 
 @section styles
 {
-    <link href="~/assets/bundles/themes/@(Model.LoginTemplate).min.css?ver=@AppSetting.Version" rel="stylesheet" />
+    <link href="~/assets/bundles/themes/@(Model.LoginTemplate)@(darkModeName).min.css?ver=@AppSetting.Version" rel="stylesheet" />
     <link href="~/assets/styles/alpha.slider-captcha.css?ver=@AppSetting.Version" rel="stylesheet" />
 }
 
 <div class="box-lang">
+    @if (Model.IsOfferDarkMode)
+    {
+        <div class="switch-mode-box">
+            <span class="switch-mode @(string.IsNullOrWhiteSpace(darkModeName) ? string.Empty : "dark-mode")" id="icon-switch-mode"></span>
+        </div>
+    }
     <div class="dropdown">
         <span class="btn dropdown-toggle" type="button" id="langList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span class="flag" id="flag"></span>
@@ -20,15 +27,15 @@
             <input type="hidden" value="en-US" id="hidLanguage" name="hidLanguage">
         </span>
         <ul class="dropdown-menu" aria-labelledby="langList" id="language-ddl">
-            <li><a href="#"><span class="flag flag-en" data-language-code="en-US"></span>English</a></li>
-            <li><a href="#"><span class="flag flag-tw" data-language-code="zh-TW"></span>繁體中文</a></li>
-            <li><a href="#"><span class="flag flag-cn" data-language-code="zh-CN"></span>简体中文</a></li>
-            <li><a href="#"><span class="flag flag-jp" data-language-code="ja-JP"></span>日本語</a></li>
-            <li><a href="#"><span class="flag flag-th" data-language-code="th-TH"></span>ภาษาไทย</a></li>
-            <li><a href="#"><span class="flag flag-kr" data-language-code="ko-KR"></span>한국어</a></li>
+            <li><a href="javascript:;"><span class="flag flag-en" data-language-code="en-US"></span>English</a></li>
+            <li><a href="javascript:;"><span class="flag flag-tw" data-language-code="zh-TW"></span>繁體中文</a></li>
+            <li><a href="javascript:;"><span class="flag flag-cn" data-language-code="zh-CN"></span>简体中文</a></li>
+            <li><a href="javascript:;"><span class="flag flag-jp" data-language-code="ja-JP"></span>日本語</a></li>
+            <li><a href="javascript:;"><span class="flag flag-th" data-language-code="th-TH"></span>ภาษาไทย</a></li>
+            <li><a href="javascript:;"><span class="flag flag-kr" data-language-code="ko-KR"></span>한국어</a></li>
             @if (!AppSetting.DisabledVietnamese)
             {
-                <li><a href="#"><span class="flag flag-vn" data-language-code="vi-VN"></span>Tiếng Việt</a></li>
+                <li><a href="javascript:;"><span class="flag flag-vn" data-language-code="vi-VN"></span>Tiếng Việt</a></li>
             }
         </ul>
     </div>
@@ -64,6 +71,7 @@
 
 <div id="captcha" name="captchaToken"></div>
 <input type="hidden" name="browserSize" id="browserSize" value="" />
+<input type="hidden" name="assetAppPath" id="assetAppPath" value="" />
 @if (AppSetting.IsShowTechnicalErrorMessage)
 {
     <input type="hidden" id="hiddenTechnicalErrorTime" value="@AppSetting.TechnicalErrorTime" />
@@ -71,6 +79,7 @@
 <div class="list-button">
     <input type="button" class="btnLogin" value="Login" id="btnLogin" tabindex="5" />
 </div>
+<input type="hidden" id="hiddenAssetAppPaths" value="@Model.AssetAppPaths" />
 
 @if (Model.ErrCode == Fanex.Alpha.Before.Customer.Constants.SignInErrorContants.CaptchaRequired)
 {
@@ -99,5 +108,3 @@
         </script>
     }
 }
-
-

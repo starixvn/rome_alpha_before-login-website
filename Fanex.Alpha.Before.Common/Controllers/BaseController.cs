@@ -31,6 +31,8 @@
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            DarkModeHelper.SetDarkModeSession(filterContext.HttpContext.Request);
+
             var lang = Request.Cookies["hidLanguage"]?.Value ?? AppSession.Language;
             lang = LanguageHelper.IsValidLanguage(lang) ? lang : LanguageHelper.DefaultLanguage;
 
@@ -76,5 +78,8 @@
 
             base.OnActionExecuting(filterContext);
         }
+
+        protected void AssignDarkModeNameViewData()
+            => ViewData["DarkModeName"] = AppSession.DarkModeName;
     }
 }

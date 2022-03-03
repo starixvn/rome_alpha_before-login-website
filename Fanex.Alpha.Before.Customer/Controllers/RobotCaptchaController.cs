@@ -52,6 +52,8 @@
                 return Redirect(EncryptURLHelper.BuildAfterURL(HttpContext.ApplicationInstance.Context));
             }
 
+            AssignDarkModeNameViewData();
+
             ViewBag.tooManyFailedLoginPageUrl = TooManyFailedLoginPageUrl;
             return View("~/Areas/Customer/Views/RobotCaptcha/Index.cshtml");
         }

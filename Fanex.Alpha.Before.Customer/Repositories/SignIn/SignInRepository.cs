@@ -26,7 +26,7 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
         /// <param name="password">User's password.</param>
         /// <param name="requestInfo">The request information.</param>
         /// <returns>Return verify result.</returns>
-        public VerifySignInResult VerifyDownlineLogin(string username, string password, Hashtable requestInfo)
+        public VerifySignInResult VerifyDownlineLogin(string username, string password, Hashtable requestInfo, bool? isDarkMode)
         {
             using (var objectDB = new ObjectDb("Age_LoginVerifyDownline"))
             {
@@ -48,6 +48,7 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
                 parameters.Add("roleid", 0);
                 parameters.Add("subusername", string.Empty);
                 parameters.Add("iskickout", false);
+                parameters.Add("isdarkmode", isDarkMode);
                 InsertRequestInfo(requestInfo, parameters);
 
                 objectDB.AssignParamValues(parameters);

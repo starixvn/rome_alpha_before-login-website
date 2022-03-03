@@ -35,7 +35,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using global::Alpha.SliderCaptcha.Mvc;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
-    using InfrastructureLanguages = Infrastructure.Resources;
 
     public interface ISignInService
     {
@@ -85,7 +84,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         {
         }
 
-        public SignInService(SignInRepository signInRepository,
+        public SignInService(
+            SignInRepository signInRepository,
             IRobotDetector robotDetector,
             Logging.ILogger logger,
             HttpContext httpContext,
@@ -218,7 +218,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-
                 if (IsCaptchaRequired(model))
                 {
                     var isVerifiedResult = captchaService.IsVerfied(model.CaptchaToken);
@@ -241,7 +240,13 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 }
 
                 var password = AesService.Default.Decrypt(model.Password, AppSession.EncryptCode);
-                VerifyDownlineLogin(model.Username, password, model.DeviceId, model.BrowserSize, signInResult);
+                var isDarkMode = DarkModeHelper.IsOfferDarkMode
+                   ? !string.IsNullOrWhiteSpace(AppSession.DarkModeName)
+                   : default(bool?);
+                var assetAppPath = AssetAppPathHelper.IsValidAssetAppPath(model.AssetAppPath)
+                    ? model.AssetAppPath
+                    : string.Empty;
+                VerifyDownlineLogin(model.Username, password, model.DeviceId, model.BrowserSize, signInResult, isDarkMode, assetAppPath);
             }
             catch (Exception ex)
             {
@@ -296,7 +301,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult);
+                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult, null, string.Empty);
             }
             catch (Exception ex)
             {
@@ -365,7 +370,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             SignInResult signInResult,
             VerifySignInResult verifySignInResult,
             string deviceId,
-            string browserSize)
+            string browserSize,
+            string assetAppPath)
         {
             cacheService.ResetLoginSession(signInResult.Username);
 
@@ -376,7 +382,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             var robotResult = robotDetector.IsRobot(httpContext.Request);
             if (robotResult == 0 || signInResult.IsCaptchaVerified)
             {
-                url = EncryptURLHelper.BuildAfterURL(httpContext, encryptPassword, verifySignInResult, deviceId, browserSize);
+                url = EncryptURLHelper.BuildAfterURL(httpContext, encryptPassword, verifySignInResult, deviceId, browserSize, assetAppPath);
             }
             else
             {
@@ -393,7 +399,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                    verifySignInResult.RoleId,
                    robotResult.ToString(),
                    deviceId,
-                   browserSize);
+                   browserSize,
+                   assetAppPath);
 
                 WriteLoginLogs(verifySignInResult.SuperId, $"After set sessionId: {httpContext.Session.SessionID}, custId:{AppSession.CustId}");
 
@@ -439,7 +446,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string password,
             string deviceId,
             string browserSize,
-            SignInResult signInResult)
+            SignInResult signInResult,
+            bool? isDarkMode,
+            string assetAppPath)
         {
             var verifySignInResult = new VerifySignInResult();
             var request = httpContext.Request;
@@ -453,12 +462,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize);
                     requestInfo["countrycode"] = GetCountryCode(IPHelper.ClientIP());
                     requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
-                    verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo);
+                    verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo, isDarkMode);
                     WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
 
                     if (verifySignInResult.ErrorCode == 0)
                     {
-                        UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize);
+                        UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize, assetAppPath);
                         if (whitelistSuperIds.Contains(verifySignInResult.SuperId))
                         {
                             return ThrottleResult.Allowed;

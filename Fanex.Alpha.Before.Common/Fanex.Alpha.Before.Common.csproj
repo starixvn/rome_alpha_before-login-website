@@ -235,6 +235,8 @@
     <Compile Include="Criteria\LimitedCountryAccess\GetIpRangesByCountryCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ActivityTracking\RobotCaptchaSession.cs" />
+    <Compile Include="Helpers\AssetAppPathHelper.cs" />
+    <Compile Include="Helpers\DarkModeHelper.cs" />
     <Compile Include="Models\GoogleReCaptcha.cs" />
     <Compile Include="Models\IPInformationModel.cs" />
     <Compile Include="Models\IPRange.cs" />

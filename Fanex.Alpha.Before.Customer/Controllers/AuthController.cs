@@ -66,6 +66,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
 
             ViewBag.FPSToken = FPS.Client.Token.Generate();
             AppSession.ResetRobotCaptchaSession();
+            AssignDarkModeNameViewData();
 
             return View(SignInViewPath, loginResult);
         }
@@ -89,17 +90,20 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             string code,
             string captchaToken,
             string browserSize,
-            string deviceId = "N/A")
+            string deviceId = "N/A",
+            string assetAppPath = "")
         {
             AssignSettingLanguage(hidLanguage);
             ViewBag.FPSToken = FPS.Client.Token.Generate();
-            var model = new SignInModel(txtUserName, txtPassWord, hidLanguage, code, captchaToken, browserSize, deviceId);
+            var model = new SignInModel(txtUserName, txtPassWord, hidLanguage, code, captchaToken, browserSize, deviceId, assetAppPath);
             var loginResult = _signInService.SignIn(model);
             if (loginResult.ErrCode == SignInErrorContants.Success && !string.IsNullOrEmpty(loginResult.AfterLoginUrl))
             {
                 FPSTracking(loginResult);
                 return Redirect(loginResult.AfterLoginUrl);
             }
+
+            AssignDarkModeNameViewData();
 
             return View(SignInViewPath, loginResult);
         }

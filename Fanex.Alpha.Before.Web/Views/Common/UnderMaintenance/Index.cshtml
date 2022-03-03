@@ -1,5 +1,5 @@
 ﻿@model UnderMaintenanceModel
-@{ 
+@{
     Layout = null;
 }
 
@@ -8,10 +8,8 @@
 <head>
     <title>UM Page</title>
     <meta charset="utf-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=0.7, user-scalable=yes">
-
-    <link href="~/assets/bundles/themes/um.min.css" rel="stylesheet" />
+    <link href="~/assets/bundles/themes/um@(ViewData["DarkModeName"]).min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="container">
@@ -101,7 +99,7 @@
     @if (Model.ShowCountDown())
     {
         <script type="text/javascript">
-            setTimeout(function () { 
+            setTimeout(function () {
                 window.location.href = window.location.href;
             }, @Model.CountdownTime.TotalMilliseconds);
         </script>

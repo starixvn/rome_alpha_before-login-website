@@ -97,6 +97,19 @@ namespace Fanex.Alpha.Before.Common.Configurations
             }
         }
 
+        public static string DarkModeName
+        {
+            get
+            {
+                return SessionExtension.Get<string>(SessionConstants.DARKMODENAME) ?? string.Empty;
+            }
+
+            set
+            {
+                SessionExtension.Set(SessionConstants.DARKMODENAME, value);
+            }
+        }
+
         #region Robot Captcha
 
         public static int CustId
@@ -268,6 +281,19 @@ namespace Fanex.Alpha.Before.Common.Configurations
             }
         }
 
+        public static string AssetAppPath
+        {
+            get
+            {
+                return SessionExtension.Get<string>(SessionConstants.ASSETAPPPATH);
+            }
+
+            set
+            {
+                SessionExtension.Set(SessionConstants.ASSETAPPPATH, value);
+            }
+        }
+
         public static bool InputCaptchaSuccess
         {
             get
@@ -294,7 +320,8 @@ namespace Fanex.Alpha.Before.Common.Configurations
             byte roleId,
             string robotResult,
             string deviceId,
-            string browserSize)
+            string browserSize,
+            string assetAppPath)
         {
             CustId = custId;
             Username = username;
@@ -310,6 +337,7 @@ namespace Fanex.Alpha.Before.Common.Configurations
             RobotResult = robotResult;
             DeviceId = deviceId;
             BrowserSize = browserSize;
+            AssetAppPath = assetAppPath;
         }
 
         public static void ResetRobotCaptchaSession()

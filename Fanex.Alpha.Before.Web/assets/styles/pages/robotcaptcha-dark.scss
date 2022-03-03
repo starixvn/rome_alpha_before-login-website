@@ -1,0 +1,128 @@
+﻿@import '../abstracts/_variables-dark.scss';
+@import '../abstracts/_mixins.scss';
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    font-family: $font-family;
+    font-size: $font-size + 2;
+    background-color: $bg-color;
+    margin: 0;
+    padding-top: 8%;
+}
+
+input, button {
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.wrapper {
+    margin: auto;
+    max-width: 360px;
+    @include box-sizing;
+
+    .error {
+        color: $msg-error-color;
+    }
+}
+div.alpha-slider-captcha {
+    .captcha-container {
+        background: #252525;
+        border: 1px solid #353535;
+
+        &.captcha-status-success {
+            background: #3A5031;
+            border: 1px solid #7ECC4D;
+
+            .captcha-message {
+                color: #7ECC4D !important;
+            }
+        }
+
+        .captcha-header {
+            color: #EDEDED;
+        }
+
+        .captcha-footer {
+            .captcha-slider-container {
+                background-color: #3A3A3A;
+                border-radius: 0;
+
+
+
+                .captcha-slider-text {
+                    color: #EDEDED;
+                }
+
+                .captcha-slider-mask {
+                    background-color: #3A3A3A;
+                    border-radius: 0;
+                    border: none;
+                }
+
+                .captcha-slider-button {
+                    background-color: #36587D;
+                    box-shadow: none;
+                    border: none;
+                    padding-top: 6px;
+                }
+            }
+        }
+
+        .captcha-row {
+            margin: 5px 0;
+            background: #252525;
+            border: 1px solid #353535;
+        }
+
+        .captcha-icon-refresh {
+            background: url('../images/sprites.png') no-repeat;
+            display: inline-block;
+            background-position: -29px -2px;
+            cursor: pointer;
+            height: 16px;
+            width: 16px;
+            vertical-align: top;
+            margin: 17px 0 0 10px;
+
+            &:hover {
+                background-position: -29px -28px;
+            }
+        }
+
+        .captcha-input {
+            border: none;
+            border: 1px solid #474747;
+            color: #E7E7E7;
+            background-color: #2B2B2B;
+            padding: 8px 0;
+            width: 250px;
+            @include border-radius(0);
+
+            &:focus {
+                border-color: #cbcbcb;
+                color: #fff;
+            }
+        }
+
+        .captcha-button {
+            background-color: $btn-bg;
+            border: none;
+            color: $btn-color;
+            cursor: pointer;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 20px;
+            text-transform: uppercase;
+            @include border-radius(0);
+
+            &:hover {
+                background-color: $btn-bg-hover;
+            }
+        }
+    }
+}
