@@ -1,0 +1,41 @@
+﻿$font-size: 13px;
+$font-family: 'Open Sans', Arial, Tahoma,helvetica,sans-serif;
+$text-color: #CBCBCB;
+$border-color: #fff;
+$border-color-dark: #8d9faf;
+$bg-color: #0a0a0a;
+$block-bg: #0E2539;
+$text-box-color: #FFFFFF;
+$text-box-color-focus: #fff;
+$link-color: #045ace;
+$link-hover-color: #F60;
+
+$btn-bg: #C0DBF2;
+$btn-color: #0E2539;
+$btn-bg-hover: #B6CFE6;
+$btn-color-hover: #0E2539;
+
+$msg-success-bg: #eefbe9;
+$msg-success-color: #52a220;
+$msg-success-border: #1db51a;
+
+$msg-warning-bg: #faf8dd;
+$msg-warning-color: #7e3d00;
+$msg-warning-border: #bcba7d;
+$msg-warning-icon-color: #f08708;
+
+$msg-error-color: #ff9500;
+$placeholder: #465867;
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../fonts/opensans/OpenSans-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../fonts/opensans/OpenSans-Semibold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}

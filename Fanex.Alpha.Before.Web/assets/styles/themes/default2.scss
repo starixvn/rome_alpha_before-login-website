@@ -100,7 +100,7 @@ input[type="checkbox"], input[type="radio"] {
         color: $text-color;
         margin-top: 16px;
         margin-bottom: 16px;
-        text-align : center;
+        text-align: center;
     }
 
     .txt {
@@ -136,9 +136,15 @@ input[type="checkbox"], input[type="radio"] {
             }
         }
 
+        &::placeholder {
+            color: $placeholder;
+        }
+
+
+
         &:focus {
-            border-bottom: 1px solid $border-color-dark;
-            color: $border-color-dark;
+            border-bottom: 1px solid $text-box-color;
+            color: $text-box-color;
 
             + .icon-user {
                 background-position: -55px -31px;
