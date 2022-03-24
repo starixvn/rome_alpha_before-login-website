@@ -1,4 +1,4 @@
-﻿@import '../abstracts/_variables.scss';
+﻿@import '../abstracts/_variables2.scss';
 @import '../abstracts/_mixins.scss';
 
 html, body {
@@ -9,9 +9,10 @@ html, body {
 body {
     font-family: $font-family;
     font-size: $font-size + 2;
-    background-color: $bg-color;
+    background: url(../images/crossword.png) $bg-color;
     margin: 0;
     padding-top: 8%;
+    color: $text-color;
 }
 
 input, button {
@@ -28,22 +29,8 @@ input[type="checkbox"], input[type="radio"] {
 
 // icons
 %icon {
-    background: url(../images/sprites.png) no-repeat;
+    background: url(../images/sprites2.png) no-repeat;
     display: inline-block;
-}
-
-.icon-user {
-    @extend %icon;
-    background-position: -55px -4px;
-    height: 14px;
-    width: 14px;
-}
-
-.icon-lock {
-    @extend %icon;
-    background-position: -79px 0;
-    height: 19px;
-    width: 14px;
 }
 
 .icon-refresh {
@@ -60,13 +47,11 @@ input[type="checkbox"], input[type="radio"] {
 
 .flag {
     @extend %icon;
-    width: 24px;
-    height: 24px;
+    width: 23px;
+    height: 15px;
     position: relative;
-    top: 7px;
+    top: 4px;
     margin-right: 4px;
-    border-radius: 50%;
-    background: url(../images/sprites4.png) no-repeat;
 
     &.flag-en {
         background-position: -2px -2px;
@@ -115,18 +100,20 @@ input[type="checkbox"], input[type="radio"] {
         color: $text-color;
         margin-top: 16px;
         margin-bottom: 16px;
+        text-align : center;
     }
 
     .txt {
         border: none;
         outline: none;
         width: 100%;
-        border-bottom: 1px solid $border-color;
+        border-bottom: 1px solid $border-color-dark;
         height: 36px;
-        padding: 8px 0 4px 28px;
+        padding: 8px 0 4px 0;
         color: $text-box-color;
         @include border-radius(0);
         filter: none;
+        background: transparent;
 
         &:-webkit-autofill {
             &::first-line {
@@ -150,8 +137,8 @@ input[type="checkbox"], input[type="radio"] {
         }
 
         &:focus {
-            border-bottom: 2px solid $border-color-dark;
-            color: $text-box-color-focus;
+            border-bottom: 1px solid $border-color-dark;
+            color: $border-color-dark;
 
             + .icon-user {
                 background-position: -55px -31px;
@@ -238,12 +225,12 @@ input[type="checkbox"], input[type="radio"] {
 
                     &:after {
                         position: absolute;
-                        top: 0;
+                        top: 3px;
                         left: 0;
                         width: 16px;
                         height: 16px;
                         content: "";
-                        border: 2px solid #8F8F9D;
+                        border: 2px solid #FFFFFF;
                         border-radius: 2px;
                         z-index: 1;
                     }
@@ -252,7 +239,7 @@ input[type="checkbox"], input[type="radio"] {
                         transform: rotate( -45deg);
                         content: "";
                         position: absolute;
-                        top: 5px;
+                        top: 8px;
                         left: 4px;
                         border: 2px solid #fff;
                         border-top: none;
@@ -268,6 +255,7 @@ input[type="checkbox"], input[type="radio"] {
     }
 
     .btnLogin {
+        font-weight: 400;
         width: 100%;
         background-color: $btn-bg;
         color: $btn-color;
@@ -281,6 +269,7 @@ input[type="checkbox"], input[type="radio"] {
 
         &:hover {
             background-color: $btn-bg-hover;
+            color: $btn-color-hover;
         }
 
         &[disabled], .disabled {
@@ -325,6 +314,11 @@ input[type="checkbox"], input[type="radio"] {
                 padding-top: 6px;
             }
         }
+        .dropdown-toggle{
+            &:hover{
+                color : #fff;
+            }
+        }
     }
 }
 
@@ -334,6 +328,7 @@ input[type="checkbox"], input[type="radio"] {
 
 .block-info {
     @extend %block;
+    color: #333;
     margin-top: 16px;
     padding-left: 24px;
     position: relative;
@@ -354,7 +349,7 @@ input[type="checkbox"], input[type="radio"] {
     body {
         font-size: $font-size + 3;
         padding-top: 0;
-        background-color: $block-bg;
+        background: $block-bg;
     }
 
     .block-login {
@@ -385,10 +380,12 @@ input[type="checkbox"], input[type="radio"] {
     }
 
     .block-info {
+        color: #a8b0ba;
         padding: 0 30px 8px 54px;
         width: 100%;
 
         &:before {
+            background-position: -56px -83px;
             left: 30px;
             top: 3px;
         }
@@ -447,8 +444,9 @@ input[type="checkbox"], input[type="radio"] {
 .switch-mode-box {
     display: inline-block;
     vertical-align: middle;
-    top: 8px;
+    top: 0;
     position: relative;
+    line-height : 1;
 
     @media screen and (max-device-width: 768px) {
         float: left;
@@ -468,7 +466,7 @@ input[type="checkbox"], input[type="radio"] {
         display: inline-block;
 
         &:after {
-            content: url("../images/mode/dark.svg");
+            content: url("../images/mode/y9.svg");
             width: 24px;
             height: 24px;
             border-radius: 10px;
