@@ -94,7 +94,7 @@ input[type="checkbox"], input[type="radio"] {
     background: $block-bg;
     padding: 40px 30px;
     @include box-shadow-multiple('0px 2px 2px rgba(0, 0, 0, 0.3)');
-
+    border: 1px solid transparent;
     .title {
         font-size: $font-size + 11;
         color: $text-color;
