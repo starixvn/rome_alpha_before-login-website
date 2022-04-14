@@ -89,6 +89,58 @@ input[type="checkbox"], input[type="radio"] {
     @include box-sizing;
 }
 
+
+div {
+    .alpha-slider-captcha {
+        margin: 20px 0 12px;
+
+        .captcha-container {
+            background: #3B6081;
+            border: 1px solid #63829D;
+
+            &.captcha-status-success {
+                background: #3A5031;
+                border: 1px solid #63829D;
+
+                .captcha-message {
+                    color: #7ECC4D !important;
+                }
+            }
+
+            .captcha-header {
+                color: #EDEDED;
+            }
+
+            .captcha-footer {
+                .captcha-slider-container {
+                    background-color: #173652;
+                    border-radius: 0;
+
+
+
+                    .captcha-slider-text {
+                        color: #EDEDED;
+                    }
+
+                    .captcha-slider-mask {
+                        background-color: #173652;
+                        border-radius: 0;
+                        border: none;
+                    }
+
+                    .captcha-slider-button {
+                        background-color: #8AAFD0;
+                        box-shadow: none;
+                        border: none;
+                        padding-top: 6px;
+                        color: #173652;
+                    }
+                }
+            }
+        }
+    }
+}
+
 .block-login {
     @extend %block;
     background: $block-bg;
