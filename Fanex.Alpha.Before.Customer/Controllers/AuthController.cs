@@ -24,6 +24,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
     using global::Alpha.SliderCaptcha.Core.Services;
     using Logging.Extensions.Web;
     using SliderCaptcha = global::Alpha.SliderCaptcha;
+    using Fanex.Alpha.Before.Customer.Helpers;
 
     /// <summary>
     /// TODO: Update summary.
@@ -99,7 +100,11 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             var loginResult = _signInService.SignIn(model);
             if (loginResult.ErrCode == SignInErrorContants.Success && !string.IsNullOrEmpty(loginResult.AfterLoginUrl))
             {
-                FPSTracking(loginResult);
+                if (loginResult.AfterLoginUrl.IndexOf("RobotCaptcha", StringComparison.OrdinalIgnoreCase) != -1)
+                {
+                    FPSHelper.FPSTracking(loginResult, loginResult.LoginTime);
+                }
+
                 return Redirect(loginResult.AfterLoginUrl);
             }
 
@@ -153,53 +158,6 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             }
 
             return Index();
-        }
-
-        /// <summary>
-        /// Function to send login status to FPS.
-        /// </summary>
-        /// <param name="loginResult">Login result.</param>
-        private static void FPSTracking(SignInResult loginResult)
-        {
-            try
-            {
-                if (!AppSetting.IsEnableFPS)
-                {
-                    return;
-                }
-
-                const string loginAction = "login";
-                var loginMessage = string.Empty;
-                var username = loginResult?.Username;
-                var fpsSubscirber = ConfigurationManager.AppSettings["FPS_Subscriber"];
-                var fpsErrorMessage = string.Empty;
-                var fpsErrorCode = string.Empty;
-
-                if (loginResult == null)
-                {
-                    loginMessage = "failed";
-                }
-                else if (loginResult.ErrCode != -1)
-                {
-                    loginMessage = string.Format("{0}", loginResult.ErrMsg);
-                }
-                else
-                {
-                    loginMessage = "successfully";
-                }
-
-                new FPS.Client.Service().CheckTransaction(
-                    username?.Trim(),
-                    loginAction,
-                    loginMessage,
-                    fpsSubscirber,
-                    out fpsErrorMessage,
-                    out fpsErrorCode);
-            }
-            catch (Exception ex)
-            {
-                ExceptionHandler.Handle(ex);
-            }
         }
 
         private bool IsNeedMappingSslDomain()

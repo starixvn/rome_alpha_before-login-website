@@ -467,7 +467,10 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
                     if (verifySignInResult.ErrorCode == 0)
                     {
+                        signInResult.LoginTime = verifySignInResult.LoginTime;
+
                         UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize, assetAppPath);
+
                         if (whitelistSuperIds.Contains(verifySignInResult.SuperId))
                         {
                             return ThrottleResult.Allowed;
@@ -478,6 +481,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     else
                     {
                         UpdateResultAfterLoginFail(signInResult, verifySignInResult);
+
                         return ThrottleResult.Allowed;
                     }
                 },

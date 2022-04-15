@@ -9,8 +9,10 @@
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Helpers;
     using Fanex.Alpha.Before.Customer.Configurations;
+    using Fanex.Alpha.Before.Customer.Helpers;
     using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Alpha.Before.Customer.Resources;
+    using Fanex.Logging.Extensions.Web;
     using RSACryptoPad;
 
     public static class EncryptURLHelper
@@ -81,6 +83,13 @@
 
             parameter = EncryptParameter(httpContext, parameter);
             var url = $"{UrlHelper.SiteGroupSetting.AfterUrl}{CustomerAppSetting.AfterLoginAuthorizationPage}?params={parameter}";
+
+            FPSHelper.FPSTracking(new SignInResult
+            {
+                Username = verifySignInResult.Username,
+                ErrCode = verifySignInResult.ErrorCode,
+                ErrMsg = verifySignInResult.ErrorMessage
+            }, verifySignInResult.LoginTime);
 
             return AddUMToken(httpContext, url);
         }
