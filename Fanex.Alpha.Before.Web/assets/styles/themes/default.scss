@@ -357,7 +357,7 @@ input[type="checkbox"], input[type="radio"] {
       background-color: $block-bg;
    }
 
-   .block-login {
+    .block-login {
         padding: 0 30px;
         width: 100%;
         @include box-shadow-multiple(none);

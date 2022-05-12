@@ -491,6 +491,8 @@
     <Content Include="assets\styles\images\mode\dark.svg" />
     <Content Include="assets\styles\images\mode\light-hover.svg" />
     <Content Include="assets\styles\images\mode\light.svg" />
+    <Content Include="assets\styles\images\mode\y9-light.svg" />
+    <Content Include="assets\styles\images\mode\y9.svg" />
     <Content Include="assets\styles\images\sprites4.png" />
     <Content Include="assets\styles\images\sprites.png" />
     <Content Include="assets\styles\images\sprites2.png" />
