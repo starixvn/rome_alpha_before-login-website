@@ -88,8 +88,9 @@
             {
                 Username = verifySignInResult.Username,
                 ErrCode = verifySignInResult.ErrorCode,
-                ErrMsg = verifySignInResult.ErrorMessage
-            }, verifySignInResult.LoginTime);
+                ErrMsg = verifySignInResult.ErrorMessage,
+                LoginTime = verifySignInResult.LoginTime
+            });
 
             return AddUMToken(httpContext, url);
         }

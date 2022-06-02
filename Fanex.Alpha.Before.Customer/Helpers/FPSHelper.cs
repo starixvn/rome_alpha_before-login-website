@@ -8,7 +8,7 @@ namespace Fanex.Alpha.Before.Customer.Helpers
 {
     public static class FPSHelper
     {
-        public static void FPSTracking(SignInResult loginResult, DateTime loginTime)
+        public static void FPSTracking(SignInResult loginResult)
         {
             try
             {
@@ -17,16 +17,11 @@ namespace Fanex.Alpha.Before.Customer.Helpers
                     return;
                 }
 
-                const string loginAction = "login";
+
                 var loginMessage = string.Empty;
-                var username = loginResult?.Username;
-
-                var fpsSubscirber = ConfigurationManager.AppSettings["FPS_Subscriber"];
-                var fpsErrorMessage = string.Empty;
-                var fpsErrorCode = string.Empty;
-
                 if (loginResult == null)
                 {
+                    loginResult = new SignInResult();
                     loginMessage = "failed";
                 }
                 else if (loginResult.ErrCode != -1)
@@ -38,12 +33,18 @@ namespace Fanex.Alpha.Before.Customer.Helpers
                     loginMessage = "successfully";
                 }
 
+                const string loginAction = "login";
+                var username = loginResult.Username;
+                var fpsSubscirber = ConfigurationManager.AppSettings["FPS_Subscriber"];
+                var fpsErrorMessage = string.Empty;
+                var fpsErrorCode = string.Empty;
+
                 new FPS.Client.Service().CheckTransaction(
-                    username?.Trim(),
+                    username.Trim(),
                     loginAction,
                     loginMessage,
                     fpsSubscirber,
-                    loginTime,
+                    loginResult.LoginTime,
                     out fpsErrorMessage,
                     out fpsErrorCode);                
             }

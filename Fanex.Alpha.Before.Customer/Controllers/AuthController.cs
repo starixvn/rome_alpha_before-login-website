@@ -102,7 +102,7 @@ namespace Fanex.Alpha.Before.Customer.Controllers
             {
                 if (loginResult.AfterLoginUrl.IndexOf("RobotCaptcha", StringComparison.OrdinalIgnoreCase) != -1)
                 {
-                    FPSHelper.FPSTracking(loginResult, loginResult.LoginTime);
+                    FPSHelper.FPSTracking(loginResult);
                 }
 
                 return Redirect(loginResult.AfterLoginUrl);
