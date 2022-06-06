@@ -103,8 +103,7 @@
       <HintPath>..\packages\FPS.Browserless.Detection.Client.8.1.4\lib\FPS.Browserless.Detection.Client.dll</HintPath>
     </Reference>
     <Reference Include="FPS.Client, Version=3.3.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Oneyed.FPSClient.3.3.1.0\lib\FPS.Client.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Fanex.Oneyed.FPSClient.3.3.3\lib\FPS.Client.dll</HintPath>
     </Reference>
     <Reference Include="IBCCrypt">
       <HintPath>..\_Dependencies\3rd\Casino\IBCCrypt.dll</HintPath>
@@ -286,6 +285,7 @@
     <Compile Include="Controllers\RobotCaptchaController.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="GlobalSuppressions2.cs" />
+    <Compile Include="Helpers\FPSHelper.cs" />
     <Compile Include="Models\RobotCaptchaModel.cs" />
     <Compile Include="Models\SignInModel.cs" />
     <Compile Include="Models\SignInResult.cs" />
