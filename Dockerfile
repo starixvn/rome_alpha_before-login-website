@@ -11,21 +11,9 @@ WORKDIR /build
 
 # Copy files *.sln, *.csproj, packages.config to restore nuget packages
 COPY *.sln .
-COPY src\Fanex.Alpha.Before.Web\*.csproj src\Fanex.Alpha.Before.Web\
-COPY src\Fanex.Alpha.Before.Web\packages.config src\Fanex.Alpha.Before.Web\
-
-COPY src\Fanex.Alpha.Before.Common\*.csproj src\Fanex.Alpha.Before.Common\
-COPY src\Fanex.Alpha.Before.Common\packages.config src\Fanex.Alpha.Before.Common\
-
-COPY src\Fanex.Alpha.Before.Customer\*.csproj src\Fanex.Alpha.Before.Customer\
-COPY src\Fanex.Alpha.Before.Customer\packages.config src\Fanex.Alpha.Before.Customer\
-
-COPY src\Fanex.Alpha.Before.Infrastructure\*.csproj src\Fanex.Alpha.Before.Infrastructure\
-COPY src\Fanex.Alpha.Before.Infrastructure\packages.config src\Fanex.Alpha.Before.Infrastructure\
+COPY src src\
 
 RUN nuget.exe restore Fanex.Alpha.Before.sln
-
-COPY src src\
 
 RUN MSBuild.exe "src\Fanex.Alpha.Before.Web\Fanex.Alpha.Before.Web.csproj" `
     /t:Build;WebPublish /m `
