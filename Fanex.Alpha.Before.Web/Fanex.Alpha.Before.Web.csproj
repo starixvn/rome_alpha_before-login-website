@@ -382,6 +382,12 @@
     <AdditionalFiles Include="..\SonarQube\alpha-before-login\CSharp\SonarLint.xml">
       <Link>SonarLint.xml</Link>
     </AdditionalFiles>
+    <Content Include="App_Data\activitytracking.local.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.sit.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
     <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\1.jpg" />
     <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\10.jpg" />
     <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\11.jpg" />
@@ -914,6 +920,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="WhoAmI.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.Setting.config">
