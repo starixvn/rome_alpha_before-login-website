@@ -11,30 +11,23 @@ WORKDIR /build
 
 # Copy files *.sln, *.csproj, packages.config to restore nuget packages
 COPY *.sln .
-COPY Fanex.Alpha.Before.Web\*.csproj Fanex.Alpha.Before.Web\
-COPY Fanex.Alpha.Before.Web\packages.config Fanex.Alpha.Before.Web\
+COPY src\Fanex.Alpha.Before.Web\*.csproj src\Fanex.Alpha.Before.Web\
+COPY src\Fanex.Alpha.Before.Web\packages.config src\Fanex.Alpha.Before.Web\
 
-COPY Fanex.Alpha.Before.Common\*.csproj Fanex.Alpha.Before.Common\
-COPY Fanex.Alpha.Before.Common\packages.config Fanex.Alpha.Before.Common\
+COPY src\Fanex.Alpha.Before.Common\*.csproj src\Fanex.Alpha.Before.Common\
+COPY src\Fanex.Alpha.Before.Common\packages.config src\Fanex.Alpha.Before.Common\
 
-COPY Fanex.Alpha.Before.Customer\*.csproj Fanex.Alpha.Before.Customer\
-COPY Fanex.Alpha.Before.Customer\packages.config Fanex.Alpha.Before.Customer\
+COPY src\Fanex.Alpha.Before.Customer\*.csproj src\Fanex.Alpha.Before.Customer\
+COPY src\Fanex.Alpha.Before.Customer\packages.config src\Fanex.Alpha.Before.Customer\
 
-COPY Fanex.Alpha.Before.Infrastructure\*.csproj Fanex.Alpha.Before.Infrastructure\
-COPY Fanex.Alpha.Before.Infrastructure\packages.config Fanex.Alpha.Before.Infrastructure\
+COPY src\Fanex.Alpha.Before.Infrastructure\*.csproj src\Fanex.Alpha.Before.Infrastructure\
+COPY src\Fanex.Alpha.Before.Infrastructure\packages.config src\Fanex.Alpha.Before.Infrastructure\
 
 RUN nuget.exe restore Fanex.Alpha.Before.sln
 
-COPY .nuget .nuget\
-COPY _tools _tools\
-COPY build build\
-COPY Fanex.Alpha.Before.Common Fanex.Alpha.Before.Common\
-COPY Fanex.Alpha.Before.Customer Fanex.Alpha.Before.Customer\
-COPY Fanex.Alpha.Before.Infrastructure Fanex.Alpha.Before.Infrastructure\
-COPY Fanex.Alpha.Before.Web Fanex.Alpha.Before.Web\
-COPY SonarQube SonarQube\
+COPY src src\
 
-RUN MSBuild.exe "Fanex.Alpha.Before.Web\Fanex.Alpha.Before.Web.csproj" `
+RUN MSBuild.exe "src\Fanex.Alpha.Before.Web\Fanex.Alpha.Before.Web.csproj" `
     /t:Build;WebPublish /m `
     /p:DebugType=None `
     /p:Configuration=Release `

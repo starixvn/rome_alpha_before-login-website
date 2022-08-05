@@ -32,7 +32,4 @@ _ReSharper*/
 /packages/*
 !/packages/*.config
 *.GhostDoc.xml
-bundles/
-**/assets/styles/**/*.css
-**/assets/styles-dark/**/*.css
 *.orig

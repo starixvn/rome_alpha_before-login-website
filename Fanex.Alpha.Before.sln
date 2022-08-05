@@ -3,15 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1321
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Common", "Fanex.Alpha.Before.Common\Fanex.Alpha.Before.Common.csproj", "{DBB7C2A5-9919-4C5D-B69C-3EDF958E1741}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Customer", "Fanex.Alpha.Before.Customer\Fanex.Alpha.Before.Customer.csproj", "{86AE59AE-4FEB-4EF7-A973-9FA75F2665E7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Infrastructure", "Fanex.Alpha.Before.Infrastructure\Fanex.Alpha.Before.Infrastructure.csproj", "{D7C7BD95-04A3-49AA-B486-16DD746B76F8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Web", "Fanex.Alpha.Before.Web\Fanex.Alpha.Before.Web.csproj", "{4BB79BA9-0D07-4478-AA13-9006AA2FB735}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Module", "Module", "{AD1FA013-9E02-4748-985B-D99366FD7FDD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AD1FA013-9E02-4748-985B-D99366FD7FDD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BB8A12A7-0B60-4F3F-AA42-88B08EC1D41C}"
 	ProjectSection(SolutionItems) = preProject
@@ -21,26 +13,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		JSLintOptions.xml = JSLintOptions.xml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{13395B86-1383-405C-BBE9-C037F4DE6397}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{77DDE5E0-A989-4D46-8A42-8EC254929B3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Common.Tests", "tests\unittests\Fanex.Alpha.Before.Common.Tests\Fanex.Alpha.Before.Common.Tests.csproj", "{017ADB57-6D53-427C-B880-972352AD0091}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{34A9DCEA-400F-4EF0-B42A-6AD6095BE22D}"
 	ProjectSection(SolutionItems) = preProject
-		SonarQube\Alpha-Before-LoginCSharp.ruleset = SonarQube\Alpha-Before-LoginCSharp.ruleset
-		SonarQube\SolutionBinding.sqconfig = SonarQube\SolutionBinding.sqconfig
-		SonarQube\alpha-before-login\CSharp\SonarLint.xml = SonarQube\alpha-before-login\CSharp\SonarLint.xml
+		src\SonarQube\Alpha-Before-LoginCSharp.ruleset = src\SonarQube\Alpha-Before-LoginCSharp.ruleset
+		src\SonarQube\SolutionBinding.sqconfig = src\SonarQube\SolutionBinding.sqconfig
+		src\SonarQube\alpha-before-login\CSharp\SonarLint.xml = src\SonarQube\alpha-before-login\CSharp\SonarLint.xml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Infrastructure.Tests", "tests\unittests\Fanex.Alpha.Before.Infrastructure.Tests\Fanex.Alpha.Before.Infrastructure.Tests.csproj", "{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Common", "src\Fanex.Alpha.Before.Common\Fanex.Alpha.Before.Common.csproj", "{DBB7C2A5-9919-4C5D-B69C-3EDF958E1741}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Customer", "src\Fanex.Alpha.Before.Customer\Fanex.Alpha.Before.Customer.csproj", "{86AE59AE-4FEB-4EF7-A973-9FA75F2665E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Infrastructure", "src\Fanex.Alpha.Before.Infrastructure\Fanex.Alpha.Before.Infrastructure.csproj", "{D7C7BD95-04A3-49AA-B486-16DD746B76F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Web", "src\Fanex.Alpha.Before.Web\Fanex.Alpha.Before.Web.csproj", "{4BB79BA9-0D07-4478-AA13-9006AA2FB735}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +40,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{017ADB57-6D53-427C-B880-972352AD0091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{017ADB57-6D53-427C-B880-972352AD0091}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{017ADB57-6D53-427C-B880-972352AD0091}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{017ADB57-6D53-427C-B880-972352AD0091}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DBB7C2A5-9919-4C5D-B69C-3EDF958E1741}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DBB7C2A5-9919-4C5D-B69C-3EDF958E1741}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DBB7C2A5-9919-4C5D-B69C-3EDF958E1741}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -64,28 +64,21 @@ Global
 		{4BB79BA9-0D07-4478-AA13-9006AA2FB735}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BB79BA9-0D07-4478-AA13-9006AA2FB735}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BB79BA9-0D07-4478-AA13-9006AA2FB735}.Release|Any CPU.Build.0 = Release|Any CPU
-		{017ADB57-6D53-427C-B880-972352AD0091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{017ADB57-6D53-427C-B880-972352AD0091}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{017ADB57-6D53-427C-B880-972352AD0091}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{017ADB57-6D53-427C-B880-972352AD0091}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{017ADB57-6D53-427C-B880-972352AD0091} = {77DDE5E0-A989-4D46-8A42-8EC254929B3D}
+		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5} = {77DDE5E0-A989-4D46-8A42-8EC254929B3D}
 		{DBB7C2A5-9919-4C5D-B69C-3EDF958E1741} = {AD1FA013-9E02-4748-985B-D99366FD7FDD}
 		{86AE59AE-4FEB-4EF7-A973-9FA75F2665E7} = {AD1FA013-9E02-4748-985B-D99366FD7FDD}
 		{D7C7BD95-04A3-49AA-B486-16DD746B76F8} = {AD1FA013-9E02-4748-985B-D99366FD7FDD}
-		{017ADB57-6D53-427C-B880-972352AD0091} = {77DDE5E0-A989-4D46-8A42-8EC254929B3D}
-		{E2F21E05-D6AA-42B1-B3A5-BB16227FCBC5} = {77DDE5E0-A989-4D46-8A42-8EC254929B3D}
+		{4BB79BA9-0D07-4478-AA13-9006AA2FB735} = {AD1FA013-9E02-4748-985B-D99366FD7FDD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D0C5C043-7E85-4559-BFF7-4DC07CF999C8}
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Data.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.1\lib\NET35;packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Logging.5.0.505.0\lib\NET35
+		SolutionGuid = {D0C5C043-7E85-4559-BFF7-4DC07CF999C8}
 	EndGlobalSection
 	GlobalSection(JSLint) = preSolution
 		SolutionConfigurationLocation = JSLintOptions.xml

@@ -194,12 +194,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Fanex.Alpha.Before.Common\Fanex.Alpha.Before.Common.csproj">
-      <Project>{dbb7c2a5-9919-4c5d-b69c-3edf958e1741}</Project>
-      <Name>Fanex.Alpha.Before.Common</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
@@ -209,6 +203,12 @@
     <Content Include="Database\LimitedCountryAccess\IPRangesByCountry.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Fanex.Alpha.Before.Common\Fanex.Alpha.Before.Common.csproj">
+      <Project>{dbb7c2a5-9919-4c5d-b69c-3edf958e1741}</Project>
+      <Name>Fanex.Alpha.Before.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\..\..\packages\Fanex.NUnit.ConsoleRunner.3.5.0\build\Fanex.NUnit.ConsoleRunner.targets" Condition="Exists('..\..\..\packages\Fanex.NUnit.ConsoleRunner.3.5.0\build\Fanex.NUnit.ConsoleRunner.targets')" />
