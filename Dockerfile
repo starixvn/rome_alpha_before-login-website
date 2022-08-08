@@ -4,6 +4,7 @@ FROM hub.nexdev.net/base/rocketor/buildservice AS builder
 ARG DEPLOY_ENV
 ARG ROCKETOR_API
 ARG REDMINE_IDS
+ARG TRANSFORM_CONFIG
 
 SHELL ["cmd", "/S", "/C"]
 
@@ -41,13 +42,13 @@ RUN `
         && xcopy C:\alpha-login-sp-result.xml "%P" /Y
 
 # Transform config
-RUN echo "%DEPLOY_ENV%" `
-    && xcopy "Configurations\WebDeployment.ConfigTransform\%DEPLOY_ENV%.Web.config" "Web.config" /Y `
-    && xcopy "Configurations\WebDeployment.ConfigTransform\%DEPLOY_ENV%.ConnectionStrings.config" "ConnectionStrings.config" /Y `
-	&& xcopy "Configurations\WebDeployment.ConfigTransform\%DEPLOY_ENV%.DomainGroupSection.config" "DomainGroupSection.config" /Y `
-    && xcopy "Configurations\WebDeployment.ConfigTransform\%DEPLOY_ENV%.LimtedCountryAccessSection.config" "LimtedCountryAccessSection.config" /Y `
-	&& xcopy "Configurations\WebDeployment.ConfigTransform\%DEPLOY_ENV%.Web.Setting.config" "Web.Setting.config" /Y `
-	&& xcopy "App_Data\activitytracking.%DEPLOY_ENV%.json" "App_Data\activitytracking.json" /Y 
+RUN echo "%TRANSFORM_CONFIG%" `
+    && xcopy "Configurations\WebDeployment.ConfigTransform\%TRANSFORM_CONFIG%.Web.config" "Web.config" /Y `
+    && xcopy "Configurations\WebDeployment.ConfigTransform\%TRANSFORM_CONFIG%.ConnectionStrings.config" "ConnectionStrings.config" /Y `
+	&& xcopy "Configurations\WebDeployment.ConfigTransform\%TRANSFORM_CONFIG%.DomainGroupSection.config" "DomainGroupSection.config" /Y `
+    && xcopy "Configurations\WebDeployment.ConfigTransform\%TRANSFORM_CONFIG%.LimtedCountryAccessSection.config" "LimtedCountryAccessSection.config" /Y `
+	&& xcopy "Configurations\WebDeployment.ConfigTransform\%TRANSFORM_CONFIG%.Web.Setting.config" "Web.Setting.config" /Y `
+	&& xcopy "App_Data\activitytracking.%TRANSFORM_CONFIG%.json" "App_Data\activitytracking.json" /Y 
 	
 
 FROM hub.nexdev.net/base/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019 AS base

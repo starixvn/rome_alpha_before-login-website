@@ -383,10 +383,46 @@
       <Link>SonarLint.xml</Link>
       <SubType>Designer</SubType>
     </AdditionalFiles>
+    <Content Include="App_Data\activitytracking.aws.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.aws2.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.aws3.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
     <Content Include="App_Data\activitytracking.local.json">
       <DependentUpon>activitytracking.json</DependentUpon>
     </Content>
+    <Content Include="App_Data\activitytracking.local2.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.master.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.pro.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.pro2.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.pro3.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
     <Content Include="App_Data\activitytracking.sit.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.sit2.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.uat2.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.uat2master.json">
+      <DependentUpon>activitytracking.json</DependentUpon>
+    </Content>
+    <Content Include="App_Data\activitytracking.uatmaster.json">
       <DependentUpon>activitytracking.json</DependentUpon>
     </Content>
     <Content Include="App_Data\Alpha.SliderCaptcha\backgrounds\1.jpg" />
@@ -621,9 +657,9 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS.Web.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS.Web.Setting.config">
+    <None Include="Configurations\WebDeployment.ConfigTransform\AWS.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
-    </Content>
+    </None>
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS2.ConnectionStrings.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
@@ -636,9 +672,9 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS2.Web.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS2.Web.Setting.config">
+    <None Include="Configurations\WebDeployment.ConfigTransform\AWS2.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
-    </Content>
+    </None>
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS3.ConnectionStrings.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
@@ -651,9 +687,9 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS3.Web.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS3.Web.Setting.config">
+    <None Include="Configurations\WebDeployment.ConfigTransform\AWS3.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
-    </Content>
+    </None>
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.ConnectionStrings.config">
       <DependentUpon>backupMNL.Web.config</DependentUpon>
     </Content>
@@ -730,19 +766,16 @@
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.DomainGroupSection.config">
-      <SubType>Designer</SubType>
       <DependentUpon>PRO.Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.LimtedCountryAccessSection.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.Setting.config">
-      <SubType>Designer</SubType>
+    <None Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
-    </Content>
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.ConnectionStrings.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
@@ -755,23 +788,27 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.Web.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.Web.Setting.config">
+    <None Include="Configurations\WebDeployment.ConfigTransform\PRO2.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
-    </Content>
+    </None>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.ConnectionStrings.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.DomainGroupSection.config">
-      <SubType>Designer</SubType>
       <DependentUpon>PRO.Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.LimtedCountryAccessSection.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.Web.config">
-      <SubType>Designer</SubType>
       <DependentUpon>PRO.Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
+    <None Include="Configurations\WebDeployment.ConfigTransform\PRO3.Web.Setting.config">
+      <DependentUpon>PRO.Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.ConnectionStrings.config">
       <DependentUpon>SIT.Web.config</DependentUpon>
     </Content>
@@ -780,10 +817,6 @@
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.LimtedCountryAccessSection.config">
       <DependentUpon>SIT.Web.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.Web.Setting.config">
-      <SubType>Designer</SubType>
-      <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.Web.Setting.config">
       <SubType>Designer</SubType>
@@ -1072,9 +1105,6 @@
     <Content Include="assets\styles\pages\error3.scss" />
     <Content Include="Areas\Customer\Views\RobotCaptcha\Index.cshtml" />
     <Content Include="App_Data\activitytracking.json" />
-    <Content Include="App_Data\activitytracking.pro.json">
-      <DependentUpon>activitytracking.json</DependentUpon>
-    </Content>
     <Content Include="App_Data\activitytracking.uat.json">
       <DependentUpon>activitytracking.json</DependentUpon>
     </Content>
@@ -1097,6 +1127,7 @@
     <Content Include="Views\Common\ErrorPage\Index3.cshtml" />
     <Content Include="Fanex.Alpha.Before.Web.ruleset" />
     <Content Include="Views\Common\ErrorPage\Style\Error-dark.less" />
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\" />
