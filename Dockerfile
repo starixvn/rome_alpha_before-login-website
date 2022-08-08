@@ -1,7 +1,6 @@
 # escape=`
 FROM hub.nexdev.net/base/rocketor/buildservice AS builder
 
-ARG DEPLOY_ENV
 ARG ROCKETOR_API
 ARG REDMINE_IDS
 ARG TRANSFORM_CONFIG
@@ -15,6 +14,19 @@ COPY *.sln .
 COPY src src\
 
 RUN nuget.exe restore Fanex.Alpha.Before.sln
+
+RUN `
+	FOR %P IN ( `
+		LOCAL2, `
+		SIT2, `
+		UAT2, `
+		PRO2, `
+		AWS2, `
+		backupMNLi7, `
+		) `
+		DO if "%P" == "%TRANSFORM_CONFIG%"; `
+		echo "Copying files..." && xcopy "src\Fanex.Alpha.Before.Web\favicon2.ico" "src\Fanex.Alpha.Before.Web\favicon.ico" /Y `
+		&& xcopy "src\Fanex.Alpha.Before.Web\compilerconfig2.json" "src\Fanex.Alpha.Before.Web\compilerconfig.json" /Y 
 
 RUN MSBuild.exe "src\Fanex.Alpha.Before.Web\Fanex.Alpha.Before.Web.csproj" `
     /t:Build;WebPublish /m `
@@ -34,9 +46,9 @@ WORKDIR C:\BeforeLogin
 RUN `
     if defined REDMINE_IDS `
     FOR %P IN ( `
-        Configurations\PRO.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml, `
-		Configurations\PRO.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml, `
-		Configurations\PRO.StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml `
+        Configurations\StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml, `
+		Configurations\StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml, `
+		Configurations\StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml `
     ) `
     DO curl --fail -o C:\alpha-login-sp-result.xml --form file=@"%P" --form "redmineIds=%REDMINE_IDS%" -X POST %ROCKETOR_API% `
         && xcopy C:\alpha-login-sp-result.xml "%P" /Y
@@ -50,10 +62,7 @@ RUN echo "%TRANSFORM_CONFIG%" `
 	&& xcopy "Configurations\WebDeployment.ConfigTransform\%TRANSFORM_CONFIG%.Web.Setting.config" "Web.Setting.config" /Y `
 	&& xcopy "App_Data\activitytracking.%TRANSFORM_CONFIG%.json" "App_Data\activitytracking.json" /Y 
 	
-
 FROM hub.nexdev.net/base/dotnet/framework/aspnet:4.7.2-windowsservercore-ltsc2019 AS base
-
-RUN ["powershell", "New-Item", "C:\\inetpub\\BeforeLogin"]
 
 COPY --from=builder C:\BeforeLogin .
 

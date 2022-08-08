@@ -483,10 +483,6 @@
     <Content Include="assets\bundles\themes\default.min.css">
       <DependentUpon>default.css</DependentUpon>
     </Content>
-    <Content Include="assets\bundles\themes\error3.css" />
-    <Content Include="assets\bundles\themes\error3.min.css">
-      <DependentUpon>error3.css</DependentUpon>
-    </Content>
     <Content Include="assets\bundles\themes\event.css" />
     <Content Include="assets\bundles\themes\event.min.css">
       <DependentUpon>event.css</DependentUpon>
@@ -502,10 +498,6 @@
     <Content Include="assets\bundles\themes\um2.css" />
     <Content Include="assets\bundles\themes\um2.min.css">
       <DependentUpon>um2.css</DependentUpon>
-    </Content>
-    <Content Include="assets\bundles\themes\um3.css" />
-    <Content Include="assets\bundles\themes\um3.min.css">
-      <DependentUpon>um3.css</DependentUpon>
     </Content>
     <Content Include="assets\bundles\um2.js" />
     <Content Include="assets\bundles\um2.min.js">
@@ -541,12 +533,6 @@
     <Content Include="assets\styles\images\sprites2.png" />
     <Content Include="assets\styles\images\sprites3.png" />
     <Content Include="assets\styles\images\um3-bg.png" />
-    <Content Include="assets\styles\pages\error3.css">
-      <DependentUpon>error3.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\error3.min.css">
-      <DependentUpon>error3.css</DependentUpon>
-    </Content>
     <Content Include="assets\styles\pages\robotcaptcha-dark.css">
       <DependentUpon>robotcaptcha-dark.scss</DependentUpon>
     </Content>
@@ -576,12 +562,6 @@
     </Content>
     <Content Include="assets\styles\pages\um2.min.css">
       <DependentUpon>um2.css</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\um3.css">
-      <DependentUpon>um3.scss</DependentUpon>
-    </Content>
-    <Content Include="assets\styles\pages\um3.min.css">
-      <DependentUpon>um3.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\themes\default-dark.css">
       <DependentUpon>default-dark.scss</DependentUpon>
@@ -620,31 +600,12 @@
     <Content Include="compilerconfig2.json">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
-    <Content Include="Configurations\Local.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\Local.StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml" />
-    <Content Include="Configurations\Master.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\Master.StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml" />
-    <Content Include="Configurations\MNL.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\MNL.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\MNL.StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml" />
-    <Content Include="Configurations\PRO.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\PRO.StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml" />
-    <Content Include="Configurations\UAT.StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\StoreProcedure\DBCUST.IPDB.BODBDownlineNet.xml" />
+    <Content Include="Configurations\StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml" />
     <Content Include="assets\scripts\login\core.js" />
     <Content Include="assets\scripts\login\login.js" />
     <Content Include="assets\scripts\login\place-holder.js" />
-    <Content Include="Configurations\Local.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configurations\Master.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\PRO.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml" />
-    <Content Include="Configurations\UAT.StoreProcedure\DBCust.CustDB.BODBDownlineNet.xml">
-      <SubType>
-      </SubType>
-    </Content>
-    <Content Include="Configurations\UAT.StoreProcedure\DBONUSER.ON_USER.BODBDownlineNet.xml" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS.ConnectionStrings.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
@@ -901,9 +862,6 @@
     <Content Include="favicon2.ico">
       <DependentUpon>favicon.ico</DependentUpon>
     </Content>
-    <Content Include="favicon3.ico">
-      <DependentUpon>favicon.ico</DependentUpon>
-    </Content>
     <Content Include="Global.asax" />
     <Content Include="Scripts\aes.js" />
     <Content Include="speedtest.png" />
@@ -936,9 +894,6 @@
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\seamless_pattern.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\style-dark.css" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\style.css" />
-    <Content Include="Views\Common\UnderMaintenance\Index2.cshtml">
-      <DependentUpon>Index.cshtml</DependentUpon>
-    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1101,8 +1056,6 @@
     <Content Include="assets\styles\abstracts\_variables2.scss" />
     <Content Include="assets\styles\pages\um.scss" />
     <Content Include="assets\styles\abstracts\_variables3.scss" />
-    <Content Include="assets\styles\pages\um3.scss" />
-    <Content Include="assets\styles\pages\error3.scss" />
     <Content Include="Areas\Customer\Views\RobotCaptcha\Index.cshtml" />
     <Content Include="App_Data\activitytracking.json" />
     <Content Include="App_Data\activitytracking.uat.json">
@@ -1123,8 +1076,6 @@
     <Content Include="Views\Shared\GoogleAnalytic.cshtml" />
     <Content Include="assets\styles\pages\um2.scss" />
     <Content Include="Views\Common\UnderMaintenance\Index.cshtml" />
-    <Content Include="Views\Common\UnderMaintenance\Index3.cshtml" />
-    <Content Include="Views\Common\ErrorPage\Index3.cshtml" />
     <Content Include="Fanex.Alpha.Before.Web.ruleset" />
     <Content Include="Views\Common\ErrorPage\Style\Error-dark.less" />
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.config" />
@@ -1174,7 +1125,9 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>cd $(ProjectDir)
+cd ..
+cd build
+assets.build.cmd</PostBuildEvent>
   </PropertyGroup>
 </Project>
