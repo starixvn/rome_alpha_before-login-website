@@ -15,7 +15,7 @@ else if (Model.GetType() == typeof(Fanex.Alpha.Before.Customer.Models.SignInResu
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link href="~/assets/styles/vendors-extensions/login/bootstrap-ex.min.css?ver=@CommonAppSetting.Version" rel="stylesheet" />
+        <link href="assets/styles/vendors-extensions/login/bootstrap-ex.min.css?ver=@CommonAppSetting.Version" rel="stylesheet" />
 
         @RenderSection("styles", false)
 
@@ -28,7 +28,7 @@ else if (Model.GetType() == typeof(Fanex.Alpha.Before.Customer.Models.SignInResu
             </h2>
         </div>
         <div id="mainholder" class="block-login">
-            <form id="formLogin" class="form-login" action="@Url.Content("~/")" method="POST" autocomplete="off">
+            <form id="formLogin" class="form-login" action="" method="POST" autocomplete="off">
                 @RenderBody()
                 <input name="code" id="code" type="hidden" value="@data.Captcha" />
                 <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
@@ -44,15 +44,13 @@ else if (Model.GetType() == typeof(Fanex.Alpha.Before.Customer.Models.SignInResu
             </div>
         }
 
-        <script src="~/assets/bundles/login.min.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
+        <script src="assets/bundles/login.min.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 
         @Html.Partial("FPS", data)
 
         @RenderSection("scripts", false)
 
         @Html.Partial("GoogleAnalytic", CommonAppSetting.GoogleAnalyticId)
-
-        @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
     </body>
 </html>
 }

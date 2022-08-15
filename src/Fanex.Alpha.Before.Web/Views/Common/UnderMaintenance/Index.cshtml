@@ -12,11 +12,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.7, user-scalable=yes">
     @if (isMbcSite)
     {
-        <link href="~/assets/bundles/themes/um@(ViewData["DarkModeName"]).min.css" rel="stylesheet" />
+        <link href="assets/bundles/themes/um@(ViewData["DarkModeName"]).min.css" rel="stylesheet" />
     }
     else
     {
-        <link href="~/assets/bundles/themes/um2.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/bundles/themes/um2.min.css" rel="stylesheet" type="text/css" />
     }
 </head>
 <body>
@@ -143,7 +143,7 @@
             @Html.Hidden("countdown-time", Model.CountdownTime.TotalSeconds)
         }
 
-        <script type="text/javascript" src="~/assets/bundles/um2.min.js"></script>
+        <script type="text/javascript" src="assets/bundles/um2.min.js"></script>
     }
 </body>
 </html>
