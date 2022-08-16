@@ -1,4 +1,4 @@
-var captchaId = '#' + document.getElementById("CaptchaId").value;
+﻿var captchaId = '#' + document.getElementById("CaptchaId").value;
 
 $(function () {
     $(captchaId).show();

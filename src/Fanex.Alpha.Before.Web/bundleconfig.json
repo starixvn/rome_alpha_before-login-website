@@ -28,12 +28,6 @@
     ]
   },
   {
-    "outputFileName": "assets/bundles/captcha.js",
-    "inputFiles": [
-      "assets/scripts/login/captcha.js"
-    ]
-  },
-  {
     "outputFileName": "assets/bundles/themes/event.css",
     "inputFiles": [
       "assets/styles/themes/default.css",
@@ -56,22 +50,9 @@
     ]
   },
   {
-    "outputFileName": "assets/bundles/themes/um3.css",
-    "inputFiles": [
-      "assets/scripts/libs/flipclock/flipclock.css",
-      "assets/styles/pages/um3.css"
-    ]
-  },
-  {
     "outputFileName": "assets/bundles/themes/um.css",
     "inputFiles": [
       "assets/styles/pages/um.css"
-    ]
-  },
-  {
-    "outputFileName": "assets/bundles/themes/error3.css",
-    "inputFiles": [
-      "assets/styles/pages/error3.css"
     ]
   },
   {

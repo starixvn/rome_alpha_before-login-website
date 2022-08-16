@@ -458,6 +458,82 @@
     <Content Include="App_Data\Alpha.SliderCaptcha\sliders\6\alpha.png" />
     <Content Include="App_Data\Alpha.SliderCaptcha\sliders\6\base.png" />
     <Content Include="App_Data\Alpha.SliderCaptcha\sliders\6\border.png" />
+    <Content Include="assets2\bundles\captchav3.js" />
+    <Content Include="assets2\bundles\captchav3.min.js" />
+    <Content Include="assets2\bundles\login.js" />
+    <Content Include="assets2\bundles\login.min.js" />
+    <Content Include="assets2\bundles\raven.min.js" />
+    <Content Include="assets2\bundles\robotcaptcha-dark.css" />
+    <Content Include="assets2\bundles\robotcaptcha-dark.min.css" />
+    <Content Include="assets2\bundles\robotcaptcha.css" />
+    <Content Include="assets2\bundles\robotcaptcha.min.css" />
+    <Content Include="assets2\bundles\themes\default-dark.css" />
+    <Content Include="assets2\bundles\themes\default-dark.min.css" />
+    <Content Include="assets2\bundles\themes\default.css" />
+    <Content Include="assets2\bundles\themes\default.min.css" />
+    <Content Include="assets2\bundles\themes\event.css" />
+    <Content Include="assets2\bundles\themes\event.min.css" />
+    <Content Include="assets2\bundles\themes\um-dark.css" />
+    <Content Include="assets2\bundles\themes\um-dark.min.css" />
+    <Content Include="assets2\bundles\themes\um.css" />
+    <Content Include="assets2\bundles\themes\um.min.css" />
+    <Content Include="assets2\bundles\themes\um2.css" />
+    <Content Include="assets2\bundles\themes\um2.min.css" />
+    <Content Include="assets2\bundles\um2.js" />
+    <Content Include="assets2\bundles\um2.min.js" />
+    <Content Include="assets2\scripts\alpha.slider-captcha.js" />
+    <Content Include="assets2\scripts\libs\bootstrap\dropdown.js" />
+    <Content Include="assets2\scripts\libs\cryptojs\aes.js" />
+    <Content Include="assets2\scripts\libs\detecas\Detecas.Base64.js" />
+    <Content Include="assets2\scripts\libs\detecas\Detecas.JSON.js" />
+    <Content Include="assets2\scripts\libs\flipclock\flipclock.css" />
+    <Content Include="assets2\scripts\libs\flipclock\flipclock.js" />
+    <Content Include="assets2\scripts\libs\flipclock\flipclock.min.js" />
+    <Content Include="assets2\scripts\libs\jquery\jquery-1.11.3.js" />
+    <Content Include="assets2\scripts\libs\storage\store-with-json2.min.js" />
+    <Content Include="assets2\scripts\login\assetAppPaths.js" />
+    <Content Include="assets2\scripts\login\captcha.js" />
+    <Content Include="assets2\scripts\login\captchav3.js" />
+    <Content Include="assets2\scripts\login\core.js" />
+    <Content Include="assets2\scripts\login\fps.js" />
+    <Content Include="assets2\scripts\login\login.js" />
+    <Content Include="assets2\scripts\login\place-holder.js" />
+    <Content Include="assets2\scripts\login\resources.js" />
+    <Content Include="assets2\scripts\um\um.js" />
+    <Content Include="assets2\styles\alpha.slider-captcha.css" />
+    <Content Include="assets2\styles\images\crossword.png" />
+    <Content Include="assets2\styles\images\error3-bg.png" />
+    <Content Include="assets2\styles\images\mode\dark-hover.svg" />
+    <Content Include="assets2\styles\images\mode\dark.svg" />
+    <Content Include="assets2\styles\images\mode\light-hover.svg" />
+    <Content Include="assets2\styles\images\mode\light.svg" />
+    <Content Include="assets2\styles\images\mode\y9-light.svg" />
+    <Content Include="assets2\styles\images\mode\y9.svg" />
+    <Content Include="assets2\styles\images\sprites.png" />
+    <Content Include="assets2\styles\images\sprites2.png" />
+    <Content Include="assets2\styles\images\sprites3.png" />
+    <Content Include="assets2\styles\images\sprites4.png" />
+    <Content Include="assets2\styles\images\um3-bg.png" />
+    <Content Include="assets2\styles\pages\robotcaptcha-dark.css" />
+    <Content Include="assets2\styles\pages\robotcaptcha-dark.min.css" />
+    <Content Include="assets2\styles\pages\robotcaptcha.css" />
+    <Content Include="assets2\styles\pages\robotcaptcha.min.css" />
+    <Content Include="assets2\styles\pages\um-dark.css" />
+    <Content Include="assets2\styles\pages\um-dark.min.css" />
+    <Content Include="assets2\styles\pages\um.css" />
+    <Content Include="assets2\styles\pages\um.min.css" />
+    <Content Include="assets2\styles\pages\um2.css" />
+    <Content Include="assets2\styles\pages\um2.min.css" />
+    <Content Include="assets2\styles\themes\default-dark.css" />
+    <Content Include="assets2\styles\themes\default-dark.min.css" />
+    <Content Include="assets2\styles\themes\default.css" />
+    <Content Include="assets2\styles\themes\default.min.css" />
+    <Content Include="assets2\styles\themes\event.css" />
+    <Content Include="assets2\styles\themes\event.min.css" />
+    <Content Include="assets2\styles\vendors-extensions\login\bootstrap-ex.css" />
+    <Content Include="assets2\styles\vendors-extensions\login\bootstrap-ex.min.css" />
+    <Content Include="assets2\styles\vendors\bootstrap.css" />
+    <Content Include="assets2\styles\vendors\bootstrap.min.css" />
     <Content Include="assets\bundles\captchav3.js" />
     <Content Include="assets\bundles\captchav3.min.js">
       <DependentUpon>captchav3.js</DependentUpon>
@@ -618,6 +694,38 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS.Web.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
+    <Content Include="bundleconfig2.json" />
+    <Content Include="assets2\scripts\libs\jquery\jquery-1.11.3.min.map" />
+    <Content Include="assets2\styles\fonts\opensans\OpenSans-Bold.ttf" />
+    <Content Include="assets2\styles\fonts\opensans\OpenSans-BoldItalic.ttf" />
+    <Content Include="assets2\styles\fonts\opensans\OpenSans-ExtraBold.ttf" />
+    <Content Include="assets2\styles\fonts\opensans\OpenSans-ExtraBoldItalic.ttf" />
+    <Content Include="assets2\styles\fonts\opensans\OpenSans-Italic.ttf" />
+    <Content Include="assets2\styles\fonts\opensans\OpenSans-Light.ttf" />
+    <Content Include="assets2\styles\fonts\opensans\OpenSans-LightItalic.ttf" />
+    <Content Include="assets2\styles\fonts\opensans\OpenSans-Regular.ttf" />
+    <Content Include="assets2\styles\fonts\opensans\OpenSans-Semibold.ttf" />
+    <Content Include="assets2\styles\fonts\opensans\OpenSans-SemiboldItalic.ttf" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Bold.eot" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Bold.ttf" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Bold.woff" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Bold.woff2" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Light.eot" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Light.ttf" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Light.woff" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Light.woff2" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Medium.eot" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Medium.ttf" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Medium.woff" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Medium.woff2" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Regular.eot" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Regular.ttf" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Regular.woff" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Regular.woff2" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Thin.eot" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Thin.ttf" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Thin.woff" />
+    <Content Include="assets2\styles\fonts\roboto\Roboto-Thin.woff2" />
     <None Include="Configurations\WebDeployment.ConfigTransform\AWS.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </None>
@@ -1125,9 +1233,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>cd $(ProjectDir)
-cd ..
-cd build
-assets.build.cmd</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

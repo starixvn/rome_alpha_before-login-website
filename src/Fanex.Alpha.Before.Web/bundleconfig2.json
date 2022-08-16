@@ -1,0 +1,84 @@
+[
+  {
+    "outputFileName": "assets2/bundles/login.js",
+    "inputFiles": [
+      "assets/scripts/libs/jquery/jquery-1.11.3.js",
+      "assets/scripts/libs/bootstrap/dropdown.js",
+      "assets/scripts/libs/storage/store-with-json2.min.js",
+      "assets/scripts/libs/detecas/Detecas.Base64.js",
+      "assets/scripts/libs/detecas/Detecas.JSON.js",
+      "assets/scripts/libs/cryptojs/aes.js",
+      "assets/scripts/login/core.js",
+      "assets/scripts/login/place-holder.js",
+      "assets/scripts/login/resources.js",
+      "assets/scripts/login/assetAppPaths.js",
+      "assets/scripts/login/login.js"
+    ]
+  },
+  {
+    "outputFileName": "assets2/bundles/captchav3.js",
+    "inputFiles": [
+      "assets/scripts/login/captchav3.js"
+    ]
+  },
+  {
+    "outputFileName": "assets2/bundles/themes/default.css",
+    "inputFiles": [
+      "assets2/styles/themes/default.css"
+    ]
+  },
+  {
+    "outputFileName": "assets2/bundles/themes/event.css",
+    "inputFiles": [
+      "assets2/styles/themes/default.css",
+      "assets2/styles/themes/event.css"
+    ]
+  },
+  {
+    "outputFileName": "assets2/bundles/um2.js",
+    "inputFiles": [
+      "assets/scripts/libs/jquery/jquery-1.11.3.js",
+      "assets/scripts/libs/flipclock/flipclock.js",
+      "assets/scripts/um/um.js"
+    ]
+  },
+  {
+    "outputFileName": "assets2/bundles/themes/um2.css",
+    "inputFiles": [
+      "assets/scripts/libs/flipclock/flipclock.css",
+      "assets2/styles/pages/um2.css"
+    ]
+  },
+  {
+    "outputFileName": "assets2/bundles/themes/um.css",
+    "inputFiles": [
+      "assets2/styles/pages/um.css"
+    ]
+  },
+  {
+    "outputFileName": "assets2/bundles/robotcaptcha.css",
+    "inputFiles": [
+      "assets2/styles/pages/robotcaptcha.css"
+    ]
+  },
+
+  /************************** Dark Mode ************************/
+  {
+    "outputFileName": "assets2/bundles/themes/default-dark.css",
+    "inputFiles": [
+      "assets2/styles/themes/default-dark.css"
+    ]
+  },
+  {
+    "outputFileName": "assets2/bundles/robotcaptcha-dark.css",
+    "inputFiles": [
+      "assets2/styles/pages/robotcaptcha-dark.css"
+    ]
+  },
+  {
+    "outputFileName": "assets2/bundles/themes/um-dark.css",
+    "inputFiles": [
+      "assets2/styles/pages/um-dark.css"
+    ]
+  }
+]

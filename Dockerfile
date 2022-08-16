@@ -13,19 +13,7 @@ WORKDIR /build
 COPY *.sln .
 COPY src src\
 
-RUN FOR %P IN ( `
-		LOCAL2, `
-		SIT2, `
-		UAT2, `
-		PRO2, `
-		AWS2, `
-		backupMNLi7, `
-    ) `
-    DO ( `
-        if "%P" == "%TRANSFORM_CONFIG%"; `
-		echo "Copying files..." && xcopy "src\Fanex.Alpha.Before.Web\favicon2.ico" "src\Fanex.Alpha.Before.Web\favicon.ico" /Y `
-		&& xcopy "src\Fanex.Alpha.Before.Web\compilerconfig2.json" "src\Fanex.Alpha.Before.Web\compilerconfig.json" /Y `
-    )
+
 
 RUN nuget.exe restore Fanex.Alpha.Before.sln `
     # Build project
@@ -42,6 +30,20 @@ RUN nuget.exe restore Fanex.Alpha.Before.sln `
         /consoleloggerparameters:ErrorsOnly
 
 WORKDIR C:\BeforeLogin
+
+RUN FOR %P IN ( `
+		LOCAL2, `
+		SIT2, `
+		UAT2, `
+		PRO2, `
+		AWS2, `
+		backupMNLi7, `
+    ) `
+    DO ( `
+        if "%P" == "%TRANSFORM_CONFIG%"; `
+		echo "Copying files..." && xcopy "favicon2.ico" "favicon.ico" /Y `
+		&& robocopy "assets2" "assets" /e /mir `
+    )
 
 # Change SP Version
 RUN if defined REDMINE_IDS `
