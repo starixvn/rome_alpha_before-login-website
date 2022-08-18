@@ -6,6 +6,7 @@
 
 namespace Fanex.Alpha.Before.Common.Helpers
 {
+    using System.Configuration;
     using System.Linq;
     using System.Web;
     using Fanex.Alpha.Before.Common.Configurations.Domain;
@@ -28,7 +29,7 @@ namespace Fanex.Alpha.Before.Common.Helpers
             {
                 var request = HttpContext.Current.Request;
                 var hostName = request.Headers["Host"];
-                var appPath = request.Path.TrimEnd('/');
+                var appPath = request.ApplicationPath;
                 var protocol = request.IsSecureConnection ? HttpSlashSlashS : HttpSlashSlash;
                 var hasAppPath = appPath.Length > 1;
                 var slash = hasAppPath ? "/" : string.Empty;
@@ -105,7 +106,8 @@ namespace Fanex.Alpha.Before.Common.Helpers
         private static string GetBaseUrl()
         {
             var hostName = HttpContext.Current.Request.Headers["Host"];
-            var appPath = HttpContext.Current.Request.Path.TrimEnd('/');
+            var appPath = HttpContext.Current.Request.ApplicationPath;
+
             var url = string.Format(
                 "{0}{1}{2}",
                 HttpContext.Current.Request.IsSecureConnection ? HttpSlashSlashS : HttpSlashSlash,
