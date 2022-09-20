@@ -12,6 +12,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using System.Diagnostics;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Threading;
     using System.Threading.Tasks;
     using System.Web;
     using Cryptography.Aes;
@@ -35,6 +38,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using global::Alpha.SliderCaptcha.Mvc;
     using Logging.Extensions.Web;
     using Newtonsoft.Json;
+    using TelegramBot.Client.Services;
 
     public interface ISignInService
     {
@@ -65,6 +69,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly CaptchaOptions captchaOptions;
         private readonly ICaptchaService captchaService;
         private readonly IKickoutCustomerService kickoutCustomerService;
+        private readonly INotificationService notificationService;
 
         private readonly Logging.ILogger logger;
         private readonly HttpContext httpContext;
@@ -80,7 +85,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         }
 
         public SignInService() :
-            this(null, null, null, null, null, null, null, null, null)
+            this(null, null, null, null, null, null, null, null, null, null)
         {
         }
 
@@ -93,7 +98,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             CaptchaOptions captchaOptions,
             IServiceFactory serviceFactory,
             IKickoutCustomerService kickoutCustomerService,
-            IPService ipService)
+            IPService ipService,
+            INotificationService notificationService)
         {
             this.ipService = ipService ?? new IpServiceImpl();
             _signInRepository = signInRepository ?? new SignInRepository();
@@ -127,6 +133,18 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             serviceFactory = serviceFactory ?? SliderCaptchaHandler.ServiceFactory;
             captchaService = serviceFactory.CaptchaService;
             this.kickoutCustomerService = kickoutCustomerService ?? new KickoutCustomerService();
+            this.notificationService = notificationService ?? new NotificationService(CreateTelegramBotHttpClient());
+        }
+
+        private static HttpClient CreateTelegramBotHttpClient()
+        {
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+            var telegramClient = HttpClientFactory.Create();
+            telegramClient.BaseAddress = AppSetting.TelegramBotUri;
+            telegramClient.DefaultRequestHeaders.Add("Accept-Language", Thread.CurrentThread.CurrentCulture.Name);
+
+            return telegramClient;
         }
 
         public SignInResult SignIn()
@@ -360,6 +378,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             if (loginUserFailedCount >= _loginFailTimeToStartUsingCaptcha)
             {
                 signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
+                Task.Run(async () => await notificationService.NotifyWrongPassword(verifySignInResult.CustId,verifySignInResult.SubAccId, signInResult.Ip));
             }
 
             signInResult.ErrMsg = verifySignInResult.ErrorMessage;

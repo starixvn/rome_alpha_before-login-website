@@ -108,5 +108,7 @@
         public static bool IsOfferDarkMode { get; }
 
         public static string AssetAppPaths { get; }
+
+        public static Uri TelegramBotUri => new Uri(ConfigurationManager.AppSettings["TelegramBotUri"]);
     }
 }
