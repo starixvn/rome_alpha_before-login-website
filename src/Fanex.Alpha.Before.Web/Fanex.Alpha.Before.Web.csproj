@@ -726,9 +726,9 @@
     <Content Include="assets2\styles\fonts\roboto\Roboto-Thin.ttf" />
     <Content Include="assets2\styles\fonts\roboto\Roboto-Thin.woff" />
     <Content Include="assets2\styles\fonts\roboto\Roboto-Thin.woff2" />
-    <None Include="Configurations\WebDeployment.ConfigTransform\AWS.Web.Setting.config">
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
-    </None>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS2.ConnectionStrings.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
@@ -741,9 +741,9 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS2.Web.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
-    <None Include="Configurations\WebDeployment.ConfigTransform\AWS2.Web.Setting.config">
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS2.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
-    </None>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS3.ConnectionStrings.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
@@ -756,9 +756,9 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS3.Web.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
-    <None Include="Configurations\WebDeployment.ConfigTransform\AWS3.Web.Setting.config">
+    <Content Include="Configurations\WebDeployment.ConfigTransform\AWS3.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
-    </None>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.ConnectionStrings.config">
       <DependentUpon>backupMNL.Web.config</DependentUpon>
     </Content>
@@ -841,10 +841,10 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.LimtedCountryAccessSection.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
-    <None Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.Setting.config">
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
       <SubType>Designer</SubType>
-    </None>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.ConnectionStrings.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
@@ -857,9 +857,9 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.Web.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
-    <None Include="Configurations\WebDeployment.ConfigTransform\PRO2.Web.Setting.config">
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO2.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
-    </None>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.ConnectionStrings.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
@@ -874,10 +874,10 @@
       <DependentUpon>PRO.Web.config</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Configurations\WebDeployment.ConfigTransform\PRO3.Web.Setting.config">
+    <Content Include="Configurations\WebDeployment.ConfigTransform\PRO3.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
       <SubType>Designer</SubType>
-    </None>
+    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\SIT.ConnectionStrings.config">
       <DependentUpon>SIT.Web.config</DependentUpon>
     </Content>
