@@ -13,8 +13,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Robot Captcha</title>
-    <link rel="stylesheet" href="@Url.Content(string.Format("assets/bundles/robotcaptcha{0}.min.css?v={1}", ViewData["DarkModeName"], version))" />
-    <link rel="stylesheet" href="@Url.Content("assets/styles/alpha.slider-captcha.css?v=" + version)" />
+    <link rel="stylesheet" href="@Url.Content(string.Format("~/assets/bundles/robotcaptcha{0}.min.css?v={1}", ViewData["DarkModeName"], version))" />
+    <link rel="stylesheet" href="@Url.Content("~/assets/styles/alpha.slider-captcha.css?v=" + version)" />
 </head>
 <body>
     <div class="wrapper">
@@ -22,12 +22,12 @@
             <div id="captcha" name="token"></div>
         </form>
     </div>
-    <script src="assets/scripts/alpha.slider-captcha.js?ver=@version" type="text/javascript"></script>
+    <script src="~/assets/scripts/alpha.slider-captcha.js?ver=@version" type="text/javascript"></script>
     <script>
         var tooManyFailedLoginPageUrl = "@Html.Raw(ViewBag.tooManyFailedLoginPageUrl)";
         sliderCaptcha('captcha', {
             lang: "@Fanex.Alpha.Before.Common.Configurations.AppSession.Language",
-            baseUri: "@Url.Content("~")",
+            baseUri: "@Url.Content("~/")",
             callback: function (response, event) {
                 if (response.Code === 0) {
                     if (localStorage) {

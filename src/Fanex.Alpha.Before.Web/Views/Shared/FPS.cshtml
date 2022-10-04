@@ -63,10 +63,10 @@
 
 @if (CommonAppSetting.IsEnableFPS)
 {
-<script src="assets/scripts/login/fps.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
+<script src="~/assets/scripts/login/fps.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 }
 
 @if (Model.GoogleReCaptcha.IsEnable)
 {
-    <script src="assets/bundles/captchav3.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
+    <script src="~/assets/bundles/captchav3.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 }
