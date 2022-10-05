@@ -2,7 +2,6 @@
 Thumbs.db
 #Ignore files build by Visual Studio
 *.obj
-*.exe
 *.pdb
 *.user
 *.aps
@@ -32,7 +31,4 @@ _ReSharper*/
 /packages/*
 !/packages/*.config
 *.GhostDoc.xml
-bundles/
-**/assets/styles/**/*.css
-**/assets/styles-dark/**/*.css
 *.orig
