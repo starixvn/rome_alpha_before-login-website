@@ -2,4 +2,4 @@ copy ..\Fanex.Alpha.Before.Web\favicon2.ico ..\Fanex.Alpha.Before.Web\favicon.ic
 
 robocopy "..\Fanex.Alpha.Before.Web\assets2" "..\Fanex.Alpha.Before.Web\assets" /e /mir 
 
-exit
+pause
