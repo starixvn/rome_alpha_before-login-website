@@ -759,33 +759,6 @@
     <Content Include="Configurations\WebDeployment.ConfigTransform\AWS3.Web.Setting.config">
       <DependentUpon>PRO.Web.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.ConnectionStrings.config">
-      <DependentUpon>backupMNL.Web.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.DomainGroupSection.config">
-      <DependentUpon>backupMNL.Web.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.LimtedCountryAccessSection.config">
-      <DependentUpon>backupMNL.Web.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.Web.Setting.config">
-      <DependentUpon>backupMNL.Web.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.ConnectionStrings.config">
-      <DependentUpon>backupMNL.Web.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.DomainGroupSection.config">
-      <DependentUpon>backupMNL.Web.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.LimtedCountryAccessSection.config">
-      <DependentUpon>backupMNL.Web.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.Web.config">
-      <DependentUpon>backupMNL.Web.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNLi7.Web.Setting.config">
-      <DependentUpon>backupMNL.Web.config</DependentUpon>
-    </Content>
     <Content Include="Configurations\WebDeployment.ConfigTransform\Local.ConnectionStrings.config">
       <DependentUpon>Local.Web.config</DependentUpon>
     </Content>
@@ -978,7 +951,6 @@
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\LICENSE.txt" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon-notify.png" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Images\icon_note.png" />
-    <Content Include="Configurations\WebDeployment.ConfigTransform\backupMNL.Web.config" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Bold.ttf" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Medium.ttf" />
     <Content Include="Views\Common\LimitedCountryAccess\Style\Font\Roboto\Roboto-Regular.ttf" />
