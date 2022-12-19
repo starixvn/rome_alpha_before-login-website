@@ -113,6 +113,14 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 LoginTime = verifySignInResult.LoginTime
             });
 
+            FPSHelper.NewFPSTracking(new SignInResult
+            {
+                Username = verifySignInResult.Username,               
+                LoginTime = verifySignInResult.LoginTime,
+                CustId = verifySignInResult.CustId,
+                CustSubId = verifySignInResult.SubAccId                
+            });
+
             return AddUMToken(httpContext, url);
         }
 

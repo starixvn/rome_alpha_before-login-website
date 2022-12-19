@@ -46,11 +46,7 @@ namespace Fanex.Alpha.Before.Customer.Helpers
                     fpsSubscirber,
                     loginResult.LoginTime,
                     out fpsErrorMessage,
-                    out fpsErrorCode);
-
-                var fpsClient = new FPS.Device.FingerPrint.Net.Framework.Client.TransactionServices("Alpha", AppSetting.NewFPSPortalAPI);
-
-                fpsClient.Insert("Login", loginResult.Username, loginResult.LoginTime);                
+                    out fpsErrorCode);                
             }
             catch (Exception ex)
             {
@@ -67,9 +63,9 @@ namespace Fanex.Alpha.Before.Customer.Helpers
                     return;
                 }
 
-                var fpsClient = new FPS.Device.FingerPrint.Net.Framework.Client.TransactionServices("Alpha", AppSetting.NewFPSPortalAPI);
+                var fpsClient = new FPS.Device.FingerPrint.Net.Framework.Client.TransactionServices(AppSetting.NewFPSSubscriber, AppSetting.NewFPSPortalAPI);
 
-                fpsClient.Insert("Login", loginResult.Username, loginResult.LoginTime);
+                fpsClient.Insert("Login", loginResult.Username, loginResult.CustId, loginResult.CustSubId, loginResult.LoginTime);
             }
             catch (Exception ex)
             {
