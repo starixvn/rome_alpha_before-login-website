@@ -1,8 +1,9 @@
 ﻿namespace Fanex.Alpha.Before.Customer.Services
 {
     using System;
-    using Fanex.Alpha.Before.Customer.Repositories;
-    using Fanex.Logging.Extensions.Web;
+    using Fanex.Alpha.Before.Customer.Criteria;
+    using Fanex.Data.Repository;
+    using Fanex.Logging;
 
     public interface IKickoutCustomerService
     {
@@ -13,11 +14,11 @@
 
     public class KickoutCustomerService : IKickoutCustomerService
     {
-        private readonly IKickoutCustomerRepository repository;
+        private readonly IDynamicRepository repository;
 
-        public KickoutCustomerService(IKickoutCustomerRepository repository = null)
+        public KickoutCustomerService(IDynamicRepository repository)
         {
-            this.repository = repository ?? new KickoutCustomerRepository();
+            this.repository = repository;
         }
 
         public void KickoutDueToProtectedMode(int custId, byte roleId, int serverId, string ip, int subAccId)
@@ -31,11 +32,11 @@
         {
             try
             {
-                repository.Kickout(custId, roleId, serverId, ip, subAccId, mode);
+                repository.Execute(new KickOutCommand(custId, roleId, serverId, ip, subAccId, mode));
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                Logger.Log.Error(ex.Message, ex);
             }
         }
     }

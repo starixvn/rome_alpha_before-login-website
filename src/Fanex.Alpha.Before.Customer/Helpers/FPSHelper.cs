@@ -1,6 +1,6 @@
 ﻿using Fanex.Alpha.Before.Common.Configurations;
 using Fanex.Alpha.Before.Customer.Models;
-using Fanex.Logging.Extensions.Web;
+using Fanex.Logging;
 using System;
 using System.Configuration;
 
@@ -39,18 +39,18 @@ namespace Fanex.Alpha.Before.Customer.Helpers
                 var fpsErrorMessage = string.Empty;
                 var fpsErrorCode = string.Empty;
 
-                new FPS.Client.Service().CheckTransaction(
-                    username.Trim(),
-                    loginAction,
-                    loginMessage,
-                    fpsSubscirber,
-                    loginResult.LoginTime,
-                    out fpsErrorMessage,
-                    out fpsErrorCode);                
+                // new FPS.Client.Service().CheckTransaction(
+                //     username.Trim(),
+                //     loginAction,
+                //     loginMessage,
+                //     fpsSubscirber,
+                //     loginResult.LoginTime,
+                //     out fpsErrorMessage,
+                //     out fpsErrorCode);                
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                Logger.Log.Error(ex.Message, ex);
             }
         }
     }

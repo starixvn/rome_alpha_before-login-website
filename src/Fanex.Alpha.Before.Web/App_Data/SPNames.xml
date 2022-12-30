@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Functions>
+    <Function Name="Login">
+        <Setting Key="Age_LoginClaimDownline" SpName="Age_LoginClaimDownline" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
+        <Setting Key="Age_LoginVerifyDownline" SpName="Age_LoginVerifyDownline" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
+        <Setting Key="Age_LoginDownline" SpName="Age_LoginDownline" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
+        <Setting Key="Age_LoginDownline_Sub" SpName="Age_LoginDownline_Sub" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
+        <Setting Key="Age_LoginDownline_Admin" SpName="Age_LoginDownline_Admin" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
+        <Setting Key="Age_LoginDownline_CheckSubUsername" SpName="Age_LoginDownline_CheckSubUsername" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
+    </Function>
+    <Function Name="IP">
+        <Setting Key="Age_IPRangesByCountrySel" SpName="Age_IPRangesByCountrySel" DbName="DBCUST.IPDB.BODBDownlineNet" Plain="0" />
+        <Setting Key="Age_AllowedAccessIPsSel" SpName="Age_AllowedAccessIPsSel" DbName="DBCUST.IPDB.BODBDownlineNet" Plain="0" />
+        <Setting Key="Acc_GetIPInfo_Full" SpName="Acc_GetIPInfo_Full" DbName="DBCust.IPDB.BODBDownlineNet" Plain="0"/>
+    </Function>
+    <Function Name="Kickout">
+        <Setting Key="Age_OnUser_ForceKickedout" SpName="Age_OnUser_ForceKickedout" DbName="DBONUSER.ON_USER.BODBDownlineNet" Plain="0" />
+    </Function>
+</Functions>

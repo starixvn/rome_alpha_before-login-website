@@ -11,7 +11,7 @@
             SiteKey = siteKey;
             SecretKey = secretKey;
             Proxy = proxy;
-            IsEnable = !string.IsNullOrWhiteSpace(SiteKey) && !string.IsNullOrWhiteSpace(SecretKey);
+            IsEnable = false;// !string.IsNullOrWhiteSpace(SiteKey) && !string.IsNullOrWhiteSpace(SecretKey);
         }
 
         public string SiteKey { get; }

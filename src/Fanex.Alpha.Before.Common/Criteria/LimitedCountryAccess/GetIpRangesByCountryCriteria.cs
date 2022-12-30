@@ -15,5 +15,7 @@
         public string CountryCodes { get; }
 
         public override string GetSettingKey() => "Age_IPRangesByCountrySel";
+
+        public override bool IsValid() => true;
     }
 }

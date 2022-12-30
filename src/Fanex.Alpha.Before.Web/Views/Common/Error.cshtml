@@ -1,0 +1,24 @@
+@using Fanex.Alpha.Before.Customer.Resources
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Error!!!!!</title>
+    <link href="~/Error@(ViewData["DarkModeName"]).less" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <center>
+        <div class="ErrorBg">
+            &nbsp;
+        </div>
+        <div class="err-txt">
+            <h3>
+                @ViewBag.ErrorMessage
+            </h3>
+            <h3>@Html.Raw(string.Format(Labels.GoBackToLoginPage, "//" + Context.Request.Host + Context.Request.PathBase))</h3>
+        </div>
+    </center>
+</body>
+</html>

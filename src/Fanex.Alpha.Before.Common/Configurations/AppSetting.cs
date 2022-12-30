@@ -2,84 +2,82 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
+    using System.ComponentModel;
     using System.Linq;
-    using Fanex.Common;
 
     public static class AppSetting
     {
-        private static string version;
-        private static string fpsActivator;
-        private static string googleAnalyticId;
-        private static bool isMBCSite;
-        private static readonly bool trackRunTime;
+        private readonly static IConfigurationRoot configurationRoot = InitConfiguration();
 
-        static AppSetting()
+        private static IConfigurationRoot InitConfiguration()
         {
-            version = Converter.ToString2(ConfigurationManager.AppSettings["AppVersion"]);
-            fpsActivator = Converter.ToString2(ConfigurationManager.AppSettings["FPS_Activator"]);
-            googleAnalyticId = Converter.ToString2(ConfigurationManager.AppSettings["GoogleAnalyticId"]);
-            isMBCSite = !string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["IsMBCSite"])
-                && ConfigurationManager.AppSettings["IsMBCSite"] == "1";
+            const string configFileName = "appsettings.json";
 
-            trackRunTime = ConfigurationManager.AppSettings["TrackRunTime"] == "1";
-            IsEnableFPS = !string.IsNullOrEmpty(FpsActivator) && !string.IsNullOrEmpty(ConfigurationManager.AppSettings["FPS_API"]);
-
-            RobotEnableDetectBot = "1" == ConfigurationManager.AppSettings["Robot:EnableDetectBot"];
-            RobotExcludeSuperIds = ToIntDictionary(ConfigurationManager.AppSettings["Robot:ExcludeSuperIds"]);
-            RobotExcludeSites = ToDictionary(ConfigurationManager.AppSettings["Robot:ExcludeSites"]);
-            RobotFPSBotDetectionApiUrl = ConfigurationManager.AppSettings["Robot:FPSBotDetectionApiUrl"];
-
-            TechnicalErrorTime = ConfigurationManager.AppSettings["TechnicalErrorTime"];
-            IsShowTechnicalErrorMessage = !string.IsNullOrWhiteSpace(TechnicalErrorTime);
-
-            IsOfferDarkMode = "1" == ConfigurationManager.AppSettings["IsOfferDarkMode"];
-            AssetAppPaths = ConfigurationManager.AppSettings["AssetAppPaths"] ?? string.Empty;
-        }
-
-        public static string Version
-        {
-            get
+            if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), configFileName)))
             {
-                return version;
+                var builder = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile(configFileName);
+
+                return builder.Build();
             }
+
+            return null;
         }
 
-        public static string FpsActivator
-        {
-            get
-            {
-                return fpsActivator;
-            }
-        }
+        public static string Version => GetValue<string>("AppVersion");
 
-        public static bool IsEnableFPS { get; }
+        public static string FpsActivator => GetValue<string>("FPS_Activator");
 
-        public static string GoogleAnalyticId
-        {
-            get
-            {
-                return googleAnalyticId;
-            }
-        }
+        public static bool IsEnableFPS => !string.IsNullOrEmpty(FpsActivator) && !string.IsNullOrEmpty(configurationRoot["FPS_API"]);
 
-        public static bool IsMBCSite
-        {
-            get
-            {
-                return isMBCSite;
-            }
-        }
+        public static string GoogleAnalyticId => GetValue<string>("GoogleAnalyticId");
+
+        public static bool IsMBCSite => GetValue<bool>("IsMBCSite");
 
         public static bool DisabledVietnamese => IsMBCSite;
 
-        public static bool TrackRunTime => trackRunTime;
+        public static bool TrackRunTime => GetValue<bool>("TrackRunTime");
 
-        public static bool RobotEnableDetectBot { get; }
+        public static bool RobotEnableDetectBot => GetValue<bool>("Robot:EnableDetectBot");
 
-        public static IDictionary<int, bool> RobotExcludeSuperIds { get; }
+        public static IDictionary<int, bool> RobotExcludeSuperIds => ToIntDictionary(configurationRoot["Robot:ExcludeSuperIds"]);
 
-        public static IDictionary<string, bool> RobotExcludeSites { get; }
+        public static IDictionary<string, bool> RobotExcludeSites => ToDictionary(configurationRoot["Robot:ExcludeSites"]);
+
+        public static bool IsIgnoreRobotCaptcha(int superId, string site)
+            => RobotExcludeSuperIds.ContainsKey(superId)
+            || RobotExcludeSites.ContainsKey(site.ToUpperInvariant());
+
+        public static string RobotFPSBotDetectionApiUrl => GetValue<string>("Robot:FPSBotDetectionApiUrl");
+
+        public static string TechnicalErrorTime => GetValue<string>("TechnicalErrorTime");
+
+        public static bool IsShowTechnicalErrorMessage => !string.IsNullOrWhiteSpace(TechnicalErrorTime);
+
+        public static string AssetAppPaths => GetValue<string>("AssetAppPaths");
+
+        public static string AfterLoginAuthorizationPage => GetValue<string>("AfterLoginPage");
+
+        public static Uri TelegramBotUri => new(GetValue<string>("TelegramBotUri"));
+
+        public static bool IsCustomErrorEnabled => false;// GetValue<bool>("IsCustomErrorEnabled");
+
+        private static T GetValue<T>(string key)
+        {
+            try
+            {
+                var value = configurationRoot[key];
+
+                TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(T));
+
+                return (T)typeConverter.ConvertFromString(value);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidCastException($"Key: {key}", ex);
+            }
+        }
 
         private static IDictionary<int, bool> ToIntDictionary(string value)
             => string.IsNullOrWhiteSpace(value)
@@ -94,21 +92,5 @@
             : value
                 .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
                 .ToDictionary(kvp => kvp.Trim().ToUpperInvariant(), kvp => true);
-
-        public static bool IsIgnoreRobotCaptcha(int superId, string site)
-            => RobotExcludeSuperIds.ContainsKey(superId)
-            || RobotExcludeSites.ContainsKey(site.ToUpperInvariant());
-
-        public static string RobotFPSBotDetectionApiUrl { get; }
-
-        public static string TechnicalErrorTime { get; }
-
-        public static bool IsShowTechnicalErrorMessage { get; }
-
-        public static bool IsOfferDarkMode { get; }
-
-        public static string AssetAppPaths { get; }
-
-        public static Uri TelegramBotUri => new Uri(ConfigurationManager.AppSettings["TelegramBotUri"]);
     }
 }

@@ -3,7 +3,6 @@
     using System;
     using Fanex.Alpha.Before.Common.Constants;
     using Fanex.Alpha.Before.Common.Helpers;
-    using Fanex.Alpha.Before.Infrastructure.Extensions;
     using Fanex.Caching;
 
     public interface ICacheService
@@ -25,23 +24,32 @@
 
     public class CacheService : ICacheService
     {
-        private readonly string _loginIPFailedCountSessionKey = string.Format(SessionConstants.LOGINIPFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
-        private readonly string _loginIPBlockedSessionKey = string.Format(SessionConstants.LOGINIPBLOCKED, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP());
+        private readonly IPHelper _ipHelper;
+        private readonly Caching.ICacheService _cacheService;
 
-        private static string GetLoginUserFailedCountSessionKey(string username)
+        public CacheService(IPHelper ipHelper, Caching.ICacheService cacheService)
         {
-            return string.Format(SessionConstants.LOGINUSERFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, IPHelper.ClientIP(), username);
+            _ipHelper = ipHelper;
+            _cacheService = cacheService;
+        }
+
+        private string _loginIPFailedCountSessionKey => string.Format(SessionConstants.LOGINIPFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, _ipHelper.ClientIP());
+        private string _loginIPBlockedSessionKey => string.Format(SessionConstants.LOGINIPBLOCKED, UrlHelper.SiteGroupSetting.SiteGroup, _ipHelper.ClientIP());
+        private string GetLoginUserFailedCountSessionKey(string username)
+        {
+
+            return string.Format(SessionConstants.LOGINUSERFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, _ipHelper.ClientIP(), username);
         }
 
         public bool IsLoginIPBlocked()
         {
-            return CacheExtension.Contain(_loginIPBlockedSessionKey);
+            return _cacheService.Contain(_loginIPBlockedSessionKey);
         }
 
         public void SetLoginIPBlocked(int blockLoginMinute)
         {
-            CacheExtension.Remove(_loginIPFailedCountSessionKey);
-            CacheExtension.Set(_loginIPBlockedSessionKey, DateTime.UtcNow, new CacheItemOptions
+            _cacheService.Remove(_loginIPFailedCountSessionKey);
+            _cacheService.Set(_loginIPBlockedSessionKey, DateTime.UtcNow, new CacheItemOptions
             {
                 AbsoluteExpiration = DateTime.UtcNow.AddMinutes(blockLoginMinute)
             });
@@ -49,32 +57,32 @@
 
         public int GetLoginIPFailedCount()
         {
-            return CacheExtension.Get(_loginIPFailedCountSessionKey, 0);
+            return _cacheService.Get<int>(_loginIPFailedCountSessionKey);
         }
 
         public int GetLoginUserFailedCount(string username)
         {
-            return CacheExtension.Get(GetLoginUserFailedCountSessionKey(username), 0);
+            return _cacheService.Get<int>(GetLoginUserFailedCountSessionKey(username));
         }
 
         public void ResetLoginSession(string username)
         {
-            CacheExtension.Remove(_loginIPFailedCountSessionKey);
-            CacheExtension.Remove(_loginIPBlockedSessionKey);
-            CacheExtension.Remove(GetLoginUserFailedCountSessionKey(username));
+            _cacheService.Remove(_loginIPFailedCountSessionKey);
+            _cacheService.Remove(_loginIPBlockedSessionKey);
+            _cacheService.Remove(GetLoginUserFailedCountSessionKey(username));
         }
 
         public int IncreaseLoginIPFailedCount()
         {
             var loginIPFailedCount = GetLoginIPFailedCount() + 1;
-            CacheExtension.Set(_loginIPFailedCountSessionKey, loginIPFailedCount);
+            _cacheService.Set(_loginIPFailedCountSessionKey, loginIPFailedCount);
             return loginIPFailedCount;
         }
 
         public int IncreaseLoginUserFailedCount(string username, int notInteractionTimeInMinutes)
         {
             var loginUserFailedCount = GetLoginUserFailedCount(username) + 1;
-            CacheExtension.Set(GetLoginUserFailedCountSessionKey(username), loginUserFailedCount, TimeSpan.FromMinutes(notInteractionTimeInMinutes));
+            _cacheService.Set(GetLoginUserFailedCountSessionKey(username), loginUserFailedCount, new CacheItemOptions() { SlidingExpiration = TimeSpan.FromMinutes(notInteractionTimeInMinutes) });
             return loginUserFailedCount;
         }
     }

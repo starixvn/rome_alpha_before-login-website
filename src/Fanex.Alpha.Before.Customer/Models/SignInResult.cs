@@ -98,8 +98,6 @@ namespace Fanex.Alpha.Before.Customer.Models
 
         public string AssetAppPaths { get; } = AppSetting.AssetAppPaths;
 
-        public bool IsOfferDarkMode { get; } = DarkModeHelper.IsOfferDarkMode;
-
-        public DateTime LoginTime { get; set; }        
+        public DateTime LoginTime { get; set; }
     }
 }

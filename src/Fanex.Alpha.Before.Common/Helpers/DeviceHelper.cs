@@ -2,16 +2,15 @@
 {
     using System;
     using System.Collections;
-    using System.Diagnostics;
     using System.Web;
-    using Logging.Extensions.Web;
+    using Fanex.Logging;
     using UAParser;
 
     public static class DeviceHelper
     {
-        public static Hashtable GetRequestInfo(HttpRequest request, string browserSize)
+        public static Hashtable GetRequestInfo(HttpRequest request, string browserSize, string clientIP)
         {
-            Hashtable requestInfo = InitClientRequestInfo(request);
+            Hashtable requestInfo = InitClientRequestInfo(request, clientIP);
 
             try
             {
@@ -19,17 +18,17 @@
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex, TraceEventType.Information);
+                Logger.Log.Info(ex.Message);
             }
 
             return requestInfo;
         }
 
-        private static Hashtable InitClientRequestInfo(HttpRequest request)
+        private static Hashtable InitClientRequestInfo(HttpRequest request, string clientIP)
         {
             return new Hashtable
             {
-                ["loginip"] = IPHelper.ClientIP(),
+                ["loginip"] = clientIP,
                 ["countrycode"] = "Unknown",
                 ["logindomain"] = request.ServerVariables["SERVER_NAME"],
                 ["browsername"] = string.Empty,
@@ -42,7 +41,7 @@
             var userAgent = request.UserAgent ?? string.Empty;
             var userAgentParser = Parser.GetDefault();
             var clientInfo = userAgentParser.Parse(userAgent);
-            var clientUserAgent = clientInfo.UserAgent;
+            var clientUserAgent = clientInfo.UA;
             var clientPatch = clientUserAgent.Patch ?? "0";
 
             var browser = $"{clientUserAgent.Family} {clientUserAgent.Major}.{clientUserAgent.Minor}.{clientPatch}";

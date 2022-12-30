@@ -1,8 +1,7 @@
-﻿@using Fanex.Alpha.Before.Common.Helpers;
-
-@{
+﻿@{
     Layout = null;
 }
+@model string
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,11 +17,11 @@
         </div>
         <div class="body-content">
            <div class="title">Dear Valued Customers:</div>
-            <p>  Note: Viewing and using this website at your current location (@IPHelper.ClientIP()) is prohibited due to its regulatory rules.
+            <p>  Note: Viewing and using this website at your current location (@Model) is prohibited due to its regulatory rules.
                 We regret any inconvenience.</p>
             
             <div class="title second-text">尊敬的客户:</div>
-            <p> 注意：您所在的地区法规条例 (@IPHelper.ClientIP()) 是禁止访问及使用本站。<br />
+            <p> 注意：您所在的地区法规条例 (@Model) 是禁止访问及使用本站。<br />
                     不便之处，敬请见谅！</p>
            
         </div>

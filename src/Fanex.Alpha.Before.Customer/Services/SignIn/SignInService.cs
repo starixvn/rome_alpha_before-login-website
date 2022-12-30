@@ -9,16 +9,12 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using System;
     using System.Collections.Generic;
     using System.Configuration;
-    using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
-    using System.Net;
-    using System.Net.Http;
-    using System.Threading;
     using System.Threading.Tasks;
     using System.Web;
     using Cryptography.Aes;
     using Fanex.Alpha.Before.Common.Configurations;
+    using Fanex.Alpha.Before.Common.Constants;
     using Fanex.Alpha.Before.Common.Extensions;
     using Fanex.Alpha.Before.Common.Helpers;
     using Fanex.Alpha.Before.Common.Services;
@@ -28,25 +24,17 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using Fanex.Alpha.Before.Customer.Repositories.SignIn;
     using Fanex.Alpha.Before.Customer.Resources;
     using Fanex.Alpha.Before.Customer.Services.FPS;
-    using Fanex.Alpha.Before.Infrastructure.Constants;
-    using Fanex.Common;
-    using global::Alpha.NetThrottling;
-    using global::Alpha.NetThrottling.Models;
-    using global::Alpha.NetThrottling.Utils;
-    using global::Alpha.SliderCaptcha.Core;
-    using global::Alpha.SliderCaptcha.Core.Services;
-    using global::Alpha.SliderCaptcha.Mvc;
-    using Logging.Extensions.Web;
+    using Fanex.Logging;
     using Newtonsoft.Json;
     using TelegramBot.Client.Services;
 
     public interface ISignInService
     {
-        SignInResult SignIn();
+        SignInResult SignIn(HttpContext httpContext);
 
-        SignInResult SignIn(SignInModel model);
+        SignInResult SignIn(SignInModel model, HttpContext httpContext);
 
-        SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize);
+        SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize, HttpContext httpContext);
     }
 
     /// <summary>
@@ -62,99 +50,83 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly string _baseDomain = string.Empty;
         private readonly string _loginTheme;
 
+        private readonly IPHelper ipHelper;
         private readonly IPService ipService;
         private readonly ISignInRepository _signInRepository;
         private readonly ICacheService cacheService;
         private readonly IRobotDetector robotDetector;
-        private readonly CaptchaOptions captchaOptions;
-        private readonly ICaptchaService captchaService;
+        // private readonly CaptchaOptions captchaOptions;
+        // private readonly ICaptchaService captchaService;
         private readonly IKickoutCustomerService kickoutCustomerService;
         private readonly INotificationService notificationService;
 
-        private readonly Logging.ILogger logger;
-        private readonly HttpContext httpContext;
+        private readonly ILogger logger;
 
-        private static NetThrottler netThrottler = new NetThrottler();
-        private static ThrottlePolicy loginThrottlePolicy = new ThrottlePolicy(netThrottler.ThrottleSetting.GetKey("Login"));
-        private static IEnumerable<int> whitelistSuperIds = ParseWhitelistSuperIds();
+        // private static NetThrottler netThrottler = new NetThrottler();
+        // private static ThrottlePolicy loginThrottlePolicy = new ThrottlePolicy(netThrottler.ThrottleSetting.GetKey("Login"));
+        // private static IEnumerable<int> whitelistSuperIds = ParseWhitelistSuperIds();
 
-        static IEnumerable<int> ParseWhitelistSuperIds()
-        {
-            var custIds = WhitelistConfiguration.Default.CustIds;
-            return string.IsNullOrWhiteSpace(custIds) ? Enumerable.Empty<int>() : custIds.Split(',').Select(int.Parse).ToList();
-        }
-
-        public SignInService() :
-            this(null, null, null, null, null, null, null, null, null, null)
-        {
-        }
+        // static IEnumerable<int> ParseWhitelistSuperIds()
+        // {
+        //     var custIds = WhitelistConfiguration.Default.CustIds;
+        //     return string.IsNullOrWhiteSpace(custIds) ? Enumerable.Empty<int>() : custIds.Split(',').Select(int.Parse).ToList();
+        // }
 
         public SignInService(
-            SignInRepository signInRepository,
+            ILogger logger,
+            IPHelper ipHelper,
+            ISignInRepository signInRepository,
             IRobotDetector robotDetector,
-            Logging.ILogger logger,
-            HttpContext httpContext,
             ICacheService cacheService,
-            CaptchaOptions captchaOptions,
-            IServiceFactory serviceFactory,
+            // CaptchaOptions captchaOptions,
+            // ICaptchaService captchaService,
             IKickoutCustomerService kickoutCustomerService,
             IPService ipService,
             INotificationService notificationService)
         {
-            this.ipService = ipService ?? new IpServiceImpl();
-            _signInRepository = signInRepository ?? new SignInRepository();
-            this.cacheService = cacheService ?? new CacheService();
-            var _loginThemeSection = LoginThemeSection.Instance;
+            this.logger = logger;
+            this.ipHelper = ipHelper;
+            this.ipService = ipService;
+            _signInRepository = signInRepository;
+            this.cacheService = cacheService;
+            this.robotDetector = robotDetector;
+            // this.captchaOptions = captchaOptions;
+            // this.captchaService = captchaService;
+            this.kickoutCustomerService = kickoutCustomerService;
+            this.notificationService = notificationService;
+            // var _loginThemeSection = LoginThemeSection.Instance;
 
-            _loginTheme = _loginThemeSection.DefaultTheme;
-            if (DateTime.Now >= Converter.ToDateTime(_loginThemeSection.StartDateShowEventTheme) &&
-                DateTime.Now <= Converter.ToDateTime(_loginThemeSection.EndDateShowEventTheme))
-            {
-                _loginTheme = _loginThemeSection.EventTheme;
-            }
+            // _loginTheme = _loginThemeSection.DefaultTheme;
+            // if (DateTime.Now >= Converter.ToDateTime(_loginThemeSection.StartDateShowEventTheme) &&
+            //     DateTime.Now <= Converter.ToDateTime(_loginThemeSection.EndDateShowEventTheme))
+            // {
+            //     _loginTheme = _loginThemeSection.EventTheme;
+            // }
 
-            var currentLoginUrl = UrlHelper.SiteGroupSetting.BeforeUrl;
-            _baseDomain = new Uri(currentLoginUrl).Host;
-            var alphaCommonSettings = AlphaCommonSection.Instance;
-            if (alphaCommonSettings != null)
-            {
-                _maxTimesToAllowLogInFail = alphaCommonSettings.MaxTimesToAllowLoginFail;
-                _blockLoginMinute = alphaCommonSettings.BlockLoginMinutes;
-                _loginFailTimeToStartUsingCaptcha = alphaCommonSettings.LoginFailTimeToStartUsingCaptcha;
-                _notInteractionTimeInMinutes = alphaCommonSettings.NoInteractionTimeInMinutes;
-                _passwordMaxFailTimeForOneUser = alphaCommonSettings.PasswordMaxFailTimeForOneUser;
-            }
+            // var currentLoginUrl = UrlHelper.SiteGroupSetting.BeforeUrl;
+            // _baseDomain = new Uri(currentLoginUrl).Host;
+            // var alphaCommonSettings = AlphaCommonSection.Instance;
+            // if (alphaCommonSettings != null)
+            // {
+            //     _maxTimesToAllowLogInFail = alphaCommonSettings.MaxTimesToAllowLoginFail;
+            //     _blockLoginMinute = alphaCommonSettings.BlockLoginMinutes;
+            //     _loginFailTimeToStartUsingCaptcha = alphaCommonSettings.LoginFailTimeToStartUsingCaptcha;
+            //     _notInteractionTimeInMinutes = alphaCommonSettings.NoInteractionTimeInMinutes;
+            //     _passwordMaxFailTimeForOneUser = alphaCommonSettings.PasswordMaxFailTimeForOneUser;
+            // }
 
-            this.robotDetector = robotDetector ?? new RobotDetector();
-            this.logger = logger ?? Logging.Logger.Log;
-            this.httpContext = httpContext ?? HttpContext.Current;
 
-            this.captchaOptions = captchaOptions ?? SliderCaptchaHandler.CaptchaOptions;
-            serviceFactory = serviceFactory ?? SliderCaptchaHandler.ServiceFactory;
-            captchaService = serviceFactory.CaptchaService;
-            this.kickoutCustomerService = kickoutCustomerService ?? new KickoutCustomerService();
-            this.notificationService = notificationService ?? new NotificationService(CreateTelegramBotHttpClient());
         }
 
-        private static HttpClient CreateTelegramBotHttpClient()
-        {
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-            var telegramClient = HttpClientFactory.Create();
-            telegramClient.BaseAddress = AppSetting.TelegramBotUri;
-            telegramClient.DefaultRequestHeaders.Add("Accept-Language", Thread.CurrentThread.CurrentCulture.Name);
-
-            return telegramClient;
-        }
-
-        public SignInResult SignIn()
+        public SignInResult SignIn(HttpContext httpContext)
         {
             var loginResult = new SignInResult
             {
                 LoginTemplate = _loginTheme,
-                Ip = IPHelper.ClientIP(),
+                Ip = ipHelper.ClientIP(),
                 Username = string.Empty
             };
+
 
             try
             {
@@ -166,7 +138,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 try
                 {
                     //// Set cookie with custid id
-                    HttpCookie cookie = new HttpCookie(EncryptURLHelper.UTMS, randomCookieTicket)
+                    HttpCookie cookie = new(EncryptURLHelper.UTMS, randomCookieTicket)
                     {
                         Domain = _baseDomain,
                         HttpOnly = true,
@@ -176,7 +148,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 }
                 catch (Exception ex)
                 {
-                    ExceptionHandler.Handle(ex);
+                    logger.Error(ex.Message, ex);
                 }
 
                 loginResult.Language = LanguageHelper.CheckingLanguageFromCookie();
@@ -191,9 +163,9 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             catch (Exception ex)
             {
                 loginResult.ErrCode = ErrorCodeConstants.ServerError;
-                loginResult.ErrMsg = HttpContext.Current.Request.RequestContext.HttpContext.IsCustomErrorEnabled ?
+                loginResult.ErrMsg = AppSetting.IsCustomErrorEnabled ?
                     string.Format(Infrastructure.Resources.Labels.Error_Server, 5004) : ex.ToString();
-                ExceptionHandler.Handle(ex);
+                logger.Error(ex.Message, ex);
             }
 
             loginResult.GoogleReCaptcha = UrlHelper.SiteGroupSetting.GoogleReCaptcha;
@@ -206,11 +178,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             return IsShowReCaptcha(model.Username);
         }
 
-        public SignInResult SignIn(SignInModel model)
+        public SignInResult SignIn(SignInModel model, HttpContext httpContext)
         {
             var signInResult = new SignInResult
             {
-                Ip = IPHelper.ClientIP(),
+                Ip = ipHelper.ClientIP(),
                 LoginTemplate = _loginTheme,
                 Username = model.Username,
                 GoogleReCaptcha = UrlHelper.SiteGroupSetting.GoogleReCaptcha,
@@ -236,55 +208,50 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-                if (IsCaptchaRequired(model))
-                {
-                    var isVerifiedResult = captchaService.IsVerfied(model.CaptchaToken);
-                    if (isVerifiedResult.IsSuccess)
-                    {
-                        signInResult.IsCaptchaVerified = true;
-                    }
-                    else
-                    {
-                        if (captchaOptions.LogEnabled)
-                        {
-                            var exception = new Exception($"signin captcha: key={model.Username} code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
-                            ExceptionHandler.Handle(exception, TraceEventType.Warning);
-                        }
+                // if (IsCaptchaRequired(model))
+                // {
+                //     var isVerifiedResult = captchaService.IsVerfied(model.CaptchaToken);
+                //     if (isVerifiedResult.IsSuccess)
+                //     {
+                //         signInResult.IsCaptchaVerified = true;
+                //     }
+                //     else
+                //     {
+                //         if (captchaOptions.LogEnabled)
+                //         {
+                //             var exception = new Exception($"signin captcha: key={model.Username} code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
+                //             logger.Warn(exception.Message);
+                //         }
 
-                        signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
-                        signInResult.ErrMsg = Labels.BotDetectionMessage;
-                        return signInResult;
-                    }
-                }
+                //         signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
+                //         signInResult.ErrMsg = Labels.BotDetectionMessage;
+                //         return signInResult;
+                //     }
+                // }
 
                 var password = AesService.Default.Decrypt(model.Password, AppSession.EncryptCode);
-                var isDarkMode = DarkModeHelper.IsOfferDarkMode
-                   ? !string.IsNullOrWhiteSpace(AppSession.DarkModeName)
-                   : default(bool?);
                 var assetAppPath = AssetAppPathHelper.IsValidAssetAppPath(model.AssetAppPath)
                     ? model.AssetAppPath
                     : string.Empty;
-                VerifyDownlineLogin(model.Username, password, model.DeviceId, model.BrowserSize, signInResult, isDarkMode, assetAppPath);
+                VerifyDownlineLogin(model.Username, password, model.DeviceId, model.BrowserSize, signInResult, !string.IsNullOrWhiteSpace(AppSession.DarkModeName), assetAppPath, httpContext);
             }
             catch (Exception ex)
             {
                 signInResult.ErrCode = ErrorCodeConstants.ServerError;
-                signInResult.ErrMsg = HttpContext.Current.Request.RequestContext.HttpContext.IsCustomErrorEnabled ?
+                signInResult.ErrMsg = AppSetting.IsCustomErrorEnabled ?
                     string.Format(Infrastructure.Resources.Labels.Error_Server, 5004) : ex.ToString();
-                ExceptionHandler.Handle(ex);
+
+                logger.Error(ex.Message, ex);
             }
 
             return signInResult;
         }
 
-        [SuppressMessage("StyleCop.CSharp.StylecopPlus.Rules",
-            "SP2101:MethodMustNotContainMoreLinesThan",
-            Justification = "Reviewed. Suppression is OK here.")]
-        public SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
+        public SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize, HttpContext httpContext)
         {
             var signInResult = new SignInResult
             {
-                Ip = IPHelper.ClientIP(),
+                Ip = ipHelper.ClientIP(),
                 LoginTemplate = _loginTheme,
                 Username = username
             };
@@ -312,21 +279,21 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 }
 
                 var allowWords = allowUsernameContainWords.ToUpperInvariant().Split(',');
-                if (!allowIps.Split(',').Contains(IPHelper.ClientIP()) ||
+                if (!allowIps.Split(',').Contains(ipHelper.ClientIP()) ||
                     !allowCaptcha.Equals(captcha) ||
                     !allowWords.All(s => username.ToUpperInvariant().Contains(s)))
                 {
                     return signInResult;
                 }
 
-                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult, null, string.Empty);
+                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult, null, string.Empty, httpContext);
             }
             catch (Exception ex)
             {
                 signInResult.ErrCode = ErrorCodeConstants.ServerError;
-                signInResult.ErrMsg = HttpContext.Current.Request.RequestContext.HttpContext.IsCustomErrorEnabled ?
+                signInResult.ErrMsg = AppSetting.IsCustomErrorEnabled ?
                     string.Format(Infrastructure.Resources.Labels.Error_Server, 5004) : ex.ToString();
-                ExceptionHandler.Handle(ex);
+                logger.Error(ex.Message, ex);
             }
 
             return signInResult;
@@ -337,7 +304,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             return cacheService.GetLoginUserFailedCount(username) >= _loginFailTimeToStartUsingCaptcha;
         }
 
-        private void LogIpBlocked(SignInResult signInResult)
+        private void LogIpBlocked(SignInResult signInResult, HttpContext httpContext)
         {
             var logInfo = new
             {
@@ -351,7 +318,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
         private void UpdateResultAfterLoginFail(
             SignInResult signInResult,
-            VerifySignInResult verifySignInResult)
+            VerifySignInResult verifySignInResult, HttpContext httpContext)
         {
             signInResult.IsChangedPassword = verifySignInResult.LastTimeToChangePassword != DateTime.MinValue;
             if (signInResult.IsChangedPassword)
@@ -364,7 +331,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 if (loginIPFailedCount == _maxTimesToAllowLogInFail + 1)
                 {
-                    LogIpBlocked(signInResult);
+                    LogIpBlocked(signInResult, httpContext);
                 }
 
                 cacheService.SetLoginIPBlocked(_blockLoginMinute);
@@ -378,7 +345,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             if (loginUserFailedCount >= _loginFailTimeToStartUsingCaptcha)
             {
                 signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
-                Task.Run(async () => await notificationService.NotifyWrongPassword(verifySignInResult.CustId,verifySignInResult.SubAccId, signInResult.Ip));
+                Task.Run(async () => await notificationService.NotifyWrongPassword(verifySignInResult.CustId, verifySignInResult.SubAccId, signInResult.Ip));
             }
 
             signInResult.ErrMsg = verifySignInResult.ErrorMessage;
@@ -390,7 +357,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             VerifySignInResult verifySignInResult,
             string deviceId,
             string browserSize,
-            string assetAppPath)
+            string assetAppPath,
+            HttpContext httpContext)
         {
             cacheService.ResetLoginSession(signInResult.Username);
 
@@ -446,7 +414,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             }
             catch (Exception ex)
             {
-                ExceptionHandler.Handle(ex);
+                logger.Error(ex.Message, ex);
             }
 
             if (verifySignInResult.IsKickoutDueToProtectedMode)
@@ -467,53 +435,55 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             string browserSize,
             SignInResult signInResult,
             bool? isDarkMode,
-            string assetAppPath)
+            string assetAppPath,
+            HttpContext httpContext)
         {
             var verifySignInResult = new VerifySignInResult();
             var request = httpContext.Request;
-            var cacheIdentity = CacheIdentity.From(
-                loginThrottlePolicy.Name,
-                UrlHelper.SiteGroupSetting.SiteGroup,
-                new[] { username.Trim().ToLowerInvariant(), request.GetClientIp().ToString() });
-            var result = netThrottler.Throttle(
-                (success) =>
-                {
-                    var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize);
-                    requestInfo["countrycode"] = GetCountryCode(IPHelper.ClientIP());
-                    requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
-                    verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo, isDarkMode);
-                    WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
+            // var cacheIdentity = CacheIdentity.From(
+            //     loginThrottlePolicy.Name,
+            //     UrlHelper.SiteGroupSetting.SiteGroup,
+            //     new[] { username.Trim().ToLowerInvariant(), request.GetClientIp().ToString() });
+            // var result = netThrottler.Throttle(
+            //     (success) =>
+            //     {
+            var clientIP = ipHelper.ClientIP();
+            var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize, clientIP);
+            requestInfo["countrycode"] = GetCountryCode(clientIP);
+            requestInfo.Add("sitegroup", UrlHelper.SiteGroupSetting.SiteGroup);
+            verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo, isDarkMode);
+            WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
 
-                    if (verifySignInResult.ErrorCode == 0)
-                    {
-                        signInResult.LoginTime = verifySignInResult.LoginTime;
-
-                        UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize, assetAppPath);
-
-                        if (whitelistSuperIds.Contains(verifySignInResult.SuperId))
-                        {
-                            return ThrottleResult.Allowed;
-                        }
-
-                        return success(ThrottleResult.Allowed);
-                    }
-                    else
-                    {
-                        UpdateResultAfterLoginFail(signInResult, verifySignInResult);
-
-                        return ThrottleResult.Allowed;
-                    }
-                },
-                () => ThrottleResult.Blocked,
-                loginThrottlePolicy,
-                cacheIdentity
-                );
-
-            if (result == ThrottleResult.Blocked)
+            if (verifySignInResult.ErrorCode == 0)
             {
-                signInResult.ErrCode = SignInErrorContants.LoginTooOften;
-                signInResult.ErrMsg = string.Format(Labels.LoginTooOftenBlockedMessage, username);
+                signInResult.LoginTime = verifySignInResult.LoginTime;
+
+                UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize, assetAppPath, httpContext);
+
+                // if (whitelistSuperIds.Contains(verifySignInResult.SuperId))
+                // {
+                //     return ThrottleResult.Allowed;
+                // }
+
+                // return success(ThrottleResult.Allowed);
             }
+            else
+            {
+                UpdateResultAfterLoginFail(signInResult, verifySignInResult, httpContext);
+
+                //return ThrottleResult.Allowed;
+            }
+            // },
+            // () => ThrottleResult.Blocked,
+            // loginThrottlePolicy,
+            // cacheIdentity
+            // );
+
+            // if (result == ThrottleResult.Blocked)
+            // {
+            //     signInResult.ErrCode = SignInErrorContants.LoginTooOften;
+            //     signInResult.ErrMsg = string.Format(Labels.LoginTooOftenBlockedMessage, username);
+            // }
 
             WriteLoginLogs(verifySignInResult.SuperId, $"After checking login too often: {JsonConvert.SerializeObject(signInResult)}");
         }
@@ -530,11 +500,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             return countryCode;
         }
 
-        private static void WriteLoginLogs(int superId, string message)
+        private void WriteLoginLogs(int superId, string message)
         {
             if (SuperIds.Any(id => id == superId))
             {
-                Logging.Logger.Log.Warn(message);
+                logger.Warn(message);
             }
         }
 

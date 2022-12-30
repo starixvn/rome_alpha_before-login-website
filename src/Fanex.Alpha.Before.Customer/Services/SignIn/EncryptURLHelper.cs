@@ -5,21 +5,16 @@
     using System.Configuration;
     using System.Linq;
     using System.Web;
-    using System.Web.Security;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Helpers;
-    using Fanex.Alpha.Before.Customer.Configurations;
     using Fanex.Alpha.Before.Customer.Helpers;
     using Fanex.Alpha.Before.Customer.Models;
-    using Fanex.Alpha.Before.Customer.Resources;
-    using Fanex.Logging.Extensions.Web;
-    using RSACryptoPad;
+    using Fanex.Cryptography.Aes;
 
     public static class EncryptURLHelper
     {
         public const string UTMS = "__utms";
-        private const string IbcpKeyPath = "~/IbcKeys/ibcpkey.snk";
-        private const int DWKeySize = 1024;
+        private const string SecretKey = "!@#$";
 
         public static void WriteLoginLogs(int superId, string message)
         {
@@ -32,9 +27,7 @@
         public static string BuildAfterURL(HttpContext httpContext)
         {
             WriteLoginLogs(AppSession.SuperId, $"After input captcha, sessionId: {httpContext.Session.SessionID}, custId:{AppSession.CustId}");
-            var url = AppSession.CustId == 0
-            ? $"{FormsAuthentication.LoginUrl}?r={Labels.inputCaptchaTooLong}"
-            : BuildAfterURL(
+            var url = BuildAfterURL(
                 httpContext,
                 AppSession.EncryptPassword,
                 new VerifySignInResult
@@ -81,8 +74,7 @@
                 AppSession.DarkModeName,
                 assetAppPath);
 
-            parameter = EncryptParameter(httpContext, parameter);
-            var url = $"{UrlHelper.SiteGroupSetting.AfterUrl}{CustomerAppSetting.AfterLoginAuthorizationPage}?params={parameter}";
+            var url = $"{UrlHelper.SiteGroupSetting.AfterUrl}{AppSetting.AfterLoginAuthorizationPage}?params={EncryptParameter(parameter)}";
 
             FPSHelper.FPSTracking(new SignInResult
             {
@@ -102,11 +94,8 @@
             return utmsCookie == null || utmsCookie.Value == AppSession.CookieCode;
         }
 
-        private static string EncryptParameter(HttpContext httpContext, string parameter)
-            => new EncryptionThread().EncryptString(parameter, DWKeySize, GetPhysicalIbcpKeyPath(httpContext));
-
-        private static string GetPhysicalIbcpKeyPath(HttpContext httpContext)
-            => httpContext.Server.MapPath(IbcpKeyPath);
+        private static string EncryptParameter(string parameter)
+            => AesService.Default.Encrypt(parameter, SecretKey);
 
         private static string AddUMToken(HttpContext httpContext, string url)
         {

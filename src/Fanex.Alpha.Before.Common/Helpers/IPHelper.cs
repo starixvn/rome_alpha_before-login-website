@@ -1,39 +1,43 @@
-﻿// --------------------------------------------------------------------------
-// <copyright file="IPHelper.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------
+﻿using Fanex.Logging;
+using Microsoft.AspNetCore.Http.Features;
 
-namespace Fanex.Alpha.Before.Common.Helpers
+namespace Fanex.Alpha.Before.Common.Helpers;
+
+public interface IPHelper
 {
-    using Fanex.Logging.Extensions.Web;
-    using System;
-    using System.Web;
+    string ClientIP();
+}
 
-    /// <summary>
-    /// IP Helper.
-    /// </summary>
-    public static class IPHelper
+public class IPHelperImpl : IPHelper
+{
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public IPHelperImpl(IHttpContextAccessor httpContextAccessor)
     {
-        public static string ClientIP()
+        _httpContextAccessor = httpContextAccessor;
+    }
+
+    public string ClientIP()
+    {
+        var context = _httpContextAccessor.HttpContext;
+        var ip = context.GetServerVariable("HTTP_X_FORWARDED_FOR") ?? context.GetServerVariable("REMOTE_ADDR");
+
+        if (string.IsNullOrWhiteSpace(ip))
         {
-            var ip = System.Web.HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ??
-                System.Web.HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-
-            if (string.IsNullOrWhiteSpace(ip))
-            {
-                ExceptionHandler.Handle(new System.Exception("Before login: ip is null or empty"), System.Diagnostics.TraceEventType.Error);
-            }
-
-            var ips = string.IsNullOrWhiteSpace(ip) || ip.Equals("::1") ?
-                new[] { "127.0.0.1" } : ip.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-            if (string.IsNullOrWhiteSpace(ips[0]))
-            {
-                ExceptionHandler.Handle(new System.Exception("Before login: HTTP_X_FORWARDED_FOR ip is null or empty"), System.Diagnostics.TraceEventType.Error);
-            }
-
-            return ips[0].Trim();
+            var ex = new Exception("Before login: ip is null or empty");
+            Logger.Log.Error(ex.Message, ex);
         }
+
+        var ips = string.IsNullOrWhiteSpace(ip) || ip.Equals("::1") ?
+            new[] { "127.0.0.1" } : ip.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+        if (string.IsNullOrWhiteSpace(ips[0]))
+        {
+            var ex = new Exception("Before login: HTTP_X_FORWARDED_FOR ip is null or empty");
+            Logger.Log.Error(ex.Message, ex);
+        }
+
+        return ips[0].Trim();
     }
 }
+

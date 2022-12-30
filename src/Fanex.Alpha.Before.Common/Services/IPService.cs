@@ -6,47 +6,37 @@
     using System.Net.Sockets;
     using Fanex.Alpha.Before.Common.Criteria;
     using Fanex.Alpha.Before.Common.Models;
-    using Fanex.Alpha.Before.Common.Repositories;
+    using Fanex.Data.Repository;
 
     public interface IPService
     {
-        string GetClientIp();
-
         IPInformationModel GetIPInformation(string ip);
     }
 
     public class IpServiceImpl : IPService
     {
-        private readonly IIpAccessRepository repository;
+        private readonly IDynamicRepository repository;
 
         [ThreadStatic]
         private static bool IsLittleEndian = BitConverter.IsLittleEndian;
 
-        public IpServiceImpl() : this(null)
+        public IpServiceImpl(IDynamicRepository repository)
         {
-        }
-
-        public IpServiceImpl(IIpAccessRepository repository)
-        {
-            this.repository = repository ?? new IpAccessRepository();
+            this.repository = repository;
         }
 
         public IPInformationModel GetIPInformation(string ip)
-            => repository.GetIPInformation(new GetIPInformationCriteria(ip));
+            => repository.Get<IPInformationModel>(new GetIPInformationCriteria(ip));
 
         public static bool IsIPV6(string clientIP)
         {
-            IPAddress address;
-
-            return IPAddress.TryParse(clientIP, out address)
+            return IPAddress.TryParse(clientIP, out IPAddress address)
                 && address.AddressFamily == AddressFamily.InterNetworkV6;
         }
 
         public static ulong ConvertIPV4ToNumber(string ipAddress)
         {
-            IPAddress parsedIpAddress;
-
-            if (!IPAddress.TryParse(ipAddress, out parsedIpAddress))
+            if (!IPAddress.TryParse(ipAddress, out IPAddress parsedIpAddress))
             {
                 return 0;
             }
@@ -72,12 +62,5 @@
 
             return ipNum;
         }
-
-        internal static void SetIsLittleEndian(bool isLittleEndian)
-        {
-            IsLittleEndian = isLittleEndian;
-        }
-
-        public string GetClientIp() => Helpers.IPHelper.ClientIP();
     }
 }

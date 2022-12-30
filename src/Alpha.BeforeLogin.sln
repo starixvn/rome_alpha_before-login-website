@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Common", "Fanex.Alpha.Before.Common\Fanex.Alpha.Before.Common.csproj", "{3AE0DEB0-6F49-4B17-B459-56952C1FAF6C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Infrastructure", "Fanex.Alpha.Before.Infrastructure\Fanex.Alpha.Before.Infrastructure.csproj", "{B201C3EE-3416-4D35-84E0-B0F34EDC0CF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Web", "Fanex.Alpha.Before.Web\Fanex.Alpha.Before.Web.csproj", "{C550D1C4-62D2-4348-9973-ED1341623A96}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3AE0DEB0-6F49-4B17-B459-56952C1FAF6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AE0DEB0-6F49-4B17-B459-56952C1FAF6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AE0DEB0-6F49-4B17-B459-56952C1FAF6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AE0DEB0-6F49-4B17-B459-56952C1FAF6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B201C3EE-3416-4D35-84E0-B0F34EDC0CF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B201C3EE-3416-4D35-84E0-B0F34EDC0CF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B201C3EE-3416-4D35-84E0-B0F34EDC0CF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B201C3EE-3416-4D35-84E0-B0F34EDC0CF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C550D1C4-62D2-4348-9973-ED1341623A96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C550D1C4-62D2-4348-9973-ED1341623A96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C550D1C4-62D2-4348-9973-ED1341623A96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C550D1C4-62D2-4348-9973-ED1341623A96}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

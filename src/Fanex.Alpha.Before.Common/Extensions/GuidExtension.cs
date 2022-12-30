@@ -8,7 +8,6 @@ namespace Fanex.Alpha.Before.Common.Extensions
 {
     using System;
     using System.Diagnostics;
-    using Fanex.Alpha.Before.Common.Helpers;
 
     /// <summary>
     /// Globally unique identifier Extension.

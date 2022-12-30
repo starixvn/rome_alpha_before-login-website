@@ -1,0 +1,101 @@
+﻿// This Startup file is based on ASP.NET Core new project templates and is included
+// as a starting point for DI registration and HTTP request processing pipeline configuration.
+// This file will need updated according to the specific scenario of the application being upgraded.
+// For more information on ASP.NET Core startup files, see https://docs.microsoft.com/aspnet/core/fundamentals/startup
+
+using Fanex.Alpha.Before.Common.Configurations;
+using Fanex.Alpha.Before.Common.Helpers;
+using Fanex.Alpha.Before.Common.Services;
+using Fanex.Alpha.Before.Common.Services.LimitedCountryAccessService;
+using Fanex.Alpha.Before.Customer.Repositories.SignIn;
+using Fanex.Alpha.Before.Customer.Services;
+using Fanex.Alpha.Before.Customer.Services.FPS;
+using Fanex.Alpha.Before.Customer.Services.SignIn;
+using Fanex.Alpha.Before.Web.Extensions;
+using Fanex.Caching.Redis;
+using Fanex.Data.Repository;
+using TelegramBot.Client.Services;
+
+namespace Fanex.Alpha.Before.Web
+{
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddSession();
+
+            services.AddONEbookUM(Configuration);
+            services.AddFanexLogging(Configuration);
+            services.AddRedisCache(Configuration.GetSection("fanex.caching.redis"));
+
+            var limitedCountryAccessOptions = new LimitedCountryAccessOptions
+            {
+                Countries = Configuration.GetSection("LimitedCountries").Get<LimitedCountry[]>()
+            };
+            services.AddSingleton(limitedCountryAccessOptions);
+
+            // var captchaOptions = new CaptchaOptions(
+            //     Configuration.GetValue<bool>("SliderCaptcha:LogEnabled"),
+            //     Configuration.GetValue<string>("SliderCaptcha:ImagePath"),
+            //     Configuration.GetValue<int>("SliderCaptcha:AcceptRange"),
+            //     Configuration.GetValue<int>("SliderCaptcha:DragTimeout"),
+            //     Configuration.GetValue<int>("SliderCaptcha:VerifyTimeout")
+            // );
+            // services.AddSingleton(captchaOptions);
+
+            services.AddSingleton<IDynamicRepository, DynamicRepository>();
+            services.AddSingleton<ISignInRepository, SignInRepository>();
+            services.AddSingleton<IRobotDetector, RobotDetector>();
+            services.AddSingleton<ICacheService, CacheService>();
+            //services.AddSingleton<ICaptchaService, CaptchaService>();
+            services.AddSingleton<IKickoutCustomerService, KickoutCustomerService>();
+            services.AddSingleton<IPHelper, IPHelperImpl>();
+            services.AddSingleton<IPService, IpServiceImpl>();
+            services.AddHttpClient<INotificationService, NotificationService>();
+            services.AddSingleton<ILimitedCountryAccessService, LimitedCountryAccessService>();
+            services.AddSingleton<ISignInService, SignInService>();
+
+            services.AddControllersWithViews();
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Common/Error");
+            }
+
+            app.UseFanexDataWithSqlServer(Configuration, env);
+            app.UseStaticFiles();
+            app.UseRouting();
+            app.UseSession();
+            app.UseAuthorization();
+
+            HttpContextHelper.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
+
+            app.UseTheme();
+            app.UseRequestCulture();
+            app.UseLimitedCountryAccess();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Auth}/{action=Index}/{id?}");
+            });
+        }
+    }
+}

@@ -2,6 +2,6 @@
 {
     public interface ILimitedCountryAccessService
     {
-        bool IsLimitedAccess();
+        bool IsLimitedAccess(string clientIP);
     }
 }

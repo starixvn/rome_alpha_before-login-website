@@ -8,9 +8,6 @@ namespace Fanex.Alpha.Before.Common.Configurations.Domain
 {
     using System.Configuration;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class DomainCollection : ConfigurationElementCollection
     {
         public override ConfigurationElementCollectionType CollectionType
@@ -20,7 +17,7 @@ namespace Fanex.Alpha.Before.Common.Configurations.Domain
                 return ConfigurationElementCollectionType.AddRemoveClearMap;
             }
         }
-        
+
         public DomainElement this[int index]
         {
             get

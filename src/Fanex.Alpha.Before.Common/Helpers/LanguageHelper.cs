@@ -9,7 +9,6 @@ namespace Fanex.Alpha.Before.Common.Helpers
     using System.Globalization;
     using System.Threading;
     using Fanex.Alpha.Before.Common.Configurations;
-    using Fanex.Common;
 
     /// <summary>
     /// TODO: Update summary.
@@ -30,10 +29,10 @@ namespace Fanex.Alpha.Before.Common.Helpers
         public static int CheckingLanguageFromCookie()
         {
             var language = 0;
-            if (System.Web.HttpContext.Current.Request.Cookies["LANGUAGE"] != null)
-            {
-                language = Converter.ToInt(System.Web.HttpContext.Current.Request.Cookies["LANGUAGE"].Value);
-            }
+            // if (HttpContextHelper.Current.Request.Cookies["LANGUAGE"] != null)
+            // {
+            //     language = Converter.ToInt(HttpContextHelper.Current.Request.Cookies["LANGUAGE"].Value);
+            // }
 
             if (language > 5)
             {

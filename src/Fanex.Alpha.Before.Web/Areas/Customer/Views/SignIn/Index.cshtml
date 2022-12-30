@@ -8,17 +8,14 @@
 
 @section styles
 {
-    <link href="~/assets/bundles/themes/@(Model.LoginTemplate)@(darkModeName).min.css?ver=@AppSetting.Version" rel="stylesheet" />
+    <link href="~/assets/bundles/themes/default.min.css?ver=@AppSetting.Version" rel="stylesheet" />
     <link href="~/assets/styles/alpha.slider-captcha.css?ver=@AppSetting.Version" rel="stylesheet" />
 }
 
 <div class="box-lang">
-    @if (Model.IsOfferDarkMode)
-    {
-        <div class="switch-mode-box">
-            <span class="switch-mode @(string.IsNullOrWhiteSpace(darkModeName) ? string.Empty : "dark-mode")" id="icon-switch-mode"></span>
-        </div>
-    }
+    <div class="switch-mode-box">
+        <span class="switch-mode @(string.IsNullOrWhiteSpace(darkModeName) ? string.Empty : "dark-mode")" id="icon-switch-mode"></span>
+    </div>
     <div class="dropdown">
         <span class="btn dropdown-toggle" type="button" id="langList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <span class="flag" id="flag"></span>

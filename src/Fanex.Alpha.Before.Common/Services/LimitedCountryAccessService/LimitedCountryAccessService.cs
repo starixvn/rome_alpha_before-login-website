@@ -1,14 +1,14 @@
 ﻿namespace Fanex.Alpha.Before.Common.Services.LimitedCountryAccessService
 {
     using Criteria.LimitedCountryAccess;
+    using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Caching;
-    using Logging.Extensions.Web;
+    using Fanex.Data.Repository;
+    using Fanex.Logging;
     using Models;
-    using Repositories.LimitedCountryAccess;
     using Services;
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
 
     public class LimitedCountryAccessService : ILimitedCountryAccessService
@@ -16,39 +16,31 @@
         private const string RestrictedIPRangesCachedKey = "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV";
         private const string AllowedAccessIPsCachedKey = "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey";
 
-        private readonly ILimitedCountryAccessRepository ipRepository;
-        private readonly IPService ipService;
         private readonly ICacheService cacheService;
-        private readonly ILimitedCountriesConfigService limitedCountriesConfigService;
-        private readonly Action<Exception> logInfoAction;
-        private readonly bool trackRunTime;
+        private readonly LimitedCountryAccessOptions options;
+        private readonly ILogger logger;
+        private readonly IDynamicRepository dynamicRepository;
 
         public LimitedCountryAccessService(
-            bool trackRunTime,
-            ILimitedCountryAccessRepository ipRepository = null,
-            IPService ipService = null,
-            ICacheService cacheService = null,
-            ILimitedCountriesConfigService limitedCountriesConfigService = null,
-            Action<Exception> logInfoAction = null)
+            ILogger logger,
+            IDynamicRepository dynamicRepository,
+            ICacheService cacheService,
+            LimitedCountryAccessOptions options)
         {
-            this.ipRepository = ipRepository ?? new LimitedCountryAccessRepository();
-            this.ipService = ipService ?? new IpServiceImpl();
-            this.cacheService = cacheService ?? new CacheService();
-            this.limitedCountriesConfigService = limitedCountriesConfigService ?? new LimitedCountriesConfigService();
-            this.logInfoAction = logInfoAction ?? HandleInfoException;
-            this.trackRunTime = trackRunTime;
+            this.logger = logger;
+            this.dynamicRepository = dynamicRepository;
+            this.cacheService = cacheService;
+            this.options = options;
         }
 
-        public bool IsLimitedAccess()
+        public bool IsLimitedAccess(string clientIP)
         {
-            var clientIP = ipService.GetClientIp();
-
             if (IpServiceImpl.IsIPV6(clientIP))
             {
-                logInfoAction(new Exception($"Customer Access via IPV6: {clientIP}"));
+                logger.Info($"Customer Access via IPV6: {clientIP}");
             }
 
-            var activeRestrictedCountriesConfig = limitedCountriesConfigService.GetActiveRestrictedCountriesConfig();
+            var activeRestrictedCountriesConfig = GetActiveRestrictedCountriesConfig();
             if (!activeRestrictedCountriesConfig.Any())
             {
                 return false;
@@ -86,22 +78,22 @@
                         && ipNumber <= ipRange.IPTo);
         }
 
-        public IList<IpRange> GetIPRangesByRestrictedCountry(
+        public IEnumerable<IpRange> GetIPRangesByRestrictedCountry(
             IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig,
             bool isIpV6)
         {
             var restrictedCountries = string.Join(",", activeLimitedCountriesConfig.Select(m => m.Name));
             var cacheKey = $"{RestrictedIPRangesCachedKey}{(isIpV6 ? "6" : "4")}_{restrictedCountries}";
 
-            IList<IpRange> getDataFromDatabaseFunc()
+            IEnumerable<IpRange> getDataFromDatabaseFunc()
             {
                 var criteria = new GetIpRangesByCountryCriteria(isIpV6, restrictedCountries);
-                return ipRepository.GetIPRangesByCountry(criteria);
+                return dynamicRepository.Fetch<IpRange>(criteria);
             }
 
             return cacheService.GetOrSet(
                 cacheKey,
-                () => trackRunTime
+                () => AppSetting.TrackRunTime
                     ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc, cacheKey)
                     : getDataFromDatabaseFunc(),
                 new CacheItemOptions
@@ -110,10 +102,10 @@
                 });
         }
 
-        public IList<string> GetsAllowedAccessIPs()
+        public IEnumerable<string> GetsAllowedAccessIPs()
             => cacheService.GetOrSet(
                 AllowedAccessIPsCachedKey,
-                () => ipRepository.GetsAllowedAccessIPs(new GetAllowedAccessIPsCriteria()),
+                () => dynamicRepository.Fetch<string>(new GetAllowedAccessIPsCriteria()),
                 new CacheItemOptions
                 {
                     RelativeExpiration = TimeSpan.FromMinutes(10)
@@ -124,9 +116,10 @@
                 => m.IsTesting
                 && m.TestingIp.Split(',').Contains(clientIP));
 
-        private static void HandleInfoException(Exception ex)
+        private IEnumerable<LimitedCountriesConfigModel> GetActiveRestrictedCountriesConfig()
         {
-            ExceptionHandler.Handle(ex, TraceEventType.Information);
+            return options.Countries.Where(m => m.Active && DateTime.Now >= m.AffectedDate)
+                .Select(m => new LimitedCountriesConfigModel(m.Name, m.IsTesting, m.TestingIp));
         }
     }
 }
