@@ -49,6 +49,6 @@ public class CommonController : Controller
     public IActionResult LimitedCountryAccess()
     {
         ViewData["DarkModeName"] = AppSession.DarkModeName;
-        return View(_ipHelper.ClientIP());
+        return View("LimitedCountryAccess", _ipHelper.ClientIP());
     }
 }

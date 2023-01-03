@@ -90,5 +90,17 @@
     "inputFiles": [
       "wwwroot/assets/styles/pages/error.css"
     ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/bundles/themes/limitedcountryaccess-dark.css",
+    "inputFiles": [
+      "wwwroot/assets/styles/pages/limitedcountryaccess-dark.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/bundles/themes/limitedcountryaccess.css",
+    "inputFiles": [
+      "wwwroot/assets/styles/pages/limitedcountryaccess.css"
+    ]
   }
 ]

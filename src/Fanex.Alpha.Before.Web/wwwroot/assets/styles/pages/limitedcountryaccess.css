@@ -1,0 +1,77 @@
+﻿@font-face {
+  font-family: "Roboto";
+  src: url(../fonts/roboto/Roboto-Regular.ttf);
+}
+
+@font-face {
+  font-family: "Roboto bold";
+  src: url(../fonts/roboto/Roboto-Bold.ttf);
+}
+
+@font-face {
+  font-family: "Roboto medium";
+  src: url(../fonts/roboto/Roboto-Medium.ttf);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: url(../images/seamless_pattern.png) repeat;
+  text-align: center;
+}
+
+.container {
+  font-family: "Roboto", Tahoma;
+}
+
+.content {
+  width: 481px;
+  margin: 150px auto 0;
+  padding: 0 0 20px;
+  background: #fff;
+}
+
+.header {
+  padding: 0 0 15px 15px;
+  font-size: 22px;
+  color: #ff6600;
+  border-bottom: 1px solid #d9dbdc;
+  font-family: "Roboto medium", Tahoma;
+  text-align: left;
+}
+
+.header .icon_note {
+  background: url(../images/icon-notify.png) no-repeat;
+  width: 64px;
+  height: 64px;
+  display: inline-block;
+  position: relative;
+  top: 9px;
+}
+
+.header-text {
+  position: relative;
+  top: -10px;
+}
+
+.body-content {
+  padding: 15px 25px 0;
+  color: #666666;
+  text-align: left;
+}
+
+.body-content .title {
+  font-size: 16px;
+  font-family: "Roboto medium";
+}
+
+.body-content p {
+  font-size: 14px;
+  line-height: 22px;
+  margin: 7px 0;
+}
+
+.second-text {
+  margin-top: 30px;
+  font-weight: bold;
+}
