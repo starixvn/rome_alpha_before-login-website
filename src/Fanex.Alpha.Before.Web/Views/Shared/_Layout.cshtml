@@ -42,11 +42,11 @@
 
     <script src="~/assets/bundles/login.min.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 
-    @* @Html.Partial("FPS", data) *@
+    @await Html.PartialAsync("FPS", data)
 
     @RenderSection("scripts", false)
 
-    @Html.Partial("GoogleAnalytic", CommonAppSetting.GoogleAnalyticId)
+    @await Html.PartialAsync("GoogleAnalytic", CommonAppSetting.GoogleAnalyticId)
 </body>
 </html>
 

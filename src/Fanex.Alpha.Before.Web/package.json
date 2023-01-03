@@ -1,0 +1,12 @@
+{
+  "name": "Fanex.Alpha.Before.Web",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-less": "^5.0.0",
+    "gulp-sass": "^5.1.0",
+    "less": "^4.1.3",
+    "sass": "1.32.13"
+  }
+}

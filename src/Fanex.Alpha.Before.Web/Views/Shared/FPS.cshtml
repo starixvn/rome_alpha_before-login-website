@@ -42,7 +42,7 @@
 
     window.rootUrl = document.getElementById("RootUrl").value;
 </script>
-@if (Model.GoogleReCaptcha.IsEnable)
+@if (Model.GoogleReCaptcha != null && Model.GoogleReCaptcha.IsEnable)
 {
     <script>
         var googleV3key = '@Model.GoogleReCaptcha.SiteKey';
@@ -66,7 +66,7 @@
 <script src="~/assets/scripts/login/fps.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 }
 
-@if (Model.GoogleReCaptcha.IsEnable)
+@if (Model.GoogleReCaptcha != null && Model.GoogleReCaptcha.IsEnable)
 {
     <script src="~/assets/bundles/captchav3.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 }

@@ -1,57 +1,79 @@
-﻿body {
-  background: url(images/bg.jpg) top center #67151b no-repeat; }
+body {
+  background: url(images/bg.jpg) top center #67151b no-repeat;
+}
 
-.icon-user, .icon-lock, .block-info:before {
-  background-image: url(images/sprites-theme.png); }
+.block-info:before, .icon-lock, .icon-user {
+  background-image: url(images/sprites-theme.png);
+}
 
 .icon-user {
-  background-position: -2px -4px; }
+  background-position: -2px -4px;
+}
 
 .icon-lock {
-  background-position: -26px 0; }
+  background-position: -26px 0;
+}
 
 .block-login {
-  background: #fff; }
-  .block-login .txt::-webkit-input-placeholder {
-    /* Chrome/Opera/Safari */
-    color: #888; }
-  .block-login .txt::-moz-placeholder {
-    /* Firefox 19+ */
-    color: #888; }
-  .block-login .txt:-ms-input-placeholder {
-    /* IE 10+ */
-    color: #888; }
-  .block-login .txt:-moz-placeholder {
-    /* Firefox 18- */
-    color: #888; }
-  .block-login .txt:focus {
-    border-bottom-color: #67151b;
-    color: #67151b; }
-  .block-login .txt:focus {
-    border-bottom-color: #67151b;
-    color: #67151b; }
-    .block-login .txt:focus + .icon-user {
-      background-position: -2px -31px; }
-    .block-login .txt:focus + .icon-lock {
-      background-position: -26px -27px; }
-  .block-login .btnLogin {
-    background-color: #67151b;
-    color: #fff; }
-    .block-login .btnLogin:hover {
-      background-color: #521115; }
-    .block-login .btnLogin[disabled]:hover, .block-login .btnLogin .disabled:hover {
-      background-color: #67151b; }
+  background: #fff;
+}
+.block-login .txt::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #888;
+}
+.block-login .txt::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #888;
+}
+.block-login .txt:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #888;
+}
+.block-login .txt:-moz-placeholder {
+  /* Firefox 18- */
+  color: #888;
+}
+.block-login .txt:focus {
+  border-bottom-color: #67151b;
+  color: #67151b;
+}
+.block-login .txt:focus {
+  border-bottom-color: #67151b;
+  color: #67151b;
+}
+.block-login .txt:focus + .icon-user {
+  background-position: -2px -31px;
+}
+.block-login .txt:focus + .icon-lock {
+  background-position: -26px -27px;
+}
+.block-login .btnLogin {
+  background-color: #67151b;
+  color: #fff;
+}
+.block-login .btnLogin:hover {
+  background-color: #521115;
+}
+.block-login .btnLogin[disabled]:hover, .block-login .btnLogin .disabled:hover {
+  background-color: #67151b;
+}
 
 .block-info {
-  color: #f6f6f6; }
-  .block-info:before {
-    background-position: -48px 0; }
+  color: #f6f6f6;
+}
+.block-info:before {
+  background-position: -48px 0;
+}
 
 @media only screen and (max-device-width: 767px) {
   body {
-    background: none; }
-  .block-info {
-    color: #333; }
-    .block-info:before {
-      background-position: -48px -27px; } }
+    background: none;
+  }
 
+  .block-info {
+    color: #333;
+  }
+  .block-info:before {
+    background-position: -48px -27px;
+  }
+}

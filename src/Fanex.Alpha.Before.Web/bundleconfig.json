@@ -1,84 +1,94 @@
 [
   {
-    "outputFileName": "assets/bundles/login.js",
+    "outputFileName": "wwwroot/assets/bundles/login.js",
     "inputFiles": [
-      "assets/scripts/libs/jquery/jquery-1.11.3.js",
-      "assets/scripts/libs/bootstrap/dropdown.js",
-      "assets/scripts/libs/storage/store-with-json2.min.js",
-      "assets/scripts/libs/detecas/Detecas.Base64.js",
-      "assets/scripts/libs/detecas/Detecas.JSON.js",
-      "assets/scripts/libs/cryptojs/aes.js",
-      "assets/scripts/login/core.js",
-      "assets/scripts/login/place-holder.js",
-      "assets/scripts/login/resources.js",
-      "assets/scripts/login/assetAppPaths.js",
-      "assets/scripts/login/login.js"
+      "wwwroot/assets/scripts/libs/jquery/jquery-1.11.3.js",
+      "wwwroot/assets/scripts/libs/bootstrap/dropdown.js",
+      "wwwroot/assets/scripts/libs/storage/store-with-json2.min.js",
+      "wwwroot/assets/scripts/libs/detecas/Detecas.Base64.js",
+      "wwwroot/assets/scripts/libs/detecas/Detecas.JSON.js",
+      "wwwroot/assets/scripts/libs/cryptojs/aes.js",
+      "wwwroot/assets/scripts/login/core.js",
+      "wwwroot/assets/scripts/login/place-holder.js",
+      "wwwroot/assets/scripts/login/resources.js",
+      "wwwroot/assets/scripts/login/assetAppPaths.js",
+      "wwwroot/assets/scripts/login/login.js"
     ]
   },
   {
-    "outputFileName": "assets/bundles/captchav3.js",
+    "outputFileName": "wwwroot/assets/bundles/captchav3.js",
     "inputFiles": [
-      "assets/scripts/login/captchav3.js"
+      "wwwroot/assets/scripts/login/captchav3.js"
     ]
   },
   {
-    "outputFileName": "assets/bundles/themes/default.css",
+    "outputFileName": "wwwroot/assets/bundles/themes/default.css",
     "inputFiles": [
-      "assets/styles/themes/default.css"
+      "wwwroot/assets/styles/themes/default.css"
     ]
   },
   {
-    "outputFileName": "assets/bundles/themes/event.css",
+    "outputFileName": "wwwroot/assets/bundles/themes/event.css",
     "inputFiles": [
-      "assets/styles/themes/default.css",
-      "assets/styles/themes/event.css"
+      "wwwroot/assets/styles/themes/default.css",
+      "wwwroot/assets/styles/themes/event.css"
     ]
   },
   {
-    "outputFileName": "assets/bundles/um2.js",
+    "outputFileName": "wwwroot/assets/bundles/um2.js",
     "inputFiles": [
-      "assets/scripts/libs/jquery/jquery-1.11.3.js",
-      "assets/scripts/libs/flipclock/flipclock.js",
-      "assets/scripts/um/um.js"
+      "wwwroot/assets/scripts/libs/jquery/jquery-1.11.3.js",
+      "wwwroot/assets/scripts/libs/flipclock/flipclock.js",
+      "wwwroot/assets/scripts/um/um.js"
     ]
   },
   {
-    "outputFileName": "assets/bundles/themes/um2.css",
+    "outputFileName": "wwwroot/assets/bundles/themes/um2.css",
     "inputFiles": [
-      "assets/scripts/libs/flipclock/flipclock.css",
-      "assets/styles/pages/um2.css"
+      "wwwroot/assets/scripts/libs/flipclock/flipclock.css",
+      "wwwroot/assets/styles/pages/um2.css"
     ]
   },
   {
-    "outputFileName": "assets/bundles/themes/um.css",
+    "outputFileName": "wwwroot/assets/bundles/themes/um.css",
     "inputFiles": [
-      "assets/styles/pages/um.css"
+      "wwwroot/assets/styles/pages/um.css"
     ]
   },
   {
-    "outputFileName": "assets/bundles/robotcaptcha.css",
+    "outputFileName": "wwwroot/assets/bundles/robotcaptcha.css",
     "inputFiles": [
-      "assets/styles/pages/robotcaptcha.css"
-    ]
-  },
-
-  /************************** Dark Mode ************************/
-  {
-    "outputFileName": "assets/bundles/themes/default-dark.css",
-    "inputFiles": [
-      "assets/styles/themes/default-dark.css"
+      "wwwroot/assets/styles/pages/robotcaptcha.css"
     ]
   },
   {
-    "outputFileName": "assets/bundles/robotcaptcha-dark.css",
+    "outputFileName": "wwwroot/assets/bundles/themes/default-dark.css",
     "inputFiles": [
-      "assets/styles/pages/robotcaptcha-dark.css"
+      "wwwroot/assets/styles/themes/default-dark.css"
     ]
   },
   {
-    "outputFileName": "assets/bundles/themes/um-dark.css",
+    "outputFileName": "wwwroot/assets/bundles/robotcaptcha-dark.css",
     "inputFiles": [
-      "assets/styles/pages/um-dark.css"
+      "wwwroot/assets/styles/pages/robotcaptcha-dark.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/bundles/themes/um-dark.css",
+    "inputFiles": [
+      "wwwroot/assets/styles/pages/um-dark.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/bundles/themes/error-dark.css",
+    "inputFiles": [
+      "wwwroot/assets/styles/pages/error-dark.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/assets/bundles/themes/error.css",
+    "inputFiles": [
+      "wwwroot/assets/styles/pages/error.css"
     ]
   }
 ]

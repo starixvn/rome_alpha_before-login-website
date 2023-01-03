@@ -1,6 +1,7 @@
 using System.Net;
 using Fanex.Alpha.Before.Common.Configurations;
 using Fanex.Alpha.Before.Common.Helpers;
+using Fanex.Alpha.Before.Common.Models;
 using Fanex.Logging.Extensions.AspNetCore;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,9 @@ public class CommonController : Controller
         }
 
         ViewData["DarkModeName"] = AppSession.DarkModeName;
-        return View(umInfo);
+
+        var umModel = new UnderMaintenanceModel(umInfo.IsUnderMaintenanceTime, umInfo.From, umInfo.To, umInfo.ConnectionResult.IsNotOk);
+        return View(umModel);
     }
 
     public IActionResult LimitedCountryAccess()

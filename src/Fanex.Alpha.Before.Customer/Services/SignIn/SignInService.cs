@@ -168,7 +168,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 logger.Error(ex.Message, ex);
             }
 
-            loginResult.GoogleReCaptcha = UrlHelper.SiteGroupSetting.GoogleReCaptcha;
+            //loginResult.GoogleReCaptcha = UrlHelper.SiteGroupSetting.GoogleReCaptcha;
 
             return loginResult;
         }

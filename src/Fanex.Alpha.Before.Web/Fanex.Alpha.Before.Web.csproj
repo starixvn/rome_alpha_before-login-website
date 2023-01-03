@@ -2,7 +2,13 @@
   <ItemGroup>
     <ProjectReference Include="..\Fanex.Alpha.Before.Customer\Fanex.Alpha.Before.Customer.csproj" />
   </ItemGroup>
+
   <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Fanex.Caching.Redis.AspNetCore" Version="2.2.3" />
     <PackageReference Include="Fanex.Data.SqlServer" Version="4.2.2" />
     <PackageReference Include="Fanex.Logging.Extensions.AspNetCore" Version="1.0.0" />

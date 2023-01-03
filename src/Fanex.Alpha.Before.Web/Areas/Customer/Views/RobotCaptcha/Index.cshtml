@@ -56,6 +56,7 @@
             }
         });
     </script>
-    @{ Html.RenderPartial("~/Views/Shared/GoogleAnalytic.cshtml", CommonAppSetting.GoogleAnalyticId); }
+
+    @await Html.PartialAsync("~/Views/Shared/GoogleAnalytic.cshtml", CommonAppSetting.GoogleAnalyticId)
 </body>
 </html>
