@@ -12,7 +12,6 @@ namespace Fanex.Alpha.Before.Common.Helpers
     using System.Web;
     using Fanex.Alpha.Before.Common.Configurations.Domain;
     using Fanex.Alpha.Before.Common.Models;
-    using Fanex.Alpha.Before.Customer.Configurations;
     using System;
 
     /// <summary>
@@ -84,12 +83,12 @@ namespace Fanex.Alpha.Before.Common.Helpers
                     //     siteGroup.AfterUrl = domainSetting.AfterUrl;
                     //     siteGroup.GoogleReCaptcha = new GoogleReCaptcha(domainGroupElement.SiteKey, domainGroupElement.SecretKey, domainGroupElement.Proxy);
 
-                    //     if (AlphaCommonSection.Instance != null &&
-                    //        !string.IsNullOrEmpty(AlphaCommonSection.Instance.OfficeIPs) &&
-                    //         AlphaCommonSection.Instance.OfficeIPs.Split(',').Contains(IPHelper.ClientIP()))
-                    //     {
-                    //         siteGroup.SiteGroup = defaultGroup;
-                    //     }
+                    // if (AlphaCommonSection.Instance != null &&
+                    //    !string.IsNullOrEmpty(AlphaCommonSection.Instance.OfficeIPs) &&
+                    //     AlphaCommonSection.Instance.OfficeIPs.Split(',').Contains(IPHelper.ClientIP()))
+                    // {
+                    //     siteGroup.SiteGroup = defaultGroup;
+                    // }
 
                     //     return siteGroup;
                     // }

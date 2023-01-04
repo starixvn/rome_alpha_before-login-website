@@ -1,5 +1,4 @@
 ﻿using Fanex.Alpha.Before.Common.Configurations;
-using Fanex.Alpha.Before.Common.Models;
 
 namespace Fanex.Alpha.Before.Customer.Models
 {
@@ -65,12 +64,6 @@ namespace Fanex.Alpha.Before.Customer.Models
             set;
         }
 
-        public string LoginTemplate
-        {
-            get;
-            set;
-        }
-
         public string Username
         {
             get;
@@ -82,5 +75,7 @@ namespace Fanex.Alpha.Before.Customer.Models
         public string AssetAppPaths { get; } = AppSetting.AssetAppPaths;
 
         public DateTime LoginTime { get; set; }
+
+        public int NoInteractionTimeInMinutes { get; set; }
     }
 }

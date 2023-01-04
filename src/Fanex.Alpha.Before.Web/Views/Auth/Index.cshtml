@@ -40,10 +40,6 @@
 
 <h1 class="title login-text">Login</h1>
 
-@if (AppSetting.IsShowTechnicalErrorMessage)
-{
-    <div class="rowlg msg-error" id="divTechnicalErrorMsg"></div>
-}
 @if (Model.ErrCode != -1)
 {
     <div class="rowlg msg-error" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
@@ -80,7 +76,7 @@
 
 @if (Model.ErrCode == Fanex.Alpha.Before.Customer.Constants.SignInErrorContants.CaptchaRequired)
 {
-    @Html.Hidden("NoInteractionTimeInMinutes", Fanex.Alpha.Before.Customer.Configurations.AlphaCommonSection.Instance.NoInteractionTimeInMinutes)
+    @Html.Hidden("NoInteractionTimeInMinutes", Model.NoInteractionTimeInMinutes)
 
     @section scripts
     {

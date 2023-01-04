@@ -4,10 +4,8 @@
     using System.Web;
     using Fanex.Cryptography.Aes;
     using Fanex.Alpha.Before.Common.Configurations;
-    using Fanex.Alpha.Before.Common.Constants;
     using Fanex.Alpha.Before.Common.Extensions;
     using Fanex.Alpha.Before.Common.Helpers;
-    using Fanex.Alpha.Before.Common.Models;
     using Fanex.Alpha.Before.Common.Services;
     using Fanex.Alpha.Before.Customer.Configurations;
     using Fanex.Alpha.Before.Customer.Constants;
@@ -35,14 +33,9 @@
     /// </summary>
     public class SignInService : ISignInService
     {
-        private readonly int _maxTimesToAllowLogInFail;
-        private readonly int _blockLoginMinute;
-        private readonly int _loginFailTimeToStartUsingCaptcha;
-        private readonly int _passwordMaxFailTimeForOneUser;
-        private readonly int _notInteractionTimeInMinutes;
         private readonly string _baseDomain = string.Empty;
-        private readonly string _loginTheme;
 
+        private readonly CommonOptions _commonOptions;
         private readonly IPHelper ipHelper;
         private readonly IPService ipService;
         private readonly ISignInRepository _signInRepository;
@@ -52,6 +45,7 @@
         private readonly ICaptchaService captchaService;
         private readonly IKickoutCustomerService kickoutCustomerService;
         private readonly INotificationService notificationService;
+
 
         private readonly ILogger logger;
 
@@ -66,6 +60,7 @@
         // }
 
         public SignInService(
+            CommonOptions commonOptions,
             ILogger logger,
             IPHelper ipHelper,
             ISignInRepository signInRepository,
@@ -77,6 +72,7 @@
             IPService ipService,
             INotificationService notificationService)
         {
+            _commonOptions = commonOptions;
             this.logger = logger;
             this.ipHelper = ipHelper;
             this.ipService = ipService;
@@ -87,86 +83,56 @@
             this.captchaService = captchaService;
             this.kickoutCustomerService = kickoutCustomerService;
             this.notificationService = notificationService;
-            // var _loginThemeSection = LoginThemeSection.Instance;
-
-            // _loginTheme = _loginThemeSection.DefaultTheme;
-            // if (DateTime.Now >= Converter.ToDateTime(_loginThemeSection.StartDateShowEventTheme) &&
-            //     DateTime.Now <= Converter.ToDateTime(_loginThemeSection.EndDateShowEventTheme))
-            // {
-            //     _loginTheme = _loginThemeSection.EventTheme;
-            // }
 
             // var currentLoginUrl = UrlHelper.SiteGroupSetting.BeforeUrl;
             // _baseDomain = new Uri(currentLoginUrl).Host;
-            // var alphaCommonSettings = AlphaCommonSection.Instance;
-            // if (alphaCommonSettings != null)
-            // {
-            //     _maxTimesToAllowLogInFail = alphaCommonSettings.MaxTimesToAllowLoginFail;
-            //     _blockLoginMinute = alphaCommonSettings.BlockLoginMinutes;
-            //     _loginFailTimeToStartUsingCaptcha = alphaCommonSettings.LoginFailTimeToStartUsingCaptcha;
-            //     _notInteractionTimeInMinutes = alphaCommonSettings.NoInteractionTimeInMinutes;
-            //     _passwordMaxFailTimeForOneUser = alphaCommonSettings.PasswordMaxFailTimeForOneUser;
-            // }
-
-
         }
 
         public SignInResult SignIn(HttpContext httpContext)
         {
             var loginResult = new SignInResult
             {
-                LoginTemplate = _loginTheme,
                 Ip = ipHelper.ClientIP(),
-                Username = string.Empty
+                Username = string.Empty,
+                NoInteractionTimeInMinutes = _commonOptions.NoInteractionTimeInMinutes
             };
 
+            //// Check cross cookie compatibility
+            const int EncryptCookieCodeLength = 6;
+            AppSession.CookieCode = EncryptExtension.RandomNumberString(EncryptCookieCodeLength);
+            var randomCookieTicket = EncryptExtension.CfsEnCode(AppSession.CookieCode);
 
             try
             {
-                //// Check cross cookie compatibility
-                const int EncryptCookieCodeLength = 6;
-                AppSession.CookieCode = EncryptExtension.RandomNumberString(EncryptCookieCodeLength);
-                var randomCookieTicket = EncryptExtension.CfsEnCode(AppSession.CookieCode);
-
-                try
+                //// Set cookie with custid id
+                HttpCookie cookie = new(EncryptURLHelper.UTMS, randomCookieTicket)
                 {
-                    //// Set cookie with custid id
-                    HttpCookie cookie = new(EncryptURLHelper.UTMS, randomCookieTicket)
-                    {
-                        Domain = _baseDomain,
-                        HttpOnly = true,
-                        Expires = DateTime.Now.AddDays(1) // Max 24h
-                    };
-                    httpContext.Response.SetCookie(cookie);
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex.Message, ex);
-                }
-
-                loginResult.Language = LanguageHelper.CheckingLanguageFromCookie();
-                loginResult.UTMS = randomCookieTicket;
-                loginResult.Domain = _baseDomain;
-
-                //// Use for encrypt pwd
-                const int EncryptPasswordLength = 4;
-                AppSession.EncryptCode = EncryptExtension.RandomNumberString(EncryptPasswordLength);
-                loginResult.Captcha = AppSession.EncryptCode;
+                    Domain = _baseDomain,
+                    HttpOnly = true,
+                    Expires = DateTime.Now.AddDays(1) // Max 24h
+                };
+                httpContext.Response.SetCookie(cookie);
             }
             catch (Exception ex)
             {
-                loginResult.ErrCode = ErrorCodeConstants.ServerError;
-                loginResult.ErrMsg = AppSetting.IsCustomErrorEnabled ?
-                    string.Format(Labels.Error_Server, 5004) : ex.ToString();
                 logger.Error(ex.Message, ex);
             }
+
+            loginResult.Language = LanguageHelper.CheckingLanguageFromCookie();
+            loginResult.UTMS = randomCookieTicket;
+            loginResult.Domain = _baseDomain;
+
+            //// Use for encrypt pwd
+            const int EncryptPasswordLength = 4;
+            AppSession.EncryptCode = EncryptExtension.RandomNumberString(EncryptPasswordLength);
+            loginResult.Captcha = AppSession.EncryptCode;
 
             return loginResult;
         }
 
         private bool IsCaptchaRequired(SignInModel model)
         {
-            return cacheService.GetLoginUserFailedCount(model.Username) >= _loginFailTimeToStartUsingCaptcha;
+            return cacheService.GetLoginUserFailedCount(model.Username) >= _commonOptions.LoginFailTimeToStartUsingCaptcha;
         }
 
         public SignInResult SignIn(SignInModel model, HttpContext httpContext)
@@ -174,65 +140,58 @@
             var signInResult = new SignInResult
             {
                 Ip = ipHelper.ClientIP(),
-                LoginTemplate = _loginTheme,
                 Username = model.Username,
-                Captcha = model.Code
+                Captcha = model.Code,
+                NoInteractionTimeInMinutes = _commonOptions.NoInteractionTimeInMinutes
             };
 
-            try
-            {
-                AppSession.EncryptCode = model.Code;
+            AppSession.EncryptCode = model.Code;
 
-                if (string.IsNullOrEmpty(AppSession.EncryptCode))
+            if (string.IsNullOrEmpty(AppSession.EncryptCode))
+            {
+                signInResult.ErrCode = SignInErrorContants.InvalidEncryptCode;
+                signInResult.ErrMsg = Labels.errInvalidCaptcha;
+                return signInResult;
+            }
+
+            if (cacheService.IsLoginIPBlocked())
+            {
+                var ipLockedError = string.Format(
+                    Labels.iploginfailedmultipletimeserror,
+                    signInResult.Ip,
+                    _commonOptions.MaxTimesToAllowLoginFail,
+                    _commonOptions.BlockLoginMinutes);
+                signInResult.ErrCode = SignInErrorContants.IPBlocked;
+                signInResult.ErrMsg = ipLockedError;
+                return signInResult;
+            }
+
+            if (IsCaptchaRequired(model))
+            {
+                var isVerifiedResult = captchaService.IsVerfied(model.CaptchaToken);
+                if (isVerifiedResult.IsSuccess)
                 {
-                    signInResult.ErrCode = SignInErrorContants.InvalidEncryptCode;
-                    signInResult.ErrMsg = Labels.errInvalidCaptcha;
+                    signInResult.IsCaptchaVerified = true;
+                }
+                else
+                {
+                    if (captchaOptions.LogEnabled)
+                    {
+                        var exception = new Exception($"signin captcha: key={model.Username} code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
+                        logger.Warn(exception.Message);
+                    }
+
+                    signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
+                    signInResult.ErrMsg = Labels.BotDetectionMessage;
                     return signInResult;
                 }
-
-                if (cacheService.IsLoginIPBlocked())
-                {
-                    var ipLockedError = string.Format(Labels.iploginfailedmultipletimeserror, signInResult.Ip, _maxTimesToAllowLogInFail, _blockLoginMinute);
-                    signInResult.ErrCode = SignInErrorContants.IPBlocked;
-                    signInResult.ErrMsg = ipLockedError;
-                    return signInResult;
-                }
-
-                if (IsCaptchaRequired(model))
-                {
-                    var isVerifiedResult = captchaService.IsVerfied(model.CaptchaToken);
-                    if (isVerifiedResult.IsSuccess)
-                    {
-                        signInResult.IsCaptchaVerified = true;
-                    }
-                    else
-                    {
-                        if (captchaOptions.LogEnabled)
-                        {
-                            var exception = new Exception($"signin captcha: key={model.Username} code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
-                            logger.Warn(exception.Message);
-                        }
-
-                        signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
-                        signInResult.ErrMsg = Labels.BotDetectionMessage;
-                        return signInResult;
-                    }
-                }
-
-                var password = AesService.Default.Decrypt(model.Password, AppSession.EncryptCode);
-                var assetAppPath = AssetAppPathHelper.IsValidAssetAppPath(model.AssetAppPath)
-                    ? model.AssetAppPath
-                    : string.Empty;
-                VerifyDownlineLogin(model.Username, password, model.DeviceId, model.BrowserSize, signInResult, !string.IsNullOrWhiteSpace(AppSession.DarkModeName), assetAppPath, httpContext);
             }
-            catch (Exception ex)
-            {
-                signInResult.ErrCode = ErrorCodeConstants.ServerError;
-                signInResult.ErrMsg = AppSetting.IsCustomErrorEnabled ?
-                    string.Format(Labels.Error_Server, 5004) : ex.ToString();
 
-                logger.Error(ex.Message, ex);
-            }
+            var password = AesService.Default.Decrypt(model.Password, AppSession.EncryptCode);
+            var assetAppPath = AssetAppPathHelper.IsValidAssetAppPath(model.AssetAppPath)
+                ? model.AssetAppPath
+                : string.Empty;
+            VerifyDownlineLogin(model.Username, password, model.DeviceId, model.BrowserSize, signInResult, !string.IsNullOrWhiteSpace(AppSession.DarkModeName), assetAppPath, httpContext);
 
             return signInResult;
         }
@@ -242,49 +201,40 @@
             var signInResult = new SignInResult
             {
                 Ip = ipHelper.ClientIP(),
-                LoginTemplate = _loginTheme,
-                Username = username
+                Username = username,
+                NoInteractionTimeInMinutes = _commonOptions.NoInteractionTimeInMinutes
             };
 
-            try
+            var automationTestSettings = AutomationTestSettings.Instance;
+            if (automationTestSettings == null)
             {
-                var automationTestSettings = AutomationTestSettings.Instance;
-                if (automationTestSettings == null)
-                {
-                    return signInResult;
-                }
-
-                var allowCaptcha = automationTestSettings.Captcha;
-                var allowIps = automationTestSettings.AllowsIPsToAccess;
-                var allowUsernameContainWords = automationTestSettings.AllowUsernameContainWords;
-
-                if (string.IsNullOrEmpty(allowCaptcha) ||
-                    string.IsNullOrEmpty(allowIps) ||
-                    string.IsNullOrEmpty(allowUsernameContainWords) ||
-                    string.IsNullOrEmpty(username) ||
-                    string.IsNullOrEmpty(password) ||
-                    string.IsNullOrEmpty(captcha))
-                {
-                    return signInResult;
-                }
-
-                var allowWords = allowUsernameContainWords.ToUpperInvariant().Split(',');
-                if (!allowIps.Split(',').Contains(ipHelper.ClientIP()) ||
-                    !allowCaptcha.Equals(captcha) ||
-                    !allowWords.All(s => username.ToUpperInvariant().Contains(s)))
-                {
-                    return signInResult;
-                }
-
-                VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult, null, string.Empty, httpContext);
+                return signInResult;
             }
-            catch (Exception ex)
+
+            var allowCaptcha = automationTestSettings.Captcha;
+            var allowIps = automationTestSettings.AllowsIPsToAccess;
+            var allowUsernameContainWords = automationTestSettings.AllowUsernameContainWords;
+
+            if (string.IsNullOrEmpty(allowCaptcha) ||
+                string.IsNullOrEmpty(allowIps) ||
+                string.IsNullOrEmpty(allowUsernameContainWords) ||
+                string.IsNullOrEmpty(username) ||
+                string.IsNullOrEmpty(password) ||
+                string.IsNullOrEmpty(captcha))
             {
-                signInResult.ErrCode = ErrorCodeConstants.ServerError;
-                signInResult.ErrMsg = AppSetting.IsCustomErrorEnabled ?
-                    string.Format(Labels.Error_Server, 5004) : ex.ToString();
-                logger.Error(ex.Message, ex);
+                return signInResult;
             }
+
+            var allowWords = allowUsernameContainWords.ToUpperInvariant().Split(',');
+            if (!allowIps.Split(',').Contains(ipHelper.ClientIP()) ||
+                !allowCaptcha.Equals(captcha) ||
+                !allowWords.All(s => username.ToUpperInvariant().Contains(s)))
+            {
+                return signInResult;
+            }
+
+            VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult, null, string.Empty, httpContext);
+
 
             return signInResult;
         }
@@ -313,22 +263,26 @@
             }
 
             var loginIPFailedCount = cacheService.IncreaseLoginIPFailedCount();
-            if (loginIPFailedCount > _maxTimesToAllowLogInFail)
+            if (loginIPFailedCount > _commonOptions.MaxTimesToAllowLoginFail)
             {
-                if (loginIPFailedCount == _maxTimesToAllowLogInFail + 1)
+                if (loginIPFailedCount == _commonOptions.MaxTimesToAllowLoginFail + 1)
                 {
                     LogIpBlocked(signInResult, httpContext);
                 }
 
-                cacheService.SetLoginIPBlocked(_blockLoginMinute);
-                var ipLockedError = string.Format(Labels.iploginfailedmultipletimeserror, signInResult.Ip, _maxTimesToAllowLogInFail, _blockLoginMinute);
+                cacheService.SetLoginIPBlocked(_commonOptions.BlockLoginMinutes);
+                var ipLockedError = string.Format(
+                    Labels.iploginfailedmultipletimeserror,
+                    signInResult.Ip,
+                    _commonOptions.MaxTimesToAllowLoginFail,
+                    _commonOptions.BlockLoginMinutes);
                 signInResult.ErrCode = SignInErrorContants.IPBlocked;
                 signInResult.ErrMsg = ipLockedError;
                 return;
             }
 
-            var loginUserFailedCount = cacheService.IncreaseLoginUserFailedCount(signInResult.Username, _notInteractionTimeInMinutes);
-            if (loginUserFailedCount >= _loginFailTimeToStartUsingCaptcha)
+            var loginUserFailedCount = cacheService.IncreaseLoginUserFailedCount(signInResult.Username, _commonOptions.NoInteractionTimeInMinutes);
+            if (loginUserFailedCount >= _commonOptions.LoginFailTimeToStartUsingCaptcha)
             {
                 signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
                 Task.Run(async () => await notificationService.NotifyWrongPassword(verifySignInResult.CustId, verifySignInResult.SubAccId, signInResult.Ip));

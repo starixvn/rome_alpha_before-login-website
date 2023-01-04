@@ -1,10 +1,9 @@
-﻿namespace Fanex.Alpha.Before.Customer.Services.SignIn
-{
-    using System;
-    using Fanex.Alpha.Before.Common.Constants;
-    using Fanex.Alpha.Before.Common.Helpers;
-    using Fanex.Caching;
+﻿using Fanex.Alpha.Before.Common.Constants;
+using Fanex.Alpha.Before.Common.Helpers;
+using Fanex.Caching;
 
+namespace Fanex.Alpha.Before.Customer.Services.SignIn
+{
     public interface ICacheService
     {
         bool IsLoginIPBlocked();
@@ -37,7 +36,6 @@
         private string _loginIPBlockedSessionKey => string.Format(SessionConstants.LOGINIPBLOCKED, UrlHelper.SiteGroupSetting.SiteGroup, _ipHelper.ClientIP());
         private string GetLoginUserFailedCountSessionKey(string username)
         {
-
             return string.Format(SessionConstants.LOGINUSERFAILEDCOUNT, UrlHelper.SiteGroupSetting.SiteGroup, _ipHelper.ClientIP(), username);
         }
 

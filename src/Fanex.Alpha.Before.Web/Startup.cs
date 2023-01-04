@@ -3,10 +3,13 @@
 // This file will need updated according to the specific scenario of the application being upgraded.
 // For more information on ASP.NET Core startup files, see https://docs.microsoft.com/aspnet/core/fundamentals/startup
 
+using Alpha.SliderCaptcha.Core;
+using Alpha.SliderCaptcha.Core.Services;
 using Fanex.Alpha.Before.Common.Configurations;
 using Fanex.Alpha.Before.Common.Helpers;
 using Fanex.Alpha.Before.Common.Services;
 using Fanex.Alpha.Before.Common.Services.LimitedCountryAccessService;
+using Fanex.Alpha.Before.Customer.Configurations;
 using Fanex.Alpha.Before.Customer.Repositories.SignIn;
 using Fanex.Alpha.Before.Customer.Services;
 using Fanex.Alpha.Before.Customer.Services.FPS;
@@ -42,20 +45,24 @@ namespace Fanex.Alpha.Before.Web
             };
             services.AddSingleton(limitedCountryAccessOptions);
 
-            // var captchaOptions = new CaptchaOptions(
-            //     Configuration.GetValue<bool>("SliderCaptcha:LogEnabled"),
-            //     Configuration.GetValue<string>("SliderCaptcha:ImagePath"),
-            //     Configuration.GetValue<int>("SliderCaptcha:AcceptRange"),
-            //     Configuration.GetValue<int>("SliderCaptcha:DragTimeout"),
-            //     Configuration.GetValue<int>("SliderCaptcha:VerifyTimeout")
-            // );
-            // services.AddSingleton(captchaOptions);
+            var commonOptions = new CommonOptions();
+            Configuration.GetSection(CommonOptions.Common).Bind(commonOptions);
+            services.AddSingleton(commonOptions);
+
+            var captchaOptions = new CaptchaOptions(
+                Configuration.GetValue<bool>("SliderCaptcha:LogEnabled"),
+                Configuration.GetValue<string>("SliderCaptcha:ImagePath"),
+                Configuration.GetValue<int>("SliderCaptcha:AcceptRange"),
+                Configuration.GetValue<int>("SliderCaptcha:DragTimeout"),
+                Configuration.GetValue<int>("SliderCaptcha:VerifyTimeout")
+            );
+            services.AddSingleton(captchaOptions);
 
             services.AddSingleton<IDynamicRepository, DynamicRepository>();
             services.AddSingleton<ISignInRepository, SignInRepository>();
             services.AddSingleton<IRobotDetector, RobotDetector>();
             services.AddSingleton<ICacheService, CacheService>();
-            //services.AddSingleton<ICaptchaService, CaptchaService>();
+            services.AddSingleton<ICaptchaService, CaptchaService>();
             services.AddSingleton<IKickoutCustomerService, KickoutCustomerService>();
             services.AddSingleton<IPHelper, IPHelperImpl>();
             services.AddSingleton<IPService, IpServiceImpl>();

@@ -1,8 +1,7 @@
-﻿namespace Fanex.Alpha.Before.Common.Helpers
-{
-    using System.Web;
-    using Fanex.Alpha.Before.Common.Configurations;
+﻿using Fanex.Alpha.Before.Common.Configurations;
 
+namespace Fanex.Alpha.Before.Common.Helpers
+{
     public static class DarkModeHelper
     {
         public static void SetDarkModeSession(HttpRequest request)
