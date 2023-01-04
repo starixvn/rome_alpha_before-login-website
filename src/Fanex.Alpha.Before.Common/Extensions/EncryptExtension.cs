@@ -13,9 +13,6 @@ namespace Fanex.Alpha.Before.Common.Extensions
     using System.Text;
     using Microsoft.VisualBasic;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class EncryptExtension
     {
         public const string HEXDIGIT = "0123456789abcdef";

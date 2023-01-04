@@ -42,31 +42,8 @@
 
     window.rootUrl = document.getElementById("RootUrl").value;
 </script>
-@if (Model.GoogleReCaptcha != null && Model.GoogleReCaptcha.IsEnable)
-{
-    <script>
-        var googleV3key = '@Model.GoogleReCaptcha.SiteKey';
-        !function (e, t, a, c, n) {
-            var s = t.createElement(a),
-               o = t.getElementsByTagName(a)[0];
-            s.async = true, s.src = n, o.appendChild(s)
-        }
-        (window, document, 'script', 'body', 'https://www.google.com/recaptcha/api.js?render=' + googleV3key);
-
-        try {
-            var analysis = document.getElementById("detecas-analysis");
-            if (analysis) analysis.value = "js-enabled" + String.fromCharCode(64) + (new Date()).getTime();
-        }
-        catch (err) { };
-    </script>
-}
 
 @if (CommonAppSetting.IsEnableFPS)
 {
 <script src="~/assets/scripts/login/fps.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
-}
-
-@if (Model.GoogleReCaptcha != null && Model.GoogleReCaptcha.IsEnable)
-{
-    <script src="~/assets/bundles/captchav3.js?ver=@CommonAppSetting.Version" type="text/javascript"></script>
 }

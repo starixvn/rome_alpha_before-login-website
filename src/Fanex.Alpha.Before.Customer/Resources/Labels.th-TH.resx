@@ -150,4 +150,7 @@
   <data name="GoBackToLoginPage" xml:space="preserve">
     <value>กลับไปยัง&lt;a href="{0}"&gt;หน้าล็อกอิน&lt;/a&gt;</value>
   </data>
+  <data name="Error_Server" xml:space="preserve">
+    <value>มีปัญหาที่ไม่คาดคิดเกิดขึ้น โปรดติดต่อฝ่ายสนับสนุนลูกค้าหากท่านต้องการความช่วยเหลือ [{0}]</value>
+  </data>
 </root>

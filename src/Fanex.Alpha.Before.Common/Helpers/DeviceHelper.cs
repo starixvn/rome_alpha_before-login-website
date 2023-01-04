@@ -1,64 +1,62 @@
-﻿namespace Fanex.Alpha.Before.Common.Helpers
+﻿using System.Collections;
+using Fanex.Logging;
+using UAParser;
+
+namespace Fanex.Alpha.Before.Common.Helpers;
+
+public static class DeviceHelper
 {
-    using System;
-    using System.Collections;
-    using System.Web;
-    using Fanex.Logging;
-    using UAParser;
-
-    public static class DeviceHelper
+    public static Hashtable GetRequestInfo(HttpRequest request, string browserSize, string clientIP)
     {
-        public static Hashtable GetRequestInfo(HttpRequest request, string browserSize, string clientIP)
+        Hashtable requestInfo = InitClientRequestInfo(request, clientIP);
+
+        try
         {
-            Hashtable requestInfo = InitClientRequestInfo(request, clientIP);
-
-            try
-            {
-                GetRequestInfoFromContext(request, browserSize, requestInfo);
-            }
-            catch (Exception ex)
-            {
-                Logger.Log.Info(ex.Message);
-            }
-
-            return requestInfo;
+            GetRequestInfoFromContext(request, browserSize, requestInfo);
+        }
+        catch (Exception ex)
+        {
+            Logger.Log.Info(ex.Message);
         }
 
-        private static Hashtable InitClientRequestInfo(HttpRequest request, string clientIP)
+        return requestInfo;
+    }
+
+    private static Hashtable InitClientRequestInfo(HttpRequest request, string clientIP)
+    {
+        return new Hashtable
         {
-            return new Hashtable
-            {
-                ["loginip"] = clientIP,
-                ["countrycode"] = "Unknown",
-                ["logindomain"] = request.ServerVariables["SERVER_NAME"],
-                ["browsername"] = string.Empty,
-                ["platform"] = string.Empty
-            };
+            ["loginip"] = clientIP,
+            ["countrycode"] = "Unknown",
+            // ["logindomain"] = request.ServerVariables["SERVER_NAME"],
+            ["logindomain"] = request.Host,
+            ["browsername"] = string.Empty,
+            ["platform"] = string.Empty
+        };
+    }
+
+    private static void GetRequestInfoFromContext(HttpRequest request, string browserSize, Hashtable requestInfo)
+    {
+        var userAgent = request.Headers["User-Agent"].ToString() ?? string.Empty;
+        var userAgentParser = Parser.GetDefault();
+        var clientInfo = userAgentParser.Parse(userAgent);
+        var clientUserAgent = clientInfo.UA;
+        var clientPatch = clientUserAgent.Patch ?? "0";
+
+        var browser = $"{clientUserAgent.Family} {clientUserAgent.Major}.{clientUserAgent.Minor}.{clientPatch}";
+        if (!string.IsNullOrWhiteSpace(browserSize))
+        {
+            browser += $", {browserSize}";
         }
 
-        private static void GetRequestInfoFromContext(HttpRequest request, string browserSize, Hashtable requestInfo)
-        {
-            var userAgent = request.UserAgent ?? string.Empty;
-            var userAgentParser = Parser.GetDefault();
-            var clientInfo = userAgentParser.Parse(userAgent);
-            var clientUserAgent = clientInfo.UA;
-            var clientPatch = clientUserAgent.Patch ?? "0";
+        var device = $"{clientInfo.Device.Family}, IsCrawler: {clientInfo.Device.IsSpider}";
 
-            var browser = $"{clientUserAgent.Family} {clientUserAgent.Major}.{clientUserAgent.Minor}.{clientPatch}";
-            if (!string.IsNullOrWhiteSpace(browserSize))
-            {
-                browser += $", {browserSize}";
-            }
+        var majorVersion = clientInfo.OS.Major ?? "0";
+        var minorVersion = clientInfo.OS.Minor ?? "0";
+        var osVersion = clientInfo.OS.Patch ?? "0";
+        var operateSystem = $"{clientInfo.OS.Family} {majorVersion}.{minorVersion}.{osVersion}";
 
-            var device = $"{clientInfo.Device.Family}, IsCrawler: {clientInfo.Device.IsSpider}";
-
-            var majorVersion = clientInfo.OS.Major ?? "0";
-            var minorVersion = clientInfo.OS.Minor ?? "0";
-            var osVersion = clientInfo.OS.Patch ?? "0";
-            var operateSystem = $"{clientInfo.OS.Family} {majorVersion}.{minorVersion}.{osVersion}";
-
-            requestInfo["browsername"] = browser;
-            requestInfo["platform"] = $"{operateSystem}, Device: {device}";
-        }
+        requestInfo["browsername"] = browser;
+        requestInfo["platform"] = $"{operateSystem}, Device: {device}";
     }
 }

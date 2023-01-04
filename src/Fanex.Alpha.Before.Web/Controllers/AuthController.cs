@@ -71,41 +71,6 @@ public class AuthController : Controller
         return View(loginResult);
     }
 
-    [HttpPost]
-    public async Task<ActionResult> ValidateGoogleCaptcha(string token)
-    {
-        var googleReCaptcha = UrlHelper.SiteGroupSetting.GoogleReCaptcha;
-
-        try
-        {
-            var TARGETURL = string.Format(
-               "https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}",
-               googleReCaptcha.SecretKey,
-               token);
-
-            var handler = new HttpClientHandler
-            {
-                Proxy = new WebProxy(googleReCaptcha.Proxy),
-                UseProxy = true,
-            };
-
-            var client = new HttpClient(handler);
-            var byteArray = Encoding.ASCII.GetBytes(":");
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
-
-            var response = await client.GetAsync(TARGETURL);
-            var content = response.Content;
-
-            var result = await content.ReadAsStringAsync();
-
-            return Json(result);
-        }
-        catch
-        {
-            return Json(string.Empty);
-        }
-    }
-
     public ActionResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
     {
         var loginResult = _signInService.AutomationTest(username, password, captcha, deviceId, browserSize, HttpContext);

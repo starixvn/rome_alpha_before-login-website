@@ -19,7 +19,7 @@ namespace Fanex.Alpha.Before.Customer.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -75,6 +75,15 @@ namespace Fanex.Alpha.Before.Customer.Resources {
         public static string errInvalidCaptcha {
             get {
                 return ResourceManager.GetString("errInvalidCaptcha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, there was an unexpected issue on the server. Please seek help from our customer support. [{0}].
+        /// </summary>
+        public static string Error_Server {
+            get {
+                return ResourceManager.GetString("Error_Server", resourceCulture);
             }
         }
         

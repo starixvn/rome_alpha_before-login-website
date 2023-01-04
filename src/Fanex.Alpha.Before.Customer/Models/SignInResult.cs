@@ -1,19 +1,8 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SignInResult.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-using Fanex.Alpha.Before.Common.Configurations;
-using Fanex.Alpha.Before.Common.Helpers;
+﻿using Fanex.Alpha.Before.Common.Configurations;
 using Fanex.Alpha.Before.Common.Models;
-using System;
 
 namespace Fanex.Alpha.Before.Customer.Models
 {
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class SignInResult
     {
         public int ErrCode
@@ -83,12 +72,6 @@ namespace Fanex.Alpha.Before.Customer.Models
         }
 
         public string Username
-        {
-            get;
-            set;
-        }
-
-        public GoogleReCaptcha GoogleReCaptcha
         {
             get;
             set;

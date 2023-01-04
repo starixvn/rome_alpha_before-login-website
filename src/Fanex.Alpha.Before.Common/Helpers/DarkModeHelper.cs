@@ -5,14 +5,14 @@
 
     public static class DarkModeHelper
     {
-        public static void SetDarkModeSession(HttpRequestBase request)
+        public static void SetDarkModeSession(HttpRequest request)
             => AppSession.DarkModeName = GetCookieIsDarkModeValue(request) ? "-dark" : string.Empty;
 
-        private static bool GetCookieIsDarkModeValue(HttpRequestBase request)
+        private static bool GetCookieIsDarkModeValue(HttpRequest request)
         {
             var cookie = request.Cookies["ISDARKMODE"];
 
-            return "1" == cookie?.Value;
+            return "1" == cookie;
         }
     }
 }

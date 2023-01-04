@@ -3,6 +3,7 @@
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
     <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <ItemGroup>
@@ -44,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.Alpha.Before.Common\Fanex.Alpha.Before.Common.csproj" />
-    <ProjectReference Include="..\Fanex.Alpha.Before.Infrastructure\Fanex.Alpha.Before.Infrastructure.csproj" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Resources\Labels.ja-JP.resx">
@@ -84,7 +84,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Alpha.SliderCaptcha" Version="1.0.1-beta1" />
+    <PackageReference Include="Alpha.SliderCaptcha" Version="1.0.1-beta2" />
     <PackageReference Include="TelegramBot.Client" Version="1.0.1" />
     <PackageReference Include="Fanex.Cryptography.Aes" Version="1.0.0.6-beta1" />
   </ItemGroup>

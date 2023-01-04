@@ -1,10 +1,4 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SignInRepository.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
+﻿namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
 {
     using System;
     using System.Collections;
@@ -14,9 +8,6 @@ namespace Fanex.Alpha.Before.Customer.Repositories.SignIn
     using Fanex.Alpha.Before.Customer.Models;
     using Fanex.Data;
 
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public class SignInRepository : ISignInRepository
     {
         /// <summary>

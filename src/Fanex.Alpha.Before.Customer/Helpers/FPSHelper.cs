@@ -1,8 +1,7 @@
 ﻿using Fanex.Alpha.Before.Common.Configurations;
 using Fanex.Alpha.Before.Customer.Models;
 using Fanex.Logging;
-using System;
-using System.Configuration;
+
 
 namespace Fanex.Alpha.Before.Customer.Helpers
 {
@@ -35,7 +34,7 @@ namespace Fanex.Alpha.Before.Customer.Helpers
 
                 const string loginAction = "login";
                 var username = loginResult.Username;
-                var fpsSubscirber = ConfigurationManager.AppSettings["FPS_Subscriber"];
+                var fpsSubscirber = AppSetting.FpsSubscriber;
                 var fpsErrorMessage = string.Empty;
                 var fpsErrorCode = string.Empty;
 

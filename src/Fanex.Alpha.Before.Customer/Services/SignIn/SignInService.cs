@@ -1,22 +1,13 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SignInService.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.Alpha.Before.Customer.Services.SignIn
+﻿namespace Fanex.Alpha.Before.Customer.Services.SignIn
 {
-    using System;
-    using System.Collections.Generic;
     using System.Configuration;
-    using System.Linq;
-    using System.Threading.Tasks;
     using System.Web;
-    using Cryptography.Aes;
+    using Fanex.Cryptography.Aes;
     using Fanex.Alpha.Before.Common.Configurations;
     using Fanex.Alpha.Before.Common.Constants;
     using Fanex.Alpha.Before.Common.Extensions;
     using Fanex.Alpha.Before.Common.Helpers;
+    using Fanex.Alpha.Before.Common.Models;
     using Fanex.Alpha.Before.Common.Services;
     using Fanex.Alpha.Before.Customer.Configurations;
     using Fanex.Alpha.Before.Customer.Constants;
@@ -27,6 +18,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
     using Fanex.Logging;
     using Newtonsoft.Json;
     using TelegramBot.Client.Services;
+    using global::Alpha.SliderCaptcha.Core;
+    using global::Alpha.SliderCaptcha.Core.Services;
 
     public interface ISignInService
     {
@@ -55,8 +48,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
         private readonly ISignInRepository _signInRepository;
         private readonly ICacheService cacheService;
         private readonly IRobotDetector robotDetector;
-        // private readonly CaptchaOptions captchaOptions;
-        // private readonly ICaptchaService captchaService;
+        private readonly CaptchaOptions captchaOptions;
+        private readonly ICaptchaService captchaService;
         private readonly IKickoutCustomerService kickoutCustomerService;
         private readonly INotificationService notificationService;
 
@@ -78,8 +71,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             ISignInRepository signInRepository,
             IRobotDetector robotDetector,
             ICacheService cacheService,
-            // CaptchaOptions captchaOptions,
-            // ICaptchaService captchaService,
+            CaptchaOptions captchaOptions,
+            ICaptchaService captchaService,
             IKickoutCustomerService kickoutCustomerService,
             IPService ipService,
             INotificationService notificationService)
@@ -90,8 +83,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             _signInRepository = signInRepository;
             this.cacheService = cacheService;
             this.robotDetector = robotDetector;
-            // this.captchaOptions = captchaOptions;
-            // this.captchaService = captchaService;
+            this.captchaOptions = captchaOptions;
+            this.captchaService = captchaService;
             this.kickoutCustomerService = kickoutCustomerService;
             this.notificationService = notificationService;
             // var _loginThemeSection = LoginThemeSection.Instance;
@@ -164,18 +157,16 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 loginResult.ErrCode = ErrorCodeConstants.ServerError;
                 loginResult.ErrMsg = AppSetting.IsCustomErrorEnabled ?
-                    string.Format(Infrastructure.Resources.Labels.Error_Server, 5004) : ex.ToString();
+                    string.Format(Labels.Error_Server, 5004) : ex.ToString();
                 logger.Error(ex.Message, ex);
             }
-
-            //loginResult.GoogleReCaptcha = UrlHelper.SiteGroupSetting.GoogleReCaptcha;
 
             return loginResult;
         }
 
         private bool IsCaptchaRequired(SignInModel model)
         {
-            return IsShowReCaptcha(model.Username);
+            return cacheService.GetLoginUserFailedCount(model.Username) >= _loginFailTimeToStartUsingCaptcha;
         }
 
         public SignInResult SignIn(SignInModel model, HttpContext httpContext)
@@ -185,7 +176,6 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                 Ip = ipHelper.ClientIP(),
                 LoginTemplate = _loginTheme,
                 Username = model.Username,
-                GoogleReCaptcha = UrlHelper.SiteGroupSetting.GoogleReCaptcha,
                 Captcha = model.Code
             };
 
@@ -208,26 +198,26 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
                     return signInResult;
                 }
 
-                // if (IsCaptchaRequired(model))
-                // {
-                //     var isVerifiedResult = captchaService.IsVerfied(model.CaptchaToken);
-                //     if (isVerifiedResult.IsSuccess)
-                //     {
-                //         signInResult.IsCaptchaVerified = true;
-                //     }
-                //     else
-                //     {
-                //         if (captchaOptions.LogEnabled)
-                //         {
-                //             var exception = new Exception($"signin captcha: key={model.Username} code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
-                //             logger.Warn(exception.Message);
-                //         }
+                if (IsCaptchaRequired(model))
+                {
+                    var isVerifiedResult = captchaService.IsVerfied(model.CaptchaToken);
+                    if (isVerifiedResult.IsSuccess)
+                    {
+                        signInResult.IsCaptchaVerified = true;
+                    }
+                    else
+                    {
+                        if (captchaOptions.LogEnabled)
+                        {
+                            var exception = new Exception($"signin captcha: key={model.Username} code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
+                            logger.Warn(exception.Message);
+                        }
 
-                //         signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
-                //         signInResult.ErrMsg = Labels.BotDetectionMessage;
-                //         return signInResult;
-                //     }
-                // }
+                        signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
+                        signInResult.ErrMsg = Labels.BotDetectionMessage;
+                        return signInResult;
+                    }
+                }
 
                 var password = AesService.Default.Decrypt(model.Password, AppSession.EncryptCode);
                 var assetAppPath = AssetAppPathHelper.IsValidAssetAppPath(model.AssetAppPath)
@@ -239,7 +229,7 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 signInResult.ErrCode = ErrorCodeConstants.ServerError;
                 signInResult.ErrMsg = AppSetting.IsCustomErrorEnabled ?
-                    string.Format(Infrastructure.Resources.Labels.Error_Server, 5004) : ex.ToString();
+                    string.Format(Labels.Error_Server, 5004) : ex.ToString();
 
                 logger.Error(ex.Message, ex);
             }
@@ -292,16 +282,11 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
             {
                 signInResult.ErrCode = ErrorCodeConstants.ServerError;
                 signInResult.ErrMsg = AppSetting.IsCustomErrorEnabled ?
-                    string.Format(Infrastructure.Resources.Labels.Error_Server, 5004) : ex.ToString();
+                    string.Format(Labels.Error_Server, 5004) : ex.ToString();
                 logger.Error(ex.Message, ex);
             }
 
             return signInResult;
-        }
-
-        private bool IsShowReCaptcha(string username)
-        {
-            return cacheService.GetLoginUserFailedCount(username) >= _loginFailTimeToStartUsingCaptcha;
         }
 
         private void LogIpBlocked(SignInResult signInResult, HttpContext httpContext)
@@ -318,7 +303,8 @@ namespace Fanex.Alpha.Before.Customer.Services.SignIn
 
         private void UpdateResultAfterLoginFail(
             SignInResult signInResult,
-            VerifySignInResult verifySignInResult, HttpContext httpContext)
+            VerifySignInResult verifySignInResult,
+            HttpContext httpContext)
         {
             signInResult.IsChangedPassword = verifySignInResult.LastTimeToChangePassword != DateTime.MinValue;
             if (signInResult.IsChangedPassword)

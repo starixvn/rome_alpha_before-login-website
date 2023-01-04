@@ -42,7 +42,7 @@ body {
 }
 
 .header .icon_note {
-  background: url(images/icon-notify.png) no-repeat;
+  background: url(../images/icon-notify.png) no-repeat;
   width: 64px;
   height: 64px;
   display: inline-block;

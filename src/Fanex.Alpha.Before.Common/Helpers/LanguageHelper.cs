@@ -1,18 +1,8 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="LanguageHelper.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
+﻿using System.Globalization;
+using Fanex.Alpha.Before.Common.Configurations;
 
 namespace Fanex.Alpha.Before.Common.Helpers
 {
-    using System.Globalization;
-    using System.Threading;
-    using Fanex.Alpha.Before.Common.Configurations;
-
-    /// <summary>
-    /// TODO: Update summary.
-    /// </summary>
     public static class LanguageHelper
     {
         private static readonly string[] languages = { "en-US", "th-TH", "zh-CN", "zh-TW", "ja-JP", "ko-KR", "vi-VN" };
@@ -22,17 +12,13 @@ namespace Fanex.Alpha.Before.Common.Helpers
             get { return languages[0]; }
         }
 
-        /// <summary>
-        /// Checking language from cookie.
-        /// </summary>
-        /// <returns>Return language result.</returns>
         public static int CheckingLanguageFromCookie()
         {
             var language = 0;
-            // if (HttpContextHelper.Current.Request.Cookies["LANGUAGE"] != null)
-            // {
-            //     language = Converter.ToInt(HttpContextHelper.Current.Request.Cookies["LANGUAGE"].Value);
-            // }
+            if (HttpContextHelper.Current.Request.Cookies["LANGUAGE"] != null)
+            {
+                language = Converter.ToInt(HttpContextHelper.Current.Request.Cookies["LANGUAGE"]);
+            }
 
             if (language > 5)
             {
@@ -49,11 +35,6 @@ namespace Fanex.Alpha.Before.Common.Helpers
             Thread.CurrentThread.CurrentUICulture = Thread.CurrentThread.CurrentCulture;
         }
 
-        /// <summary>
-        /// Validate language.
-        /// </summary>
-        /// <param name="culture">The culture.</param>
-        /// <returns>Return result.</returns>
         public static bool IsValidLanguage(string culture)
         {
             if (AppSetting.DisabledVietnamese && culture == "vi-VN")

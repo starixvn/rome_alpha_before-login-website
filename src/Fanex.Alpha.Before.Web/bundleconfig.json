@@ -16,12 +16,6 @@
     ]
   },
   {
-    "outputFileName": "wwwroot/assets/bundles/captchav3.js",
-    "inputFiles": [
-      "wwwroot/assets/scripts/login/captchav3.js"
-    ]
-  },
-  {
     "outputFileName": "wwwroot/assets/bundles/themes/default.css",
     "inputFiles": [
       "wwwroot/assets/styles/themes/default.css"

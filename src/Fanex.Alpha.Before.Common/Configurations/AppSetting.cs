@@ -27,9 +27,11 @@
 
         public static string Version => GetValue<string>("AppVersion");
 
-        public static string FpsActivator => GetValue<string>("FPS_Activator");
+        public static string FpsActivator => GetValue<string>("FPS:Activator");
 
-        public static bool IsEnableFPS => !string.IsNullOrEmpty(FpsActivator) && !string.IsNullOrEmpty(configurationRoot["FPS_API"]);
+        public static string FpsSubscriber => GetValue<string>("FPS:Subscriber");
+
+        public static bool IsEnableFPS => !string.IsNullOrEmpty(FpsActivator) && !string.IsNullOrEmpty(configurationRoot["FPS:API"]);
 
         public static string GoogleAnalyticId => GetValue<string>("GoogleAnalyticId");
 

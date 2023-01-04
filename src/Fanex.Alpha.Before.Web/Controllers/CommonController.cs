@@ -26,7 +26,7 @@ public class CommonController : Controller
         var error = HttpContext.Features.Get<IExceptionHandlerFeature>().Error;
         await ExceptionHandler.HandleAsync(error, HttpContext);
 
-        ViewBag.ErrorMessage = string.Format(Infrastructure.Resources.Labels.Error_Server, HttpStatusCode.InternalServerError);
+        ViewBag.ErrorMessage = string.Format(Customer.Resources.Labels.Error_Server, HttpStatusCode.InternalServerError);
         ViewData["DarkModeName"] = AppSession.DarkModeName;
 
         return View();

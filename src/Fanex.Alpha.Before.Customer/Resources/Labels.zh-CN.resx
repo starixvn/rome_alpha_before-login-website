@@ -151,4 +151,7 @@
   <data name="GoBackToLoginPage" xml:space="preserve">
     <value>请返回&lt;a href="{0}"&gt;"登录页面"&lt;/a&gt;</value>
   </data>
+  <data name="Error_Server" xml:space="preserve">
+    <value>很抱歉，服务器发生意外错误，请联系我们的客服协助处理。[{0}]</value>
+  </data>
 </root>

@@ -44,7 +44,6 @@ namespace Fanex.Alpha.Before.Common.Helpers
                     SiteGroup = defaultGroup,
                     BeforeUrl = baseUrl,
                     AfterUrl = baseUrl,
-                    GoogleReCaptcha = new GoogleReCaptcha()
                 };
 
                 if (domainGroupSection == null || domainGroupSection.Count == 0)

@@ -2,8 +2,6 @@ using System.Diagnostics;
 
 namespace Fanex.Alpha.Before.Common.Helpers
 {
-
-
     public static class Converter
     {
         /// <summary>

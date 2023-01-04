@@ -151,4 +151,7 @@ Vì lý do bảo mật, chức năng đăng nhập sẽ tạm khoá trong {2} ph
   <data name="GoBackToLoginPage" xml:space="preserve">
     <value>Quay lại trang &lt;a href="{0}"&gt;đăng nhập&lt;/a&gt;</value>
   </data>
+  <data name="Error_Server" xml:space="preserve">
+    <value>Rất tiếc, đã xảy ra lỗi không mong muốn với máy chủ. Vui lòng liên hệ với bộ phận chăm sóc khách hàng của chúng tôi để được hỗ trợ. [{0}]</value>
+  </data>
 </root>

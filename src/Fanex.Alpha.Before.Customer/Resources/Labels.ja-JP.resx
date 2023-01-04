@@ -136,4 +136,7 @@ For security reasons, login function has been locked for {2} minutes.</value>
   <data name="invalidsession" xml:space="preserve">
     <value>Invalid Session!</value>
   </data>
+  <data name="Error_Server" xml:space="preserve">
+    <value>Sorry, there was an unexpected issue on the server. Please seek help from our customer support. [{0}]</value>
+  </data>
 </root>
