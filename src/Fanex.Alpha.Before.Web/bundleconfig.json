@@ -1,5 +1,11 @@
 [
   {
+    "outputFileName": "wwwroot/assets/bundles/bootstrap-ex.css",
+    "inputFiles": [
+      "wwwroot/assets/styles/vendors-extensions/login/bootstrap-ex.css"
+    ]
+  },
+  {
     "outputFileName": "wwwroot/assets/bundles/login.js",
     "inputFiles": [
       "wwwroot/assets/scripts/libs/jquery/jquery-1.11.3.js",

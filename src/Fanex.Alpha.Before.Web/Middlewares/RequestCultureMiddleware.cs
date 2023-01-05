@@ -1,5 +1,4 @@
-using Fanex.Alpha.Before.Common.Configurations;
-using Fanex.Alpha.Before.Common.Helpers;
+using Fanex.Alpha.Before.Helpers;
 
 namespace Fanex.Alpha.Before.Web.Middlewares;
 

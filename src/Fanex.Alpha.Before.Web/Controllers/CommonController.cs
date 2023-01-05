@@ -1,7 +1,6 @@
 using System.Net;
-using Fanex.Alpha.Before.Common.Configurations;
-using Fanex.Alpha.Before.Common.Helpers;
-using Fanex.Alpha.Before.Common.Models;
+using Fanex.Alpha.Before.Helpers;
+using Fanex.Alpha.Before.Models;
 using Fanex.Logging.Extensions.AspNetCore;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +25,7 @@ public class CommonController : Controller
         var error = HttpContext.Features.Get<IExceptionHandlerFeature>().Error;
         await ExceptionHandler.HandleAsync(error, HttpContext);
 
-        ViewBag.ErrorMessage = string.Format(Customer.Resources.Labels.Error_Server, HttpStatusCode.InternalServerError);
+        ViewBag.ErrorMessage = string.Format(Resources.Labels.Error_Server, HttpStatusCode.InternalServerError);
         ViewData["DarkModeName"] = AppSession.DarkModeName;
 
         return View();

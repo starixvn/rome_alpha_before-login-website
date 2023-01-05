@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.Alpha.Before.Customer\Fanex.Alpha.Before.Customer.csproj" />
+    <ProjectReference Include="..\Fanex.Alpha.Before\Fanex.Alpha.Before.csproj" />
   </ItemGroup>
 
   <ItemGroup>

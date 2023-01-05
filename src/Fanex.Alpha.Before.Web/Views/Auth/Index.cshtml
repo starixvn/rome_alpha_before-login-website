@@ -1,10 +1,9 @@
-﻿@using Fanex.Alpha.Before.Common.Configurations;
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var darkModeName = (string)ViewData["DarkModeName"];
 }
 
-@model Fanex.Alpha.Before.Customer.Models.SignInResult
+@model Fanex.Alpha.Before.Models.SignInResult
 
 @section styles
 {
@@ -74,7 +73,7 @@
 </div>
 <input type="hidden" id="hiddenAssetAppPaths" value="@Model.AssetAppPaths" />
 
-@if (Model.ErrCode == Fanex.Alpha.Before.Customer.Constants.SignInErrorContants.CaptchaRequired)
+@if (Model.ErrCode == Fanex.Alpha.Before.Constants.SignInErrorContants.CaptchaRequired)
 {
     @Html.Hidden("NoInteractionTimeInMinutes", Model.NoInteractionTimeInMinutes)
 
@@ -89,7 +88,7 @@
                 }, noInteractionTimeInMinutes * 60 * 1000);
 
             window.scInstance = sliderCaptcha('captcha', {
-                lang: "@Fanex.Alpha.Before.Common.Configurations.AppSession.Language",
+                lang: "@AppSession.Language",
                 baseUri: "@Url.Content("~")",
                 keyElement: document.getElementById('txtUserName'),
                 callback: function (response) {

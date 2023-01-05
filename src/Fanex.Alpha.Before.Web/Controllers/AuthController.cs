@@ -1,11 +1,7 @@
-using System.Net;
-using System.Text;
-using Fanex.Alpha.Before.Common.Configurations;
-using Fanex.Alpha.Before.Common.Helpers;
-using Fanex.Alpha.Before.Customer.Constants;
-using Fanex.Alpha.Before.Customer.Helpers;
-using Fanex.Alpha.Before.Customer.Models;
-using Fanex.Alpha.Before.Customer.Services.SignIn;
+using Fanex.Alpha.Before.Constants;
+using Fanex.Alpha.Before.Helpers;
+using Fanex.Alpha.Before.Models;
+using Fanex.Alpha.Before.Services.SignIn;
 using Microsoft.AspNetCore.Mvc;
 using ONEbook.UM.AspNetCore.Filters;
 

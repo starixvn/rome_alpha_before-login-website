@@ -1,7 +1,7 @@
 ﻿@model UnderMaintenanceModel
 @{
     Layout = null;
-    var isMbcSite = Fanex.Alpha.Before.Common.Configurations.AppSetting.IsMBCSite;
+    var is789ySite = AppSetting.Is789ySite;
 }
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
     <title>UM Page</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=0.7, user-scalable=yes">
-    @if (isMbcSite)
+    @if (!is789ySite)
     {
         <link href="~/assets/bundles/themes/um@(ViewData["DarkModeName"]).min.css" rel="stylesheet" />
     }
@@ -20,7 +20,7 @@
     }
 </head>
 <body>
-    @if (isMbcSite)
+    @if (!is789ySite)
     {
         <div class="container">
             <svg id="wrap" width="200" height="200" viewbox="0 0 300 300">

@@ -5,7 +5,7 @@ var sass = require("gulp-sass")(require("sass"));
 gulp.task("sass", function (cb) {
   gulp
     .src([
-      "./wwwroot/assets/styles/vendors-extensions/login/bootstrap-ex.scss",
+      "wwwroot/assets/styles/vendors-extensions/login/bootstrap-ex.scss",
       "wwwroot/assets/styles/vendors/bootstrap.scss",
       "wwwroot/assets/styles/themes/*.scss",
       "wwwroot/assets/styles/pages/*.scss",

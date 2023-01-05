@@ -1,0 +1,55 @@
+﻿using Fanex.Alpha.Before.Configurations;
+using Fanex.Alpha.Before.Models;
+using Fanex.Logging;
+
+namespace Fanex.Alpha.Before.Helpers
+{
+    public static class FPSHelper
+    {
+        public static void FPSTracking(SignInResult loginResult)
+        {
+            try
+            {
+                if (!AppSetting.IsEnableFPS)
+                {
+                    return;
+                }
+
+
+                var loginMessage = string.Empty;
+                if (loginResult == null)
+                {
+                    loginResult = new SignInResult();
+                    loginMessage = "failed";
+                }
+                else if (loginResult.ErrCode != -1)
+                {
+                    loginMessage = string.Format("{0}", loginResult.ErrMsg);
+                }
+                else
+                {
+                    loginMessage = "successfully";
+                }
+
+                const string loginAction = "login";
+                var username = loginResult.Username;
+                var fpsSubscirber = AppSetting.FpsSubscriber;
+                var fpsErrorMessage = string.Empty;
+                var fpsErrorCode = string.Empty;
+
+                // new FPS.Client.Service().CheckTransaction(
+                //     username.Trim(),
+                //     loginAction,
+                //     loginMessage,
+                //     fpsSubscirber,
+                //     loginResult.LoginTime,
+                //     out fpsErrorMessage,
+                //     out fpsErrorCode);                
+            }
+            catch (Exception ex)
+            {
+                Logger.Log.Error(ex.Message, ex);
+            }
+        }
+    }
+}

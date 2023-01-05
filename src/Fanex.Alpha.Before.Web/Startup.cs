@@ -4,16 +4,12 @@
 // For more information on ASP.NET Core startup files, see https://docs.microsoft.com/aspnet/core/fundamentals/startup
 
 using Alpha.SliderCaptcha.Core;
-using Alpha.SliderCaptcha.Core.Services;
-using Fanex.Alpha.Before.Common.Configurations;
-using Fanex.Alpha.Before.Common.Helpers;
-using Fanex.Alpha.Before.Common.Services;
-using Fanex.Alpha.Before.Common.Services.LimitedCountryAccessService;
-using Fanex.Alpha.Before.Customer.Configurations;
-using Fanex.Alpha.Before.Customer.Repositories.SignIn;
-using Fanex.Alpha.Before.Customer.Services;
-using Fanex.Alpha.Before.Customer.Services.FPS;
-using Fanex.Alpha.Before.Customer.Services.SignIn;
+using Fanex.Alpha.Before.Configurations;
+using Fanex.Alpha.Before.Helpers;
+using Fanex.Alpha.Before.Repositories;
+using Fanex.Alpha.Before.Services;
+using Fanex.Alpha.Before.Services.FPS;
+using Fanex.Alpha.Before.Services.SignIn;
 using Fanex.Alpha.Before.Web.Extensions;
 using Fanex.Caching.Redis;
 using Fanex.Data.Repository;
@@ -39,15 +35,14 @@ namespace Fanex.Alpha.Before.Web
             services.AddFanexLogging(Configuration);
             services.AddRedisCache(Configuration.GetSection("fanex.caching.redis"));
 
-            var limitedCountryAccessOptions = new LimitedCountryAccessOptions
-            {
-                Countries = Configuration.GetSection("LimitedCountries").Get<LimitedCountry[]>()
-            };
-            services.AddSingleton(limitedCountryAccessOptions);
-
             var commonOptions = new CommonOptions();
             Configuration.GetSection(CommonOptions.Common).Bind(commonOptions);
             services.AddSingleton(commonOptions);
+
+            var automationTestOptions = new AutomationTestOptions();
+            Configuration.GetSection(AutomationTestOptions.AutomationTest).Bind(automationTestOptions);
+            services.AddSingleton(automationTestOptions);
+
 
             var captchaOptions = new CaptchaOptions(
                 Configuration.GetValue<bool>("SliderCaptcha:LogEnabled"),
@@ -62,7 +57,12 @@ namespace Fanex.Alpha.Before.Web
             services.AddSingleton<ISignInRepository, SignInRepository>();
             services.AddSingleton<IRobotDetector, RobotDetector>();
             services.AddSingleton<ICacheService, CacheService>();
-            services.AddSingleton<ICaptchaService, CaptchaService>();
+            // services.AddSingleton<ITokenService, TokenService>();
+
+            // services.AddSingleton<IHttpContextService, HttpContextService>();
+            // services.AddSingleton<IRandomService, RandomService>();
+            // services.AddSingleton<IFileProvider, FileProvider>();
+            // services.AddSingleton<ICaptchaService, CaptchaService>();
             services.AddSingleton<IKickoutCustomerService, KickoutCustomerService>();
             services.AddSingleton<IPHelper, IPHelperImpl>();
             services.AddSingleton<IPService, IpServiceImpl>();

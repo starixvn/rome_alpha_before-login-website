@@ -33,3 +33,6 @@ _ReSharper*/
 *.GhostDoc.xml
 *.orig
 node_modules/
+*/**/bundles
+*.min.css
+*.css
