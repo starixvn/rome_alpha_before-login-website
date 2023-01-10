@@ -12,12 +12,17 @@ RUN dotnet restore "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
 COPY . .
 WORKDIR /source/src/Fanex.Alpha.Before.Web
 
-FROM hub.nexdev.net/base/node:17.9-alpine3.14 AS deps
+#Installing nodejs
+RUN apt-get update -yq \
+    && apt-get install curl gnupg -yq \
+    && curl -sL https://deb.nodesource.com/setup_18.x | bash \
+    && apt-get install nodejs -yq
+
+#Installing gulp
 RUN npm install -g gulp
 RUN npm install
-RUN gulp
+RUN gulp sass
 
-FROM builder as publish
 RUN dotnet publish -c release -o /app --self-contained false --no-restore
 
 RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
@@ -35,7 +40,7 @@ USER dotnetuser
 # final stage/image
 FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0
 WORKDIR /app
-COPY --from=publish /app ./
+COPY --from=builder /app ./
 ENV TZ="America/La_Paz"
 
 

@@ -1,3 +1,4 @@
+/// <binding AfterBuild='default' />
 // Sass configuration
 var gulp = require("gulp");
 var sass = require("gulp-sass")(require("sass"));
@@ -19,10 +20,13 @@ gulp.task("sass", function (cb) {
   cb();
 });
 
+gulp.task("watch", function () {
+  gulp.watch("wwwroot/assets/styles/**/*.scss", gulp.series("sass"));
+});
+
 gulp.task(
   "default",
-  gulp.series("sass", function (cb) {
-    gulp.watch("*.scss", gulp.series("sass"));
+  gulp.series(["sass", "watch"], function (cb) {
     cb();
   })
 );
