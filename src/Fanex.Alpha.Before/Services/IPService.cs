@@ -1,9 +1,11 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using Fanex.Alpha.Before.Criteria;
 using Fanex.Alpha.Before.Models;
 using Fanex.Data.Repository;
 
+[assembly: InternalsVisibleTo("Fanex.Alpha.Before.UnitTests")]
 namespace Fanex.Alpha.Before.Services
 {
     public interface IPService
@@ -59,6 +61,11 @@ namespace Fanex.Alpha.Before.Services
             ipNum += BitConverter.ToUInt64(addrBytes, 0);
 
             return ipNum;
+        }
+
+        internal static void SetIsLittleEndian(bool isLittleEndian)
+        {
+            IsLittleEndian = isLittleEndian;
         }
     }
 }

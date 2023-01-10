@@ -15,7 +15,6 @@ namespace Fanex.Alpha.Before.Helpers
                     return;
                 }
 
-
                 var loginMessage = string.Empty;
                 if (loginResult == null)
                 {
@@ -37,14 +36,14 @@ namespace Fanex.Alpha.Before.Helpers
                 var fpsErrorMessage = string.Empty;
                 var fpsErrorCode = string.Empty;
 
-                // new FPS.Client.Service().CheckTransaction(
+                // new FPS.Client.NetStandard.Service().CheckTransaction(
                 //     username.Trim(),
                 //     loginAction,
                 //     loginMessage,
                 //     fpsSubscirber,
                 //     loginResult.LoginTime,
                 //     out fpsErrorMessage,
-                //     out fpsErrorCode);                
+                //     out fpsErrorCode);
             }
             catch (Exception ex)
             {

@@ -1,5 +1,3 @@
-using System;
-
 namespace Fanex.Alpha.Before.Criteria
 {
     public class VerifyDownlineLoginCommand

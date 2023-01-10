@@ -1,107 +1,101 @@
+using Alpha.SliderCaptcha.Core;
+using Alpha.SliderCaptcha.Core.Services;
+using Fanex.Alpha.Before.Configurations;
+using Fanex.Alpha.Before.Constants;
+using Fanex.Alpha.Before.Models;
+using Fanex.Alpha.Before.Resources;
+using Fanex.Alpha.Before.Services.SignIn;
+using Fanex.Logging.Extensions.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
+
 namespace Fanex.Alpha.Before.Web.Controllers;
 
-public class RobotCaptchaController
+public class RobotCaptchaController : Controller
 {
-    // private const int LimitRobotCaptchaFailedCount = 5;
-    // private readonly ICaptchaService captchaService;
-    // private readonly CaptchaOptions captchaOptions;
+    private const int LimitRobotCaptchaFailedCount = 5;
+    private readonly ICaptchaService captchaService;
+    private readonly CaptchaOptions captchaOptions;
 
-    // public RobotCaptchaController()
-    //     : this(null, null)
-    // {
-    // }
+    public RobotCaptchaController(CaptchaOptions captchaOptions, ICaptchaService captchaService)
+    {
+        this.captchaOptions = captchaOptions;
+        this.captchaService = captchaService;
+    }
 
-    // public RobotCaptchaController(CaptchaOptions captchaOptions, IServiceFactory serviceFactory)
-    // {
-    //     this.captchaOptions = captchaOptions ?? SliderCaptchaHandler.CaptchaOptions;
-    //     serviceFactory = serviceFactory ?? SliderCaptchaHandler.ServiceFactory;
-    //     captchaService = serviceFactory.CaptchaService;
-    // }
+    private static string TooManyFailedLoginPageUrl => $"~/?r={Labels.tooManyFailedCaptcha}";
 
-    // private static string TooManyFailedLoginPageUrl => $"{FormsAuthentication.LoginUrl}?r={Labels.tooManyFailedCaptcha}";
+    public IActionResult Index()
+    {
+        if (IsNotRobot())
+        {
+            var message = $"{Labels.invalidsession} / {Labels.inputCaptchaTooLong}";
 
-    // public Microsoft.AspNetCore.Mvc.ActionResult Index(string returnUrl)
-    // {
-    //     if (IsNotRobot())
-    //     {
-    //         var message = $"{Labels.invalidsession} / {Labels.inputCaptchaTooLong}";
+            return Redirect($"~/?r={message}");
+        }
 
-    //         return Redirect($"{FormsAuthentication.LoginUrl}?r={message}");
-    //     }
+        if (IsIgnoreRobotCaptcha())
+        {
+            return Redirect(EncryptUrlHelper.BuildAfterURL(HttpContext));
+        }
 
-    //     if (IsIgnoreRobotCaptcha())
-    //     {
-    //         return Redirect(EncryptURLHelper.BuildAfterURL(HttpContext.ApplicationInstance.Context));
-    //     }
+        AssignDarkModeNameViewData();
 
-    //     AssignDarkModeNameViewData();
+        ViewBag.tooManyFailedLoginPageUrl = TooManyFailedLoginPageUrl;
+        return View();
+    }
 
-    //     ViewBag.tooManyFailedLoginPageUrl = TooManyFailedLoginPageUrl;
-    //     return View("~/Areas/Customer/Views/RobotCaptcha/Index.cshtml");
-    // }
+    [HttpPost]
+    public async Task<IActionResult> Index(RobotCaptchaModel model)
+    {
+        var isVerifiedResult = captchaService.IsVerfied(model.Token);
+        if (isVerifiedResult.IsSuccess)
+        {
+            AppSession.InputCaptchaSuccess = true;
+            return RedirectToAction(nameof(InputCaptchaSuccessfully));
+        }
 
-    // [HttpPost]
-    // public Microsoft.AspNetCore.Mvc.ActionResult Index(RobotCaptchaModel model)
-    // {
-    //     var isVerifiedResult = captchaService.IsVerfied(model.Token);
-    //     if (isVerifiedResult.IsSuccess)
-    //     {
-    //         AppSession.InputCaptchaSuccess = true;
-    //         return RedirectToAction(nameof(InputCaptchaSuccessfully));
-    //     }
+        if (captchaOptions.LogEnabled)
+        {
+            var exception = new Exception($"robot captcha: key={AppSession.Username}, code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
+            await ExceptionHandler.HandleAsync(exception, HttpContext);
+        }
 
-    //     if (captchaOptions.LogEnabled)
-    //     {
-    //         var exception = new Exception($"robot captcha: key={AppSession.Username}, code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
-    //         ExceptionHandler.Handle(exception, TraceEventType.Warning);
-    //     }
+        if (AppSession.CustId == 0)
+        {
+            return Redirect($"~/?r={Labels.inputCaptchaTooLong}");
+        }
 
-    //     if (AppSession.CustId == 0)
-    //     {
-    //         return Redirect($"{FormsAuthentication.LoginUrl}?r={Labels.inputCaptchaTooLong}");
-    //     }
+        TempData["ErrorMessage"] = Labels.errInvalidCaptcha;
 
-    //     TempData["ErrorMessage"] = Labels.errInvalidCaptcha;
+        AppSession.IncreaseRobotCaptchaFailedCount();
 
-    //     AppSession.IncreaseRobotCaptchaFailedCount();
+        if (AppSession.RobotCaptchaFailedCount >= LimitRobotCaptchaFailedCount)
+        {
+            TempData["ErrorMessage"] = string.Empty;
 
-    //     if (AppSession.RobotCaptchaFailedCount >= LimitRobotCaptchaFailedCount)
-    //     {
-    //         TempData["ErrorMessage"] = string.Empty;
+            return Redirect(TooManyFailedLoginPageUrl);
+        }
 
-    //         return Redirect(TooManyFailedLoginPageUrl);
-    //     }
+        return RedirectToAction(nameof(Index));
+    }
 
-    //     return RedirectToAction(nameof(Index));
-    // }
+    public IActionResult InputCaptchaSuccessfully()
+    {
+        if (AppSession.InputCaptchaSuccess)
+        {
+            return Redirect(EncryptUrlHelper.BuildAfterURL(HttpContext));
+        }
 
-    // public Microsoft.AspNetCore.Mvc.ActionResult InputCaptchaSuccessfully()
-    // {
-    //     if (AppSession.InputCaptchaSuccess)
-    //     {
-    //         return Redirect(EncryptURLHelper.BuildAfterURL(HttpContext.ApplicationInstance.Context));
-    //     }
+        return RedirectToAction(nameof(Index));
+    }
 
-    //     return RedirectToAction(nameof(Index));
-    // }
+    private static bool IsNotRobot()
+        => string.IsNullOrWhiteSpace(AppSession.RobotResult)
+        || AppSession.RobotResult == ((int)BotFlagged.IsClean).ToString();
 
-    // protected override IAsyncResult BeginExecuteCore(AsyncCallback callback, object state)
-    // {
-    //     var currentThread = Thread.CurrentThread;
-    //     currentThread.CurrentCulture = new CultureInfo(AppSession.Language ?? LanguageHelper.DefaultLanguage);
-    //     currentThread.CurrentUICulture = currentThread.CurrentCulture;
+    private static bool IsIgnoreRobotCaptcha()
+        => AppSetting.IsIgnoreRobotCaptcha(AppSession.SuperId, AppSession.Site);
 
-    //     return base.BeginExecuteCore(callback, state);
-    // }
-
-    // private static bool IsNotRobot()
-    //     => string.IsNullOrWhiteSpace(AppSession.RobotResult)
-    //     || AppSession.RobotResult == ((int)BotFlagged.IsClean).ToString();
-
-    // private static bool IsIgnoreRobotCaptcha()
-    //     => AppSetting.IsIgnoreRobotCaptcha(AppSession.SuperId, AppSession.Site);
-    // public RobotCaptchaController(IUnderMainternanceService mainternanceService, ILimitedCountryAccessService limitedCountryAccessService)
-    //     : base(mainternanceService, limitedCountryAccessService)
-    // {
-    // }
+    private void AssignDarkModeNameViewData()
+        => ViewData["DarkModeName"] = AppSession.DarkModeName;
 }

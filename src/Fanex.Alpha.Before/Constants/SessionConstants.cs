@@ -1,14 +1,5 @@
-﻿// -----------------------------------------------------------------------
-// <copyright file="SessionConstants.cs" company="">
-// Copyright (c). All rights reserved.
-// </copyright>
-// -----------------------------------------------------------------------
-
-namespace Fanex.Alpha.Before.Constants
+﻿namespace Fanex.Alpha.Before.Constants
 {
-    /// <summary>
-    /// Session Constants.
-    /// </summary>
     public static class SessionConstants
     {
         public const string LANGUAGE = "Fanex.Alpha.Before.Common.Constants.SessionConstants.language";

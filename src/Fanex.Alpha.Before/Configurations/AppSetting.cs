@@ -44,13 +44,15 @@
 
         public static bool RobotEnableDetectBot => GetValue<bool>("Robot:EnableDetectBot");
 
-        public static IDictionary<int, bool> RobotExcludeSuperIds => ToIntDictionary(configurationRoot["Robot:ExcludeSuperIds"]);
+        public static bool IsRobotAlways => GetValue<bool>("Robot:IsRobotAlways");
 
-        public static IDictionary<string, bool> RobotExcludeSites => ToDictionary(configurationRoot["Robot:ExcludeSites"]);
+        public static int[] RobotExcludeSuperIds => GetValue<int[]>("Robot:ExcludeSuperIds");
+
+        public static string[] RobotExcludeSites => GetValue<string[]>("Robot:ExcludeSites");
 
         public static bool IsIgnoreRobotCaptcha(int superId, string site)
-            => RobotExcludeSuperIds.ContainsKey(superId)
-            || RobotExcludeSites.ContainsKey(site.ToUpperInvariant());
+            => RobotExcludeSuperIds.Contains(superId)
+            || RobotExcludeSites.Contains(site.ToUpperInvariant());
 
         public static string RobotFPSBotDetectionApiUrl => GetValue<string>("Robot:FPSBotDetectionApiUrl");
 

@@ -3,7 +3,7 @@
 // This file will need updated according to the specific scenario of the application being upgraded.
 // For more information on ASP.NET Core startup files, see https://docs.microsoft.com/aspnet/core/fundamentals/startup
 
-using Alpha.SliderCaptcha.Core;
+using Alpha.SliderCaptcha.AspNetCore;
 using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Repositories;
@@ -43,26 +43,13 @@ namespace Fanex.Alpha.Before.Web
             Configuration.GetSection(AutomationTestOptions.AutomationTest).Bind(automationTestOptions);
             services.AddSingleton(automationTestOptions);
 
-
-            var captchaOptions = new CaptchaOptions(
-                Configuration.GetValue<bool>("SliderCaptcha:LogEnabled"),
-                Configuration.GetValue<string>("SliderCaptcha:ImagePath"),
-                Configuration.GetValue<int>("SliderCaptcha:AcceptRange"),
-                Configuration.GetValue<int>("SliderCaptcha:DragTimeout"),
-                Configuration.GetValue<int>("SliderCaptcha:VerifyTimeout")
-            );
-            services.AddSingleton(captchaOptions);
-
             services.AddSingleton<IDynamicRepository, DynamicRepository>();
             services.AddSingleton<ISignInRepository, SignInRepository>();
             services.AddSingleton<IRobotDetector, RobotDetector>();
             services.AddSingleton<ICacheService, CacheService>();
-            // services.AddSingleton<ITokenService, TokenService>();
 
-            // services.AddSingleton<IHttpContextService, HttpContextService>();
-            // services.AddSingleton<IRandomService, RandomService>();
-            // services.AddSingleton<IFileProvider, FileProvider>();
-            // services.AddSingleton<ICaptchaService, CaptchaService>();
+            services.AddSliderCaptcha(Configuration);
+
             services.AddSingleton<IKickoutCustomerService, KickoutCustomerService>();
             services.AddSingleton<IPHelper, IPHelperImpl>();
             services.AddSingleton<IPService, IpServiceImpl>();

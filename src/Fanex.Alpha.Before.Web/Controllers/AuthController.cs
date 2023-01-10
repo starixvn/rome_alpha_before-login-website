@@ -18,7 +18,7 @@ public class AuthController : Controller
     }
 
     [HttpGet]
-    public ActionResult Index(string r = null)
+    public IActionResult Index(string r = null)
     {
         var umToken = Request.Query["UMToken"].ToString();
         if (!string.IsNullOrWhiteSpace(umToken))
@@ -30,7 +30,7 @@ public class AuthController : Controller
         loginResult.ErrCode = !string.IsNullOrWhiteSpace(r) ? SignInErrorContants.ServerError : loginResult.ErrCode;
         loginResult.ErrMsg = !string.IsNullOrWhiteSpace(r) ? r : loginResult.ErrMsg;
 
-        //ViewBag.FPSToken = FPS.Client.Token.Generate();
+        ViewBag.FPSToken = FPS.Client.NetStandard.Token.Generate();
         AppSession.ResetRobotCaptchaSession();
         AssignDarkModeNameViewData();
 
@@ -38,7 +38,7 @@ public class AuthController : Controller
     }
 
     [HttpPost, ValidateAntiForgeryToken]
-    public ActionResult Index(
+    public IActionResult Index(
         string txtUserName,
         string txtPassWord,
         string hidLanguage,
@@ -49,7 +49,7 @@ public class AuthController : Controller
         string assetAppPath = "")
     {
         AssignSettingLanguage(hidLanguage);
-        //ViewBag.FPSToken = FPS.Client.Token.Generate();
+        ViewBag.FPSToken = FPS.Client.NetStandard.Token.Generate();
         var model = new SignInModel(txtUserName, txtPassWord, hidLanguage, code, captchaToken, browserSize, deviceId, assetAppPath);
         var loginResult = _signInService.SignIn(model, HttpContext);
         if (loginResult.ErrCode == SignInErrorContants.Success && !string.IsNullOrEmpty(loginResult.AfterLoginUrl))
@@ -67,7 +67,7 @@ public class AuthController : Controller
         return View(loginResult);
     }
 
-    public ActionResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
+    public IActionResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
     {
         var loginResult = _signInService.AutomationTest(username, password, captcha, deviceId, browserSize, HttpContext);
 
@@ -79,15 +79,11 @@ public class AuthController : Controller
         return Index();
     }
 
-    /// <summary>
-    /// Setting language that user's choosing.
-    /// </summary>
-    /// <param name="language">The currently language.</param>
     private static void AssignSettingLanguage(string language)
     {
         LanguageHelper.SetLanguage(LanguageHelper.IsValidLanguage(language) ? language : LanguageHelper.DefaultLanguage);
     }
 
-    protected void AssignDarkModeNameViewData()
+    private void AssignDarkModeNameViewData()
         => ViewData["DarkModeName"] = AppSession.DarkModeName;
 }
