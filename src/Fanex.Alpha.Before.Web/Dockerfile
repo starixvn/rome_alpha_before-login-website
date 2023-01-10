@@ -7,7 +7,7 @@ COPY "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj" "src/Fanex.Alpha
 
 COPY "NuGet.config" "NuGet.config"
 
-RUN dotnet restore -r linux-x64 "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
+RUN dotnet restore "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
 
 COPY . .
 WORKDIR /source/src/Fanex.Alpha.Before.Web
@@ -15,10 +15,10 @@ WORKDIR /source/src/Fanex.Alpha.Before.Web
 FROM hub.nexdev.net/base/node:17.9-alpine3.14 AS deps
 RUN npm install -g gulp
 RUN npm install
-RUN gulp default
+RUN gulp
 
 FROM builder as publish
-RUN dotnet publish -c release -o /app -r linux-x64 --self-contained false --no-restore
+RUN dotnet publish -c release -o /app --self-contained false --no-restore
 
 RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
 RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1/g' /etc/ssl/openssl.cnf
