@@ -1,7 +1,8 @@
+ARG NODE_IMAGE=hub.nexdev.net/base/node:lts
 FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0 as base
 WORKDIR /app
 
-FROM hub.nexdev.net/base/dotnet/core/sdk:7.0 AS build
+FROM hub.nexdev.net/base/dotnet/core/sdk:7.0 AS builder
 WORKDIR /source
 COPY "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj" "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj"
 COPY "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj" "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
@@ -10,13 +11,13 @@ RUN dotnet restore "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
 
 COPY . .
 
-FROM hub.nexdev.net/base/node:lts as node-build
+FROM ${NODE_IMAGE} as node-build
 RUN npm install -g gulp
 WORKDIR /source/src/Fanex.Alpha.Before.Web
 RUN npm install
 RUN gulp sass
 
-FROM build AS publish
+FROM builder AS publish
 WORKDIR /source/src/Fanex.Alpha.Before.Web
 RUN dotnet publish -c release -o /app --self-contained false --no-restore
 

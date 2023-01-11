@@ -1,7 +1,6 @@
 using Alpha.SliderCaptcha.AspNetCore.Models;
 using Alpha.SliderCaptcha.Core.Models;
 using Alpha.SliderCaptcha.Core.Services;
-using Fanex.Caching;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fanex.Alpha.Before.Web.Controllers;
@@ -9,12 +8,10 @@ namespace Fanex.Alpha.Before.Web.Controllers;
 public class SliderCaptchaController : Controller
 {
     private readonly ICaptchaService captchaService;
-    private readonly ICacheService cacheService;
 
-    public SliderCaptchaController(ICaptchaService captchaService, ICacheService cacheService)
+    public SliderCaptchaController(ICaptchaService captchaService)
     {
         this.captchaService = captchaService;
-        this.cacheService = cacheService;
     }
 
     [HttpPost]
