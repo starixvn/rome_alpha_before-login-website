@@ -12,10 +12,6 @@ public static class SessionExtension
     public static T Get<T>(this ISession session, string sessionKey)
     {
         var value = session.GetString(sessionKey);
-
-        return value == null ? default : JsonSerializer.Deserialize<T>(value, new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        });
+        return value == null ? default : JsonSerializer.Deserialize<T>(value);
     }
 }

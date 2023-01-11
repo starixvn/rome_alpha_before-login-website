@@ -4,7 +4,6 @@
 // For more information on ASP.NET Core startup files, see https://docs.microsoft.com/aspnet/core/fundamentals/startup
 
 using Alpha.SliderCaptcha.AspNetCore;
-using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Repositories;
 using Fanex.Alpha.Before.Services;
@@ -13,6 +12,7 @@ using Fanex.Alpha.Before.Services.SignIn;
 using Fanex.Alpha.Before.Web.Extensions;
 using Fanex.Caching.Redis;
 using Fanex.Data.Repository;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using TelegramBot.Client.Services;
 
 namespace Fanex.Alpha.Before.Web
@@ -29,26 +29,26 @@ namespace Fanex.Alpha.Before.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSession();
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = ".Alpha.Before.Session";
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.IsEssential = true;
+            });
 
-            services.AddONEbookUM(Configuration);
-            services.AddFanexLogging(Configuration);
-            services.AddRedisCache(Configuration.GetSection("fanex.caching.redis"));
-
-            var commonOptions = new CommonOptions();
-            Configuration.GetSection(CommonOptions.Common).Bind(commonOptions);
-            services.AddSingleton(commonOptions);
-
-            var automationTestOptions = new AutomationTestOptions();
-            Configuration.GetSection(AutomationTestOptions.AutomationTest).Bind(automationTestOptions);
-            services.AddSingleton(automationTestOptions);
+            services.AddFanexLogging(Configuration)
+                 .AddRedisCache(Configuration.GetSection("Fanex.Caching.Redis"))
+                 .AddONEbookUM(Configuration)
+                 .AddCustomOptions(Configuration)
+                 .AddSliderCaptcha(Configuration)
+                 .AddCustomHealthChecks()
+                 .AddControllersWithViews()
+                 .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
             services.AddSingleton<IDynamicRepository, DynamicRepository>();
             services.AddSingleton<ISignInRepository, SignInRepository>();
             services.AddSingleton<IRobotDetector, RobotDetector>();
             services.AddSingleton<ICacheService, CacheService>();
-
-            services.AddSliderCaptcha(Configuration);
 
             services.AddSingleton<IKickoutCustomerService, KickoutCustomerService>();
             services.AddSingleton<IPHelper, IPHelperImpl>();
@@ -56,8 +56,6 @@ namespace Fanex.Alpha.Before.Web
             services.AddHttpClient<INotificationService, NotificationService>();
             services.AddSingleton<ILimitedCountryAccessService, LimitedCountryAccessService>();
             services.AddSingleton<ISignInService, SignInService>();
-
-            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,9 +84,11 @@ namespace Fanex.Alpha.Before.Web
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Auth}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=Auth}/{action=Index}/{id?}");
+                endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                {
+                    Predicate = r => r.Name.Contains("self")
+                });
             });
         }
     }

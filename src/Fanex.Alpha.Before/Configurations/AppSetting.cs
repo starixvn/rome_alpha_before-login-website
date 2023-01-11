@@ -46,9 +46,9 @@
 
         public static bool IsRobotAlways => GetValue<bool>("Robot:IsRobotAlways");
 
-        public static int[] RobotExcludeSuperIds => GetValue<int[]>("Robot:ExcludeSuperIds");
+        public static int[] RobotExcludeSuperIds => configurationRoot.GetValue("Robot:ExcludeSuperIds", Array.Empty<int>());
 
-        public static string[] RobotExcludeSites => GetValue<string[]>("Robot:ExcludeSites");
+        public static string[] RobotExcludeSites => configurationRoot.GetValue("Robot:ExcludeSites", Array.Empty<string>());
 
         public static bool IsIgnoreRobotCaptcha(int superId, string site)
             => RobotExcludeSuperIds.Contains(superId)
@@ -68,26 +68,12 @@
         {
             try
             {
-                return configurationRoot.GetSection(key).Get<T>();
+                return configurationRoot.GetValue<T>(key);
             }
             catch (Exception ex)
             {
                 throw new InvalidCastException($"Key: {key}", ex);
             }
         }
-
-        private static IDictionary<int, bool> ToIntDictionary(string value)
-            => string.IsNullOrWhiteSpace(value)
-            ? new Dictionary<int, bool>()
-            : value
-                .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
-                .ToDictionary(kvp => int.Parse(kvp.Trim()), kvp => true);
-
-        private static IDictionary<string, bool> ToDictionary(string value)
-            => string.IsNullOrWhiteSpace(value)
-            ? new Dictionary<string, bool>()
-            : value
-                .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries)
-                .ToDictionary(kvp => kvp.Trim().ToUpperInvariant(), kvp => true);
     }
 }

@@ -47,7 +47,7 @@ public class RobotCaptchaController : Controller
     [HttpPost]
     public async Task<IActionResult> Index(RobotCaptchaModel model)
     {
-        var isVerifiedResult = captchaService.IsVerfied(model.Token);
+        var isVerifiedResult = await captchaService.IsVerified(model.Token);
         if (isVerifiedResult.IsSuccess)
         {
             AppSession.InputCaptchaSuccess = true;

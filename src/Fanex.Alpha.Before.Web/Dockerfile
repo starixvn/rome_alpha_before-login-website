@@ -1,28 +1,23 @@
+FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0 as base
+WORKDIR /app
 
-FROM hub.nexdev.net/base/dotnet/core/sdk:7.0 AS builder
+FROM hub.nexdev.net/base/dotnet/core/sdk:7.0 AS build
 WORKDIR /source
-
 COPY "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj" "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj"
 COPY "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj" "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
-
 COPY "NuGet.config" "NuGet.config"
-
 RUN dotnet restore "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
 
 COPY . .
-WORKDIR /source/src/Fanex.Alpha.Before.Web
 
-#Installing nodejs
-RUN apt-get update -yq \
-    && apt-get install curl gnupg -yq \
-    && curl -sL https://deb.nodesource.com/setup_18.x | bash \
-    && apt-get install nodejs -yq
-
-#Installing gulp
+FROM hub.nexdev.net/base/node:lts as node-build
 RUN npm install -g gulp
+WORKDIR /source/src/Fanex.Alpha.Before.Web
 RUN npm install
 RUN gulp sass
 
+FROM build AS publish
+WORKDIR /source/src/Fanex.Alpha.Before.Web
 RUN dotnet publish -c release -o /app --self-contained false --no-restore
 
 RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
@@ -38,10 +33,9 @@ USER dotnetuser
 #
 
 # final stage/image
-FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0
+FROM base AS final
 WORKDIR /app
-COPY --from=builder /app ./
+COPY --from=publish /app ./
 ENV TZ="America/La_Paz"
-
 
 ENTRYPOINT ["dotnet", "Fanex.Alpha.Before.Web.dll"]

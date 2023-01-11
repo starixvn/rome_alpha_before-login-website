@@ -82,7 +82,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Alpha.SliderCaptcha" Version="1.0.1-beta3" />
+    <PackageReference Include="Alpha.SliderCaptcha" Version="1.0.1-beta5" />
     <PackageReference Include="Fanex.Data.Repository" Version="4.2.2" />
     <PackageReference Include="Fanex.Logging" Version="2.0.1" />
     <PackageReference Include="FPS.Client.NetStandard" Version="1.0.2" />

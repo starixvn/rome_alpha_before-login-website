@@ -1,11 +1,11 @@
-using Fanex.Data;
-using Fanex.Data.SqlServer;
+using Fanex.Alpha.Before.Configurations;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.AspNetCore;
 using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.RabbitMQ;
 using Fanex.Logging.Sentry;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using ONEbook.UM.AspNetCore;
 using ONEbook.UM.AspNetCore.Filters;
 using ONEbook.UM.Configurations;
@@ -16,7 +16,7 @@ using Sentry;
 
 namespace Fanex.Alpha.Before.Web.Extensions;
 
-public static class CustomExtensions
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddONEbookUM(this IServiceCollection services, IConfiguration configuration)
     {
@@ -24,7 +24,7 @@ public static class CustomExtensions
         services.AddSingleton<CheckUMFilterAttribute>();
         services.AddSingleton<IUMCacheService, UMCacheService>();
         services.AddSingleton<IUMRestClient, UMRestClient>();
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); // For WEB 
+        services.AddHttpContextAccessor(); // For WEB 
         services.AddSingleton<IHttpContextHelper, HttpContextHelper>(); // For WEB 
         services.AddSingleton<IMaintenanceService, MaintenanceService>();
 
@@ -61,19 +61,24 @@ public static class CustomExtensions
         return services;
     }
 
-    public static IApplicationBuilder UseFanexDataWithSqlServer(this IApplicationBuilder app, IConfiguration configuration, IWebHostEnvironment env)
+    public static IServiceCollection AddCustomOptions(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionStrings = configuration
-            .GetSection("ConnectionStrings")
-            .GetChildren()
-            .ToDictionary(connection => connection.Key,
-                        connection => new ConnectionConfiguration(connection.Key, connection.Value));
-        var resourcePath = Path.Combine(env.ContentRootPath, "App_Data", "SPNames.xml");
-        DbSettingProviderManager
-            .StartNewSession()
-            .WithSqlServer(resourcePath)
-            .Use(connectionStrings)
-            .Run();
-        return app;
+        var commonOptions = new CommonOptions();
+        configuration.GetSection(CommonOptions.Common).Bind(commonOptions);
+        services.AddSingleton(commonOptions);
+
+        var automationTestOptions = new AutomationTestOptions();
+        configuration.GetSection(AutomationTestOptions.AutomationTest).Bind(automationTestOptions);
+        services.AddSingleton(automationTestOptions);
+
+        return services;
+    }
+
+    public static IServiceCollection AddCustomHealthChecks(this IServiceCollection services)
+    {
+        services.AddHealthChecks()
+            .AddCheck("self", () => HealthCheckResult.Healthy());
+
+        return services;
     }
 }

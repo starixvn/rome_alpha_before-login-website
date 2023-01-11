@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Alpha.SliderCaptcha.AspNetCore" Version="1.0.0-beta1" />
+    <PackageReference Include="Alpha.SliderCaptcha.AspNetCore" Version="1.0.0-beta3" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
     <PackageReference Include="Fanex.Caching.Redis.AspNetCore" Version="2.2.3" />
     <PackageReference Include="Fanex.Data.SqlServer" Version="4.2.2" />
