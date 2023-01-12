@@ -40,8 +40,6 @@
 
         public static bool IsEnableFPS => !string.IsNullOrEmpty(FpsActivator) && !string.IsNullOrEmpty(configurationRoot["FPS:API"]);
 
-        public static string GoogleAnalyticId => GetValue<string>("GoogleAnalyticId");
-
         public static bool TrackRunTime => GetValue<bool>("TrackRunTime");
 
         public static string TechnicalErrorTime => GetValue<string>("TechnicalErrorTime");
