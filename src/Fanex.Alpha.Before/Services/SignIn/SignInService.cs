@@ -11,6 +11,7 @@ using Alpha.SliderCaptcha.Core;
 using Alpha.SliderCaptcha.Core.Services;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Fanex.Alpha.Before.Services.SignIn
 {
@@ -18,28 +19,27 @@ namespace Fanex.Alpha.Before.Services.SignIn
     {
         SignInResult SignIn(HttpContext httpContext);
 
-        SignInResult SignIn(SignInModel model, HttpContext httpContext);
+        Task<SignInResult> SignIn(SignInModel model, HttpContext httpContext);
 
         SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize, HttpContext httpContext);
     }
 
-    /// <summary>
-    /// Sign in service.
-    /// </summary>
     public class SignInService : ISignInService
     {
-        private readonly CommonOptions _commonOptions;
-        private readonly AutomationTestOptions _automationTestOptions;
+        private readonly string _loginTheme;
+
+        private readonly CommonOptions commonOptions;
+        private readonly AutomationTestOptions automationTestOptions;
+        private readonly LoginThemeOptions loginThemeOptions;
         private readonly IPHelper ipHelper;
         private readonly IPService ipService;
-        private readonly ISignInRepository _signInRepository;
+        private readonly ISignInRepository signInRepository;
         private readonly ICacheService cacheService;
         private readonly IRobotDetector robotDetector;
         private readonly CaptchaOptions captchaOptions;
-        //private readonly ICaptchaService captchaService;
+        private readonly ICaptchaService captchaService;
         private readonly IKickoutCustomerService kickoutCustomerService;
         private readonly INotificationService notificationService;
-
         private readonly Logging.ILogger logger;
 
         // private static NetThrottler netThrottler = new NetThrottler();
@@ -53,40 +53,50 @@ namespace Fanex.Alpha.Before.Services.SignIn
         // }
 
         public SignInService(
-            CommonOptions commonOptions,
-            AutomationTestOptions automationTestOptions,
+            IOptions<CommonOptions> commonOptions,
+            IOptions<AutomationTestOptions> automationTestOptions,
+            IOptions<LoginThemeOptions> loginThemeOptions,
             Logging.ILogger logger,
             IPHelper ipHelper,
             ISignInRepository signInRepository,
             IRobotDetector robotDetector,
             ICacheService cacheService,
             CaptchaOptions captchaOptions,
-            //ICaptchaService captchaService,
+            ICaptchaService captchaService,
             IKickoutCustomerService kickoutCustomerService,
             IPService ipService,
             INotificationService notificationService)
         {
-            _commonOptions = commonOptions;
-            _automationTestOptions = automationTestOptions;
+            this.commonOptions = commonOptions.Value;
+            this.automationTestOptions = automationTestOptions.Value;
+            this.loginThemeOptions = loginThemeOptions.Value;
             this.logger = logger;
             this.ipHelper = ipHelper;
             this.ipService = ipService;
-            _signInRepository = signInRepository;
+            this.signInRepository = signInRepository;
             this.cacheService = cacheService;
             this.robotDetector = robotDetector;
             this.captchaOptions = captchaOptions;
-            //this.captchaService = captchaService;
+            this.captchaService = captchaService;
             this.kickoutCustomerService = kickoutCustomerService;
             this.notificationService = notificationService;
+
+            _loginTheme = this.loginThemeOptions.DefaultTheme;
+            if (DateTime.Now >= this.loginThemeOptions.StartDate &&
+                DateTime.Now <= this.loginThemeOptions.EndDate)
+            {
+                _loginTheme = this.loginThemeOptions.EventTheme;
+            }
         }
 
         public SignInResult SignIn(HttpContext httpContext)
         {
             var loginResult = new SignInResult
             {
+                LoginTemplate = _loginTheme,
                 Ip = ipHelper.ClientIP(),
                 Username = string.Empty,
-                NoInteractionTimeInMinutes = _commonOptions.NoInteractionTimeInMinutes
+                NoInteractionTimeInMinutes = commonOptions.NoInteractionTimeInMinutes
             };
 
             //// Check cross cookie compatibility
@@ -116,18 +126,17 @@ namespace Fanex.Alpha.Before.Services.SignIn
         }
 
         private bool IsCaptchaRequired(SignInModel model)
-        {
-            return cacheService.GetLoginUserFailedCount(model.Username) >= _commonOptions.LoginFailTimeToStartUsingCaptcha;
-        }
+            => cacheService.GetLoginUserFailedCount(model.Username) >= commonOptions.LoginFailTimeToStartUsingCaptcha;
 
-        public SignInResult SignIn(SignInModel model, HttpContext httpContext)
+        public async Task<SignInResult> SignIn(SignInModel model, HttpContext httpContext)
         {
             var signInResult = new SignInResult
             {
                 Ip = ipHelper.ClientIP(),
+                LoginTemplate = _loginTheme,
                 Username = model.Username,
                 Captcha = model.Code,
-                NoInteractionTimeInMinutes = _commonOptions.NoInteractionTimeInMinutes
+                NoInteractionTimeInMinutes = commonOptions.NoInteractionTimeInMinutes
             };
 
             AppSession.EncryptCode = model.Code;
@@ -144,33 +153,33 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 var ipLockedError = string.Format(
                     Labels.iploginfailedmultipletimeserror,
                     signInResult.Ip,
-                    _commonOptions.MaxTimesToAllowLoginFail,
-                    _commonOptions.BlockLoginMinutes);
+                    commonOptions.MaxTimesToAllowLoginFail,
+                    commonOptions.BlockLoginMinutes);
                 signInResult.ErrCode = SignInErrorContants.IPBlocked;
                 signInResult.ErrMsg = ipLockedError;
                 return signInResult;
             }
 
-            // if (IsCaptchaRequired(model))
-            // {
-            //     var isVerifiedResult = captchaService.IsVerfied(model.CaptchaToken);
-            //     if (isVerifiedResult.IsSuccess)
-            //     {
-            //         signInResult.IsCaptchaVerified = true;
-            //     }
-            //     else
-            //     {
-            //         if (captchaOptions.LogEnabled)
-            //         {
-            //             var exception = new Exception($"signin captcha: key={model.Username} code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
-            //             logger.Warn(exception.Message);
-            //         }
+            if (IsCaptchaRequired(model))
+            {
+                var isVerifiedResult = await captchaService.IsVerified(model.CaptchaToken);
+                if (isVerifiedResult.IsSuccess)
+                {
+                    signInResult.IsCaptchaVerified = true;
+                }
+                else
+                {
+                    if (captchaOptions.LogEnabled)
+                    {
+                        var exception = new Exception($"signin captcha: key={model.Username} code={isVerifiedResult.Code}, reason={isVerifiedResult.Reason}, detail={isVerifiedResult.Detail}");
+                        logger.Warn(exception.Message);
+                    }
 
-            //         signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
-            //         signInResult.ErrMsg = Labels.BotDetectionMessage;
-            //         return signInResult;
-            //     }
-            // }
+                    signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
+                    signInResult.ErrMsg = Labels.BotDetectionMessage;
+                    return signInResult;
+                }
+            }
 
             var password = AesService.Default.Decrypt(model.Password, AppSession.EncryptCode);
             var assetAppPath = AssetAppPathHelper.IsValidAssetAppPath(model.AssetAppPath)
@@ -186,16 +195,17 @@ namespace Fanex.Alpha.Before.Services.SignIn
             var signInResult = new SignInResult
             {
                 Ip = ipHelper.ClientIP(),
+                LoginTemplate = _loginTheme,
                 Username = username,
-                NoInteractionTimeInMinutes = _commonOptions.NoInteractionTimeInMinutes
+                NoInteractionTimeInMinutes = commonOptions.NoInteractionTimeInMinutes
             };
 
             if (string.IsNullOrEmpty(username) ||
                 string.IsNullOrEmpty(password) ||
                 string.IsNullOrEmpty(captcha) ||
-                !_automationTestOptions.AllowedIPs.Contains(ipHelper.ClientIP()) ||
-                !_automationTestOptions.Captcha.Equals(captcha) ||
-                !_automationTestOptions.AllowUsernameContainWords.All(s => username.ToUpperInvariant().Contains(s)))
+                !automationTestOptions.AllowedIPs.Contains(ipHelper.ClientIP()) ||
+                !automationTestOptions.Captcha.Equals(captcha) ||
+                !automationTestOptions.AllowUsernameContainWords.All(s => username.ToUpperInvariant().Contains(s)))
             {
                 return signInResult;
             }
@@ -230,26 +240,26 @@ namespace Fanex.Alpha.Before.Services.SignIn
             }
 
             var loginIPFailedCount = cacheService.IncreaseLoginIPFailedCount();
-            if (loginIPFailedCount > _commonOptions.MaxTimesToAllowLoginFail)
+            if (loginIPFailedCount > commonOptions.MaxTimesToAllowLoginFail)
             {
-                if (loginIPFailedCount == _commonOptions.MaxTimesToAllowLoginFail + 1)
+                if (loginIPFailedCount == commonOptions.MaxTimesToAllowLoginFail + 1)
                 {
                     LogIpBlocked(signInResult, httpContext);
                 }
 
-                cacheService.SetLoginIPBlocked(_commonOptions.BlockLoginMinutes);
+                cacheService.SetLoginIPBlocked(commonOptions.BlockLoginMinutes);
                 var ipLockedError = string.Format(
                     Labels.iploginfailedmultipletimeserror,
                     signInResult.Ip,
-                    _commonOptions.MaxTimesToAllowLoginFail,
-                    _commonOptions.BlockLoginMinutes);
+                    commonOptions.MaxTimesToAllowLoginFail,
+                    commonOptions.BlockLoginMinutes);
                 signInResult.ErrCode = SignInErrorContants.IPBlocked;
                 signInResult.ErrMsg = ipLockedError;
                 return;
             }
 
-            var loginUserFailedCount = cacheService.IncreaseLoginUserFailedCount(signInResult.Username, _commonOptions.NoInteractionTimeInMinutes);
-            if (loginUserFailedCount >= _commonOptions.LoginFailTimeToStartUsingCaptcha)
+            var loginUserFailedCount = cacheService.IncreaseLoginUserFailedCount(signInResult.Username, commonOptions.NoInteractionTimeInMinutes);
+            if (loginUserFailedCount >= commonOptions.LoginFailTimeToStartUsingCaptcha)
             {
                 signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
                 Task.Run(async () => await notificationService.NotifyWrongPassword(verifySignInResult.CustId, verifySignInResult.SubAccId, signInResult.Ip));
@@ -350,7 +360,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize, clientIP);
             requestInfo["countrycode"] = GetCountryCode(clientIP);
             requestInfo.Add("sitegroup", AppSetting.SiteGroup);
-            verifySignInResult = _signInRepository.VerifyDownlineLogin(username, password, requestInfo, isDarkMode);
+            verifySignInResult = signInRepository.VerifyDownlineLogin(username, password, requestInfo, isDarkMode);
             EncryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
 
             if (verifySignInResult.ErrorCode == 0)

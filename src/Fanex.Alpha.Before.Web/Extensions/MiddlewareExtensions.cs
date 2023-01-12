@@ -9,9 +9,9 @@ public static class MiddlewareExtensions
         return builder.UseMiddleware<RequestCultureMiddleware>();
     }
 
-    public static IApplicationBuilder UseTheme(this IApplicationBuilder builder)
+    public static IApplicationBuilder UseViewMode(this IApplicationBuilder builder)
     {
-        return builder.UseMiddleware<ThemeMiddleware>();
+        return builder.UseMiddleware<ViewModeMiddleware>();
     }
 
     public static IApplicationBuilder UseLimitedCountryAccess(this IApplicationBuilder builder)

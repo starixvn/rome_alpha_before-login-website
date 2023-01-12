@@ -9,7 +9,11 @@
         <Setting Key="Age_LoginDownline_CheckSubUsername" SpName="Age_LoginDownline_CheckSubUsername" DbName="DBCust.CustDB.BODBDownlineNet" Plain="0" />
     </Function>
     <Function Name="IP">
-        <Setting Key="Age_IPRangesByCountrySel" SpName="Age_IPRangesByCountrySel" DbName="DBCUST.IPDB.BODBDownlineNet" Plain="0" />
+        <Setting Key="Age_IPRangesByCountrySel" SpName="Age_IPRangesByCountrySel" DbName="DBCUST.IPDB.BODBDownlineNet" Plain="0">
+            <Mappings>
+                <Mapping DataField="CountryShort" ObjectProperty="CountryCode" />
+            </Mappings>
+        </Setting>
         <Setting Key="Age_AllowedAccessIPsSel" SpName="Age_AllowedAccessIPsSel" DbName="DBCUST.IPDB.BODBDownlineNet" Plain="0" />
         <Setting Key="Acc_GetIPInfo_Full" SpName="Acc_GetIPInfo_Full" DbName="DBCust.IPDB.BODBDownlineNet" Plain="0"/>
     </Function>

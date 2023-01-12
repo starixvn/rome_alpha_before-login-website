@@ -1,0 +1,8 @@
+{
+    "DomainMappings": [
+        {
+            "Before": "localhost:5000",
+            "After": "http://localhost:8080/ex-main/"
+        }
+    ]
+}

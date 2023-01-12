@@ -1,0 +1,8 @@
+{
+    "DomainMappings": [
+        {
+            "Before": "y1.sportsfun.app",
+            "After": "http://y1mb.sportsfun.app/ex-main/"
+        }
+    ]
+}

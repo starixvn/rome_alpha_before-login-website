@@ -1,4 +1,5 @@
 ﻿using Fanex.Alpha.Before.Configurations;
+using Microsoft.Extensions.Options;
 
 namespace Fanex.Alpha.Before.Services.FPS
 {
@@ -10,22 +11,24 @@ namespace Fanex.Alpha.Before.Services.FPS
     public class RobotDetector : IRobotDetector
     {
         private readonly Logging.ILogger logger;
+        private readonly RobotOptions robotOptions;
 
-        public RobotDetector(Logging.ILogger logger)
+        public RobotDetector(Logging.ILogger logger, IOptions<RobotOptions> robotOptions)
         {
             this.logger = logger;
+            this.robotOptions = robotOptions.Value;
         }
 
         public int IsRobot(HttpRequest request)
         {
-            if (!AppSetting.RobotEnableDetectBot)
+            if (!robotOptions.EnableDetectBot)
             {
                 return 0;
             }
 
             try
             {
-                if (AppSetting.IsRobotAlways)
+                if (robotOptions.IsRobotAlways)
                 {
                     return 1;
                 }

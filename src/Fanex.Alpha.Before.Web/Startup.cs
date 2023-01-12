@@ -53,7 +53,11 @@ namespace Fanex.Alpha.Before.Web
             services.AddSingleton<IKickoutCustomerService, KickoutCustomerService>();
             services.AddSingleton<IPHelper, IPHelperImpl>();
             services.AddSingleton<IPService, IpServiceImpl>();
-            services.AddHttpClient<INotificationService, NotificationService>();
+            services.AddHttpClient<INotificationService, NotificationService>(httpClient =>
+            {
+                httpClient.BaseAddress = new Uri(Configuration.GetValue<string>("TelegramBotUri"));
+                httpClient.Timeout = TimeSpan.FromMinutes(5);
+            });
             services.AddSingleton<ILimitedCountryAccessService, LimitedCountryAccessService>();
             services.AddSingleton<ISignInService, SignInService>();
         }
@@ -78,7 +82,7 @@ namespace Fanex.Alpha.Before.Web
 
             HttpContextHelper.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
 
-            app.UseTheme();
+            app.UseViewMode();
             app.UseRequestCulture();
             app.UseLimitedCountryAccess();
 

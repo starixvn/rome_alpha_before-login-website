@@ -7,7 +7,7 @@
 
 @section styles
 {
-    <link href="~/assets/bundles/themes/default@(darkModeName).min.css?ver=@AppSetting.Version" rel="stylesheet" />
+    <link href="~/assets/bundles/themes/@(Model.LoginTemplate)@(darkModeName).min.css?ver=@AppSetting.Version" rel="stylesheet" />
     <link href="~/assets/styles/alpha.slider-captcha.css?ver=@AppSetting.Version" rel="stylesheet" />
 }
 
@@ -39,6 +39,10 @@
 
 <h1 class="title login-text">Login</h1>
 
+@if (AppSetting.IsShowTechnicalErrorMessage)
+{
+    <div class="rowlg msg-error" id="divTechnicalErrorMsg"></div>
+}
 @if (Model.ErrCode != -1)
 {
     <div class="rowlg msg-error" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>

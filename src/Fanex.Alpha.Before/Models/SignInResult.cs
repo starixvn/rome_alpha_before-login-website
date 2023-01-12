@@ -64,6 +64,12 @@ namespace Fanex.Alpha.Before.Models
             set;
         }
 
+        public string LoginTemplate
+        {
+            get;
+            set;
+        }
+
         public string Username
         {
             get;

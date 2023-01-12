@@ -1,0 +1,32 @@
+{
+    "DomainMappings": [
+        {
+            "Before": "alpha11.starixuat.com",
+            "After": "http://i7mb1.starixuat.com/ex-main/"
+        },
+        {
+            "Before": "alpha12.starixuat.com",
+            "After": "http://i7mb2.starixuat.com/ex-main/"
+        },
+        {
+            "Before": "alpha13.starixuat.com",
+            "After": "http://i7mb3.starixuat.com/ex-main/"
+        },
+        {
+            "Before": "alpha14.starixuat.com",
+            "After": "http://i7mb4.starixuat.com/ex-main/"
+        },
+        {
+            "Before": "alpha15.starixuat.com",
+            "After": "http://i7mb5.starixuat.com/ex-main/"
+        },
+        {
+            "Before": "ag7.starixuat.com:8080",
+            "After": "http://mbag7.starixuat.com:8080/ex-main/"
+        },
+        {
+            "Before": "ag7.gatonic.com",
+            "After": "http://mbag7.gatonic.com/ex-main/"
+        }
+    ]
+}

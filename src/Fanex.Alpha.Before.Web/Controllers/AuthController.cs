@@ -10,11 +10,11 @@ namespace Fanex.Alpha.Before.Web.Controllers;
 [ServiceFilter(typeof(CheckUMFilterAttribute))]
 public class AuthController : Controller
 {
-    private readonly ISignInService _signInService;
+    private readonly ISignInService signInService;
 
     public AuthController(ISignInService signInService)
     {
-        _signInService = signInService;
+        this.signInService = signInService;
     }
 
     [HttpGet]
@@ -26,7 +26,7 @@ public class AuthController : Controller
             HttpContext.Session.SetString("UMToken", umToken);
         }
 
-        var loginResult = _signInService.SignIn(HttpContext);
+        var loginResult = signInService.SignIn(HttpContext);
         loginResult.ErrCode = !string.IsNullOrWhiteSpace(r) ? SignInErrorContants.ServerError : loginResult.ErrCode;
         loginResult.ErrMsg = !string.IsNullOrWhiteSpace(r) ? r : loginResult.ErrMsg;
 
@@ -38,7 +38,7 @@ public class AuthController : Controller
     }
 
     [HttpPost, ValidateAntiForgeryToken]
-    public IActionResult Index(
+    public async Task<IActionResult> Index(
         string txtUserName,
         string txtPassWord,
         string hidLanguage,
@@ -51,7 +51,7 @@ public class AuthController : Controller
         AssignSettingLanguage(hidLanguage);
         ViewBag.FPSToken = FPS.Client.NetStandard.Token.Generate();
         var model = new SignInModel(txtUserName, txtPassWord, hidLanguage, code, captchaToken, browserSize, deviceId, assetAppPath);
-        var loginResult = _signInService.SignIn(model, HttpContext);
+        var loginResult = await signInService.SignIn(model, HttpContext);
         if (loginResult.ErrCode == SignInErrorContants.Success && !string.IsNullOrEmpty(loginResult.AfterLoginUrl))
         {
             if (loginResult.AfterLoginUrl.IndexOf("RobotCaptcha", StringComparison.OrdinalIgnoreCase) != -1)
@@ -69,7 +69,7 @@ public class AuthController : Controller
 
     public IActionResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
     {
-        var loginResult = _signInService.AutomationTest(username, password, captcha, deviceId, browserSize, HttpContext);
+        var loginResult = signInService.AutomationTest(username, password, captcha, deviceId, browserSize, HttpContext);
 
         if (loginResult.ErrCode == -1)
         {

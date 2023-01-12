@@ -7,6 +7,7 @@ using Fanex.Alpha.Before.Resources;
 using Fanex.Alpha.Before.Services.SignIn;
 using Fanex.Logging.Extensions.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Fanex.Alpha.Before.Web.Controllers;
 
@@ -15,11 +16,13 @@ public class RobotCaptchaController : Controller
     private const int LimitRobotCaptchaFailedCount = 5;
     private readonly ICaptchaService captchaService;
     private readonly CaptchaOptions captchaOptions;
+    private readonly RobotOptions robotOptions;
 
-    public RobotCaptchaController(CaptchaOptions captchaOptions, ICaptchaService captchaService)
+    public RobotCaptchaController(CaptchaOptions captchaOptions, ICaptchaService captchaService, IOptions<RobotOptions> robotOptions)
     {
         this.captchaOptions = captchaOptions;
         this.captchaService = captchaService;
+        this.robotOptions = robotOptions.Value;
     }
 
     private static string TooManyFailedLoginPageUrl => $"~/?r={Labels.tooManyFailedCaptcha}";
@@ -93,8 +96,9 @@ public class RobotCaptchaController : Controller
         => string.IsNullOrWhiteSpace(AppSession.RobotResult)
         || AppSession.RobotResult == ((int)BotFlagged.IsClean).ToString();
 
-    private static bool IsIgnoreRobotCaptcha()
-        => AppSetting.IsIgnoreRobotCaptcha(AppSession.SuperId, AppSession.Site);
+    private bool IsIgnoreRobotCaptcha()
+        => robotOptions.ExcludeSuperIds.Contains(AppSession.SuperId)
+        || robotOptions.ExcludeSites.Contains(AppSession.Site.ToUpperInvariant());
 
     private void AssignDarkModeNameViewData()
         => ViewData["DarkModeName"] = AppSession.DarkModeName;

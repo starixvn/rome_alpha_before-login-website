@@ -8,12 +8,14 @@
         private static IConfigurationRoot InitConfiguration()
         {
             const string configFileName = "appsettings.json";
+            const string domainMappingFileName = "domainmappings.json";
 
             if (File.Exists(Path.Combine(Directory.GetCurrentDirectory(), configFileName)))
             {
                 var builder = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile(configFileName);
+                    .AddJsonFile(configFileName, optional: false, reloadOnChange: true)
+                    .AddJsonFile(domainMappingFileName, optional: false, reloadOnChange: true);
 
                 return builder.Build();
             }
@@ -41,20 +43,6 @@
         public static string GoogleAnalyticId => GetValue<string>("GoogleAnalyticId");
 
         public static bool TrackRunTime => GetValue<bool>("TrackRunTime");
-
-        public static bool RobotEnableDetectBot => GetValue<bool>("Robot:EnableDetectBot");
-
-        public static bool IsRobotAlways => GetValue<bool>("Robot:IsRobotAlways");
-
-        public static int[] RobotExcludeSuperIds => configurationRoot.GetValue("Robot:ExcludeSuperIds", Array.Empty<int>());
-
-        public static string[] RobotExcludeSites => configurationRoot.GetValue("Robot:ExcludeSites", Array.Empty<string>());
-
-        public static bool IsIgnoreRobotCaptcha(int superId, string site)
-            => RobotExcludeSuperIds.Contains(superId)
-            || RobotExcludeSites.Contains(site.ToUpperInvariant());
-
-        public static string RobotFPSBotDetectionApiUrl => GetValue<string>("Robot:FPSBotDetectionApiUrl");
 
         public static string TechnicalErrorTime => GetValue<string>("TechnicalErrorTime");
 

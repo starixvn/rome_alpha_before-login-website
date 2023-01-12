@@ -1,17 +1,19 @@
-FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0 as base
-WORKDIR /app
-
 FROM hub.nexdev.net/base/dotnet/core/sdk:7.0 AS builder
 WORKDIR /source
 COPY "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj" "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj"
 COPY "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj" "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
 COPY "NuGet.config" "NuGet.config"
-RUN dotnet restore "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
+RUN dotnet restore --configfile "NuGet.config" "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
 
 COPY . .
 
 ARG TRANSFORM_CONFIG
 RUN echo $TRANSFORM_CONFIG
+
+RUN if [ "$TRANSFORM_CONFIG" != "" ]; \
+then \
+  cp "src/Fanex.Alpha.Before.Web/domainmappings.$TRANSFORM_CONFIG.json" "src/Fanex.Alpha.Before.Web/domainmappings.json"; \
+fi
 
 RUN if [ "$TRANSFORM_CONFIG" = "LOCAL2" ] \
   || [ "$TRANSFORM_CONFIG" = "SIT2" ] \
@@ -47,7 +49,7 @@ USER dotnetuser
 #
 
 # final stage/image
-FROM base AS final
+FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0 AS final
 WORKDIR /app
 COPY --from=publish /app ./
 ENV TZ="America/La_Paz"

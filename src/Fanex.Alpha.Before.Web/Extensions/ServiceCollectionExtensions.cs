@@ -63,13 +63,10 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddCustomOptions(this IServiceCollection services, IConfiguration configuration)
     {
-        var commonOptions = new CommonOptions();
-        configuration.GetSection(CommonOptions.Common).Bind(commonOptions);
-        services.AddSingleton(commonOptions);
-
-        var automationTestOptions = new AutomationTestOptions();
-        configuration.GetSection(AutomationTestOptions.AutomationTest).Bind(automationTestOptions);
-        services.AddSingleton(automationTestOptions);
+        services.Configure<CommonOptions>(configuration.GetSection(CommonOptions.Common));
+        services.Configure<AutomationTestOptions>(configuration.GetSection(AutomationTestOptions.AutomationTest));
+        services.Configure<RobotOptions>(configuration.GetSection(RobotOptions.Robot));
+        services.Configure<LoginThemeOptions>(configuration.GetSection(LoginThemeOptions.LoginTheme));
 
         return services;
     }
