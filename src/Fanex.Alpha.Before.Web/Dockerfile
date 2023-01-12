@@ -1,4 +1,3 @@
-ARG NODE_IMAGE=hub.nexdev.net/base/node:lts
 FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0 as base
 WORKDIR /app
 
@@ -11,7 +10,21 @@ RUN dotnet restore "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
 
 COPY . .
 
-FROM ${NODE_IMAGE} as node-build
+ARG TRANSFORM_CONFIG
+RUN echo $TRANSFORM_CONFIG
+
+RUN if [ "$TRANSFORM_CONFIG" = "LOCAL2" ] \
+  || [ "$TRANSFORM_CONFIG" = "SIT2" ] \
+  || [ "$TRANSFORM_CONFIG" = "UAT2" ] \
+  || [ "$TRANSFORM_CONFIG" = "PRO2" ] \
+  || [ "$TRANSFORM_CONFIG" = "AWS2" ] \
+  || [ "$TRANSFORM_CONFIG" = "backupMNLi7" ]; \
+then \
+	cp "src/Fanex.Alpha.Before.Web/wwwroot/favicon2.ico" "src/Fanex.Alpha.Before.Web/wwwroot/favicon.ico"; \
+  cp "src/Fanex.Alpha.Before.Web/bundleconfig2.json" "src/Fanex.Alpha.Before.Web/bundleconfig.json";\
+fi
+
+FROM hub.nexdev.net/base/node:lts as node-build
 RUN npm install -g gulp
 WORKDIR /source/src/Fanex.Alpha.Before.Web
 RUN npm install
