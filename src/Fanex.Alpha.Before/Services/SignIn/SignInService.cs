@@ -12,6 +12,7 @@ using Alpha.SliderCaptcha.Core.Services;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Extensions;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http;
 
 namespace Fanex.Alpha.Before.Services.SignIn
 {
@@ -220,9 +221,9 @@ namespace Fanex.Alpha.Before.Services.SignIn
         {
             var logInfo = new
             {
-                Domain = httpContext.Request.Headers["Host"],
+                Domain = httpContext.Request.Host.Value,
                 signInResult.Ip,
-                httpContext.Request.Headers.UserAgent,
+                UserAgent = httpContext.Request.Headers["User-Agent"].ToString(),
                 Result = signInResult
             };
             logger.Warn($"IP blocked for login: {JsonConvert.SerializeObject(logInfo)}");

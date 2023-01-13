@@ -1,4 +1,6 @@
 ﻿using Fanex.Logging;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Fanex.Alpha.Before.Helpers;
 
@@ -19,7 +21,7 @@ public class IPHelperImpl : IPHelper
     public string ClientIP()
     {
         var context = _httpContextAccessor.HttpContext;
-        var ip = context.GetServerVariable("HTTP_X_FORWARDED_FOR") ?? context.GetServerVariable("REMOTE_ADDR");
+        var ip = context.Request.Headers["HTTP_X_FORWARDED_FOR"].ToString() ?? context.Connection.RemoteIpAddress.ToString();
 
         if (string.IsNullOrWhiteSpace(ip))
         {

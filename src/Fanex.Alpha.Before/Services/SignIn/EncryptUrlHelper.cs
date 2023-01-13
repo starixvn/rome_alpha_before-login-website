@@ -2,6 +2,7 @@
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
 using Fanex.Cryptography.Aes;
+using Microsoft.AspNetCore.Http;
 
 namespace Fanex.Alpha.Before.Services.SignIn
 {

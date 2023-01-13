@@ -1,4 +1,6 @@
-﻿namespace Fanex.Alpha.Before.Configurations
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Fanex.Alpha.Before.Configurations
 {
     public static class AppSetting
     {

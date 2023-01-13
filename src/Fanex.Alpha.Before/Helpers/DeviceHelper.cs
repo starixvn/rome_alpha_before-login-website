@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Fanex.Logging;
+using Microsoft.AspNetCore.Http;
 using UAParser;
 
 namespace Fanex.Alpha.Before.Helpers;
@@ -37,7 +38,7 @@ public static class DeviceHelper
 
     private static void GetRequestInfoFromContext(HttpRequest request, string browserSize, Hashtable requestInfo)
     {
-        var userAgent = request.Headers.UserAgent.ToString() ?? string.Empty;
+        var userAgent = request.Headers["User-Agent"].ToString() ?? string.Empty;
         var userAgentParser = Parser.GetDefault();
         var clientInfo = userAgentParser.Parse(userAgent);
         var clientUserAgent = clientInfo.UA;

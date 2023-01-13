@@ -1,4 +1,5 @@
 ﻿using Fanex.Alpha.Before.Configurations;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
 namespace Fanex.Alpha.Before.Services.FPS
