@@ -10,6 +10,12 @@ COPY . .
 ARG TRANSFORM_CONFIG
 RUN echo $TRANSFORM_CONFIG
 
+RUN if [ "$TRANSFORM_CONFIG" = "PRO" ] \
+		|| [ "$TRANSFORM_CONFIG" = "PRO2" ] \
+		|| [ "$TRANSFORM_CONFIG" = "PRO3" ]; \
+	then git clone git@gitlab.nexdev.net:alpha-config/login-domains.git . \
+		&& cp -r src/$TRANSFORM_CONFIG.domainmappings.json src/Fanex.Alpha.Before.Web/domainmappings.$TRANSFORM_CONFIG.json; fi
+	
 RUN if [ "$TRANSFORM_CONFIG" != "" ]; \
 then \
   cp "src/Fanex.Alpha.Before.Web/domainmappings.$TRANSFORM_CONFIG.json" "src/Fanex.Alpha.Before.Web/domainmappings.json"; \
