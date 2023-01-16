@@ -2,10 +2,13 @@
 using Fanex.Alpha.Before.Constants;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Caching;
+using Fanex.Caching.Redis;
+using Microsoft.Extensions.Configuration;
+using StackExchange.Redis;
 
 namespace Fanex.Alpha.Before.Services.SignIn
 {
-    public interface ICacheService
+    public interface IDistributedCacheService
     {
         bool IsLoginIPBlocked();
 
@@ -22,15 +25,20 @@ namespace Fanex.Alpha.Before.Services.SignIn
         int IncreaseLoginUserFailedCount(string username, int notInteractionTimeInMinutes);
     }
 
-    public class CacheService : ICacheService
+    public class DistributedCacheService : IDistributedCacheService
     {
         private readonly IPHelper _ipHelper;
-        private readonly Caching.ICacheService _cacheService;
+        private readonly ICacheService _cacheService;
 
-        public CacheService(IPHelper ipHelper, Caching.ICacheService cacheService)
+        public DistributedCacheService(IPHelper ipHelper, IConfiguration configuration)
         {
             _ipHelper = ipHelper;
-            _cacheService = cacheService;
+
+            var options = new RedisCacheOptions();
+            var configSection = configuration.GetSection("Fanex.Caching.Redis");
+            configSection.Bind(options);
+            ReadEndPoints(configSection, options);
+            _cacheService = new CacheService(new RedisCache(options));
         }
 
         private string _loginIPFailedCountSessionKey => string.Format(SessionConstants.LOGINIPFAILEDCOUNT, AppSetting.SiteGroup, _ipHelper.ClientIP());
@@ -83,6 +91,21 @@ namespace Fanex.Alpha.Before.Services.SignIn
             var loginUserFailedCount = GetLoginUserFailedCount(username) + 1;
             _cacheService.Set(GetLoginUserFailedCountSessionKey(username), loginUserFailedCount, new CacheItemOptions() { SlidingExpiration = TimeSpan.FromMinutes(notInteractionTimeInMinutes) });
             return loginUserFailedCount;
+        }
+
+        private static void ReadEndPoints(IConfigurationSection configuration, RedisCacheOptions options)
+        {
+            var endPoints = configuration.GetSection("ConnectionOptions:EndPoints").Get<string[]>();
+
+            if (endPoints != null && endPoints.Length > 0)
+            {
+                options.ConnectionOptions ??= new ConfigurationOptions();
+
+                foreach (var endPoint in endPoints)
+                {
+                    options.ConnectionOptions.EndPoints.Add(endPoint);
+                }
+            }
         }
     }
 }

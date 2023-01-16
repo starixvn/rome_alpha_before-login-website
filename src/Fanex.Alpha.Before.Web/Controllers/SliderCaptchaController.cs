@@ -1,6 +1,6 @@
+using Alpha.Captcha.Core.Models;
+using Alpha.Captcha.Core.Services;
 using Alpha.SliderCaptcha.AspNetCore.Models;
-using Alpha.SliderCaptcha.Core.Models;
-using Alpha.SliderCaptcha.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fanex.Alpha.Before.Web.Controllers;

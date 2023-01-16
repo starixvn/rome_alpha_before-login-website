@@ -7,12 +7,12 @@ using Fanex.Alpha.Before.Resources;
 using Fanex.Alpha.Before.Services.FPS;
 using Newtonsoft.Json;
 using TelegramBot.Client.Services;
-using Alpha.SliderCaptcha.Core;
-using Alpha.SliderCaptcha.Core.Services;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Extensions;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http;
+using Alpha.Captcha.Core;
+using Alpha.Captcha.Core.Services;
 
 namespace Fanex.Alpha.Before.Services.SignIn
 {
@@ -35,7 +35,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
         private readonly IPHelper ipHelper;
         private readonly IPService ipService;
         private readonly ISignInRepository signInRepository;
-        private readonly ICacheService cacheService;
+        private readonly IDistributedCacheService cacheService;
         private readonly IRobotDetector robotDetector;
         private readonly CaptchaOptions captchaOptions;
         private readonly ICaptchaService captchaService;
@@ -61,7 +61,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             IPHelper ipHelper,
             ISignInRepository signInRepository,
             IRobotDetector robotDetector,
-            ICacheService cacheService,
+            IDistributedCacheService cacheService,
             CaptchaOptions captchaOptions,
             ICaptchaService captchaService,
             IKickoutCustomerService kickoutCustomerService,

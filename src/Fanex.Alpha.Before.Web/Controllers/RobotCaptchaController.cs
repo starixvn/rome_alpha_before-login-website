@@ -1,5 +1,5 @@
-using Alpha.SliderCaptcha.Core;
-using Alpha.SliderCaptcha.Core.Services;
+using Alpha.Captcha.Core;
+using Alpha.Captcha.Core.Services;
 using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Constants;
 using Fanex.Alpha.Before.Models;

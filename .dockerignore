@@ -14,4 +14,5 @@ LICENSE
 **/node_modules/
 **/bower_components/
 **/wwwroot/lib/
+**/wwwroot/assets/bundles/
 global.json

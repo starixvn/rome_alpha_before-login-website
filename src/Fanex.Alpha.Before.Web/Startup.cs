@@ -10,6 +10,7 @@ using Fanex.Alpha.Before.Services;
 using Fanex.Alpha.Before.Services.FPS;
 using Fanex.Alpha.Before.Services.SignIn;
 using Fanex.Alpha.Before.Web.Extensions;
+using Fanex.Caching;
 using Fanex.Caching.Redis;
 using Fanex.Data.Repository;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -37,7 +38,6 @@ namespace Fanex.Alpha.Before.Web
             });
 
             services.AddFanexLogging(Configuration)
-                 .AddRedisCache(Configuration.GetSection("Fanex.Caching.Redis"))
                  .AddONEbookUM(Configuration)
                  .AddCustomOptions(Configuration)
                  .AddSliderCaptcha(Configuration)
@@ -49,6 +49,7 @@ namespace Fanex.Alpha.Before.Web
             services.AddSingleton<ISignInRepository, SignInRepository>();
             services.AddSingleton<IRobotDetector, RobotDetector>();
             services.AddSingleton<ICacheService, CacheService>();
+            services.AddSingleton<IDistributedCacheService, DistributedCacheService>();
 
             services.AddSingleton<IKickoutCustomerService, KickoutCustomerService>();
             services.AddSingleton<IPHelper, IPHelperImpl>();

@@ -93,7 +93,7 @@
 
             window.scInstance = sliderCaptcha('captcha', {
                 lang: "@AppSession.Language",
-                baseUri: "@Url.Content("~")",
+                baseUri: "@Url.Content("~/")",
                 keyElement: document.getElementById('txtUserName'),
                 callback: function (response) {
                     if (response.Code === 0) {
