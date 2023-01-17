@@ -34,4 +34,7 @@
     <PackageReference Include="Fanex.Cryptography.Aes" Version="1.0.0.6-beta1" />
     <PackageReference Include="UAParser" Version="3.1.47" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.Alpha.Before.NetThrottling\Fanex.Alpha.Before.NetThrottling.csproj" />
+  </ItemGroup>
 </Project>

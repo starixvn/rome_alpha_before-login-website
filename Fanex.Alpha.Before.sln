@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.UnitTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.Web.UnitTests", "tests\unittests\Fanex.Alpha.Before.Web.UnitTests\Fanex.Alpha.Before.Web.UnitTests.csproj", "{26FF88EE-E14D-460E-8E88-53BB34FC4D4B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.Alpha.Before.NetThrottling", "src\Fanex.Alpha.Before.NetThrottling\Fanex.Alpha.Before.NetThrottling.csproj", "{191BD534-9020-4AB3-BB61-B599AFB293B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{26FF88EE-E14D-460E-8E88-53BB34FC4D4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26FF88EE-E14D-460E-8E88-53BB34FC4D4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26FF88EE-E14D-460E-8E88-53BB34FC4D4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{191BD534-9020-4AB3-BB61-B599AFB293B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{191BD534-9020-4AB3-BB61-B599AFB293B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{191BD534-9020-4AB3-BB61-B599AFB293B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{191BD534-9020-4AB3-BB61-B599AFB293B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9115639E-1F00-425C-B620-E6B3362B3425} = {2B4D36CC-4A97-48FE-A177-5D0919FF1B6D}
@@ -49,5 +55,6 @@ Global
 		{AE187553-A4F6-4055-929E-AC90DBDF2CA0} = {4062CA87-128A-4833-AA8D-8592CBBD3293}
 		{17403978-F71F-44D6-98EE-318D2EA3EBEA} = {AE187553-A4F6-4055-929E-AC90DBDF2CA0}
 		{26FF88EE-E14D-460E-8E88-53BB34FC4D4B} = {AE187553-A4F6-4055-929E-AC90DBDF2CA0}
+		{191BD534-9020-4AB3-BB61-B599AFB293B6} = {2B4D36CC-4A97-48FE-A177-5D0919FF1B6D}
 	EndGlobalSection
 EndGlobal

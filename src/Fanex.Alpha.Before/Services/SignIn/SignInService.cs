@@ -13,6 +13,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http;
 using Alpha.Captcha.Core;
 using Alpha.Captcha.Core.Services;
+using Fanex.Alpha.Before.NetThrottling.Models;
+using Fanex.Alpha.Before.NetThrottling;
 
 namespace Fanex.Alpha.Before.Services.SignIn
 {
@@ -31,7 +33,6 @@ namespace Fanex.Alpha.Before.Services.SignIn
 
         private readonly CommonOptions commonOptions;
         private readonly AutomationTestOptions automationTestOptions;
-        private readonly LoginThemeOptions loginThemeOptions;
         private readonly IPHelper ipHelper;
         private readonly IPService ipService;
         private readonly ISignInRepository signInRepository;
@@ -42,16 +43,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
         private readonly IKickoutCustomerService kickoutCustomerService;
         private readonly INotificationService notificationService;
         private readonly Logging.ILogger logger;
-
-        // private static NetThrottler netThrottler = new NetThrottler();
-        // private static ThrottlePolicy loginThrottlePolicy = new ThrottlePolicy(netThrottler.ThrottleSetting.GetKey("Login"));
-        // private static IEnumerable<int> whitelistSuperIds = ParseWhitelistSuperIds();
-
-        // static IEnumerable<int> ParseWhitelistSuperIds()
-        // {
-        //     var custIds = WhitelistConfiguration.Default.CustIds;
-        //     return string.IsNullOrWhiteSpace(custIds) ? Enumerable.Empty<int>() : custIds.Split(',').Select(int.Parse).ToList();
-        // }
+        private readonly ThrottlePolicy throttlePolicy;
+        private readonly INetThrottler netThrottler;
 
         public SignInService(
             IOptions<CommonOptions> commonOptions,
@@ -66,11 +59,12 @@ namespace Fanex.Alpha.Before.Services.SignIn
             ICaptchaService captchaService,
             IKickoutCustomerService kickoutCustomerService,
             IPService ipService,
-            INotificationService notificationService)
+            INotificationService notificationService,
+            IOptions<ThrottlePolicy> throttlePolicy,
+            INetThrottler netThrottler)
         {
             this.commonOptions = commonOptions.Value;
             this.automationTestOptions = automationTestOptions.Value;
-            this.loginThemeOptions = loginThemeOptions.Value;
             this.logger = logger;
             this.ipHelper = ipHelper;
             this.ipService = ipService;
@@ -81,12 +75,15 @@ namespace Fanex.Alpha.Before.Services.SignIn
             this.captchaService = captchaService;
             this.kickoutCustomerService = kickoutCustomerService;
             this.notificationService = notificationService;
+            this.throttlePolicy = throttlePolicy.Value;
+            this.netThrottler = netThrottler;
 
-            _loginTheme = this.loginThemeOptions.DefaultTheme;
-            if (DateTime.Now >= this.loginThemeOptions.StartDate &&
-                DateTime.Now <= this.loginThemeOptions.EndDate)
+            var loginThemeOpt = loginThemeOptions.Value;
+            _loginTheme = loginThemeOpt.DefaultTheme;
+            if (DateTime.Now >= loginThemeOpt.StartDate &&
+                DateTime.Now <= loginThemeOpt.EndDate)
             {
-                _loginTheme = this.loginThemeOptions.EventTheme;
+                _loginTheme = loginThemeOpt.EventTheme;
             }
         }
 
@@ -350,50 +347,49 @@ namespace Fanex.Alpha.Before.Services.SignIn
         {
             var verifySignInResult = new VerifySignInResult();
             var request = httpContext.Request;
-            // var cacheIdentity = CacheIdentity.From(
-            //     loginThrottlePolicy.Name,
-            //     UrlHelper.SiteGroupSetting.SiteGroup,
-            //     new[] { username.Trim().ToLowerInvariant(), request.GetClientIp().ToString() });
-            // var result = netThrottler.Throttle(
-            //     (success) =>
-            //     {
-            var clientIP = ipHelper.ClientIP();
-            var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize, clientIP);
-            requestInfo["countrycode"] = GetCountryCode(clientIP);
-            requestInfo.Add("sitegroup", AppSetting.SiteGroup);
-            verifySignInResult = signInRepository.VerifyDownlineLogin(username, password, requestInfo, isDarkMode);
-            EncryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
+            var cacheIdentity = CacheIdentity.From(
+                throttlePolicy.Name,
+                AppSetting.SiteGroup,
+                new[] { username.Trim().ToLowerInvariant(), ipHelper.ClientIP() });
+            var result = netThrottler.Throttle(
+                (success) =>
+                {
+                    var clientIP = ipHelper.ClientIP();
+                    var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize, clientIP);
+                    requestInfo["countrycode"] = GetCountryCode(clientIP);
+                    requestInfo.Add("sitegroup", AppSetting.SiteGroup);
+                    verifySignInResult = signInRepository.VerifyDownlineLogin(username, password, requestInfo, isDarkMode);
+                    EncryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
 
-            if (verifySignInResult.ErrorCode == 0)
+                    if (verifySignInResult.ErrorCode == 0)
+                    {
+                        signInResult.LoginTime = verifySignInResult.LoginTime;
+
+                        UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize, assetAppPath, httpContext);
+
+                        if (throttlePolicy.WhitelistSuperIds.Contains(verifySignInResult.SuperId))
+                        {
+                            return ThrottleResult.Allowed;
+                        }
+
+                        return success(ThrottleResult.Allowed);
+                    }
+                    else
+                    {
+                        UpdateResultAfterLoginFail(signInResult, verifySignInResult, httpContext);
+
+                        return ThrottleResult.Allowed;
+                    }
+                },
+            () => ThrottleResult.Blocked,
+            throttlePolicy,
+            cacheIdentity);
+
+            if (result == ThrottleResult.Blocked)
             {
-                signInResult.LoginTime = verifySignInResult.LoginTime;
-
-                UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize, assetAppPath, httpContext);
-
-                // if (whitelistSuperIds.Contains(verifySignInResult.SuperId))
-                // {
-                //     return ThrottleResult.Allowed;
-                // }
-
-                // return success(ThrottleResult.Allowed);
+                signInResult.ErrCode = SignInErrorContants.LoginTooOften;
+                signInResult.ErrMsg = string.Format(Labels.LoginTooOftenBlockedMessage, username);
             }
-            else
-            {
-                UpdateResultAfterLoginFail(signInResult, verifySignInResult, httpContext);
-
-                //return ThrottleResult.Allowed;
-            }
-            // },
-            // () => ThrottleResult.Blocked,
-            // loginThrottlePolicy,
-            // cacheIdentity
-            // );
-
-            // if (result == ThrottleResult.Blocked)
-            // {
-            //     signInResult.ErrCode = SignInErrorContants.LoginTooOften;
-            //     signInResult.ErrMsg = string.Format(Labels.LoginTooOftenBlockedMessage, username);
-            // }
 
             EncryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"After checking login too often: {JsonConvert.SerializeObject(signInResult)}");
         }

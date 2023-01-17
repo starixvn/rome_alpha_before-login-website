@@ -40,6 +40,7 @@ namespace Fanex.Alpha.Before.Web
             services.AddFanexLogging(Configuration)
                  .AddONEbookUM(Configuration)
                  .AddCustomOptions(Configuration)
+                 .AddNetThrottling(Configuration)
                  .AddSliderCaptcha(Configuration)
                  .AddCustomHealthChecks()
                  .AddControllersWithViews()

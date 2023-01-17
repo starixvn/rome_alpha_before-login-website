@@ -1,4 +1,6 @@
 using Fanex.Alpha.Before.Configurations;
+using Fanex.Alpha.Before.NetThrottling;
+using Fanex.Caching.Redis;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.AspNetCore;
@@ -13,6 +15,7 @@ using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
 using Sentry;
+using StackExchange.Redis;
 
 namespace Fanex.Alpha.Before.Web.Extensions;
 
@@ -68,6 +71,12 @@ public static class ServiceCollectionExtensions
         services.Configure<RobotOptions>(configuration.GetSection(RobotOptions.Robot));
         services.Configure<LoginThemeOptions>(configuration.GetSection(LoginThemeOptions.LoginTheme));
 
+        var redisCacheOptions = new RedisCacheOptions();
+        var configSection = configuration.GetSection("Fanex.Caching.Redis");
+        configSection.Bind(redisCacheOptions);
+        ReadEndPoints(configSection, redisCacheOptions);
+        services.AddSingleton(redisCacheOptions);
+
         return services;
     }
 
@@ -77,5 +86,28 @@ public static class ServiceCollectionExtensions
             .AddCheck("self", () => HealthCheckResult.Healthy());
 
         return services;
+    }
+
+    public static IServiceCollection AddNetThrottling(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<ThrottlePolicy>(configuration.GetSection("ThrottlePolicy"));
+        services.AddSingleton<INetThrottler, NetThrottler>();
+
+        return services;
+    }
+
+    private static void ReadEndPoints(IConfigurationSection configuration, RedisCacheOptions options)
+    {
+        var endPoints = configuration.GetSection("ConnectionOptions:EndPoints").Get<string[]>();
+
+        if (endPoints != null && endPoints.Length > 0)
+        {
+            options.ConnectionOptions ??= new ConfigurationOptions();
+
+            foreach (var endPoint in endPoints)
+            {
+                options.ConnectionOptions.EndPoints.Add(endPoint);
+            }
+        }
     }
 }

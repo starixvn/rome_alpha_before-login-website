@@ -1,5 +1,6 @@
 FROM hub.nexdev.net/base/dotnet/core/sdk:7.0 AS builder
 WORKDIR /source
+COPY "src/Fanex.Alpha.Before.NetThrottling/Fanex.Alpha.Before.NetThrottling.csproj" "src/Fanex.Alpha.Before.NetThrottling/Fanex.Alpha.Before.NetThrottling.csproj"
 COPY "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj" "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj"
 COPY "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj" "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
 COPY "NuGet.config" "NuGet.config"
