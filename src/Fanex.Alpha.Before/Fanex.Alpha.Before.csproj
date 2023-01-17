@@ -19,7 +19,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Alpha.SliderCaptcha" Version="1.0.1-beta6" />
+    <PackageReference Include="Alpha.SliderCaptcha" Version="1.0.1-beta7" />
     <PackageReference Include="Fanex.Caching.Redis" Version="2.2.3" />
     <PackageReference Include="Fanex.Data.Repository" Version="4.2.2" />
     <PackageReference Include="Fanex.Logging" Version="2.0.1" />
