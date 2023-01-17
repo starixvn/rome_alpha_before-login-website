@@ -9,14 +9,15 @@ RUN dotnet restore --configfile "NuGet.config" "src/Fanex.Alpha.Before.Web/Fanex
 COPY . .
 
 ARG TRANSFORM_CONFIG
+ARG CI_JOB_TOKEN
 RUN echo $TRANSFORM_CONFIG
 RUN mkdir /source/tmp
 RUN if [ "$TRANSFORM_CONFIG" = "PRO" ] \
 		|| [ "$TRANSFORM_CONFIG" = "PRO2" ] \
 		|| [ "$TRANSFORM_CONFIG" = "LOCAL" ] \
 		|| [ "$TRANSFORM_CONFIG" = "PRO3" ]; \
-	then cd /source/tmp && git clone git@gitlab.nexdev.net:alpha-config/login-domains.git -b 182789-UpgradeNetCore \
-		&& cp -r /source/tmp/alpha-domains/src/$TRANSFORM_CONFIG.domainmappings.json src/Fanex.Alpha.Before.Web/domainmappings.$TRANSFORM_CONFIG.json; fi
+	then cd /source/tmp && curl --fail -o $TRANSFORM_CONFIG.domainmappings.json --header "PRIVATE-TOKEN:$CI_JOB_TOKEN" https://gitlab.nexdev.net/api/v4/projects/alpha-config%2Flogin-domains/repository/files/src%2F$TRANSFORM_CONFIG.domainmappings.json/raw?ref=182789-UpgradeNetCore \
+		&& cd - && cp -r tmp/$TRANSFORM_CONFIG.domainmappings.json src/Fanex.Alpha.Before.Web/domainmappings.$TRANSFORM_CONFIG.json; fi
 
 RUN if [ "$TRANSFORM_CONFIG" != "" ]; \
 then \
