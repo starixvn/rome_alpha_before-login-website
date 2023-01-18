@@ -3,8 +3,8 @@ WORKDIR /source
 COPY "src/Fanex.Alpha.Before.NetThrottling/Fanex.Alpha.Before.NetThrottling.csproj" "src/Fanex.Alpha.Before.NetThrottling/Fanex.Alpha.Before.NetThrottling.csproj"
 COPY "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj" "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj"
 COPY "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj" "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
-COPY "NuGet.config" "NuGet.config"
-RUN dotnet restore --configfile "NuGet.config" "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj"
+RUN dotnet nuget add source https://nuget.nexdev.net/api/v2
+RUN dotnet restore "src/Fanex.Alpha.Before.Web/Fanex.Alpha.Before.Web.csproj" -v n
 
 COPY . .
 
@@ -43,7 +43,9 @@ RUN gulp sass
 
 FROM builder AS publish
 WORKDIR /source/src/Fanex.Alpha.Before.Web
-RUN dotnet publish -c release -o /app --self-contained false --no-restore
+RUN dotnet publish -c release -o /app --self-contained false
+
+FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0 AS final
 
 RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
 RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1/g' /etc/ssl/openssl.cnf
@@ -58,7 +60,6 @@ USER dotnetuser
 #
 
 # final stage/image
-FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0 AS final
 WORKDIR /app
 COPY --from=publish /app ./
 ENV TZ="America/La_Paz"
