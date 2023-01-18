@@ -34,5 +34,3 @@ _ReSharper*/
 *.orig
 node_modules/
 */**/bundles
-*.min.css
-*.css

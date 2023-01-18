@@ -1,7 +1,7 @@
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Services;
 
-namespace Fanex.Alpha.Before.Web.Middlewares;
+namespace Fanex.Alpha.Before.Middlewares;
 
 public class LimitedCountryAccessMiddleware
 {

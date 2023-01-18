@@ -1,6 +1,6 @@
 using Fanex.Alpha.Before.Helpers;
 
-namespace Fanex.Alpha.Before.Web.Middlewares;
+namespace Fanex.Alpha.Before.Middlewares;
 
 public class ViewModeMiddleware
 {

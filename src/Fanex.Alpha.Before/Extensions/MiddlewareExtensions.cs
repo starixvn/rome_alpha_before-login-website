@@ -1,6 +1,6 @@
-using Fanex.Alpha.Before.Web.Middlewares;
+using Fanex.Alpha.Before.Middlewares;
 
-namespace Fanex.Alpha.Before.Web.Extensions;
+namespace Fanex.Alpha.Before.Extensions;
 
 public static class MiddlewareExtensions
 {

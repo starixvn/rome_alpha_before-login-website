@@ -1,6 +1,6 @@
 ﻿
 
-using Fanex.Alpha.Before.Web;
+using Fanex.Alpha.Before;
 using Microsoft.AspNetCore;
 
 var host = BuildWebHost(args);

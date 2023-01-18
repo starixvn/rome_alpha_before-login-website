@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ONEbook.UM.Services;
 
-namespace Fanex.Alpha.Before.Web.Controllers;
+namespace Fanex.Alpha.Before.Controllers;
 
 public class CommonController : Controller
 {

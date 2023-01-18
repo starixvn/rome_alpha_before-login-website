@@ -1,7 +1,7 @@
 using Fanex.Data;
 using Fanex.Data.SqlServer;
 
-namespace Fanex.Alpha.Before.Web.Extensions;
+namespace Fanex.Alpha.Before.Extensions;
 
 public static class ApplicationBuilderExtensions
 {

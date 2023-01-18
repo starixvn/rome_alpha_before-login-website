@@ -9,7 +9,7 @@ using Fanex.Logging.Extensions.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
-namespace Fanex.Alpha.Before.Web.Controllers;
+namespace Fanex.Alpha.Before.Controllers;
 
 public class RobotCaptchaController : Controller
 {

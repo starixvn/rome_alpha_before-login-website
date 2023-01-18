@@ -17,7 +17,7 @@ using ONEbook.UM.Transport;
 using Sentry;
 using StackExchange.Redis;
 
-namespace Fanex.Alpha.Before.Web.Extensions;
+namespace Fanex.Alpha.Before.Extensions;
 
 public static class ServiceCollectionExtensions
 {

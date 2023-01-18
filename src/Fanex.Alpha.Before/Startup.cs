@@ -9,14 +9,14 @@ using Fanex.Alpha.Before.Repositories;
 using Fanex.Alpha.Before.Services;
 using Fanex.Alpha.Before.Services.FPS;
 using Fanex.Alpha.Before.Services.SignIn;
-using Fanex.Alpha.Before.Web.Extensions;
+using Fanex.Alpha.Before.Extensions;
 using Fanex.Caching;
 using Fanex.Caching.Redis;
 using Fanex.Data.Repository;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using TelegramBot.Client.Services;
 
-namespace Fanex.Alpha.Before.Web
+namespace Fanex.Alpha.Before
 {
     public class Startup
     {

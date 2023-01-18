@@ -5,7 +5,7 @@ using Fanex.Alpha.Before.Services.SignIn;
 using Microsoft.AspNetCore.Mvc;
 using ONEbook.UM.AspNetCore.Filters;
 
-namespace Fanex.Alpha.Before.Web.Controllers;
+namespace Fanex.Alpha.Before.Controllers;
 
 [ServiceFilter(typeof(CheckUMFilterAttribute))]
 public class AuthController : Controller
