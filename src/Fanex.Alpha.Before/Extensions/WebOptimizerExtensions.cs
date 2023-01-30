@@ -44,6 +44,10 @@ public static class WebOptimizerExtensions
              "assets/scripts/libs/jquery/jquery-1.11.3.js",
              "assets/scripts/libs/flipclock/flipclock.js",
              "assets/scripts/um/um.js");
+
+            pipeline.AddCssBundle("/assets/bundles/alpha.slider-captcha.css", "assets/styles/alpha.slider-captcha.css");
+            pipeline.AddJavaScriptBundle("/assets/bundles/alpha.slider-captcha.js", "assets/scripts/alpha.slider-captcha.js");
+            pipeline.AddJavaScriptBundle("/assets/bundles/fps.js", "assets/scripts/login/fps.js");
         });
 
         return services;

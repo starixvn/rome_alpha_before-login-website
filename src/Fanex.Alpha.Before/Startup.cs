@@ -55,6 +55,8 @@ namespace Fanex.Alpha.Before
 
             services.AddSingleton<IKickoutCustomerService, KickoutCustomerService>();
             services.AddSingleton<IPHelper, IPHelperImpl>();
+            services.AddSingleton<IFPSHelper, FPSHelper>();
+            services.AddSingleton<IEncryptUrlHelper, EncryptUrlHelper>();
             services.AddSingleton<IPService, IpServiceImpl>();
             services.AddHttpClient<INotificationService, NotificationService>(httpClient =>
             {

@@ -13,8 +13,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Robot Captcha</title>
-    <link rel="stylesheet" href="@Url.Content(string.Format("~/assets/bundles/robotcaptcha{0}.min.css", ViewData["DarkModeName"]))" />
-    <link rel="stylesheet" href="@Url.Content("~/assets/styles/alpha.slider-captcha.css")" />
+    <link rel="stylesheet" href="~/assets/bundles/robotcaptcha@(ViewData["DarkModeName"]).min.css" />
+    <link rel="stylesheet" href="~/assets/bundles/alpha.slider-captcha.css" />
 </head>
 <body>
     <div class="wrapper">
@@ -22,7 +22,7 @@
             <div id="captcha" name="token"></div>
         </form>
     </div>
-    <script src="~/assets/scripts/alpha.slider-captcha.js" type="text/javascript"></script>
+    <script src="~/assets/bundles/alpha.slider-captcha.js" type="text/javascript"></script>
     <script>
         var tooManyFailedLoginPageUrl = "@Html.Raw(ViewBag.tooManyFailedLoginPageUrl)";
         sliderCaptcha('captcha', {

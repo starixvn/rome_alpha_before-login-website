@@ -1,5 +1,5 @@
 ﻿using Fanex.Alpha.Before.Configurations;
-using Microsoft.AspNetCore.Http;
+using FPS.Browserless.Detection.Client.NetStandard;
 using Microsoft.Extensions.Options;
 
 namespace Fanex.Alpha.Before.Services.FPS
@@ -34,8 +34,7 @@ namespace Fanex.Alpha.Before.Services.FPS
                     return 1;
                 }
 
-                //return BotDetection.IsBot(request, AppSetting.RobotFPSBotDetectionApiUrl);
-                return 0;
+                return BotDetection.IsBot(request, robotOptions.FPSBotDetectionApiUrl);
             }
             catch (Exception ex)
             {

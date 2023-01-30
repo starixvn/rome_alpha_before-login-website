@@ -10,7 +10,6 @@ using TelegramBot.Client.Services;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Extensions;
 using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Http;
 using Alpha.Captcha.Core;
 using Alpha.Captcha.Core.Services;
 using Fanex.Alpha.Before.NetThrottling.Models;
@@ -45,6 +44,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
         private readonly Logging.ILogger logger;
         private readonly ThrottlePolicy throttlePolicy;
         private readonly INetThrottler netThrottler;
+        private readonly IEncryptUrlHelper encryptUrlHelper;
 
         public SignInService(
             IOptions<CommonOptions> commonOptions,
@@ -61,7 +61,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
             IPService ipService,
             INotificationService notificationService,
             IOptions<ThrottlePolicy> throttlePolicy,
-            INetThrottler netThrottler)
+            INetThrottler netThrottler,
+            IEncryptUrlHelper encryptUrlHelper)
         {
             this.commonOptions = commonOptions.Value;
             this.automationTestOptions = automationTestOptions.Value;
@@ -77,6 +78,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             this.notificationService = notificationService;
             this.throttlePolicy = throttlePolicy.Value;
             this.netThrottler = netThrottler;
+            this.encryptUrlHelper = encryptUrlHelper;
 
             var loginThemeOpt = loginThemeOptions.Value;
             _loginTheme = loginThemeOpt.DefaultTheme;
@@ -284,7 +286,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             var robotResult = robotDetector.IsRobot(httpContext.Request);
             if (robotResult == 0 || signInResult.IsCaptchaVerified)
             {
-                url = EncryptUrlHelper.BuildAfterURL(httpContext, encryptPassword, verifySignInResult, deviceId, browserSize, assetAppPath);
+                url = encryptUrlHelper.BuildAfterURL(httpContext, encryptPassword, verifySignInResult, deviceId, browserSize, assetAppPath);
             }
             else
             {
@@ -304,7 +306,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                    browserSize,
                    assetAppPath);
 
-                EncryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"After set sessionId: {httpContext.Session.Id}, custId:{AppSession.CustId}");
+                encryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"After set sessionId: {httpContext.Session.Id}, custId:{AppSession.CustId}");
 
                 url = "RobotCaptcha/Index";
             }
@@ -359,7 +361,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                     requestInfo["countrycode"] = GetCountryCode(clientIP);
                     requestInfo.Add("sitegroup", AppSetting.SiteGroup);
                     verifySignInResult = signInRepository.VerifyDownlineLogin(username, password, requestInfo, isDarkMode);
-                    EncryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
+                    encryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
 
                     if (verifySignInResult.ErrorCode == 0)
                     {
@@ -391,7 +393,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 signInResult.ErrMsg = string.Format(Labels.LoginTooOftenBlockedMessage, username);
             }
 
-            EncryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"After checking login too often: {JsonConvert.SerializeObject(signInResult)}");
+            encryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"After checking login too often: {JsonConvert.SerializeObject(signInResult)}");
         }
 
         private string GetCountryCode(string ip)

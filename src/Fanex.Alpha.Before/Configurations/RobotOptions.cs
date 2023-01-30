@@ -13,4 +13,6 @@ public class RobotOptions
     public string[] ExcludeSites { get; set; } = Array.Empty<string>();
 
     public string FPSBotDetectionApiUrl { get; set; } = string.Empty;
+
+    public string FPSTransactionApiUrl { get; set; } = string.Empty;
 }

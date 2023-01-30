@@ -11,10 +11,12 @@ namespace Fanex.Alpha.Before.Controllers;
 public class AuthController : Controller
 {
     private readonly ISignInService signInService;
+    private readonly IFPSHelper fpsHelper;
 
-    public AuthController(ISignInService signInService)
+    public AuthController(ISignInService signInService, IFPSHelper fpsHelper)
     {
         this.signInService = signInService;
+        this.fpsHelper = fpsHelper;
     }
 
     [HttpGet]
@@ -56,7 +58,7 @@ public class AuthController : Controller
         {
             if (loginResult.AfterLoginUrl.IndexOf("RobotCaptcha", StringComparison.OrdinalIgnoreCase) != -1)
             {
-                FPSHelper.FPSTracking(loginResult);
+                fpsHelper.FPSTracking(Request, loginResult);
             }
 
             return Redirect(loginResult.AfterLoginUrl);

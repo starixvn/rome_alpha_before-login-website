@@ -1,12 +1,28 @@
 ﻿using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Models;
 using Fanex.Logging;
+using FPS.Client.NetStandard.Models;
+using Microsoft.Extensions.Options;
 
 namespace Fanex.Alpha.Before.Helpers
 {
-    public static class FPSHelper
+    public interface IFPSHelper
     {
-        public static void FPSTracking(SignInResult loginResult)
+        void FPSTracking(HttpRequest request, SignInResult loginResult);
+    }
+
+    public class FPSHelper : IFPSHelper
+    {
+        private readonly RobotOptions robotOptions;
+        private readonly IPHelper ipHelper;
+
+        public FPSHelper(IOptions<RobotOptions> robotOptions, IPHelper ipHelper)
+        {
+            this.robotOptions = robotOptions.Value;
+            this.ipHelper = ipHelper;
+        }
+
+        public void FPSTracking(HttpRequest request, SignInResult loginResult)
         {
             try
             {
@@ -33,17 +49,27 @@ namespace Fanex.Alpha.Before.Helpers
                 const string loginAction = "login";
                 var username = loginResult.Username;
                 var fpsSubscirber = AppSetting.FpsSubscriber;
-                var fpsErrorMessage = string.Empty;
-                var fpsErrorCode = string.Empty;
+                TimeSpan diff = DateTime.UtcNow - DateTime.Now;
+                var httpRequestData = new HttpRequestData()
+                {
+                    AcceptTypes = request.Headers["Accept"].ToString() ?? string.Empty,
+                    UserAgent = request.Headers["User-Agent"].ToString() ?? string.Empty,
+                    TotalMinutes = diff.TotalMinutes.ToString(),
+                    RequestIP = ipHelper.ClientIP(),
+                    Di = request.Form["__di"].ToString(),
+                    Token = request.Form["__tk"].ToString(),
+                    Url = request.Scheme.ToString() + "://" + request.Host.ToString(),
+                    DebugInfo = request.Form["detecas-analysis"].ToString(),
+                    CaptchaResult = request.Form["captcha_result"].ToString()
+                };
 
-                // new FPS.Client.NetStandard.Service().CheckTransaction(
-                //     username.Trim(),
-                //     loginAction,
-                //     loginMessage,
-                //     fpsSubscirber,
-                //     loginResult.LoginTime,
-                //     out fpsErrorMessage,
-                //     out fpsErrorCode);
+                new FPS.Client.NetStandard.Service(robotOptions.FPSTransactionApiUrl).CheckTransaction(
+                    httpRequestData,
+                    username.Trim(),
+                    loginAction,
+                    loginMessage,
+                    fpsSubscirber,
+                    loginResult.LoginTime);
             }
             catch (Exception ex)
             {

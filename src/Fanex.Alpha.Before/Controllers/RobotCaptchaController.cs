@@ -17,12 +17,18 @@ public class RobotCaptchaController : Controller
     private readonly ICaptchaService captchaService;
     private readonly CaptchaOptions captchaOptions;
     private readonly RobotOptions robotOptions;
+    private readonly IEncryptUrlHelper encryptUrlHelper;
 
-    public RobotCaptchaController(CaptchaOptions captchaOptions, ICaptchaService captchaService, IOptions<RobotOptions> robotOptions)
+    public RobotCaptchaController(
+        CaptchaOptions captchaOptions,
+        ICaptchaService captchaService,
+        IOptions<RobotOptions> robotOptions,
+        IEncryptUrlHelper encryptUrlHelper)
     {
         this.captchaOptions = captchaOptions;
         this.captchaService = captchaService;
         this.robotOptions = robotOptions.Value;
+        this.encryptUrlHelper = encryptUrlHelper;
     }
 
     private static string TooManyFailedLoginPageUrl => $"~/?r={Labels.tooManyFailedCaptcha}";
@@ -38,7 +44,7 @@ public class RobotCaptchaController : Controller
 
         if (IsIgnoreRobotCaptcha())
         {
-            return Redirect(EncryptUrlHelper.BuildAfterURL(HttpContext));
+            return Redirect(encryptUrlHelper.BuildAfterURL(HttpContext));
         }
 
         AssignDarkModeNameViewData();
@@ -86,7 +92,7 @@ public class RobotCaptchaController : Controller
     {
         if (AppSession.InputCaptchaSuccess)
         {
-            return Redirect(EncryptUrlHelper.BuildAfterURL(HttpContext));
+            return Redirect(encryptUrlHelper.BuildAfterURL(HttpContext));
         }
 
         return RedirectToAction(nameof(Index));
