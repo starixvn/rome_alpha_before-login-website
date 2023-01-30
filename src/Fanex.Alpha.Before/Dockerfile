@@ -1,10 +1,10 @@
 FROM hub.nexdev.net/base/dotnet/core/sdk:7.0 AS builder
 WORKDIR /source
-COPY "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj" "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj"
+COPY src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj
 RUN dotnet nuget add source https://nuget.nexdev.net/api/v2
-RUN dotnet restore "src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj" -v n
+RUN dotnet restore src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj -v n
 
-COPY . .
+COPY src/Fanex.Alpha.Before src/Fanex.Alpha.Before
 
 ARG TRANSFORM_CONFIG
 ARG CI_JOB_TOKEN
@@ -33,11 +33,10 @@ then \
   cp "src/Fanex.Alpha.Before/bundleconfig2.json" "src/Fanex.Alpha.Before/bundleconfig.json";\
 fi
 
-FROM builder AS publish
 WORKDIR /source/src/Fanex.Alpha.Before
-RUN dotnet publish -c release -o /app --self-contained false
+RUN dotnet publish -r linux-x64 --self-contained false -o /app
 
-FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0 AS final
+FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0 AS base
 
 RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
 RUN sed -i 's/MinProtocol = TLSv1.2/MinProtocol = TLSv1/g' /etc/ssl/openssl.cnf
@@ -53,7 +52,7 @@ USER dotnetuser
 
 # final stage/image
 WORKDIR /app
-COPY --from=publish /app ./
+COPY --from=builder /app ./
 ENV TZ="America/La_Paz"
 
 ENTRYPOINT ["dotnet", "Fanex.Alpha.Before.dll"]

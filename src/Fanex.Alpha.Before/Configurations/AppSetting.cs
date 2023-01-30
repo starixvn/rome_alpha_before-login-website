@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Fanex.Alpha.Before.Constants;
+using Microsoft.Extensions.Configuration;
 
 namespace Fanex.Alpha.Before.Configurations
 {
     public static class AppSetting
     {
-        private const string Site789y = "789y";
         private readonly static IConfigurationRoot configurationRoot = InitConfiguration();
 
         private static IConfigurationRoot InitConfiguration()
@@ -27,7 +27,7 @@ namespace Fanex.Alpha.Before.Configurations
 
         public static string SiteGroup => GetValue<string>("SiteGroup");
 
-        public static bool Is789ySite => SiteGroup == Site789y;
+        public static bool Is789ySite => SiteGroup == SiteGroupConstants.Site789y;
 
         public static bool DisabledVietnamese => !Is789ySite;
 

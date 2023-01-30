@@ -7,8 +7,8 @@
 
 @section styles
 {
-    <link href="~/assets/bundles/themes/@(Model.LoginTemplate)@(darkModeName).min.css?ver=@AppSetting.Version" rel="stylesheet" />
-    <link href="~/assets/styles/alpha.slider-captcha.css?ver=@AppSetting.Version" rel="stylesheet" />
+    <link href="~/assets/bundles/themes/@(Model.LoginTemplate)@(darkModeName).min.css" rel="stylesheet" />
+    <link href="~/assets/styles/alpha.slider-captcha.css" rel="stylesheet" />
 }
 
 <div class="box-lang">
@@ -83,7 +83,7 @@
 
     @section scripts
     {
-        <script src="~/assets/scripts/alpha.slider-captcha.js?ver=@AppSetting.Version" type="text/javascript"></script>
+        <script src="~/assets/scripts/alpha.slider-captcha.js" type="text/javascript"></script>
         <script>
             var noInteractionTimeInMinutes = parseInt(document.getElementById("NoInteractionTimeInMinutes").value);
             setTimeout(
