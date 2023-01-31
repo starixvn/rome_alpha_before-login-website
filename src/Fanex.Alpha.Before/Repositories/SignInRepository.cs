@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using Fanex.Alpha.Before.Extensions;
-using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
+using Fanex.Common;
 using Fanex.Data;
 
 namespace Fanex.Alpha.Before.Repositories

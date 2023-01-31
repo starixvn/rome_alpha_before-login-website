@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using Fanex.Alpha.Before.Configurations;
+using Fanex.Common;
 
 namespace Fanex.Alpha.Before.Helpers
 {

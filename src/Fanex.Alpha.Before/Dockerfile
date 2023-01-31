@@ -1,25 +1,26 @@
 FROM hub.nexdev.net/base/dotnet/core/sdk:7.0 AS builder
-WORKDIR /source
-COPY src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj
-RUN dotnet nuget add source https://nuget.nexdev.net/api/v2
-RUN dotnet restore src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj -v n
+WORKDIR /src
 
-COPY src/Fanex.Alpha.Before src/Fanex.Alpha.Before
+COPY src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj ./Fanex.Alpha.Before/Fanex.Alpha.Before.csproj
+RUN dotnet nuget add source https://nuget.nexdev.net/api/v2
+RUN dotnet restore Fanex.Alpha.Before/Fanex.Alpha.Before.csproj -v n
+
+COPY src/Fanex.Alpha.Before ./Fanex.Alpha.Before
 
 ARG TRANSFORM_CONFIG
 ARG CI_JOB_TOKEN
 RUN echo $TRANSFORM_CONFIG
-RUN mkdir /source/tmp
+RUN mkdir /src/tmp
 RUN if [ "$TRANSFORM_CONFIG" = "PRO" ] \
 		|| [ "$TRANSFORM_CONFIG" = "PRO2" ] \
 		|| [ "$TRANSFORM_CONFIG" = "LOCAL" ] \
 		|| [ "$TRANSFORM_CONFIG" = "PRO3" ]; \
-	then cd /source/tmp && curl --fail -o $TRANSFORM_CONFIG.domainmappings.json --header "PRIVATE-TOKEN:$CI_JOB_TOKEN" https://gitlab.nexdev.net/api/v4/projects/alpha-config%2Flogin-domains/repository/files/src%2F$TRANSFORM_CONFIG.domainmappings.json/raw?ref=182789-UpgradeNetCore \
-		&& cd - && cp -r tmp/$TRANSFORM_CONFIG.domainmappings.json src/Fanex.Alpha.Before/domainmappings.$TRANSFORM_CONFIG.json; fi
+	then cd /src/tmp && curl --fail -o $TRANSFORM_CONFIG.domainmappings.json --header "PRIVATE-TOKEN:$CI_JOB_TOKEN" https://gitlab.nexdev.net/api/v4/projects/alpha-config%2Flogin-domains/repository/files/src%2F$TRANSFORM_CONFIG.domainmappings.json/raw?ref=182789-UpgradeNetCore \
+		&& cd - && cp -r tmp/$TRANSFORM_CONFIG.domainmappings.json Fanex.Alpha.Before/domainmappings.$TRANSFORM_CONFIG.json; fi
 
 RUN if [ "$TRANSFORM_CONFIG" != "" ]; \
 then \
-  cp "src/Fanex.Alpha.Before/domainmappings.$TRANSFORM_CONFIG.json" "src/Fanex.Alpha.Before/domainmappings.json"; \
+  cp "Fanex.Alpha.Before/domainmappings.$TRANSFORM_CONFIG.json" "Fanex.Alpha.Before/domainmappings.json"; \
 fi
 
 RUN if [ "$TRANSFORM_CONFIG" = "LOCAL2" ] \
@@ -29,11 +30,11 @@ RUN if [ "$TRANSFORM_CONFIG" = "LOCAL2" ] \
   || [ "$TRANSFORM_CONFIG" = "AWS2" ] \
   || [ "$TRANSFORM_CONFIG" = "backupMNLi7" ]; \
 then \
-	cp "src/Fanex.Alpha.Before/wwwroot/favicon2.ico" "src/Fanex.Alpha.Before/wwwroot/favicon.ico"; \
-  cp "src/Fanex.Alpha.Before/bundleconfig2.json" "src/Fanex.Alpha.Before/bundleconfig.json";\
+	cp "Fanex.Alpha.Before/wwwroot/favicon2.ico" "Fanex.Alpha.Before/wwwroot/favicon.ico"; \
+  cp "Fanex.Alpha.Before/bundleconfig2.json" "Fanex.Alpha.Before/bundleconfig.json";\
 fi
 
-WORKDIR /source/src/Fanex.Alpha.Before
+WORKDIR /src/Fanex.Alpha.Before
 RUN dotnet publish -r linux-x64 --self-contained false -o /app
 
 FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0 AS base
