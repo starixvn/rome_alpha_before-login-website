@@ -13,9 +13,8 @@ RUN echo $TRANSFORM_CONFIG
 RUN mkdir /src/tmp
 RUN if [ "$TRANSFORM_CONFIG" = "PRO" ] \
 		|| [ "$TRANSFORM_CONFIG" = "PRO2" ] \
-		|| [ "$TRANSFORM_CONFIG" = "LOCAL" ] \
 		|| [ "$TRANSFORM_CONFIG" = "PRO3" ]; \
-	then cd /src/tmp && curl --fail -o $TRANSFORM_CONFIG.domainmappings.json --header "PRIVATE-TOKEN:$CI_JOB_TOKEN" https://gitlab.nexdev.net/api/v4/projects/alpha-config%2Flogin-domains/repository/files/src%2F$TRANSFORM_CONFIG.domainmappings.json/raw?ref=182789-UpgradeNetCore \
+	then cd /src/tmp && curl --fail -o $TRANSFORM_CONFIG.domainmappings.json --header "PRIVATE-TOKEN:$CI_JOB_TOKEN" https://gitlab.nexdev.net/api/v4/projects/alpha-config%2Flogin-domains/repository/files/src%2F$TRANSFORM_CONFIG.domainmappings.json/raw?ref=main \
 		&& cd - && cp -r tmp/$TRANSFORM_CONFIG.domainmappings.json Fanex.Alpha.Before/domainmappings.$TRANSFORM_CONFIG.json; fi
 
 RUN if [ "$TRANSFORM_CONFIG" != "" ]; \
