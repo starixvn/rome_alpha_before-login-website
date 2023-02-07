@@ -1,11 +1,11 @@
 using Alpha.Captcha.Core;
 using Alpha.Captcha.Core.Services;
 using Fanex.Alpha.Before.Configurations;
-using Fanex.Alpha.Before.Constants;
 using Fanex.Alpha.Before.Models;
 using Fanex.Alpha.Before.Resources;
 using Fanex.Alpha.Before.Services.SignIn;
 using Fanex.Logging.Extensions.AspNetCore;
+using FPS.Browserless.Detection.Client.NetStandard.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 

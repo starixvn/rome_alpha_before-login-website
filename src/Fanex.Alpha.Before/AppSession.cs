@@ -1,7 +1,6 @@
 using Fanex.Alpha.Before.Constants;
 using Fanex.Alpha.Before.Extensions;
 using Fanex.Alpha.Before.Helpers;
-using Microsoft.AspNetCore.Http;
 
 namespace Fanex.Alpha.Before;
 

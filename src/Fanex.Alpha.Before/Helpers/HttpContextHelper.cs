@@ -1,6 +1,3 @@
-
-using Microsoft.AspNetCore.Http;
-
 namespace Fanex.Alpha.Before.Helpers;
 
 public static class HttpContextHelper

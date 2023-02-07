@@ -1,5 +1,4 @@
 ﻿using Fanex.Alpha.Before.Constants;
-using Microsoft.Extensions.Configuration;
 
 namespace Fanex.Alpha.Before.Configurations
 {

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Fanex.Logging;
-using Microsoft.AspNetCore.Http;
 using UAParser;
 
 namespace Fanex.Alpha.Before.Helpers;

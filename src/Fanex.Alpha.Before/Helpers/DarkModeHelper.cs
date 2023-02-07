@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Fanex.Alpha.Before.Helpers
+﻿namespace Fanex.Alpha.Before.Helpers
 {
     public static class DarkModeHelper
     {

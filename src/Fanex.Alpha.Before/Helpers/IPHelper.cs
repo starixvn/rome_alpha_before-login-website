@@ -1,6 +1,4 @@
 ﻿using Fanex.Logging;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 
 namespace Fanex.Alpha.Before.Helpers;
 
