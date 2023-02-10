@@ -1,5 +1,6 @@
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Fanex.Alpha.Before.Middlewares;
 
@@ -23,6 +24,13 @@ public class LimitedCountryAccessMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
+        var endpoint = context.GetEndpoint();
+        if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() is object)
+        {
+            await _next(context);
+            return;
+        }
+
         if (_limitedCountryAccessService.IsLimitedAccess(_ipHelper.ClientIP()) && context.Request.Path.Value != LimitedCountryAccessPath)
         {
             context.Response.Redirect(LimitedCountryAccessPath, permanent: true, preserveMethod: true);
