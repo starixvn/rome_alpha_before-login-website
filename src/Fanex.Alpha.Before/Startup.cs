@@ -15,6 +15,8 @@ using Fanex.Data.Repository;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using TelegramBot.Client.Services;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.DataProtection;
+using StackExchange.Redis;
 
 namespace Fanex.Alpha.Before
 {
@@ -31,6 +33,9 @@ namespace Fanex.Alpha.Before
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSession();
+
+            services.AddDataProtection()
+               .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect("ha.nexdev.net:16389,Password=foo1@bared,Name=Alpha.Before.LOCAL,AbortConnect=false"), "alpha-before-login");
 
             services.AddFanexLogging(Configuration)
                  .AddONEbookUM(Configuration)
