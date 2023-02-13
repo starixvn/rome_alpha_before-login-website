@@ -1,5 +1,6 @@
 ﻿using Fanex.Logging;
 using Microsoft.AspNetCore.HttpOverrides;
+using ILogger = Fanex.Logging.ILogger;
 
 namespace Fanex.Alpha.Before.Helpers;
 
@@ -11,21 +12,24 @@ public interface IPHelper
 public class IPHelperImpl : IPHelper
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly ILogger _logger;
 
-    public IPHelperImpl(IHttpContextAccessor httpContextAccessor)
+    public IPHelperImpl(IHttpContextAccessor httpContextAccessor, ILogger logger)
     {
         _httpContextAccessor = httpContextAccessor;
+        _logger = logger;
     }
 
     public string ClientIP()
     {
         var context = _httpContextAccessor.HttpContext;
         var ip = context.Request.Headers["X-Forwarded-For"].ToString() ?? context.Connection.RemoteIpAddress.ToString();
+        _logger.Info(ip);
 
         if (string.IsNullOrWhiteSpace(ip))
         {
             var ex = new Exception("Before login: ip is null or empty");
-            Logger.Log.Error(ex.Message, ex);
+            _logger.Error(ex.Message, ex);
         }
 
         var ips = string.IsNullOrWhiteSpace(ip) || ip.Equals("::1") ?
@@ -34,7 +38,7 @@ public class IPHelperImpl : IPHelper
         if (string.IsNullOrWhiteSpace(ips[0]))
         {
             var ex = new Exception("Before login: HTTP_X_FORWARDED_FOR ip is null or empty");
-            Logger.Log.Error(ex.Message, ex);
+            _logger.Error(ex.Message, ex);
         }
 
         return ips[0].Trim();

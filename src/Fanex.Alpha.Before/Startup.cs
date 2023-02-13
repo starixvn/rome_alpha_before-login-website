@@ -14,6 +14,7 @@ using Fanex.Caching;
 using Fanex.Data.Repository;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using TelegramBot.Client.Services;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Fanex.Alpha.Before
 {
@@ -44,6 +45,12 @@ namespace Fanex.Alpha.Before
                  .AddCustomHealthChecks()
                  .AddControllersWithViews()
                  .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+
+            services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
 
             services.AddAssetsBundle(Configuration);
 
@@ -78,6 +85,8 @@ namespace Fanex.Alpha.Before
             {
                 app.UseExceptionHandler("/Common/Error");
             }
+
+            app.UseForwardedHeaders();
 
             app.UseFanexDataWithSqlServer(Configuration, env);
             app.UseWebOptimizer();
