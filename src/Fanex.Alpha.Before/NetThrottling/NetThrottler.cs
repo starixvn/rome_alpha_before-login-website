@@ -1,7 +1,6 @@
 using Fanex.Alpha.Before.NetThrottling.Models;
 using Fanex.Alpha.Before.NetThrottling.Utils;
 using Fanex.Caching;
-using Fanex.Caching.Redis;
 
 namespace Fanex.Alpha.Before.NetThrottling;
 
@@ -18,10 +17,9 @@ public class NetThrottler : INetThrottler
 {
     private readonly ICacheService cacheService;
 
-    public NetThrottler(RedisCacheOptions redisCacheOptions)
+    public NetThrottler(ICacheService cacheService)
     {
-        ICache cacheStorage = new RedisCache(redisCacheOptions);
-        cacheService = new CacheService(cacheStorage);
+        this.cacheService = cacheService;
     }
 
     public TResult Throttle<TResult>(Func<Func<TResult, TResult>, TResult> work, Func<TResult> blocked, ThrottlePolicy policy, CacheIdentity cacheIdentity)

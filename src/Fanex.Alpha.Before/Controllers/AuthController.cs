@@ -2,7 +2,6 @@ using Fanex.Alpha.Before.Constants;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
 using Fanex.Alpha.Before.Services.SignIn;
-using Fanex.Logging;
 using Microsoft.AspNetCore.Mvc;
 using ONEbook.UM.AspNetCore.Filters;
 
@@ -23,7 +22,6 @@ public class AuthController : Controller
     [HttpGet]
     public IActionResult Index(string r = null)
     {
-        Logger.Log.Info("Index-Get");
         var umToken = Request.Query["UMToken"].ToString();
         if (!string.IsNullOrWhiteSpace(umToken))
         {
@@ -52,7 +50,6 @@ public class AuthController : Controller
         string deviceId = "N/A",
         string assetAppPath = "")
     {
-        Logger.Log.Info("Index-Post");
         AssignSettingLanguage(hidLanguage);
         ViewBag.FPSToken = FPS.Client.NetStandard.Token.Generate();
         var model = new SignInModel(txtUserName, txtPassWord, hidLanguage, code, captchaToken, browserSize, deviceId, assetAppPath);

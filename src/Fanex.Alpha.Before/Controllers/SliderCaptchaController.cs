@@ -4,7 +4,6 @@ using Alpha.SliderCaptcha.AspNetCore.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fanex.Alpha.Before.Controllers;
-
 public class SliderCaptchaController : Controller
 {
     private readonly ICaptchaService captchaService;

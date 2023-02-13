@@ -17,6 +17,7 @@ using TelegramBot.Client.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.DataProtection;
 using StackExchange.Redis;
+using Fanex.Caching.Redis;
 
 namespace Fanex.Alpha.Before
 {
@@ -39,6 +40,7 @@ namespace Fanex.Alpha.Before
 
             services.AddFanexLogging(Configuration)
                  .AddONEbookUM(Configuration)
+                 .AddRedisCache(Configuration.GetSection("Fanex.Caching.Redis"))
                  .AddCustomOptions(Configuration)
                  .AddNetThrottling(Configuration)
                  .AddSliderCaptcha(Configuration)
@@ -57,7 +59,6 @@ namespace Fanex.Alpha.Before
             services.AddSingleton<IDynamicRepository, DynamicRepository>();
             services.AddSingleton<ISignInRepository, SignInRepository>();
             services.AddSingleton<IRobotDetector, RobotDetector>();
-            services.AddSingleton<ICacheService, CacheService>();
             services.AddSingleton<IDistributedCacheService, DistributedCacheService>();
 
             services.AddSingleton<IKickoutCustomerService, KickoutCustomerService>();

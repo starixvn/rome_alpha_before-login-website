@@ -71,12 +71,6 @@ public static class ServiceCollectionExtensions
         services.Configure<RobotOptions>(configuration.GetSection(RobotOptions.Robot));
         services.Configure<LoginThemeOptions>(configuration.GetSection(LoginThemeOptions.LoginTheme));
 
-        var redisCacheOptions = new RedisCacheOptions();
-        var configSection = configuration.GetSection("Fanex.Caching.Redis");
-        configSection.Bind(redisCacheOptions);
-        ReadEndPoints(configSection, redisCacheOptions);
-        services.AddSingleton(redisCacheOptions);
-
         return services;
     }
 
@@ -94,20 +88,5 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<INetThrottler, NetThrottler>();
 
         return services;
-    }
-
-    private static void ReadEndPoints(IConfigurationSection configuration, RedisCacheOptions options)
-    {
-        var endPoints = configuration.GetSection("ConnectionOptions:EndPoints").Get<string[]>();
-
-        if (endPoints != null && endPoints.Length > 0)
-        {
-            options.ConnectionOptions ??= new ConfigurationOptions();
-
-            foreach (var endPoint in endPoints)
-            {
-                options.ConnectionOptions.EndPoints.Add(endPoint);
-            }
-        }
     }
 }

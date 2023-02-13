@@ -2,7 +2,6 @@
 using Fanex.Alpha.Before.Constants;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Caching;
-using Fanex.Caching.Redis;
 
 namespace Fanex.Alpha.Before.Services.SignIn
 {
@@ -28,10 +27,10 @@ namespace Fanex.Alpha.Before.Services.SignIn
         private readonly IPHelper _ipHelper;
         private readonly ICacheService _cacheService;
 
-        public DistributedCacheService(IPHelper ipHelper, RedisCacheOptions redisCacheOptions)
+        public DistributedCacheService(IPHelper ipHelper, ICacheService cacheService)
         {
             _ipHelper = ipHelper;
-            _cacheService = new CacheService(new RedisCache(redisCacheOptions));
+            _cacheService = cacheService;
         }
 
         private string _loginIPFailedCountSessionKey => string.Format(SessionConstants.LOGINIPFAILEDCOUNT, AppSetting.SiteGroup, _ipHelper.ClientIP());
