@@ -102,10 +102,7 @@ namespace Fanex.Alpha.Before
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
-                {
-                    Predicate = r => r.Name.Contains("self")
-                }).AllowAnonymous();
+                endpoints.MapHealthChecks("/liveness").AllowAnonymous();
                 endpoints.MapControllerRoute("default", "{controller=Auth}/{action=Index}/{id?}");
             });
         }
