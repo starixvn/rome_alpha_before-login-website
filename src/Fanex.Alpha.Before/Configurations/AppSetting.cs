@@ -33,8 +33,6 @@ namespace Fanex.Alpha.Before.Configurations
         public static IDictionary<string, string> DomainMappings
             => configurationRoot.GetSection("DomainMappings").Get<DomainMapping[]>().ToDictionary(kvp => kvp.Before, kvp => kvp.After);
 
-        public static string Version => GetValue<string>("AppVersion");
-
         public static string FpsActivator => GetValue<string>("FPS:Activator");
 
         public static string FpsSubscriber => GetValue<string>("FPS:Subscriber");

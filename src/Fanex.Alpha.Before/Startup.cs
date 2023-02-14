@@ -10,7 +10,6 @@ using Fanex.Alpha.Before.Services;
 using Fanex.Alpha.Before.Services.FPS;
 using Fanex.Alpha.Before.Services.SignIn;
 using Fanex.Alpha.Before.Extensions;
-using Fanex.Caching;
 using Fanex.Data.Repository;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using TelegramBot.Client.Services;
@@ -34,9 +33,8 @@ namespace Fanex.Alpha.Before
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSession();
-
             services.AddDataProtection()
-               .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect("ha.nexdev.net:16389,Password=foo1@bared,Name=Alpha.Before.LOCAL,AbortConnect=false"), "alpha-before-login");
+               .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(Configuration.GetValue<string>("RedisConfiguration")), "alpha-before-login");
 
             services.AddFanexLogging(Configuration)
                  .AddONEbookUM(Configuration)
