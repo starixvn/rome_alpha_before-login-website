@@ -32,14 +32,14 @@
     <PackageReference Include="Fanex.Caching.Redis.AspNetCore" Version="2.2.3" />
     <PackageReference Include="Fanex.Common" Version="1.1.1-beta1" />
     <PackageReference Include="Fanex.Data.Repository" Version="4.2.2" />
-    <PackageReference Include="FPS.Browserless.Detection.Client.NetStandard" Version="1.0.0" />
+    <PackageReference Include="FPS.Browserless.Detection.Client.NetStandard" Version="1.0.4" />
     <PackageReference Include="FPS.Client.NetStandard" Version="1.0.2" />
     <PackageReference Include="LigerShark.WebOptimizer.Sass" Version="3.0.91" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.2" />
     <PackageReference Include="TelegramBot.Client" Version="1.0.1" />
     <PackageReference Include="Fanex.Cryptography.Aes" Version="1.0.0.6-beta1" />
     <PackageReference Include="UAParser" Version="3.1.47" />
-    <PackageReference Include="Alpha.SliderCaptcha.AspNetCore" Version="1.0.0-beta6" />
+    <PackageReference Include="Alpha.SliderCaptcha.AspNetCore" Version="1.0.0-beta7" />
     <PackageReference Include="Fanex.Data.SqlServer" Version="4.2.2" />
     <PackageReference Include="Fanex.Logging.Extensions.AspNetCore" Version="1.0.0" />
     <PackageReference Include="Fanex.Logging.Extensions.Database" Version="1.0.8" />

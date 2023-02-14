@@ -11,6 +11,7 @@ using Fanex.Alpha.Before.Services.FPS;
 using Fanex.Alpha.Before.Services.SignIn;
 using Fanex.Alpha.Before.Extensions;
 using Fanex.Data.Repository;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using TelegramBot.Client.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.DataProtection;
@@ -97,11 +98,14 @@ namespace Fanex.Alpha.Before
 
             app.UseViewMode();
             app.UseRequestCulture();
-            //app.UseLimitedCountryAccess();
+            app.UseLimitedCountryAccess();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHealthChecks("/liveness").AllowAnonymous();
+                endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                {
+                    Predicate = r => r.Name.Contains("self")
+                }).AllowAnonymous();
                 endpoints.MapControllerRoute("default", "{controller=Auth}/{action=Index}/{id?}");
             });
         }

@@ -1,6 +1,4 @@
-﻿using Fanex.Logging;
-using Microsoft.AspNetCore.HttpOverrides;
-using ILogger = Fanex.Logging.ILogger;
+﻿using ILogger = Fanex.Logging.ILogger;
 
 namespace Fanex.Alpha.Before.Helpers;
 
@@ -23,9 +21,8 @@ public class IPHelperImpl : IPHelper
     public string ClientIP()
     {
         var context = _httpContextAccessor.HttpContext;
-        var ip = context.Request.Headers["X-Forwarded-For"].ToString() ?? context.Connection.RemoteIpAddress.ToString();
-        _logger.Info(context.Request.Path.Value);
-        _logger.Info(ip);
+        var xForwardedFor = context.Request.Headers["X-Forwarded-For"].ToString();
+        var ip = !string.IsNullOrEmpty(xForwardedFor) ? xForwardedFor : context.Connection.RemoteIpAddress.ToString();
 
         if (string.IsNullOrWhiteSpace(ip))
         {

@@ -8,6 +8,6 @@ host.Run();
 
 static IWebHost BuildWebHost(string[] args) =>
     WebHost.CreateDefaultBuilder(args)
-        .ConfigureKestrel(options => options.ListenAnyIP(5000))
         .UseStartup<Startup>()
+        .UseUrls("http://0.0.0.0:5000")
         .Build();
