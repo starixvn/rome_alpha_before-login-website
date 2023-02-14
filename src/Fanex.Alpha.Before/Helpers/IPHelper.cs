@@ -24,6 +24,7 @@ public class IPHelperImpl : IPHelper
     {
         var context = _httpContextAccessor.HttpContext;
         var ip = context.Request.Headers["X-Forwarded-For"].ToString() ?? context.Connection.RemoteIpAddress.ToString();
+        _logger.Info(context.Request.Path.Value);
         _logger.Info(ip);
 
         if (string.IsNullOrWhiteSpace(ip))

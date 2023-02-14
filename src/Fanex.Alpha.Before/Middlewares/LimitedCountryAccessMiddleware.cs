@@ -31,7 +31,7 @@ public class LimitedCountryAccessMiddleware
             return;
         }
 
-        if (_limitedCountryAccessService.IsLimitedAccess(_ipHelper.ClientIP()) && context.Request.Path.Value != LimitedCountryAccessPath)
+        if (context.Request.Path.Value != LimitedCountryAccessPath && _limitedCountryAccessService.IsLimitedAccess(_ipHelper.ClientIP()))
         {
             context.Response.Redirect(LimitedCountryAccessPath, permanent: true, preserveMethod: true);
             return;
