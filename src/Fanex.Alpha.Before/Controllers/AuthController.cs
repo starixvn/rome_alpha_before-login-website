@@ -2,6 +2,7 @@ using Fanex.Alpha.Before.Constants;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
 using Fanex.Alpha.Before.Services.SignIn;
+using Fanex.Logging;
 using Microsoft.AspNetCore.Mvc;
 using ONEbook.UM.AspNetCore.Filters;
 
@@ -22,6 +23,7 @@ public class AuthController : Controller
     [HttpGet]
     public IActionResult Index(string r = null)
     {
+        Logger.Log.Info("Index");
         var umToken = Request.Query["UMToken"].ToString();
         if (!string.IsNullOrWhiteSpace(umToken))
         {

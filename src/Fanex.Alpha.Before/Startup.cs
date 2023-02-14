@@ -11,7 +11,6 @@ using Fanex.Alpha.Before.Services.FPS;
 using Fanex.Alpha.Before.Services.SignIn;
 using Fanex.Alpha.Before.Extensions;
 using Fanex.Data.Repository;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using TelegramBot.Client.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.DataProtection;
@@ -98,7 +97,7 @@ namespace Fanex.Alpha.Before
 
             app.UseViewMode();
             app.UseRequestCulture();
-            app.UseLimitedCountryAccess();
+            //app.UseLimitedCountryAccess();
 
             app.UseEndpoints(endpoints =>
             {
