@@ -1,8 +1,7 @@
 ﻿using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Models;
-using Fanex.Logging;
 using FPS.Client.NetStandard.Models;
-using Microsoft.Extensions.Options;
+using ILogger = Fanex.Logging.ILogger;
 
 namespace Fanex.Alpha.Before.Helpers
 {
@@ -13,13 +12,13 @@ namespace Fanex.Alpha.Before.Helpers
 
     public class FPSHelper : IFPSHelper
     {
-        private readonly RobotOptions robotOptions;
         private readonly IPHelper ipHelper;
+        private readonly ILogger logger;
 
-        public FPSHelper(IOptions<RobotOptions> robotOptions, IPHelper ipHelper)
+        public FPSHelper(IPHelper ipHelper, ILogger logger)
         {
-            this.robotOptions = robotOptions.Value;
             this.ipHelper = ipHelper;
+            this.logger = logger;
         }
 
         public void FPSTracking(HttpRequest request, SignInResult loginResult)
@@ -63,7 +62,7 @@ namespace Fanex.Alpha.Before.Helpers
                     CaptchaResult = string.Empty
                 };
 
-                new FPS.Client.NetStandard.Service(robotOptions.FPSTransactionApiUrl).CheckTransaction(
+                new FPS.Client.NetStandard.Service(AppSetting.FpsApi).CheckTransaction(
                     httpRequestData,
                     username.Trim(),
                     loginAction,
@@ -73,7 +72,7 @@ namespace Fanex.Alpha.Before.Helpers
             }
             catch (Exception ex)
             {
-                Logger.Log.Error(ex.Message, ex);
+                logger.Error(ex.Message, ex);
             }
         }
     }
