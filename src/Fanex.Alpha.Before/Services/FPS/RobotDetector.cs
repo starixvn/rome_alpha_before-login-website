@@ -2,6 +2,7 @@
 using Fanex.Alpha.Before.Helpers;
 using FPS.Browserless.Detection.Client.NetStandard;
 using Microsoft.Extensions.Options;
+using System.Text.Json;
 
 namespace Fanex.Alpha.Before.Services.FPS
 {
@@ -44,6 +45,7 @@ namespace Fanex.Alpha.Before.Services.FPS
                 }
 
                 var ipInfo = ipService.GetIPInformation(ipHelper.ClientIP());
+                logger.Info(JsonSerializer.Serialize(ipInfo));
                 if (ipInfo != null && ipInfo.CountryShort == "MY")
                 {
                     return 0;

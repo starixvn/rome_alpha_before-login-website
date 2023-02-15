@@ -1,6 +1,7 @@
 using Fanex.Alpha.Before.NetThrottling.Models;
 using Fanex.Alpha.Before.NetThrottling.Utils;
 using Fanex.Caching;
+using System.Text.Json;
 
 namespace Fanex.Alpha.Before.NetThrottling;
 
@@ -64,8 +65,10 @@ public class NetThrottler : INetThrottler
             return ThrottleResult.Blocked;
         }
 
-        var isHasValue = cacheService.TryGet(cacheIdentity.ThrottleKey, out ThrottleCounter throttleCounter);
-        throttleCounter = !isHasValue || Clock.UtcNow > throttleCounter.Timestamp + TimeSpan.FromSeconds(policy.ThrottleDuration)
+        var jsonString = cacheService.Get<string>(cacheIdentity.ThrottleKey);
+        var throttleCounter = !string.IsNullOrWhiteSpace(jsonString) ? JsonSerializer.Deserialize<ThrottleCounter>(jsonString) : null;
+
+        throttleCounter = throttleCounter == null || Clock.UtcNow > throttleCounter.Timestamp + TimeSpan.FromSeconds(policy.ThrottleDuration)
             ? new ThrottleCounter
             {
                 Timestamp = Clock.UtcNow,
@@ -87,7 +90,7 @@ public class NetThrottler : INetThrottler
 
         cacheService.Set(
             cacheIdentity.ThrottleKey,
-            throttleCounter, new CacheItemOptions
+            JsonSerializer.Serialize(throttleCounter), new CacheItemOptions
             {
                 SlidingExpiration = TimeSpan.FromSeconds(policy.ThrottleDuration)
             });
