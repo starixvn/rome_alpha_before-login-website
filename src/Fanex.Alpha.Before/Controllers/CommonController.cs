@@ -1,6 +1,7 @@
 using System.Net;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
+using Fanex.Alpha.Before.Services;
 using Fanex.Logging.Extensions.AspNetCore;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,13 @@ public class CommonController : Controller
 {
     private readonly IMaintenanceService _maintenanceService;
     private readonly IPHelper _ipHelper;
+    private readonly ILimitedCountryAccessService _limitedCountryAccessService;
 
-    public CommonController(IMaintenanceService maintenanceService, IPHelper ipHelper)
+    public CommonController(IMaintenanceService maintenanceService, IPHelper ipHelper, ILimitedCountryAccessService limitedCountryAccessService)
     {
         _maintenanceService = maintenanceService;
         _ipHelper = ipHelper;
+        _limitedCountryAccessService = limitedCountryAccessService;
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -47,7 +50,16 @@ public class CommonController : Controller
 
     public IActionResult LimitedCountryAccess()
     {
-        ViewData["DarkModeName"] = AppSession.DarkModeName;
-        return View("LimitedCountryAccess", _ipHelper.ClientIP());
+        var clientIP = _ipHelper.ClientIP();
+        if (_limitedCountryAccessService.IsLimitedAccess(clientIP))
+        {
+            ViewData["DarkModeName"] = AppSession.DarkModeName;
+            return View("LimitedCountryAccess", _ipHelper.ClientIP());
+        }
+        else
+        {
+            return Redirect("~/");
+        }
+
     }
 }
