@@ -36,6 +36,7 @@
     <PackageReference Include="FPS.Client.NetStandard" Version="1.0.2" />
     <PackageReference Include="LigerShark.WebOptimizer.Sass" Version="3.0.91" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.3" />
     <PackageReference Include="TelegramBot.Client" Version="1.0.1" />
     <PackageReference Include="Fanex.Cryptography.Aes" Version="1.0.0.6-beta1" />
     <PackageReference Include="UAParser" Version="3.1.47" />

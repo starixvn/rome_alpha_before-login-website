@@ -290,6 +290,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             }
             else
             {
+                logger.Info(robotResult.ToString());
                 AppSession.AssignRobotCaptchaSession(
                    verifySignInResult.CustId,
                    verifySignInResult.Username,

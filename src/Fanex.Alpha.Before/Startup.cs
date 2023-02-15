@@ -32,10 +32,16 @@ namespace Fanex.Alpha.Before
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var redisConfiguration = Configuration.GetValue<string>("RedisConfiguration");
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = redisConfiguration;
+                options.InstanceName = "AlphaBeforeLogin";
+            });
             services.AddSession();
             services.AddDataProtection()
                 .SetApplicationName("alpha-before-login")
-                .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(Configuration.GetValue<string>("RedisConfiguration")), "alpha-before-login");
+                .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(redisConfiguration), "alpha-before-login");
 
             services.AddFanexLogging(Configuration)
                  .AddONEbookUM(Configuration)
