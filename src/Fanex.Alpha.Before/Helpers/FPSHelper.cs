@@ -60,7 +60,7 @@ namespace Fanex.Alpha.Before.Helpers
                     Token = request.Form["__tk"].ToString(),
                     Url = request.Scheme.ToString() + "://" + request.Host.ToString(),
                     DebugInfo = request.Form["detecas-analysis"].ToString(),
-                    CaptchaResult = request.Form["captcha_result"].ToString()
+                    CaptchaResult = string.Empty
                 };
 
                 new FPS.Client.NetStandard.Service(robotOptions.FPSTransactionApiUrl).CheckTransaction(

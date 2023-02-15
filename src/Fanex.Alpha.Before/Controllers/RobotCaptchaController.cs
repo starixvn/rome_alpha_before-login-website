@@ -4,7 +4,6 @@ using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Models;
 using Fanex.Alpha.Before.Resources;
 using Fanex.Alpha.Before.Services.SignIn;
-using Fanex.Logging;
 using Fanex.Logging.Extensions.AspNetCore;
 using FPS.Browserless.Detection.Client.NetStandard.Entity;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +35,6 @@ public class RobotCaptchaController : Controller
 
     public IActionResult Index()
     {
-        Logger.Log.Info(AppSession.RobotResult);
         if (IsNotRobot())
         {
             var message = $"{Labels.invalidsession} / {Labels.inputCaptchaTooLong}";
