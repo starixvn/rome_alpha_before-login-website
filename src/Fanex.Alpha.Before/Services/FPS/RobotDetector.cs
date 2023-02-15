@@ -1,4 +1,5 @@
 ﻿using Fanex.Alpha.Before.Configurations;
+using Fanex.Alpha.Before.Helpers;
 using FPS.Browserless.Detection.Client.NetStandard;
 using Microsoft.Extensions.Options;
 
@@ -13,11 +14,19 @@ namespace Fanex.Alpha.Before.Services.FPS
     {
         private readonly Logging.ILogger logger;
         private readonly RobotOptions robotOptions;
+        private readonly IPHelper ipHelper;
+        private readonly IPService ipService;
 
-        public RobotDetector(Logging.ILogger logger, IOptions<RobotOptions> robotOptions)
+        public RobotDetector(
+            Logging.ILogger logger,
+            IOptions<RobotOptions> robotOptions,
+            IPHelper ipHelper,
+            IPService ipService)
         {
             this.logger = logger;
             this.robotOptions = robotOptions.Value;
+            this.ipHelper = ipHelper;
+            this.ipService = ipService;
         }
 
         public int IsRobot(HttpRequest request)
@@ -32,6 +41,12 @@ namespace Fanex.Alpha.Before.Services.FPS
                 if (robotOptions.IsRobotAlways)
                 {
                     return 1;
+                }
+
+                var ipInfo = ipService.GetIPInformation(ipHelper.ClientIP());
+                if (ipInfo != null && ipInfo.CountryShort == "MY")
+                {
+                    return 0;
                 }
 
                 return BotDetection.IsBot(request, robotOptions.FPSBotDetectionApiUrl);
