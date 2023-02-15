@@ -114,7 +114,7 @@ Sphinx.Login = {
     },
 
     setLanguague: function (languageCode, firstLoad) {
-        Sphinx.Core.setCookie("hidLanguage", languageCode, 1);
+        Sphinx.Core.setUserData("hidLanguage", languageCode);
         var domElements = Sphinx.Login.domElements;
 
         if (!firstLoad) {
@@ -211,8 +211,8 @@ Sphinx.Login = {
         var inputPassword = $('<input type="text" id="txtPassWord" name="txtPassWord" tabindex="2" placeholder="' +
             valPlaceholder +
             '" class="txt" value="' +
-             $('<div>').text($input.val()).html() +
-             '" autocomplete="off"  />');
+            $('<div>').text($input.val()).html() +
+            '" autocomplete="off"  />');
 
         $input.replaceWith(inputPassword);
         Sphinx.Login.domElements.txtPassword = inputPassword;
@@ -302,12 +302,12 @@ Sphinx.Login = {
         var iv = key;
 
         var pwd = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(plainText), key,
-        {
-            keySize: 128 / 8,
-            iv: iv,
-            mode: CryptoJS.mode.CBC,
-            padding: CryptoJS.pad.Pkcs7
-        });
+            {
+                keySize: 128 / 8,
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
 
         return pwd;
     },
@@ -339,11 +339,11 @@ Sphinx.Login = {
 
     getBrowserSize: function () {
         var w = window,
-        d = document,
-        e = d.documentElement,
-        g = d.getElementsByTagName('body')[0],
-        x = w.innerWidth || e.clientWidth || g.clientWidth,
-        y = w.innerHeight || e.clientHeight || g.clientHeight;
+            d = document,
+            e = d.documentElement,
+            g = d.getElementsByTagName('body')[0],
+            x = w.innerWidth || e.clientWidth || g.clientWidth,
+            y = w.innerHeight || e.clientHeight || g.clientHeight;
 
         return x + 'x' + y;
     },
