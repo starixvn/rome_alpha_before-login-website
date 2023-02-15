@@ -39,9 +39,11 @@ namespace Fanex.Alpha.Before
                 options.InstanceName = "AlphaBeforeLogin";
             });
             services.AddSession();
+
+            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(redisConfiguration);
             services.AddDataProtection()
                 .SetApplicationName("alpha-before-login")
-                .PersistKeysToStackExchangeRedis(ConnectionMultiplexer.Connect(redisConfiguration), "alpha-before-login");
+                .PersistKeysToStackExchangeRedis(redis, "alpha-before-login");
 
             services.AddFanexLogging(Configuration)
                  .AddONEbookUM(Configuration)
