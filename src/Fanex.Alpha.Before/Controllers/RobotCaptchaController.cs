@@ -48,8 +48,6 @@ public class RobotCaptchaController : Controller
         }
 
         AssignDarkModeNameViewData();
-
-        ViewBag.tooManyFailedLoginPageUrl = TooManyFailedLoginPageUrl;
         return View();
     }
 
