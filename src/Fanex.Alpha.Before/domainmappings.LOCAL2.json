@@ -1,8 +1,8 @@
 {
     "DomainMappings": [
         {
-            "Before": "alpha-login.nexdev.net",
-            "After": "http://mb6.nexdev.net/ex-main/"
+            "Before": "alpha-login2.nexdev.net",
+            "After": "http://mb17.nexdev.net/ex-main/"
         }
     ]
 }

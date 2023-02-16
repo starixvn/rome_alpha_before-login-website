@@ -30,7 +30,6 @@ RUN if [ "$TRANSFORM_CONFIG" = "LOCAL2" ] \
   || [ "$TRANSFORM_CONFIG" = "backupMNLi7" ]; \
 then \
 	cp "Fanex.Alpha.Before/wwwroot/favicon2.ico" "Fanex.Alpha.Before/wwwroot/favicon.ico"; \
-  cp "Fanex.Alpha.Before/bundleconfig2.json" "Fanex.Alpha.Before/bundleconfig.json";\
 fi
 
 WORKDIR /src/Fanex.Alpha.Before
