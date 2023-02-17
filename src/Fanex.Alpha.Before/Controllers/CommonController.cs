@@ -23,12 +23,15 @@ public class CommonController : Controller
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public async Task<IActionResult> Error()
+    public async Task<IActionResult> Error(string code)
     {
-        var error = HttpContext.Features.Get<IExceptionHandlerFeature>().Error;
-        await ExceptionHandler.HandleAsync(error, HttpContext);
+        var exceptionHandlerFeature = HttpContext.Features.Get<IExceptionHandlerFeature>();
+        if (exceptionHandlerFeature != null)
+        {
+            await ExceptionHandler.HandleAsync(exceptionHandlerFeature.Error, HttpContext);
+        }
 
-        ViewBag.ErrorMessage = string.Format(Resources.Labels.Error_Server, HttpStatusCode.InternalServerError);
+        ViewBag.ErrorMessage = string.Format(Resources.Labels.Error_Server, string.IsNullOrWhiteSpace(code) ? (int)HttpStatusCode.InternalServerError : code);
         ViewData["DarkModeName"] = AppSession.DarkModeName;
 
         return View();

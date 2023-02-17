@@ -94,6 +94,8 @@ namespace Fanex.Alpha.Before
                 app.UseExceptionHandler("/Common/Error");
             }
 
+            app.UseStatusCodePagesWithRedirects("/Common/Error?code={0}");
+
             app.UseForwardedHeaders();
 
             app.UseFanexDataWithSqlServer(Configuration, env);
