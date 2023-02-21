@@ -1,4 +1,4 @@
 include:
-  - project: "ci/repos-ci/rome_alpha_login_site" # Refer to field CI Script Repo at step #3
-    ref: master
-    file: "gitlab-ci.yml"
+  - project: ci/core-cicd
+    ref: main
+    file: nexcel.gitlab-ci.yml
