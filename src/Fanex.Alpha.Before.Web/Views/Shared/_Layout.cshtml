@@ -51,6 +51,8 @@ else if (Model.GetType() == typeof(Fanex.Alpha.Before.Customer.Models.SignInResu
         @RenderSection("scripts", false)
 
         @Html.Partial("GoogleAnalytic", CommonAppSetting.GoogleAnalyticId)
+
+        @Html.Hidden("is789y", CommonAppSetting.IsMBCSite ? "0" : "1")
     </body>
 </html>
 }

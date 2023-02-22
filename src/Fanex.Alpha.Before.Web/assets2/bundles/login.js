@@ -10954,17 +10954,30 @@ var Sphinx = Sphinx || {};
 
 Sphinx.Core = {
     getUserData: function (name) {
-        if (store.enabled) {
-            return store.get(name);
-        }
-
-        return null;
+        return this.getCookie(name); 
     },
     setUserData: function (name, value) {
-        if (store.enabled) {
-            return store.set(name, value);
-        }
+        var domain = window.location.hostname;
+        var subDomain = domain.split('.')[0];
+        var mainDomain = domain.replace(subDomain, '');
+        this.setCookie(name, value, 365, mainDomain);
     },
+    getCookie: function(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    },
+
     setCookie: function (name, value, days, domain) {
         var expires = "";
         if (days) {
@@ -11413,7 +11426,11 @@ Sphinx.Helper = (function () {
 
 Sphinx.Login = {
     currentLanguageCode: 'en-US',
+    is789y: "0",
+
     init: function () {
+        this.is789y = $("#is789y").val();
+
         Sphinx.Login.browser = Sphinx.Core.detectBrowser();
         Sphinx.Login.cachedDomElements();
         Sphinx.rootUrl = window.rootUrl;
@@ -11424,6 +11441,11 @@ Sphinx.Login = {
 
         if (parseInt(language) === 0) {
             language = Sphinx.Login.currentLanguageCode;
+        }
+
+        if (!this.is789y && language === "vi-VN") {
+            language = this.currentLanguageCode;
+            Sphinx.Core.setUserData("LANGUAGE", language);
         }
 
         Sphinx.Login.setLanguague(language, true);
@@ -11495,7 +11517,7 @@ Sphinx.Login = {
     },
 
     setLanguague: function (languageCode, firstLoad) {
-        Sphinx.Core.setCookie("hidLanguage", languageCode, 1);
+        Sphinx.Core.setUserData("hidLanguage", languageCode);
         var domElements = Sphinx.Login.domElements;
 
         if (!firstLoad) {
@@ -11592,8 +11614,8 @@ Sphinx.Login = {
         var inputPassword = $('<input type="text" id="txtPassWord" name="txtPassWord" tabindex="2" placeholder="' +
             valPlaceholder +
             '" class="txt" value="' +
-             $('<div>').text($input.val()).html() +
-             '" autocomplete="off"  />');
+            $('<div>').text($input.val()).html() +
+            '" autocomplete="off"  />');
 
         $input.replaceWith(inputPassword);
         Sphinx.Login.domElements.txtPassword = inputPassword;
@@ -11683,12 +11705,12 @@ Sphinx.Login = {
         var iv = key;
 
         var pwd = CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(plainText), key,
-        {
-            keySize: 128 / 8,
-            iv: iv,
-            mode: CryptoJS.mode.CBC,
-            padding: CryptoJS.pad.Pkcs7
-        });
+            {
+                keySize: 128 / 8,
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
 
         return pwd;
     },
@@ -11720,11 +11742,11 @@ Sphinx.Login = {
 
     getBrowserSize: function () {
         var w = window,
-        d = document,
-        e = d.documentElement,
-        g = d.getElementsByTagName('body')[0],
-        x = w.innerWidth || e.clientWidth || g.clientWidth,
-        y = w.innerHeight || e.clientHeight || g.clientHeight;
+            d = document,
+            e = d.documentElement,
+            g = d.getElementsByTagName('body')[0],
+            x = w.innerWidth || e.clientWidth || g.clientWidth,
+            y = w.innerHeight || e.clientHeight || g.clientHeight;
 
         return x + 'x' + y;
     },
