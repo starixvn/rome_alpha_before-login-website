@@ -2,7 +2,6 @@
 using Fanex.Alpha.Before.Models;
 using FPS.Client.NetStandard.Models;
 using ILogger = Fanex.Logging.ILogger;
-using System.Text.Json;
 
 namespace Fanex.Alpha.Before.Helpers
 {
@@ -62,8 +61,6 @@ namespace Fanex.Alpha.Before.Helpers
                     DebugInfo = request.Form["detecas-analysis"].ToString(),
                     CaptchaResult = string.Empty
                 };
-
-                logger.Info(JsonSerializer.Serialize(httpRequestData));
 
                 new FPS.Client.NetStandard.Service(AppSetting.FpsApi).CheckTransaction(
                     httpRequestData,
