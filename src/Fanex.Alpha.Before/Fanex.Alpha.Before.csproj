@@ -33,7 +33,7 @@
     <PackageReference Include="Fanex.Common" Version="1.1.1" />
     <PackageReference Include="Fanex.Data.Repository" Version="4.2.2" />
     <PackageReference Include="FPS.Browserless.Detection.Client.NetStandard" Version="1.0.4" />
-    <PackageReference Include="FPS.Client.NetStandard" Version="1.0.3" />
+    <PackageReference Include="FPS.Client.NetStandard" Version="1.0.5" />
     <PackageReference Include="LigerShark.WebOptimizer.Sass" Version="3.0.91" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="7.0.2" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.3" />

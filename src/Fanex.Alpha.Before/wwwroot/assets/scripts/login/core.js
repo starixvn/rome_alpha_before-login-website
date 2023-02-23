@@ -8,17 +8,30 @@ var Sphinx = Sphinx || {};
 
 Sphinx.Core = {
     getUserData: function (name) {
-        if (store.enabled) {
-            return store.get(name);
-        }
-
-        return null;
+        return this.getCookie(name); 
     },
     setUserData: function (name, value) {
-        if (store.enabled) {
-            return store.set(name, value);
-        }
+        var domain = window.location.hostname;
+        var subDomain = domain.split('.')[0];
+        var mainDomain = domain.replace(subDomain, '');
+        this.setCookie(name, value, 365, mainDomain);
     },
+    getCookie: function(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    },
+
     setCookie: function (name, value, days, domain) {
         var expires = "";
         if (days) {

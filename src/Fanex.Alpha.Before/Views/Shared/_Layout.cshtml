@@ -44,6 +44,8 @@
     @await Html.PartialAsync("FPS", data)
 
     @RenderSection("scripts", false)
+
+    @Html.Hidden("is789y", AppSetting.Is789ySite? "1":"0")
 </body>
 </html>
 

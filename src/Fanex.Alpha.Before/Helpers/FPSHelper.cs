@@ -49,7 +49,7 @@ namespace Fanex.Alpha.Before.Helpers
                 var username = loginResult.Username;
                 var fpsSubscirber = AppSetting.FpsSubscriber;
                 TimeSpan diff = DateTime.UtcNow - DateTime.Now;
-                var httpRequestData = new HttpRequestData()
+                var httpRequestData = new HttpRequestModel()
                 {
                     AcceptTypes = request.Headers["Accept"].ToString() ?? string.Empty,
                     UserAgent = request.Headers["User-Agent"].ToString() ?? string.Empty,
@@ -68,7 +68,9 @@ namespace Fanex.Alpha.Before.Helpers
                     loginAction,
                     loginMessage,
                     fpsSubscirber,
-                    loginResult.LoginTime);
+                    loginResult.LoginTime,
+                    out var resultMessage,
+                    out var deviceCode);
             }
             catch (Exception ex)
             {
