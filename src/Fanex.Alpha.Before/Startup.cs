@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using TelegramBot.Client.Services;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.DataProtection;
-using StackExchange.Redis;
 using Fanex.Caching.Redis;
 
 namespace Fanex.Alpha.Before
@@ -40,10 +39,9 @@ namespace Fanex.Alpha.Before
             });
             services.AddSession();
 
-            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(redisConfiguration);
             services.AddDataProtection()
                 .SetApplicationName("alpha-before-login")
-                .PersistKeysToStackExchangeRedis(redis, "alpha-before-login");
+                .PersistKeysToFileSystem(new DirectoryInfo("login_site_cache"));
 
             services.AddFanexLogging(Configuration)
                  .AddONEbookUM(Configuration)
