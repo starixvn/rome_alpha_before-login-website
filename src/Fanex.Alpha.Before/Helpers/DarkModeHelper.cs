@@ -3,7 +3,10 @@
     public static class DarkModeHelper
     {
         public static void SetDarkModeSession(HttpRequest request)
-            => AppSession.DarkModeName = GetCookieIsDarkModeValue(request) ? "-dark" : string.Empty;
+            => AppSession.DarkModeName = GetDarkModeValue(request);
+
+        public static string GetDarkModeValue(HttpRequest request)
+            => GetCookieIsDarkModeValue(request) ? "-dark" : string.Empty;
 
         private static bool GetCookieIsDarkModeValue(HttpRequest request)
         {

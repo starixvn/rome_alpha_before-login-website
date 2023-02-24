@@ -101,8 +101,9 @@ namespace Fanex.Alpha.Before.Services.SignIn
 
             //// Check cross cookie compatibility
             const int EncryptCookieCodeLength = 6;
-            AppSession.CookieCode = EncryptExtension.RandomNumberString(EncryptCookieCodeLength);
-            var randomCookieTicket = EncryptExtension.CfsEnCode(AppSession.CookieCode);
+            var cookieCode = EncryptExtension.RandomNumberString(EncryptCookieCodeLength);
+            AppSession.CookieCode = cookieCode;
+            var randomCookieTicket = EncryptExtension.CfsEnCode(cookieCode);
 
             //// Set cookie with custid id
             var baseDomain = httpContext.Request.Host.Value;
@@ -119,8 +120,9 @@ namespace Fanex.Alpha.Before.Services.SignIn
 
             //// Use for encrypt pwd
             const int EncryptPasswordLength = 4;
-            AppSession.EncryptCode = EncryptExtension.RandomNumberString(EncryptPasswordLength);
-            loginResult.Captcha = AppSession.EncryptCode;
+            var encryptCode = EncryptExtension.RandomNumberString(EncryptPasswordLength);
+            AppSession.EncryptCode = encryptCode;
+            loginResult.Captcha = encryptCode;
 
             return loginResult;
         }
@@ -141,7 +143,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
 
             AppSession.EncryptCode = model.Code;
 
-            if (string.IsNullOrEmpty(AppSession.EncryptCode))
+            if (string.IsNullOrEmpty(model.Code))
             {
                 signInResult.ErrCode = SignInErrorContants.InvalidEncryptCode;
                 signInResult.ErrMsg = Labels.errInvalidCaptcha;
@@ -181,11 +183,18 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 }
             }
 
-            var password = AesService.Default.Decrypt(model.Password, AppSession.EncryptCode);
-            var assetAppPath = AssetAppPathHelper.IsValidAssetAppPath(model.AssetAppPath)
-                ? model.AssetAppPath
-                : string.Empty;
-            VerifyDownlineLogin(model.Username, password, model.DeviceId, model.BrowserSize, signInResult, !string.IsNullOrWhiteSpace(AppSession.DarkModeName), assetAppPath, httpContext);
+            var password = AesService.Default.Decrypt(model.Password, model.Code);
+            var assetAppPath = AssetAppPathHelper.IsValidAssetAppPath(model.AssetAppPath) ? model.AssetAppPath : string.Empty;
+            VerifyDownlineLogin(
+                model.Username,
+                password,
+                model.Language,
+                model.DeviceId,
+                model.BrowserSize,
+                signInResult,
+                DarkModeHelper.GetDarkModeValue(httpContext.Request),
+                assetAppPath,
+                httpContext);
 
             return signInResult;
         }
@@ -210,7 +219,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 return signInResult;
             }
 
-            VerifyDownlineLogin(username, password, deviceId, browserSize, signInResult, null, string.Empty, httpContext);
+            VerifyDownlineLogin(username, password, LanguageHelper.DefaultLanguage, deviceId, browserSize, signInResult, null, string.Empty, httpContext);
 
 
             return signInResult;
@@ -272,21 +281,32 @@ namespace Fanex.Alpha.Before.Services.SignIn
             string password,
             SignInResult signInResult,
             VerifySignInResult verifySignInResult,
+            string language,
             string deviceId,
             string browserSize,
+            string darkModeName,
             string assetAppPath,
             HttpContext httpContext)
         {
             cacheService.ResetLoginSession(signInResult.Username);
 
-            var encryptPassword = AesService.Default.Encrypt(password, AppSession.EncryptCode);
+            var encryptPassword = AesService.Default.Encrypt(password, signInResult.Captcha);
             var crossCookieValue = EncryptExtension.CfsEnCode((verifySignInResult.CustId + verifySignInResult.LoginTime.Minute).ToString());
 
             string url;
             var robotResult = robotDetector.IsRobot(httpContext.Request);
             if (robotResult == 0 || signInResult.IsCaptchaVerified)
             {
-                url = encryptUrlHelper.BuildAfterURL(httpContext, encryptPassword, verifySignInResult, deviceId, browserSize, assetAppPath);
+                url = encryptUrlHelper.BuildAfterURL(
+                    httpContext,
+                    encryptPassword,
+                    verifySignInResult,
+                    language,
+                    deviceId,
+                    browserSize,
+                    signInResult.Captcha,
+                    darkModeName,
+                    assetAppPath);
             }
             else
             {
@@ -306,7 +326,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                    browserSize,
                    assetAppPath);
 
-                encryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"After set sessionId: {httpContext.Session.Id}, custId:{AppSession.CustId}");
+                encryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"After set sessionId: {httpContext.Session.Id}, custId:{verifySignInResult.CustId}");
 
                 url = "RobotCaptcha/Index";
             }
@@ -340,10 +360,11 @@ namespace Fanex.Alpha.Before.Services.SignIn
         private void VerifyDownlineLogin(
             string username,
             string password,
+            string language,
             string deviceId,
             string browserSize,
             SignInResult signInResult,
-            bool? isDarkMode,
+            string darkModeName,
             string assetAppPath,
             HttpContext httpContext)
         {
@@ -360,14 +381,14 @@ namespace Fanex.Alpha.Before.Services.SignIn
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize, clientIP);
                     requestInfo["countrycode"] = GetCountryCode(clientIP);
                     requestInfo.Add("sitegroup", AppSetting.SiteGroup);
-                    verifySignInResult = signInRepository.VerifyDownlineLogin(username, password, requestInfo, isDarkMode);
+                    verifySignInResult = signInRepository.VerifyDownlineLogin(username, password, requestInfo, !string.IsNullOrWhiteSpace(darkModeName));
                     encryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
 
                     if (verifySignInResult.ErrorCode == 0)
                     {
                         signInResult.LoginTime = verifySignInResult.LoginTime;
 
-                        UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, deviceId, browserSize, assetAppPath, httpContext);
+                        UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, language, deviceId, browserSize, darkModeName, assetAppPath, httpContext);
 
                         if (throttlePolicy.WhitelistSuperIds.Contains(verifySignInResult.SuperId))
                         {

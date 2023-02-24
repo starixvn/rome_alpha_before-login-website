@@ -15,8 +15,11 @@ namespace Fanex.Alpha.Before.Services.SignIn
             HttpContext httpContext,
             string encryptPassword,
             VerifySignInResult verifySignInResult,
+            string language,
             string deviceId,
             string browserSize,
+            string encryptCode,
+            string darkModeName,
             string assetAppPath);
     }
 
@@ -56,8 +59,11 @@ namespace Fanex.Alpha.Before.Services.SignIn
                     Nickname = AppSession.Nickname,
                     LoginTime = DateTime.Now
                 },
+                AppSession.Language,
                 AppSession.DeviceId,
                 AppSession.BrowserSize,
+                AppSession.EncryptCode,
+                AppSession.DarkModeName,
                 AppSession.AssetAppPath);
 
             AppSession.ResetRobotCaptchaSession();
@@ -69,8 +75,11 @@ namespace Fanex.Alpha.Before.Services.SignIn
             HttpContext httpContext,
             string encryptPassword,
             VerifySignInResult verifySignInResult,
+            string language,
             string deviceId,
             string browserSize,
+            string encryptCode,
+            string darkModeName,
             string assetAppPath)
         {
             WriteLoginLogs(verifySignInResult.SuperId, $"Build after url, sessionId: {httpContext.Session.Id}, custId:{verifySignInResult.CustId}");
@@ -83,12 +92,12 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 encryptPassword,
                 verifySignInResult.Nickname,
                 verifySignInResult.IsNickname,
-                AppSession.Language,
+                language,
                 NumberCrossCookie(httpContext),
                 deviceId,
                 browserSize,
-                AppSession.EncryptCode,
-                AppSession.DarkModeName,
+                encryptCode,
+                darkModeName,
                 assetAppPath);
 
             var afterUrl = AppSetting.DomainMappings[httpContext.Request.Host.Value];
