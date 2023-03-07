@@ -41,7 +41,7 @@ namespace Fanex.Alpha.Before
 
             services.AddDataProtection()
                 .SetApplicationName("alpha-before-login")
-                .PersistKeysToFileSystem(new DirectoryInfo("login_site_cache"));
+                .PersistKeysToFileSystem(new DirectoryInfo(Configuration.GetValue("SharedDirectory", "login_site_cache")));
 
             services.AddFanexLogging(Configuration)
                  .AddONEbookUM(Configuration)
