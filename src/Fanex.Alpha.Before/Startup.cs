@@ -105,6 +105,12 @@ namespace Fanex.Alpha.Before
 
             HttpContextHelper.Configure(app.ApplicationServices.GetRequiredService<IHttpContextAccessor>());
 
+            app.Use(next => context =>
+            {
+                context.Request.EnableBuffering();
+                return next(context);
+            });
+
             app.UseViewMode();
             app.UseRequestCulture();
             app.UseLimitedCountryAccess();
