@@ -74,7 +74,7 @@ namespace Fanex.Alpha.Before.Helpers
             }
             catch (Exception ex)
             {
-                logger.Error(ex.Message, ex);
+                logger.Warn(ex.Message);
             }
         }
     }
