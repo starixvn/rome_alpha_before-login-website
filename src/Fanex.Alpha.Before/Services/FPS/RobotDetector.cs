@@ -45,7 +45,6 @@ namespace Fanex.Alpha.Before.Services.FPS
                 }
 
                 var ipInfo = ipService.GetIPInformation(ipHelper.ClientIP());
-                logger.Info(JsonSerializer.Serialize(ipInfo));
                 if (ipInfo != null && ipInfo.CountryShort == "MY")
                 {
                     return 0;
