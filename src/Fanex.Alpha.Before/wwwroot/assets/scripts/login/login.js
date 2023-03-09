@@ -49,7 +49,7 @@ Sphinx.Login = {
             language = Sphinx.Login.currentLanguageCode;
         }
 
-        if (this.is789y === "1" && language === "vi-VN") {
+        if (this.is789y === "0" && language === "vi-VN") {
             language = this.currentLanguageCode;
             Sphinx.Core.setUserData("LANGUAGE", language);
         }
