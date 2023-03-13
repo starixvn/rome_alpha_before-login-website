@@ -98,7 +98,7 @@ namespace Fanex.Alpha.Before.Helpers
                 fpsClient.CheckTransaction(new TransactionModel
                 {
                     Action = "Login",
-                    ClientIp= request.HttpContext.Connection.RemoteIpAddress.ToString(),
+                    ClientIp= ipHelper.ClientIP(),
                     CustId  = loginResult.CustId,
                     LoginName = loginResult.Username,
                     SessionKey = request.Form["__fdi"].ToString(),
