@@ -1,6 +1,10 @@
 ﻿using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Models;
+using Fanex.Logging.Extensions.AspNetCore;
 using FPS.Client.NetStandard.Models;
+using FPS.Device.FingerPrint.Net.Standard.Client;
+using FPS.Device.FingerPrint.Net.Standard.Client.Model;
+using Microsoft.AspNetCore.Http.Extensions;
 using ILogger = Fanex.Logging.ILogger;
 
 namespace Fanex.Alpha.Before.Helpers
@@ -8,6 +12,8 @@ namespace Fanex.Alpha.Before.Helpers
     public interface IFPSHelper
     {
         void FPSTracking(HttpRequest request, SignInResult loginResult);
+
+        void NewFPSTracking(HttpRequest request, SignInResult loginResult);
     }
 
     public class FPSHelper : IFPSHelper
@@ -75,6 +81,36 @@ namespace Fanex.Alpha.Before.Helpers
             catch (Exception ex)
             {
                 logger.Warn(ex.ToString());
+            }
+        }
+
+        public void NewFPSTracking(HttpRequest request, SignInResult loginResult)
+        {
+            try
+            {
+                if (!AppSetting.NewFPSEnabled)
+                {
+                    return;
+                }
+
+                var fpsClient = new TransactionServices(AppSetting.FpsSubscriber, AppSetting.NewFPSPortalAPI);
+
+                fpsClient.CheckTransaction(new TransactionModel
+                {
+                    Action = "Login",
+                    ClientIp= request.HttpContext.Connection.RemoteIpAddress.ToString(),
+                    CustId  = loginResult.CustId,
+                    LoginName = loginResult.Username,
+                    SessionKey = request.Form["__fdi"].ToString(),
+                    LoginTime = loginResult.LoginTime,   
+                    SubAccId = loginResult.CustSubId,
+                    Url = request.GetDisplayUrl(),
+                    UserAgent = request.Headers["User-Agent"].ToString()
+                });
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
             }
         }
     }

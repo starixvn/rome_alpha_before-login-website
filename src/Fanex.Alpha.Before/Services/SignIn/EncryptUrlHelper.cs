@@ -113,7 +113,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 LoginTime = verifySignInResult.LoginTime
             });
 
-            FPSHelper.NewFPSTracking(new SignInResult
+            fpsHelper.NewFPSTracking(httpContext.Request, new SignInResult
             {
                 Username = verifySignInResult.Username,               
                 LoginTime = verifySignInResult.LoginTime,
