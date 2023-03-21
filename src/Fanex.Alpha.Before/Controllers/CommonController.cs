@@ -2,7 +2,6 @@ using System.Net;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
 using Fanex.Alpha.Before.Services;
-using Fanex.Logging.Extensions.AspNetCore;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ONEbook.UM.Services;
@@ -14,12 +13,18 @@ public class CommonController : Controller
     private readonly IMaintenanceService _maintenanceService;
     private readonly IPHelper _ipHelper;
     private readonly ILimitedCountryAccessService _limitedCountryAccessService;
+    private readonly Logging.ILogger _logger;
 
-    public CommonController(IMaintenanceService maintenanceService, IPHelper ipHelper, ILimitedCountryAccessService limitedCountryAccessService)
+    public CommonController(
+        IMaintenanceService maintenanceService,
+        IPHelper ipHelper,
+        ILimitedCountryAccessService limitedCountryAccessService,
+        Logging.ILogger logger)
     {
         _maintenanceService = maintenanceService;
         _ipHelper = ipHelper;
         _limitedCountryAccessService = limitedCountryAccessService;
+        _logger = logger;
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -28,7 +33,7 @@ public class CommonController : Controller
         var exceptionHandlerFeature = HttpContext.Features.Get<IExceptionHandlerFeature>();
         if (exceptionHandlerFeature != null)
         {
-            await ExceptionHandler.HandleAsync(exceptionHandlerFeature.Error, HttpContext);
+            await _logger.ErrorAsync(await ExceptionHelper.BuildError(HttpContext.Request, exceptionHandlerFeature));
         }
 
         ViewBag.ErrorMessage = string.Format(Resources.Labels.Error_Server, string.IsNullOrWhiteSpace(code) ? (int)HttpStatusCode.InternalServerError : code);
@@ -63,6 +68,5 @@ public class CommonController : Controller
         {
             return Redirect("~/");
         }
-
     }
 }
