@@ -1,8 +1,8 @@
-﻿using Fanex.Caching;
-using Fanex.Data.Repository;
+﻿using Fanex.Data.Repository;
 using Fanex.Alpha.Before.Models;
 using Fanex.Alpha.Before.Criteria.LimitedCountryAccess;
 using Fanex.Alpha.Before.Configurations;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Fanex.Alpha.Before.Services
 {
@@ -16,20 +16,20 @@ namespace Fanex.Alpha.Before.Services
         private const string RestrictedIPRangesCachedKey = "Fanex.Alpha.Before.Common.RestrictedIPRangesCachedKey_IPV";
         private const string AllowedAccessIPsCachedKey = "Fanex.Alpha.Before.Common.AllowedAccessIPsCachedKey";
 
-        private readonly ICacheService cacheService;
+        private readonly IMemoryCache memoryCache;
         private readonly IConfiguration configuration;
         private readonly Logging.ILogger logger;
         private readonly IDynamicRepository dynamicRepository;
 
         public LimitedCountryAccessService(
+            IMemoryCache memoryCache,
             Logging.ILogger logger,
             IDynamicRepository dynamicRepository,
-            ICacheService cacheService,
             IConfiguration configuration)
         {
+            this.memoryCache = memoryCache;
             this.logger = logger;
             this.dynamicRepository = dynamicRepository;
-            this.cacheService = cacheService;
             this.configuration = configuration;
         }
 
@@ -91,24 +91,23 @@ namespace Fanex.Alpha.Before.Services
                 return dynamicRepository.Fetch<IpRange>(criteria);
             }
 
-            return cacheService.GetOrSet(
-                cacheKey,
-                () => AppSetting.TrackRunTime
+
+            return memoryCache.GetOrCreate(cacheKey, (cacheEntry) =>
+            {
+                cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(30);
+                return AppSetting.TrackRunTime
                     ? FunctionRecorder.RunFunctionAndTrackTime(getDataFromDatabaseFunc, cacheKey)
-                    : getDataFromDatabaseFunc(),
-                new CacheItemOptions
-                {
-                    RelativeExpiration = TimeSpan.FromDays(30)
-                });
+                    : getDataFromDatabaseFunc();
+            });
         }
 
         public IEnumerable<string> GetsAllowedAccessIPs()
-            => cacheService.GetOrSet(
+            => memoryCache.GetOrCreate(
                 AllowedAccessIPsCachedKey,
-                () => dynamicRepository.Fetch<string>(new GetAllowedAccessIPsCriteria()),
-                new CacheItemOptions
+                (cacheEntry) =>
                 {
-                    RelativeExpiration = TimeSpan.FromMinutes(10)
+                    cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10);
+                    return dynamicRepository.Fetch<string>(new GetAllowedAccessIPsCriteria());
                 });
 
         private static bool IsTestedIP(IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig, string clientIP)
