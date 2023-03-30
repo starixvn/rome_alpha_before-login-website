@@ -1,5 +1,6 @@
 using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.NetThrottling;
+using Fanex.Alpha.Before.Services;
 using Fanex.Caching.Redis;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
@@ -25,7 +26,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton(new UMClientConfiguration().Initialize(configuration));
         services.AddSingleton<CheckUMFilterAttribute>();
-        services.AddSingleton<IUMCacheService, UMCacheService>();
+        services.AddSingleton<IUMCacheService, MemoryUMCacheService>();
         services.AddSingleton<IUMRestClient, UMRestClient>();
         services.AddHttpContextAccessor(); // For WEB 
         services.AddSingleton<IHttpContextHelper, HttpContextHelper>(); // For WEB 
