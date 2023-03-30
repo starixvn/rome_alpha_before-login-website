@@ -23,7 +23,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
 
         Task<SignInResult> SignIn(SignInModel model, HttpContext httpContext);
 
-        SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize, HttpContext httpContext);
+        Task<SignInResult> AutomationTest(string username, string password, string captcha, string deviceId, string browserSize, HttpContext httpContext);
     }
 
     public class SignInService : ISignInService
@@ -127,8 +127,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
             return loginResult;
         }
 
-        private bool IsCaptchaRequired(SignInModel model)
-            => cacheService.GetLoginUserFailedCount(model.Username) >= commonOptions.LoginFailTimeToStartUsingCaptcha;
+        private async Task<bool> IsCaptchaRequired(SignInModel model)
+            => (await cacheService.GetLoginUserFailedCount(model.Username)) >= commonOptions.LoginFailTimeToStartUsingCaptcha;
 
         public async Task<SignInResult> SignIn(SignInModel model, HttpContext httpContext)
         {
@@ -150,7 +150,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 return signInResult;
             }
 
-            if (cacheService.IsLoginIPBlocked())
+            if (await cacheService.IsLoginIPBlocked())
             {
                 var ipLockedError = string.Format(
                     Labels.iploginfailedmultipletimeserror,
@@ -162,7 +162,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 return signInResult;
             }
 
-            if (IsCaptchaRequired(model))
+            if (await IsCaptchaRequired(model))
             {
                 var isVerifiedResult = await captchaService.IsVerified(model.CaptchaToken);
                 if (isVerifiedResult.IsSuccess)
@@ -185,7 +185,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
 
             var password = AesService.Default.Decrypt(model.Password, model.Code);
             var assetAppPath = AssetAppPathHelper.IsValidAssetAppPath(model.AssetAppPath) ? model.AssetAppPath : string.Empty;
-            VerifyDownlineLogin(
+            await VerifyDownlineLogin(
                 model.Username,
                 password,
                 model.Language,
@@ -199,7 +199,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             return signInResult;
         }
 
-        public SignInResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize, HttpContext httpContext)
+        public async Task<SignInResult> AutomationTest(string username, string password, string captcha, string deviceId, string browserSize, HttpContext httpContext)
         {
             var signInResult = new SignInResult
             {
@@ -219,8 +219,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 return signInResult;
             }
 
-            VerifyDownlineLogin(username, password, LanguageHelper.DefaultLanguage, deviceId, browserSize, signInResult, null, string.Empty, httpContext);
-
+            await VerifyDownlineLogin(username, password, LanguageHelper.DefaultLanguage, deviceId, browserSize, signInResult, null, string.Empty, httpContext);
 
             return signInResult;
         }
@@ -237,7 +236,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             logger.Warn($"IP blocked for login: {JsonConvert.SerializeObject(logInfo)}");
         }
 
-        private void UpdateResultAfterLoginFail(
+        private async Task UpdateResultAfterLoginFail(
             SignInResult signInResult,
             VerifySignInResult verifySignInResult,
             HttpContext httpContext)
@@ -248,7 +247,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 signInResult.ChangedPasswordTime = string.Format(Labels.lblPasswordChanged, verifySignInResult.LastTimeToChangePassword);
             }
 
-            var loginIPFailedCount = cacheService.IncreaseLoginIPFailedCount();
+            var loginIPFailedCount = await cacheService.IncreaseLoginIPFailedCount();
             if (loginIPFailedCount > commonOptions.MaxTimesToAllowLoginFail)
             {
                 if (loginIPFailedCount == commonOptions.MaxTimesToAllowLoginFail + 1)
@@ -256,7 +255,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                     LogIpBlocked(signInResult, httpContext);
                 }
 
-                cacheService.SetLoginIPBlocked(commonOptions.BlockLoginMinutes);
+                await cacheService.SetLoginIPBlocked(commonOptions.BlockLoginMinutes);
                 var ipLockedError = string.Format(
                     Labels.iploginfailedmultipletimeserror,
                     signInResult.Ip,
@@ -267,7 +266,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 return;
             }
 
-            var loginUserFailedCount = cacheService.IncreaseLoginUserFailedCount(signInResult.Username, commonOptions.NoInteractionTimeInMinutes);
+            var loginUserFailedCount = await cacheService.IncreaseLoginUserFailedCount(signInResult.Username, commonOptions.NoInteractionTimeInMinutes);
             if (loginUserFailedCount >= commonOptions.LoginFailTimeToStartUsingCaptcha)
             {
                 signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
@@ -357,7 +356,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             }
         }
 
-        private void VerifyDownlineLogin(
+        private async Task VerifyDownlineLogin(
             string username,
             string password,
             string language,
@@ -374,8 +373,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 throttlePolicy.Name,
                 AppSetting.SiteGroup,
                 new[] { username.Trim().ToLowerInvariant(), ipHelper.ClientIP() });
-            var result = netThrottler.Throttle(
-                (success) =>
+            var result = await netThrottler.Throttle(
+                async (success) =>
                 {
                     var clientIP = ipHelper.ClientIP();
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize, clientIP);
@@ -395,11 +394,11 @@ namespace Fanex.Alpha.Before.Services.SignIn
                             return ThrottleResult.Allowed;
                         }
 
-                        return success(ThrottleResult.Allowed);
+                        return await success(ThrottleResult.Allowed);
                     }
                     else
                     {
-                        UpdateResultAfterLoginFail(signInResult, verifySignInResult, httpContext);
+                        await UpdateResultAfterLoginFail(signInResult, verifySignInResult, httpContext);
 
                         return ThrottleResult.Allowed;
                     }

@@ -67,6 +67,7 @@ namespace Fanex.Alpha.Before
             services.AddSingleton<IDistributedCacheService, DistributedCacheService>();
 
             services.AddSingleton<IKickoutCustomerService, KickoutCustomerService>();
+            services.AddSingleton<IDistributedCacheService, DistributedCacheService>();
             services.AddSingleton<IPHelper, IPHelperImpl>();
             services.AddSingleton<IFPSHelper, FPSHelper>();
             services.AddSingleton<IEncryptUrlHelper, EncryptUrlHelper>();

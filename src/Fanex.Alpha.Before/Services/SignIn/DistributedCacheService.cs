@@ -1,36 +1,36 @@
 ﻿using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Constants;
 using Fanex.Alpha.Before.Helpers;
-using Fanex.Caching;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Fanex.Alpha.Before.Services.SignIn
 {
     public interface IDistributedCacheService
     {
-        bool IsLoginIPBlocked();
+        Task<bool> IsLoginIPBlocked();
 
-        void SetLoginIPBlocked(int blockLoginMinute);
+        Task SetLoginIPBlocked(int blockLoginMinute);
 
-        int GetLoginIPFailedCount();
+        Task<int> GetLoginIPFailedCount();
 
-        int GetLoginUserFailedCount(string username);
+        Task<int> GetLoginUserFailedCount(string username);
 
-        void ResetLoginSession(string username);
+        Task ResetLoginSession(string username);
 
-        int IncreaseLoginIPFailedCount();
+        Task<int> IncreaseLoginIPFailedCount();
 
-        int IncreaseLoginUserFailedCount(string username, int notInteractionTimeInMinutes);
+        Task<int> IncreaseLoginUserFailedCount(string username, int notInteractionTimeInMinutes);
     }
 
     public class DistributedCacheService : IDistributedCacheService
     {
         private readonly IPHelper _ipHelper;
-        private readonly ICacheService _cacheService;
+        private readonly IDistributedCacheHelper _cacheHelper;
 
-        public DistributedCacheService(IPHelper ipHelper, ICacheService cacheService)
+        public DistributedCacheService(IPHelper ipHelper, IDistributedCacheHelper cacheHelper)
         {
             _ipHelper = ipHelper;
-            _cacheService = cacheService;
+            _cacheHelper = cacheHelper;
         }
 
         private string _loginIPFailedCountSessionKey => string.Format(SessionConstants.LOGINIPFAILEDCOUNT, AppSetting.SiteGroup, _ipHelper.ClientIP());
@@ -40,49 +40,51 @@ namespace Fanex.Alpha.Before.Services.SignIn
             return string.Format(SessionConstants.LOGINUSERFAILEDCOUNT, AppSetting.SiteGroup, _ipHelper.ClientIP(), username);
         }
 
-        public bool IsLoginIPBlocked()
+        public Task<bool> IsLoginIPBlocked()
         {
-            return _cacheService.Contain(_loginIPBlockedSessionKey);
+            return _cacheHelper.Contain(_loginIPBlockedSessionKey);
         }
 
-        public void SetLoginIPBlocked(int blockLoginMinute)
+        public async Task SetLoginIPBlocked(int blockLoginMinute)
         {
-            _cacheService.Remove(_loginIPFailedCountSessionKey);
-            _cacheService.Set(_loginIPBlockedSessionKey, DateTime.UtcNow, new CacheItemOptions
+            await _cacheHelper.Remove(_loginIPFailedCountSessionKey);
+            await _cacheHelper.Set(_loginIPBlockedSessionKey, DateTime.UtcNow, new DistributedCacheEntryOptions()
             {
                 AbsoluteExpiration = DateTime.UtcNow.AddMinutes(blockLoginMinute)
             });
         }
 
-        public int GetLoginIPFailedCount()
+        public Task<int> GetLoginIPFailedCount()
         {
-            return _cacheService.Get<int>(_loginIPFailedCountSessionKey);
+            return _cacheHelper.Get(_loginIPFailedCountSessionKey, 0);
         }
 
-        public int GetLoginUserFailedCount(string username)
+        public Task<int> GetLoginUserFailedCount(string username)
         {
-            return _cacheService.Get<int>(GetLoginUserFailedCountSessionKey(username));
+            return _cacheHelper.Get(GetLoginUserFailedCountSessionKey(username), 0);
         }
 
-        public void ResetLoginSession(string username)
+        public async Task ResetLoginSession(string username)
         {
-            _cacheService.Remove(_loginIPFailedCountSessionKey);
-            _cacheService.Remove(_loginIPBlockedSessionKey);
-            _cacheService.Remove(GetLoginUserFailedCountSessionKey(username));
+            await _cacheHelper.Remove(_loginIPFailedCountSessionKey);
+            await _cacheHelper.Remove(_loginIPBlockedSessionKey);
+            await _cacheHelper.Remove(GetLoginUserFailedCountSessionKey(username));
         }
 
-        public int IncreaseLoginIPFailedCount()
+        public async Task<int> IncreaseLoginIPFailedCount()
         {
-            var loginIPFailedCount = GetLoginIPFailedCount() + 1;
-            _cacheService.Set(_loginIPFailedCountSessionKey, loginIPFailedCount);
+            var loginIPFailedCount = (await GetLoginIPFailedCount()) + 1;
+            await _cacheHelper.Set(_loginIPFailedCountSessionKey, loginIPFailedCount);
             return loginIPFailedCount;
         }
 
-        public int IncreaseLoginUserFailedCount(string username, int notInteractionTimeInMinutes)
+        public async Task<int> IncreaseLoginUserFailedCount(string username, int notInteractionTimeInMinutes)
         {
-            var loginUserFailedCount = GetLoginUserFailedCount(username) + 1;
-            _cacheService.Set(GetLoginUserFailedCountSessionKey(username), loginUserFailedCount, new CacheItemOptions() { SlidingExpiration = TimeSpan.FromMinutes(notInteractionTimeInMinutes) });
+            var loginUserFailedCount = (await GetLoginUserFailedCount(username)) + 1;
+            await _cacheHelper.Set(GetLoginUserFailedCountSessionKey(username), loginUserFailedCount, new DistributedCacheEntryOptions() { SlidingExpiration = TimeSpan.FromMinutes(notInteractionTimeInMinutes) });
             return loginUserFailedCount;
         }
+
+
     }
 }

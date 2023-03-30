@@ -1,14 +1,15 @@
+using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.NetThrottling.Models;
 using Fanex.Alpha.Before.NetThrottling.Utils;
-using Fanex.Caching;
+using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
 
 namespace Fanex.Alpha.Before.NetThrottling;
 
 public interface INetThrottler
 {
-    TResult Throttle<TResult>(
-            Func<Func<TResult, TResult>, TResult> work,
+    Task<TResult> Throttle<TResult>(
+            Func<Func<TResult, Task<TResult>>, Task<TResult>> work,
             Func<TResult> blocked,
             ThrottlePolicy policy,
             CacheIdentity cacheIdentity);
@@ -16,22 +17,22 @@ public interface INetThrottler
 
 public class NetThrottler : INetThrottler
 {
-    private readonly ICacheService cacheService;
+    private readonly IDistributedCacheHelper cacheHelper;
 
-    public NetThrottler(ICacheService cacheService)
+    public NetThrottler(IDistributedCacheHelper cacheHelper)
     {
-        this.cacheService = cacheService;
+        this.cacheHelper = cacheHelper;
     }
 
-    public TResult Throttle<TResult>(Func<Func<TResult, TResult>, TResult> work, Func<TResult> blocked, ThrottlePolicy policy, CacheIdentity cacheIdentity)
+    public async Task<TResult> Throttle<TResult>(Func<Func<TResult, Task<TResult>>, Task<TResult>> work, Func<TResult> blocked, ThrottlePolicy policy, CacheIdentity cacheIdentity)
     {
-        TResult success(TResult returnType)
+        async Task<TResult> success(TResult returnType)
         {
-            var throttleResult = Throttle(policy, cacheIdentity);
+            var throttleResult = await Throttle(policy, cacheIdentity);
             if (throttleResult == ThrottleResult.Blocked)
             {
-                AddBlacklist(policy, cacheIdentity);
-                RemoveThrottling(cacheIdentity);
+                await AddBlacklist(policy, cacheIdentity);
+                await RemoveThrottling(cacheIdentity);
                 return blocked();
             }
 
@@ -40,32 +41,35 @@ public class NetThrottler : INetThrottler
 
         if (cacheIdentity == null)
         {
-            return work(success);
+            return await work(success);
         }
 
-        if (IsBlacklist(cacheIdentity))
+        if (await IsBlacklist(cacheIdentity))
         {
             return blocked();
         }
 
-        return work(success);
+        return await work(success);
     }
 
-    public ThrottleResult Throttle(ThrottlePolicy policy, CacheIdentity cacheIdentity)
+    public Task<ThrottleResult> Throttle(ThrottlePolicy policy, CacheIdentity cacheIdentity)
     {
         return Throttle(policy, cacheIdentity, false);
     }
 
-    public ThrottleResult Throttle(ThrottlePolicy policy, CacheIdentity cacheIdentity, bool blockImmediately)
+    public async Task<ThrottleResult> Throttle(ThrottlePolicy policy, CacheIdentity cacheIdentity, bool blockImmediately)
     {
         if (cacheIdentity == null)
+        {
             return ThrottleResult.Allowed;
-        if (IsBlacklist(cacheIdentity))
+        }
+
+        if (await IsBlacklist(cacheIdentity))
         {
             return ThrottleResult.Blocked;
         }
 
-        var jsonString = cacheService.Get<string>(cacheIdentity.ThrottleKey);
+        var jsonString = await cacheHelper.Get(cacheIdentity.ThrottleKey, string.Empty);
         var throttleCounter = !string.IsNullOrWhiteSpace(jsonString) ? JsonSerializer.Deserialize<ThrottleCounter>(jsonString) : null;
 
         throttleCounter = throttleCounter == null || Clock.UtcNow > throttleCounter.Timestamp + TimeSpan.FromSeconds(policy.ThrottleDuration)
@@ -83,37 +87,37 @@ public class NetThrottler : INetThrottler
         if (throttleCounter.TotalRequests > policy.MaxRequests ||
             (blockImmediately && throttleCounter.TotalRequests == policy.MaxRequests))
         {
-            AddBlacklist(policy, cacheIdentity);
-            RemoveThrottling(cacheIdentity);
+            await AddBlacklist(policy, cacheIdentity);
+            await RemoveThrottling(cacheIdentity);
             return ThrottleResult.Blocked;
         }
 
-        cacheService.Set(
+        await cacheHelper.Set(
             cacheIdentity.ThrottleKey,
-            JsonSerializer.Serialize(throttleCounter), new CacheItemOptions
+            JsonSerializer.Serialize(throttleCounter), new DistributedCacheEntryOptions
             {
                 SlidingExpiration = TimeSpan.FromSeconds(policy.ThrottleDuration)
             });
         return ThrottleResult.Allowed;
     }
 
-    public bool IsBlacklist(CacheIdentity cacheIdentity)
+    public Task<bool> IsBlacklist(CacheIdentity cacheIdentity)
     {
-        return cacheService.Contain(cacheIdentity.BlockKey);
+        return cacheHelper.Contain(cacheIdentity.BlockKey);
     }
 
-    public void RemoveThrottling(CacheIdentity cacheIdentity)
+    public Task RemoveThrottling(CacheIdentity cacheIdentity)
     {
-        cacheService.Remove(cacheIdentity.ThrottleKey);
+        return cacheHelper.Remove(cacheIdentity.ThrottleKey);
     }
 
-    public void AddBlacklist(ThrottlePolicy policy, CacheIdentity cacheIdentity)
+    public Task AddBlacklist(ThrottlePolicy policy, CacheIdentity cacheIdentity)
     {
-        cacheService.Set(
-            cacheIdentity.BlockKey,
-            Clock.UtcNow, new CacheItemOptions
-            {
-                RelativeExpiration = TimeSpan.FromSeconds(policy.BlockDuration)
-            });
+        return cacheHelper.Set(
+             cacheIdentity.BlockKey,
+             Clock.UtcNow, new DistributedCacheEntryOptions
+             {
+                 AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(policy.BlockDuration)
+             });
     }
 }
