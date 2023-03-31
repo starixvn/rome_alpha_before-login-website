@@ -84,7 +84,5 @@ namespace Fanex.Alpha.Before.Services.SignIn
             await _cacheHelper.Set(GetLoginUserFailedCountSessionKey(username), loginUserFailedCount, new DistributedCacheEntryOptions() { SlidingExpiration = TimeSpan.FromMinutes(notInteractionTimeInMinutes) });
             return loginUserFailedCount;
         }
-
-
     }
 }

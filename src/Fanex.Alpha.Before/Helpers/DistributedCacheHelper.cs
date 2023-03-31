@@ -37,7 +37,7 @@ public class DistributedCacheHelper : IDistributedCacheHelper
         }
         catch (Exception ex)
         {
-            await _logger.ErrorAsync(ex.Message, ex);
+            await _logger.WarnAsync(ex.ToString());
             return false;
         }
     }
@@ -53,7 +53,7 @@ public class DistributedCacheHelper : IDistributedCacheHelper
         }
         catch (Exception ex)
         {
-            await _logger.ErrorAsync(ex.Message, ex);
+            await _logger.WarnAsync(ex.ToString());
             return defaultValue;
         }
     }
@@ -77,7 +77,7 @@ public class DistributedCacheHelper : IDistributedCacheHelper
         }
         catch (Exception ex)
         {
-            await _logger.ErrorAsync(ex.Message, ex);
+            await _logger.WarnAsync(ex.ToString());
         }
     }
 
@@ -89,7 +89,7 @@ public class DistributedCacheHelper : IDistributedCacheHelper
         }
         catch (Exception ex)
         {
-            return _logger.ErrorAsync(ex.Message, ex);
+            return _logger.WarnAsync(ex.ToString());
         }
     }
 }
