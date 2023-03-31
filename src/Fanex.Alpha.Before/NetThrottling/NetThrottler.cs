@@ -1,14 +1,14 @@
 using Fanex.Alpha.Before.NetThrottling.Models;
 using Fanex.Alpha.Before.NetThrottling.Utils;
-using Fanex.Caching;
-using System.Text.Json;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Fanex.Alpha.Before.NetThrottling;
 
 public interface INetThrottler
 {
-    TResult Throttle<TResult>(
-            Func<Func<TResult, TResult>, TResult> work,
+    Task<TResult> Throttle<TResult>(
+            Func<Func<TResult, TResult>, Task<TResult>> work,
             Func<TResult> blocked,
             ThrottlePolicy policy,
             CacheIdentity cacheIdentity);
@@ -16,14 +16,14 @@ public interface INetThrottler
 
 public class NetThrottler : INetThrottler
 {
-    private readonly ICacheService cacheService;
+    private readonly IMemoryCache _memoryCache;
 
-    public NetThrottler(ICacheService cacheService)
+    public NetThrottler(IMemoryCache memoryCache)
     {
-        this.cacheService = cacheService;
+        _memoryCache = memoryCache;
     }
 
-    public TResult Throttle<TResult>(Func<Func<TResult, TResult>, TResult> work, Func<TResult> blocked, ThrottlePolicy policy, CacheIdentity cacheIdentity)
+    public async Task<TResult> Throttle<TResult>(Func<Func<TResult, TResult>, Task<TResult>> work, Func<TResult> blocked, ThrottlePolicy policy, CacheIdentity cacheIdentity)
     {
         TResult success(TResult returnType)
         {
@@ -40,7 +40,7 @@ public class NetThrottler : INetThrottler
 
         if (cacheIdentity == null)
         {
-            return work(success);
+            return await work(success);
         }
 
         if (IsBlacklist(cacheIdentity))
@@ -48,7 +48,7 @@ public class NetThrottler : INetThrottler
             return blocked();
         }
 
-        return work(success);
+        return await work(success);
     }
 
     public ThrottleResult Throttle(ThrottlePolicy policy, CacheIdentity cacheIdentity)
@@ -59,14 +59,16 @@ public class NetThrottler : INetThrottler
     public ThrottleResult Throttle(ThrottlePolicy policy, CacheIdentity cacheIdentity, bool blockImmediately)
     {
         if (cacheIdentity == null)
+        {
             return ThrottleResult.Allowed;
+        }
+
         if (IsBlacklist(cacheIdentity))
         {
             return ThrottleResult.Blocked;
         }
 
-        var jsonString = cacheService.Get<string>(cacheIdentity.ThrottleKey);
-        var throttleCounter = !string.IsNullOrWhiteSpace(jsonString) ? JsonSerializer.Deserialize<ThrottleCounter>(jsonString) : null;
+        var throttleCounter = _memoryCache.Get<ThrottleCounter>(cacheIdentity.ThrottleKey);
 
         throttleCounter = throttleCounter == null || Clock.UtcNow > throttleCounter.Timestamp + TimeSpan.FromSeconds(policy.ThrottleDuration)
             ? new ThrottleCounter
@@ -88,32 +90,28 @@ public class NetThrottler : INetThrottler
             return ThrottleResult.Blocked;
         }
 
-        cacheService.Set(
-            cacheIdentity.ThrottleKey,
-            JsonSerializer.Serialize(throttleCounter), new CacheItemOptions
-            {
-                SlidingExpiration = TimeSpan.FromSeconds(policy.ThrottleDuration)
-            });
+        _memoryCache.Set(cacheIdentity.ThrottleKey, throttleCounter, new MemoryCacheEntryOptions
+        {
+            SlidingExpiration = TimeSpan.FromSeconds(policy.ThrottleDuration)
+        });
         return ThrottleResult.Allowed;
     }
 
     public bool IsBlacklist(CacheIdentity cacheIdentity)
     {
-        return cacheService.Contain(cacheIdentity.BlockKey);
+        return _memoryCache.TryGetValue(cacheIdentity.BlockKey, out _);
     }
 
     public void RemoveThrottling(CacheIdentity cacheIdentity)
     {
-        cacheService.Remove(cacheIdentity.ThrottleKey);
+        _memoryCache.Remove(cacheIdentity.ThrottleKey);
     }
 
     public void AddBlacklist(ThrottlePolicy policy, CacheIdentity cacheIdentity)
     {
-        cacheService.Set(
-            cacheIdentity.BlockKey,
-            Clock.UtcNow, new CacheItemOptions
-            {
-                RelativeExpiration = TimeSpan.FromSeconds(policy.BlockDuration)
-            });
+        _memoryCache.Set(cacheIdentity.BlockKey, Clock.UtcNow, new MemoryCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(policy.BlockDuration)
+        });
     }
 }

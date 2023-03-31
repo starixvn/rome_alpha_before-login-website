@@ -1,7 +1,6 @@
 using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.NetThrottling;
 using Fanex.Alpha.Before.Services;
-using Fanex.Caching.Redis;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.AspNetCore;
@@ -16,7 +15,6 @@ using ONEbook.UM.Helpers;
 using ONEbook.UM.Services;
 using ONEbook.UM.Transport;
 using Sentry;
-using StackExchange.Redis;
 
 namespace Fanex.Alpha.Before.Extensions;
 

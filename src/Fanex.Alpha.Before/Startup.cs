@@ -64,6 +64,7 @@ namespace Fanex.Alpha.Before
             services.AddSingleton<IDynamicRepository, DynamicRepository>();
             services.AddSingleton<ISignInRepository, SignInRepository>();
             services.AddSingleton<IRobotDetector, RobotDetector>();
+            services.AddSingleton<IDistributedCacheHelper, DistributedCacheHelper>();
             services.AddSingleton<IDistributedCacheService, DistributedCacheService>();
 
             services.AddSingleton<IKickoutCustomerService, KickoutCustomerService>();

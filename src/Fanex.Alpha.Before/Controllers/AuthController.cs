@@ -69,9 +69,9 @@ public class AuthController : Controller
         return View(loginResult);
     }
 
-    public IActionResult AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
+    public async Task<IActionResult> AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
     {
-        var loginResult = signInService.AutomationTest(username, password, captcha, deviceId, browserSize, HttpContext);
+        var loginResult = await signInService.AutomationTest(username, password, captcha, deviceId, browserSize, HttpContext);
 
         if (loginResult.ErrCode == -1)
         {
