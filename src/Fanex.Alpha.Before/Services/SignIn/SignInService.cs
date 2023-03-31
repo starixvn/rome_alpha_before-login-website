@@ -394,7 +394,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                             return ThrottleResult.Allowed;
                         }
 
-                        return await success(ThrottleResult.Allowed);
+                        return success(ThrottleResult.Allowed);
                     }
                     else
                     {
