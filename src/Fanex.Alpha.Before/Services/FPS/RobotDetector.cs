@@ -2,7 +2,6 @@
 using Fanex.Alpha.Before.Helpers;
 using FPS.Browserless.Detection.Client.NetStandard;
 using Microsoft.Extensions.Options;
-using System.Text.Json;
 
 namespace Fanex.Alpha.Before.Services.FPS
 {
