@@ -1,7 +1,7 @@
-﻿
-
-using Fanex.Alpha.Before;
+﻿using Fanex.Alpha.Before;
 using Microsoft.AspNetCore;
+
+ThreadPool.SetMinThreads(100, 100);
 
 var host = BuildWebHost(args);
 host.Run();
