@@ -4,13 +4,16 @@ using Alpha.SliderCaptcha.AspNetCore.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fanex.Alpha.Before.Controllers;
+
 public class SliderCaptchaController : Controller
 {
     private readonly ICaptchaService captchaService;
+    private readonly Logging.ILogger logger;
 
-    public SliderCaptchaController(ICaptchaService captchaService)
+    public SliderCaptchaController(ICaptchaService captchaService, Logging.ILogger logger)
     {
         this.captchaService = captchaService;
+        this.logger = logger;
     }
 
     [HttpPost]
@@ -23,7 +26,15 @@ public class SliderCaptchaController : Controller
     [HttpPost]
     public async Task<ActionResult> Verify([FromBody] VerifyRequestModel request)
     {
-        var result = await captchaService.Verify(request.Token, request.Data);
-        return Json(new ResponseModel(result.Code, result.Reason));
+        try
+        {
+            var result = await captchaService.Verify(request.Token, request.Data);
+            return Json(new ResponseModel(result.Code, result.Reason));
+        }
+        catch (Exception ex)
+        {
+            await logger.WarnAsync(ex.ToString());
+            return Json(new ResponseModel(ResponseModel.SuccessCode, string.Empty));
+        }
     }
 }

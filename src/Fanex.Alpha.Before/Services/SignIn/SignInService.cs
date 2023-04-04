@@ -150,18 +150,6 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 return signInResult;
             }
 
-            if (await cacheService.IsLoginIPBlocked())
-            {
-                var ipLockedError = string.Format(
-                    Labels.iploginfailedmultipletimeserror,
-                    signInResult.Ip,
-                    commonOptions.MaxTimesToAllowLoginFail,
-                    commonOptions.BlockLoginMinutes);
-                signInResult.ErrCode = SignInErrorContants.IPBlocked;
-                signInResult.ErrMsg = ipLockedError;
-                return signInResult;
-            }
-
             if (await IsCaptchaRequired(model))
             {
                 var isVerifiedResult = await captchaService.IsVerified(model.CaptchaToken);
@@ -224,46 +212,12 @@ namespace Fanex.Alpha.Before.Services.SignIn
             return signInResult;
         }
 
-        private void LogIpBlocked(SignInResult signInResult, HttpContext httpContext)
-        {
-            var logInfo = new
-            {
-                Domain = httpContext.Request.Host.Value,
-                signInResult.Ip,
-                UserAgent = httpContext.Request.Headers["User-Agent"].ToString(),
-                Result = signInResult
-            };
-            logger.Warn($"IP blocked for login: {JsonConvert.SerializeObject(logInfo)}");
-        }
-
-        private async Task UpdateResultAfterLoginFail(
-            SignInResult signInResult,
-            VerifySignInResult verifySignInResult,
-            HttpContext httpContext)
+        private async Task UpdateResultAfterLoginFail(SignInResult signInResult, VerifySignInResult verifySignInResult)
         {
             signInResult.IsChangedPassword = verifySignInResult.LastTimeToChangePassword != DateTime.MinValue;
             if (signInResult.IsChangedPassword)
             {
                 signInResult.ChangedPasswordTime = string.Format(Labels.lblPasswordChanged, verifySignInResult.LastTimeToChangePassword);
-            }
-
-            var loginIPFailedCount = await cacheService.IncreaseLoginIPFailedCount();
-            if (loginIPFailedCount > commonOptions.MaxTimesToAllowLoginFail)
-            {
-                if (loginIPFailedCount == commonOptions.MaxTimesToAllowLoginFail + 1)
-                {
-                    LogIpBlocked(signInResult, httpContext);
-                }
-
-                await cacheService.SetLoginIPBlocked(commonOptions.BlockLoginMinutes);
-                var ipLockedError = string.Format(
-                    Labels.iploginfailedmultipletimeserror,
-                    signInResult.Ip,
-                    commonOptions.MaxTimesToAllowLoginFail,
-                    commonOptions.BlockLoginMinutes);
-                signInResult.ErrCode = SignInErrorContants.IPBlocked;
-                signInResult.ErrMsg = ipLockedError;
-                return;
             }
 
             var loginUserFailedCount = await cacheService.IncreaseLoginUserFailedCount(signInResult.Username, commonOptions.NoInteractionTimeInMinutes);
@@ -398,7 +352,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                     }
                     else
                     {
-                        await UpdateResultAfterLoginFail(signInResult, verifySignInResult, httpContext);
+                        await UpdateResultAfterLoginFail(signInResult, verifySignInResult);
 
                         return ThrottleResult.Allowed;
                     }

@@ -1,3 +1,4 @@
+using System.Web;
 using Alpha.Captcha.Core;
 using Alpha.Captcha.Core.Services;
 using Fanex.Alpha.Before.Configurations;
@@ -31,7 +32,7 @@ public class RobotCaptchaController : Controller
         this.encryptUrlHelper = encryptUrlHelper;
     }
 
-    private static string TooManyFailedLoginPageUrl => $"~/?r={Labels.tooManyFailedCaptcha}";
+    private static string TooManyFailedLoginPageUrl => $"~/?r={HttpUtility.UrlEncode(Labels.tooManyFailedCaptcha)}";
 
     public IActionResult Index()
     {
@@ -39,7 +40,7 @@ public class RobotCaptchaController : Controller
         {
             var message = $"{Labels.invalidsession} / {Labels.inputCaptchaTooLong}";
 
-            return Redirect($"~/?r={message}");
+            return Redirect($"~/?r={HttpUtility.UrlEncode(message)}");
         }
 
         if (IsIgnoreRobotCaptcha())
@@ -69,7 +70,7 @@ public class RobotCaptchaController : Controller
 
         if (AppSession.CustId == 0)
         {
-            return Redirect($"~/?r={Labels.inputCaptchaTooLong}");
+            return Redirect($"~/?r={HttpUtility.UrlEncode(Labels.inputCaptchaTooLong)}");
         }
 
         TempData["ErrorMessage"] = Labels.errInvalidCaptcha;
