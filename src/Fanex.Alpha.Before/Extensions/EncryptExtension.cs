@@ -20,7 +20,7 @@ namespace Fanex.Alpha.Before.Extensions
             for (int i = 1; i <= num; i++)
             {
                 int num5 = num + (Strings.Asc(Strings.Mid(codeValue, i, 1)) * i);
-                num3 *= num5;
+                num3 *= (double)num5;
             }
 
             codeValue = num3.ToString("G15");
