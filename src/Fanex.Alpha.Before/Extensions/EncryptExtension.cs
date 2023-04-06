@@ -23,7 +23,7 @@ namespace Fanex.Alpha.Before.Extensions
                 num3 *= (double)num5;
             }
 
-            codeValue = num3.ToString("G15");
+            codeValue = Math.Round(num3, 0).ToString("G15");
             string str = string.Empty;
             for (int j = 1; j <= codeValue.Length; j++)
             {
