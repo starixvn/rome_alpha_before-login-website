@@ -100,7 +100,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 darkModeName,
                 assetAppPath);
 
-            var afterUrl = AppSetting.DomainMappings[httpContext.Request.Host.Value];
+            var host = httpContext.Request.Host.Value.TrimEnd('.');
+            var afterUrl = AppSetting.DomainMappings[host];
 
             var url = $"{afterUrl}{AppSetting.AfterLoginAuthorizationPage}?params={EncryptParameter(parameter)}";
 

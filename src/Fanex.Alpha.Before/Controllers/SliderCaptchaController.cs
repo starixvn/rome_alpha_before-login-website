@@ -19,8 +19,16 @@ public class SliderCaptchaController : Controller
     [HttpPost]
     public async Task<ActionResult> Generate([FromBody] GenerateRequestModel request)
     {
-        var result = await captchaService.Generate(request.Token, (CaptchaStyle)request.Style);
-        return Json(result);
+        try
+        {
+            var result = await captchaService.Generate(request.Token, (CaptchaStyle)request.Style);
+            return Json(result);
+        }
+        catch (Exception ex)
+        {
+            await logger.WarnAsync(ex.ToString());
+            return Json(new GenerateResult(string.Empty, null));
+        }
     }
 
     [HttpPost]
