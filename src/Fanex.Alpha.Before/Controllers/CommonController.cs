@@ -42,6 +42,7 @@ public class CommonController : Controller
         return View();
     }
 
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public async Task<IActionResult> Offline()
     {
         var umInfo = await _maintenanceService.GetUnderMaintenanceTimeAsync();

@@ -19,7 +19,7 @@ public static class WebOptimizerExtensions
             pipeline.AddScssBundle("/assets/bundles/themes/default-dark.min.css", $"assets/styles/themes/default{cssSuffix}-dark.scss");
             pipeline.AddScssBundle("/assets/bundles/themes/event.min.css", $"assets/styles/themes/default{cssSuffix}.scss", $"assets/styles/themes/event{cssSuffix}.scss");
             pipeline.AddScssBundle("/assets/bundles/themes/um.min.css", "assets/styles/pages/um.scss");
-            pipeline.AddScssBundle("/assets/bundles/themes/um-dark.min.css", "assets/styles/pages/um-dark.css");
+            pipeline.AddScssBundle("/assets/bundles/themes/um-dark.min.css", "assets/styles/pages/um-dark.scss");
             pipeline.AddScssBundle("/assets/bundles/themes/um2.min.css", "assets/scripts/libs/flipclock/flipclock.css", "assets/styles/pages/um2.scss");
             pipeline.AddScssBundle("/assets/bundles/robotcaptcha.min.css", "assets/styles/pages/robotcaptcha.scss");
             pipeline.AddScssBundle("/assets/bundles/robotcaptcha-dark.min.css", "assets/styles/pages/robotcaptcha-dark.scss");
