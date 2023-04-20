@@ -110,7 +110,7 @@ namespace Fanex.Alpha.Before.Helpers
             }
             catch (Exception ex)
             {
-                logger.Error(ex.Message);
+                logger.Error(ex.ToString());
             }
         }
     }
