@@ -1,5 +1,6 @@
 using System.Web;
 using Alpha.Captcha.Core;
+using Alpha.Captcha.Core.Models;
 using Alpha.Captcha.Core.Services;
 using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Models;
@@ -19,17 +20,20 @@ public class RobotCaptchaController : Controller
     private readonly CaptchaOptions captchaOptions;
     private readonly RobotOptions robotOptions;
     private readonly IEncryptUrlHelper encryptUrlHelper;
+    private readonly Logging.ILogger logger;
 
     public RobotCaptchaController(
         CaptchaOptions captchaOptions,
         ICaptchaService captchaService,
         IOptions<RobotOptions> robotOptions,
-        IEncryptUrlHelper encryptUrlHelper)
+        IEncryptUrlHelper encryptUrlHelper,
+        Logging.ILogger logger)
     {
         this.captchaOptions = captchaOptions;
         this.captchaService = captchaService;
         this.robotOptions = robotOptions.Value;
         this.encryptUrlHelper = encryptUrlHelper;
+        this.logger = logger;
     }
 
     private static string TooManyFailedLoginPageUrl => $"~/?r={HttpUtility.UrlEncode(Labels.tooManyFailedCaptcha)}";
@@ -55,7 +59,16 @@ public class RobotCaptchaController : Controller
     [HttpPost]
     public async Task<IActionResult> Index(RobotCaptchaModel model)
     {
-        var isVerifiedResult = await captchaService.IsVerified(model.Token);
+        var isVerifiedResult = new Result(Result.Timeout, "Timeout error. Please try again");
+        try
+        {
+            isVerifiedResult = await captchaService.IsVerified(model.Token);
+        }
+        catch (Exception ex)
+        {
+            await logger.WarnAsync(ex.ToString());
+        }
+
         if (isVerifiedResult.IsSuccess)
         {
             AppSession.InputCaptchaSuccess = true;
