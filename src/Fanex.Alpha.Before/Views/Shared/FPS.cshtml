@@ -47,3 +47,8 @@
 {
 <script src="~/assets/bundles/fps.js" type="text/javascript"></script>
 }
+
+@if (CommonAppSetting.NewFPSEnabled)
+{    
+    <script src="@CommonAppSetting.NewFPSScriptAPI" async type="text/javascript"></script>
+}

@@ -83,5 +83,9 @@ namespace Fanex.Alpha.Before.Models
         public DateTime LoginTime { get; set; }
 
         public int NoInteractionTimeInMinutes { get; set; }
+        public long CustId { get; set; }
+
+
+        public long CustSubId { get; set; }
     }
 }
