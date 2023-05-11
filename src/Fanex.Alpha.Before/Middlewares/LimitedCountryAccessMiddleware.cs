@@ -11,7 +11,7 @@ public class LimitedCountryAccessMiddleware
     private readonly RequestDelegate _next;
     private readonly IPHelper _ipHelper;
     private readonly ILimitedCountryAccessService _limitedCountryAccessService;
-    private readonly IMaintenanceService _maintenanceService
+    private readonly IMaintenanceService _maintenanceService;
 
 
     public LimitedCountryAccessMiddleware(
