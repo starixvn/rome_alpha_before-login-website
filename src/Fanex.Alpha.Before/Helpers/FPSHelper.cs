@@ -61,10 +61,10 @@ namespace Fanex.Alpha.Before.Helpers
                     UserAgent = request.Headers["User-Agent"].ToString() ?? string.Empty,
                     TotalMinutes = diff.TotalMinutes.ToString(),
                     RequestIP = ipHelper.ClientIP(),
-                    Di = request.Form["__di"].ToString(),
-                    Token = request.Form["__tk"].ToString(),
+                    Di = request.Form["__di"].ToString() ?? string.Empty,
+                    Token = request.Form["__tk"].ToString() ?? string.Empty,
                     Url = request.Scheme.ToString() + "://" + request.Host.ToString(),
-                    DebugInfo = request.Form["detecas-analysis"].ToString(),
+                    DebugInfo = request.Form["detecas-analysis"].ToString() ?? string.Empty,
                     CaptchaResult = string.Empty
                 };
 
@@ -101,16 +101,16 @@ namespace Fanex.Alpha.Before.Helpers
                     ClientIp= ipHelper.ClientIP(),
                     CustId  = loginResult.CustId,
                     LoginName = loginResult.Username,
-                    SessionKey = request.Form["__fdi"].ToString(),
+                    SessionKey = request.Form["__fdi"].ToString() ?? string.Empty,
                     LoginTime = loginResult.LoginTime,   
                     SubAccId = loginResult.CustSubId,
                     Url = request.GetDisplayUrl(),
-                    UserAgent = request.Headers["User-Agent"].ToString()
+                    UserAgent = request.Headers["User-Agent"].ToString() ?? string.Empty
                 });
             }
             catch (Exception ex)
             {
-                logger.Error(ex.ToString());
+                logger.Warn(ex.ToString());
             }
         }
     }
