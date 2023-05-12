@@ -5,6 +5,7 @@ using FPS.Client.NetStandard.Models;
 using FPS.Device.FingerPrint.Net.Standard.Client;
 using FPS.Device.FingerPrint.Net.Standard.Client.Model;
 using Microsoft.AspNetCore.Http.Extensions;
+using Newtonsoft.Json;
 using ILogger = Fanex.Logging.ILogger;
 
 namespace Fanex.Alpha.Before.Helpers
@@ -87,7 +88,7 @@ namespace Fanex.Alpha.Before.Helpers
         public void NewFPSTracking(HttpRequest request, SignInResult loginResult)
         {
             try
-            {
+            {   
                 if (!AppSetting.NewFPSEnabled)
                 {
                     return;
@@ -95,18 +96,20 @@ namespace Fanex.Alpha.Before.Helpers
 
                 var fpsClient = new TransactionServices(AppSetting.FpsSubscriber, AppSetting.NewFPSPortalAPI);
 
-                fpsClient.CheckTransaction(new TransactionModel
+                var data = new TransactionModel
                 {
                     Action = "Login",
-                    ClientIp= ipHelper.ClientIP(),
-                    CustId  = loginResult.CustId,
+                    ClientIp = ipHelper.ClientIP(),
+                    CustId = loginResult.CustId,
                     LoginName = loginResult.Username,
                     SessionKey = request.Form["__fdi"].ToString() ?? string.Empty,
-                    LoginTime = loginResult.LoginTime,   
+                    LoginTime = loginResult.LoginTime,
                     SubAccId = loginResult.CustSubId,
                     Url = request.GetDisplayUrl(),
                     UserAgent = request.Headers["User-Agent"].ToString() ?? string.Empty
-                });
+                };
+
+                fpsClient.CheckTransaction(data);
             }
             catch (Exception ex)
             {
