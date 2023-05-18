@@ -88,7 +88,7 @@ namespace Fanex.Alpha.Before.Helpers
         public void NewFPSTracking(HttpRequest request, SignInResult loginResult)
         {
             try
-            {   
+            {
                 if (!AppSetting.NewFPSEnabled)
                 {
                     return;
