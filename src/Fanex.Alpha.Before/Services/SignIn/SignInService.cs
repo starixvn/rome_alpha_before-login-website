@@ -141,6 +141,11 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 NoInteractionTimeInMinutes = commonOptions.NoInteractionTimeInMinutes
             };
 
+            if (string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.Password))
+            {
+                return signInResult;
+            }
+
             AppSession.EncryptCode = model.Code;
 
             if (string.IsNullOrEmpty(model.Code))
