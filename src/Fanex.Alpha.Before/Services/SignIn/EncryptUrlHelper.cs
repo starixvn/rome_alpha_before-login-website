@@ -105,22 +105,6 @@ namespace Fanex.Alpha.Before.Services.SignIn
 
             var url = $"{afterUrl}{AppSetting.AfterLoginAuthorizationPage}?params={EncryptParameter(parameter)}";
 
-            fpsHelper.FPSTracking(httpContext.Request, new SignInResult
-            {
-                Username = verifySignInResult.Username,
-                ErrCode = verifySignInResult.ErrorCode,
-                ErrMsg = verifySignInResult.ErrorMessage,
-                LoginTime = verifySignInResult.LoginTime
-            });
-
-            fpsHelper.NewFPSTracking(httpContext.Request, new SignInResult
-            {
-                Username = verifySignInResult.Username,               
-                LoginTime = verifySignInResult.LoginTime,
-                CustId = verifySignInResult.CustId,
-                CustSubId = verifySignInResult.SubAccId                
-            });
-
             return AddUMToken(httpContext, url);
         }
 

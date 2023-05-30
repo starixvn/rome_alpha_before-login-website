@@ -2,6 +2,7 @@ using Fanex.Alpha.Before.Constants;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
 using Fanex.Alpha.Before.Services.SignIn;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ONEbook.UM.AspNetCore.Filters;
 
@@ -56,10 +57,21 @@ public class AuthController : Controller
         var loginResult = await signInService.SignIn(model, HttpContext);
         if (loginResult.ErrCode == SignInErrorContants.Success && !string.IsNullOrEmpty(loginResult.AfterLoginUrl))
         {
-            if (loginResult.AfterLoginUrl.IndexOf("RobotCaptcha", StringComparison.OrdinalIgnoreCase) != -1)
+            fpsHelper.FPSTracking(HttpContext.Request, new Models.SignInResult
             {
-                fpsHelper.FPSTracking(Request, loginResult);
-            }
+                Username = loginResult.Username,
+                ErrCode = loginResult.ErrCode,
+                ErrMsg = loginResult.ErrMsg,
+                LoginTime = loginResult.LoginTime
+            });
+
+            fpsHelper.NewFPSTracking(HttpContext.Request, new Models.SignInResult
+            {
+                Username = loginResult.Username,
+                LoginTime = loginResult.LoginTime,
+                CustId = loginResult.CustId,
+                CustSubId = loginResult.CustSubId
+            });
 
             return Redirect(loginResult.AfterLoginUrl);
         }
