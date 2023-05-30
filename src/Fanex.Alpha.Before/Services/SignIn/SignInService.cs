@@ -302,6 +302,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 Expires = DateTime.Now.AddDays(1), // Max 24h
                 HttpOnly = true
             });
+            signInResult.CustId = verifySignInResult.CustId;
+            signInResult.CustSubId = verifySignInResult.SubAccId;
 
 
             if (verifySignInResult.IsKickoutDueToProtectedMode)
