@@ -14,7 +14,6 @@ using Fanex.Alpha.Before.Services.SignIn;
 using Fanex.Caching.Redis;
 using Fanex.Data.Repository;
 using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpOverrides;
 using TelegramBot.Client.Services;
 
@@ -121,7 +120,11 @@ namespace Fanex.Alpha.Before
             {
                 endpoints.MapGet("/liveness", () =>
                 {
-                    return $"{Assembly.GetExecutingAssembly().GetName().Name}-{Configuration.GetValue<string>("Environment")}: {Configuration.GetValue<string>("SiteGroup")}";
+                    var request = HttpContextHelper.Current.Request;
+                    return $"x-actual-ip: {request.Headers["x-actual-ip"]}{Environment.NewLine}" +
+                        $"x-forwarded-for: {request.Headers["x-forwarded-for"]}{Environment.NewLine}" +
+                        $"GetClientIP: {app.ApplicationServices.GetRequiredService<IPHelper>().ClientIP()}{Environment.NewLine}" +
+                        $"{Assembly.GetExecutingAssembly().GetName().Name}-{Configuration.GetValue<string>("Environment")}: {Configuration.GetValue<string>("SiteGroup")}";
                 }).AllowAnonymous();
                 endpoints.MapControllerRoute("default", "{controller=Auth}/{action=Index}/{id?}");
             });
