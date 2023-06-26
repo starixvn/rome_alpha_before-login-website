@@ -4,5 +4,6 @@
     "appsettings.json": "appsettings.*.json",
     "domainmappings.json": "domainmappings.*.json",
     "Labels.resx": "Labels.*.resx"
-  }
+  },
+  "dotnet.defaultSolution": "Fanex.Alpha.Before.sln"
 }
