@@ -1,4 +1,4 @@
-FROM hub.nexdev.net/base/dotnet/core/sdk:7.0-alpine AS builder
+FROM hub.nexdev.net/base/dotnet/core/sdk:7.0 AS builder
 WORKDIR /src
 
 COPY src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj ./Fanex.Alpha.Before/Fanex.Alpha.Before.csproj
@@ -39,7 +39,7 @@ fi
 WORKDIR /src/Fanex.Alpha.Before
 RUN dotnet publish -r linux-x64 --self-contained false -o /app
 
-FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0-alpine AS base
+FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0-slim AS base
 
 # Don’t run as root
 RUN adduser --disabled-password \

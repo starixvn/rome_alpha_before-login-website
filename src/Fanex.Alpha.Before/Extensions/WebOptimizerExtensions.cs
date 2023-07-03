@@ -1,4 +1,6 @@
 using Fanex.Alpha.Before.Constants;
+using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
+using JavaScriptEngineSwitcher.V8;
 
 namespace Fanex.Alpha.Before.Extensions;
 
@@ -8,6 +10,8 @@ public static class WebOptimizerExtensions
     {
         var siteGroup = configuration.GetValue<string>("SiteGroup");
         var cssSuffix = siteGroup == SiteGroupConstants.Site789y ? "2" : string.Empty;
+
+        services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName).AddV8();
 
 
         services.AddWebOptimizer(pipeline =>
