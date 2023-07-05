@@ -1,19 +1,19 @@
-﻿using Fanex.Cryptography.Aes;
+﻿using Alpha.Captcha.Core;
+using Alpha.Captcha.Core.Services;
 using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Constants;
+using Fanex.Alpha.Before.Extensions;
+using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
+using Fanex.Alpha.Before.NetThrottling;
+using Fanex.Alpha.Before.NetThrottling.Models;
 using Fanex.Alpha.Before.Repositories;
 using Fanex.Alpha.Before.Resources;
 using Fanex.Alpha.Before.Services.FPS;
+using Fanex.Cryptography.Aes;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using TelegramBot.Client.Services;
-using Fanex.Alpha.Before.Helpers;
-using Fanex.Alpha.Before.Extensions;
-using Microsoft.Extensions.Options;
-using Alpha.Captcha.Core;
-using Alpha.Captcha.Core.Services;
-using Fanex.Alpha.Before.NetThrottling.Models;
-using Fanex.Alpha.Before.NetThrottling;
 
 namespace Fanex.Alpha.Before.Services.SignIn
 {
@@ -177,6 +177,13 @@ namespace Fanex.Alpha.Before.Services.SignIn
             }
 
             var password = AesService.Default.Decrypt(model.Password, model.Code);
+            if (string.IsNullOrEmpty(password))
+            {
+                signInResult.ErrCode = SignInErrorContants.InvalidEncryptCode;
+                signInResult.ErrMsg = Labels.errInvalidCaptcha;
+                return signInResult;
+            }
+
             var assetAppPath = AssetAppPathHelper.IsValidAssetAppPath(model.AssetAppPath) ? model.AssetAppPath : string.Empty;
             await VerifyDownlineLogin(
                 model.Username,
