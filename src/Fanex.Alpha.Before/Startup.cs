@@ -91,7 +91,8 @@ namespace Fanex.Alpha.Before
             }
             else
             {
-                app.UseExceptionHandler("/Common/Error");
+                app.UseDeveloperExceptionPage();
+                //app.UseExceptionHandler("/Common/Error");
             }
 
             app.UseStatusCodePagesWithRedirects("/Common/Error?code={0}");
