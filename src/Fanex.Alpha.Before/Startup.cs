@@ -4,18 +4,19 @@
 // For more information on ASP.NET Core startup files, see https://docs.microsoft.com/aspnet/core/fundamentals/startup
 
 using Alpha.SliderCaptcha.AspNetCore;
+using Fanex.Alpha.Before.Extensions;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Repositories;
 using Fanex.Alpha.Before.Services;
 using Fanex.Alpha.Before.Services.FPS;
 using Fanex.Alpha.Before.Services.SignIn;
-using Fanex.Alpha.Before.Extensions;
-using Fanex.Data.Repository;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using TelegramBot.Client.Services;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.DataProtection;
 using Fanex.Caching.Redis;
+using Fanex.Data.Repository;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.HttpOverrides;
+using StackExchange.Redis;
+using TelegramBot.Client.Services;
 
 namespace Fanex.Alpha.Before
 {
@@ -39,9 +40,21 @@ namespace Fanex.Alpha.Before
             });
             services.AddSession();
 
-            services.AddDataProtection()
-                .SetApplicationName("alpha-before-login")
-                .PersistKeysToFileSystem(new DirectoryInfo(Configuration.GetValue("SharedDirectory", "login_site_cache")));
+            if (Configuration.GetValue<bool>("UseFileSystem"))
+            {
+                services.AddDataProtection()
+                    .SetApplicationName("alpha-before-login")
+                    .PersistKeysToFileSystem(new DirectoryInfo(Configuration.GetValue("SharedDirectory", "login_site_cache")));
+            }
+            else
+            {
+                var redis = ConnectionMultiplexer.Connect(redisConfiguration);
+                services.AddDataProtection()
+                    .SetApplicationName("alpha-before-login")
+                    .PersistKeysToStackExchangeRedis(redis, "BeforeLogin-DataProtection-Keys");
+            }
+
+
 
             services.AddFanexLogging(Configuration)
                  .AddONEbookUM(Configuration)
