@@ -3,19 +3,20 @@
 // This file will need updated according to the specific scenario of the application being upgraded.
 // For more information on ASP.NET Core startup files, see https://docs.microsoft.com/aspnet/core/fundamentals/startup
 
+using System.Reflection;
 using Alpha.SliderCaptcha.AspNetCore;
+using Fanex.Alpha.Before.Extensions;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Repositories;
 using Fanex.Alpha.Before.Services;
 using Fanex.Alpha.Before.Services.FPS;
 using Fanex.Alpha.Before.Services.SignIn;
-using Fanex.Alpha.Before.Extensions;
-using Fanex.Data.Repository;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using TelegramBot.Client.Services;
-using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.DataProtection;
 using Fanex.Caching.Redis;
+using Fanex.Data.Repository;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.HttpOverrides;
+using TelegramBot.Client.Services;
 
 namespace Fanex.Alpha.Before
 {
@@ -118,9 +119,9 @@ namespace Fanex.Alpha.Before
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                endpoints.MapGet("/liveness", () =>
                 {
-                    Predicate = r => r.Name.Contains("self")
+                    return $"{Assembly.GetExecutingAssembly().GetName().Name}-{Configuration.GetValue<string>("Environment")}: {Configuration.GetValue<string>("SiteGroup")}";
                 }).AllowAnonymous();
                 endpoints.MapControllerRoute("default", "{controller=Auth}/{action=Index}/{id?}");
             });
