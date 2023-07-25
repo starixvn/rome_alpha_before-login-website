@@ -2,7 +2,7 @@
     "DomainMappings": [
         {
             "Before": "mbc.playthefun.com",
-            "After": "http://mb1.playthefun.com/ex-main/"
+            "After": "http://mb2.playthefun.com/ex-main/"
         }
     ]
 }
