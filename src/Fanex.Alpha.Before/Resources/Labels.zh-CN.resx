@@ -169,7 +169,7 @@
     <comment/>
   </data>
   <data name="UM_Message" xml:space="preserve">
-    <value>本公司將於 {0} 至 {1} (GMT +8) 對服務器進行例行維護。 期間所有的網頁將無法登入。 請您稍候再來。</value>
+    <value>本公司将于 {0}至{1} (GMT+8) 对服务器进行例行维护。期间所有的网页将无法登入。请您稍候再来。</value>
     <comment/>
   </data>
 </root>
