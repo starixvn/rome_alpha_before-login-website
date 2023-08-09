@@ -30,6 +30,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
     {
         private readonly string _loginTheme;
 
+        private readonly ManualUMOptions manualUMOptions;
         private readonly CommonOptions commonOptions;
         private readonly AutomationTestOptions automationTestOptions;
         private readonly IPHelper ipHelper;
@@ -47,6 +48,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
         private readonly IEncryptUrlHelper encryptUrlHelper;
 
         public SignInService(
+            IOptions<ManualUMOptions> manualUMOptions,
             IOptions<CommonOptions> commonOptions,
             IOptions<AutomationTestOptions> automationTestOptions,
             IOptions<LoginThemeOptions> loginThemeOptions,
@@ -64,6 +66,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             INetThrottler netThrottler,
             IEncryptUrlHelper encryptUrlHelper)
         {
+            this.manualUMOptions = manualUMOptions.Value;
             this.commonOptions = commonOptions.Value;
             this.automationTestOptions = automationTestOptions.Value;
             this.logger = logger;
@@ -351,6 +354,13 @@ namespace Fanex.Alpha.Before.Services.SignIn
 
                     if (verifySignInResult.ErrorCode == 0)
                     {
+                        if (manualUMOptions.Sites.Contains(verifySignInResult.Site))
+                        {
+                            signInResult.ErrCode = SignInErrorContants.ManualUM;
+                            signInResult.ErrMsg = string.Format(Labels.UM_Message, manualUMOptions.UMFrom, manualUMOptions.UMTo);
+                            return ThrottleResult.Allowed;
+                        }
+
                         signInResult.LoginTime = verifySignInResult.LoginTime;
 
                         UpdateResultAfterLoginSuccessfully(password, signInResult, verifySignInResult, language, deviceId, browserSize, darkModeName, assetAppPath, httpContext);

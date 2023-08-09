@@ -8,7 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Fanex.Alpha.Before.Resources {
+namespace Fanex.Alpha.Before.Resources
+{
 
     using System;
 
@@ -199,6 +200,14 @@ namespace Fanex.Alpha.Before.Resources {
             get
             {
                 return ResourceManager.GetString("tooManyFailedCaptcha", resourceCulture);
+            }
+        }
+
+        public static string UM_Message
+        {
+            get
+            {
+                return ResourceManager.GetString("UM_Message", resourceCulture);
             }
         }
     }

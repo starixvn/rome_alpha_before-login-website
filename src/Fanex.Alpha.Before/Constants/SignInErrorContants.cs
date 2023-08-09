@@ -8,5 +8,6 @@
         public const int CaptchaRequired = -2;
         public const int LoginTooOften = -3;
         public const int Success = -1;
+        public const int ManualUM = 999999;
     }
 }
