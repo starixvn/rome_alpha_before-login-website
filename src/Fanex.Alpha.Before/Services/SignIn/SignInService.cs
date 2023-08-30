@@ -1,4 +1,5 @@
-﻿using Alpha.Captcha.Core;
+﻿using System.Net;
+using Alpha.Captcha.Core;
 using Alpha.Captcha.Core.Services;
 using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Constants;
@@ -346,6 +347,11 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 async (success) =>
                 {
                     var clientIP = ipHelper.ClientIP();
+                    if (!IPAddress.TryParse(clientIP, out _))
+                    {
+                        return ThrottleResult.Allowed;
+                    }
+
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize, clientIP);
                     requestInfo["countrycode"] = GetCountryCode(clientIP);
                     requestInfo.Add("sitegroup", AppSetting.SiteGroup);
