@@ -33,7 +33,7 @@
     <PackageReference Include="Fanex.Common" Version="1.1.1" />
     <PackageReference Include="Fanex.Data.Repository" Version="4.2.2" />
     <PackageReference Include="FPS.Browserless.Detection.Client.NetStandard" Version="1.0.4" />
-    <PackageReference Include="FPS.Client.NetStandard" Version="1.0.7-beta" />
+    <PackageReference Include="FPS.Client.NetStandard" Version="1.0.8-alpha" />
     <PackageReference Include="FPS.Device.FingerPrint.Net.Standard.Client" Version="1.0.3" />
     <PackageReference Include="JavaScriptEngineSwitcher.Extensions.MsDependencyInjection" Version="3.21.0" />
     <PackageReference Include="JavaScriptEngineSwitcher.V8" Version="3.21.3" />

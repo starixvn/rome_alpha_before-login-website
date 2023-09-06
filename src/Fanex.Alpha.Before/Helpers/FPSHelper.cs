@@ -36,13 +36,15 @@ namespace Fanex.Alpha.Before.Helpers
                 {
                     return;
                 }
+                var fpsClient = new FPS.Client.NetStandard.Service(AppSetting.FpsApi, request);
 
-                new FPS.Client.NetStandard.Service(AppSetting.FpsApi, request).CheckTransaction(
+                fpsClient.CheckTransaction(
                     loginResult.Username,
                     AppSetting.FpsSubscriber,
                     "login",
                     "successfully",
                     loginResult.LoginTime);
+
             }
             catch (Exception ex)
             {
