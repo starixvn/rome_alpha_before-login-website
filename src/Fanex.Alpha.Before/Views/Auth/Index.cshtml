@@ -1,6 +1,24 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var darkModeName = (string)ViewData["DarkModeName"];
+
+
+
+    try
+    {
+        Console.WriteLine("GetJobConfigModel1");
+        var criteria = new Fanex.Alpha.Before.Criteria.GetJobConfigCriteria();
+        Console.WriteLine("GetJobConfigModel2");
+
+        var dynamicRepository = new Fanex.Data.Repository.DynamicRepository();
+        var data = dynamicRepository.Fetch<JobConfigModel>(criteria);
+        Console.WriteLine("GetJobConfigModel3");
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine("GetJobConfigModel Exception");
+        Console.WriteLine(e.Message);
+    }
 }
 
 @model Fanex.Alpha.Before.Models.SignInResult
