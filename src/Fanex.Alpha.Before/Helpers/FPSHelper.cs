@@ -41,8 +41,7 @@ namespace Fanex.Alpha.Before.Helpers
                 fpsClient.CheckTransaction(
                     loginResult.Username,
                     AppSetting.FpsSubscriber,
-                    "login",
-                    "successfully",
+                    "login",                   
                     loginResult.LoginTime);
 
             }
