@@ -36,48 +36,14 @@ namespace Fanex.Alpha.Before.Helpers
                 {
                     return;
                 }
+                var fpsClient = new FPS.Client.NetStandard.Service(AppSetting.FpsApi, request);
 
-                var loginMessage = string.Empty;
-                if (loginResult == null)
-                {
-                    loginResult = new SignInResult();
-                    loginMessage = "failed";
-                }
-                else if (loginResult.ErrCode != -1)
-                {
-                    loginMessage = string.Format("{0}", loginResult.ErrMsg);
-                }
-                else
-                {
-                    loginMessage = "successfully";
-                }
+                fpsClient.CheckTransaction(
+                    loginResult.Username,
+                    AppSetting.FpsSubscriber,
+                    "login",                   
+                    loginResult.LoginTime);
 
-                const string loginAction = "login";
-                var username = loginResult.Username;
-                var fpsSubscirber = AppSetting.FpsSubscriber;
-                TimeSpan diff = DateTime.UtcNow - DateTime.Now;
-                var httpRequestData = new HttpRequestModel()
-                {
-                    AcceptTypes = request.Headers["Accept"].ToString() ?? string.Empty,
-                    UserAgent = request.Headers["User-Agent"].ToString() ?? string.Empty,
-                    TotalMinutes = diff.TotalMinutes.ToString(),
-                    RequestIP = ipHelper.ClientIP(),
-                    Di = request.Form["__di"].ToString() ?? string.Empty,
-                    Token = request.Form["__tk"].ToString() ?? string.Empty,
-                    Url = request.Scheme.ToString() + "://" + request.Host.ToString(),
-                    DebugInfo = request.Form["detecas-analysis"].ToString() ?? string.Empty,
-                    CaptchaResult = string.Empty
-                };
-
-                new FPS.Client.NetStandard.Service(AppSetting.FpsApi).CheckTransaction(
-                    httpRequestData,
-                    username.Trim(),
-                    loginAction,
-                    loginMessage,
-                    fpsSubscirber,
-                    loginResult.LoginTime,
-                    out var resultMessage,
-                    out var deviceCode);
             }
             catch (Exception ex)
             {
