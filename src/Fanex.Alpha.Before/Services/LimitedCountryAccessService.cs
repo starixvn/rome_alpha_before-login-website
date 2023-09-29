@@ -126,8 +126,8 @@ namespace Fanex.Alpha.Before.Services
         private IEnumerable<LimitedCountriesConfigModel> GetActiveRestrictedCountriesConfig()
         {
             return configuration.GetSection("LimitedCountries").Get<LimitedCountry[]>()
-                .Where(m => m.Active && DateTime.Now >= m.AffectedDate)
-                .Select(m => new LimitedCountriesConfigModel(m.Name, m.IsTesting, m.TestingIp));
+                ?.Where(m => m.Active && DateTime.Now >= m.AffectedDate)
+                ?.Select(m => new LimitedCountriesConfigModel(m.Name, m.IsTesting, m.TestingIp)) ?? Enumerable.Empty<LimitedCountriesConfigModel>();
         }
     }
 }
