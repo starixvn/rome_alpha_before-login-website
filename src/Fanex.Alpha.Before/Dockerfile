@@ -44,11 +44,12 @@ FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0-slim AS base
 # Don’t run as root
 RUN adduser --disabled-password \
   --home /app \
-  --gecos '' dotnetuser && chown -R dotnetuser /app
+  --gecos '' dotnetuser && chown -R dotnetuser /app && chown -R dotnetuser /tmp
 USER dotnetuser
 #
 
 # final stage/image
+ENV COMPlus_EnableDiagnostics=0
 WORKDIR /app
 COPY --from=builder /app ./
 ENV TZ="America/La_Paz"

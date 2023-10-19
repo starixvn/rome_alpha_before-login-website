@@ -1,4 +1,5 @@
-﻿using Fanex.Alpha.Before.Configurations;
+﻿using System.Text.Json;
+using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
 using Fanex.Cryptography.Aes;
@@ -25,11 +26,10 @@ namespace Fanex.Alpha.Before.Services.SignIn
 
     public class EncryptUrlHelper : IEncryptUrlHelper
     {
-        private readonly IFPSHelper fpsHelper;
-
-        public EncryptUrlHelper(IFPSHelper fpsHelper)
+        private readonly ILogger<EncryptUrlHelper> logger;
+        public EncryptUrlHelper(ILogger<EncryptUrlHelper> logger)
         {
-            this.fpsHelper = fpsHelper;
+            this.logger = logger;
         }
 
         public const string UTMS = "__utms";
@@ -101,6 +101,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 assetAppPath);
 
             var host = httpContext.Request.Host.Value.TrimEnd('.');
+            logger.LogInformation(host);
+            logger.LogInformation(JsonSerializer.Serialize(AppSetting.DomainMappings));
             var afterUrl = AppSetting.DomainMappings[host];
 
             var url = $"{afterUrl}{AppSetting.AfterLoginAuthorizationPage}?params={EncryptParameter(parameter)}";
