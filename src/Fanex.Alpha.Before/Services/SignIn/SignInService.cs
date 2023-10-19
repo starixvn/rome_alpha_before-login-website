@@ -152,7 +152,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
 
             AppSession.EncryptCode = model.Code;
 
-            if (string.IsNullOrEmpty(model.Code))
+            if (string.IsNullOrEmpty(model.Code) && model.Code.Length != 4)
             {
                 signInResult.ErrCode = SignInErrorContants.InvalidEncryptCode;
                 signInResult.ErrMsg = Labels.errInvalidCaptcha;
