@@ -1,76 +1,80 @@
 {
-    "DomainMappings": [
-        {
-            "Before": "alpha1.nexdev.net",
-            "After": "http://mb1.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha2.nexdev.net",
-            "After": "http://mb2.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha3.nexdev.net",
-            "After": "http://mb3.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha4.nexdev.net",
-            "After": "http://mb4.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha5.nexdev.net",
-            "After": "http://mb5.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha6.nexdev.net",
-            "After": "http://mb6.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha7.nexdev.net",
-            "After": "http://mb7.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha8.nexdev.net",
-            "After": "http://mb8.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha11.nexdev.net",
-            "After": "http://mb11.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha12.nexdev.net",
-            "After": "http://mb12.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha13.nexdev.net",
-            "After": "http://mb13.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha14.nexdev.net",
-            "After": "http://mb14.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha15.nexdev.net",
-            "After": "http://mb15.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha16.nexdev.net",
-            "After": "http://mb16.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha17.nexdev.net",
-            "After": "http://mb17.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha18.nexdev.net",
-            "After": "http://mb18.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha19.nexdev.net",
-            "After": "http://mb19.nexdev.net/ex-main/"
-        },
-        {
-            "Before": "alpha20.nexdev.net",
-            "After": "http://mb20.nexdev.net/ex-main/"
-        }
-    ]
+  "DomainMappings": [
+    {
+      "Before": "alpha1.nexdev.net",
+      "After": "http://mb1.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha2.nexdev.net",
+      "After": "http://mb2.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha3.nexdev.net",
+      "After": "http://mb3.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha4.nexdev.net",
+      "After": "http://mb4.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha5.nexdev.net",
+      "After": "http://mb5.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha6.nexdev.net",
+      "After": "http://mb6.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha7.nexdev.net",
+      "After": "http://mb7.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha8.nexdev.net",
+      "After": "http://mb8.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha11.nexdev.net",
+      "After": "http://mb11.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha12.nexdev.net",
+      "After": "http://mb12.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha13.nexdev.net",
+      "After": "http://mb13.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha14.nexdev.net",
+      "After": "http://mb14.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha15.nexdev.net",
+      "After": "http://mb15.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha16.nexdev.net",
+      "After": "http://mb16.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha17.nexdev.net",
+      "After": "http://mb17.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha18.nexdev.net",
+      "After": "http://mb18.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha19.nexdev.net",
+      "After": "http://mb19.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alpha20.nexdev.net",
+      "After": "http://mb20.nexdev.net/ex-main/"
+    },
+    {
+      "Before": "alphafps.nexdev.net",
+      "After": "http://mb20.nexdev.net/ex-main/"
+    }
+  ]
 }

@@ -1,11 +1,6 @@
 ﻿using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Models;
-using Fanex.Logging.Extensions.AspNetCore;
-using FPS.Client.NetStandard.Models;
-using FPS.Device.FingerPrint.Net.Standard.Client;
-using FPS.Device.FingerPrint.Net.Standard.Client.Model;
 using Microsoft.AspNetCore.Http.Extensions;
-using Newtonsoft.Json;
 using ILogger = Fanex.Logging.ILogger;
 
 namespace Fanex.Alpha.Before.Helpers
@@ -13,8 +8,6 @@ namespace Fanex.Alpha.Before.Helpers
     public interface IFPSHelper
     {
         void FPSTracking(HttpRequest request, SignInResult loginResult);
-
-        void NewFPSTracking(HttpRequest request, SignInResult loginResult);
     }
 
     public class FPSHelper : IFPSHelper
@@ -36,9 +29,11 @@ namespace Fanex.Alpha.Before.Helpers
                 {
                     return;
                 }
-                var fpsClient = new FPS.Client.NetStandard.Service(AppSetting.FpsApi, request);
+                var fpsClient = new FPS.Client.NetStandard.Service();
 
-                fpsClient.CheckTransaction(
+                fpsClient
+                    .InitialRequest(AppSetting.FpsApi, request)
+                    .CheckTransaction(
                     loginResult.Username,
                     AppSetting.FpsSubscriber,
                     "login",                   
@@ -49,38 +44,6 @@ namespace Fanex.Alpha.Before.Helpers
             {
                 logger.Warn(ex.ToString());
             }
-        }
-
-        public void NewFPSTracking(HttpRequest request, SignInResult loginResult)
-        {
-            try
-            {
-                if (!AppSetting.NewFPSEnabled)
-                {
-                    return;
-                }
-
-                var fpsClient = new TransactionServices(AppSetting.FpsSubscriber, AppSetting.NewFPSPortalAPI);
-
-                var data = new TransactionModel
-                {
-                    Action = "Login",
-                    ClientIp = ipHelper.ClientIP(),
-                    CustId = loginResult.CustId,
-                    LoginName = loginResult.Username,
-                    SessionKey = request.Form["__fdi"].ToString() ?? string.Empty,
-                    LoginTime = loginResult.LoginTime,
-                    SubAccId = loginResult.CustSubId,
-                    Url = request.GetDisplayUrl(),
-                    UserAgent = request.Headers["User-Agent"].ToString() ?? string.Empty
-                };
-
-                fpsClient.CheckTransaction(data);
-            }
-            catch (Exception ex)
-            {
-                logger.Warn(ex.ToString());
-            }
-        }
+        }        
     }
 }
