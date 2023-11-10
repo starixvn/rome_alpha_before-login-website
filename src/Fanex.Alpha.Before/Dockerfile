@@ -14,6 +14,7 @@ RUN mkdir /src/tmp
 RUN if [ "$TRANSFORM_CONFIG" = "PRO" ] \
 		|| [ "$TRANSFORM_CONFIG" = "PRO2" ] \
     || [ "$TRANSFORM_CONFIG" = "PRO3" ] \
+    || [ "$TRANSFORM_CONFIG" = "PRO5" ] \
     || [ "$TRANSFORM_CONFIG" = "STG" ] \
     || [ "$TRANSFORM_CONFIG" = "STG2" ] \
 		|| [ "$TRANSFORM_CONFIG" = "STG3" ]; \
