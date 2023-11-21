@@ -1,0 +1,8 @@
+{
+    "DomainMappings": [
+        {
+            "Before": "mbc.playthefun.com",
+            "After": "http://mb10.playthefun.com/ex-main/"
+        }
+    ]
+}

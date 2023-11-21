@@ -1,0 +1,8 @@
+{
+    "DomainMappings": [       
+        {
+            "Before": "alpha10.starixuat.com",
+            "After": "http://i1mb10.starixuat.com/ex-main/"
+        }
+    ]
+}
