@@ -7,7 +7,6 @@ using System.Reflection;
 using Alpha.SliderCaptcha.AspNetCore;
 using Fanex.Alpha.Before.Extensions;
 using Fanex.Alpha.Before.Helpers;
-using Fanex.Alpha.Before.Repositories;
 using Fanex.Alpha.Before.Services;
 using Fanex.Alpha.Before.Services.FPS;
 using Fanex.Alpha.Before.Services.SignIn;
@@ -64,8 +63,8 @@ namespace Fanex.Alpha.Before
 
             services.AddAssetsBundle(Configuration);
 
+            services.AddFanexDataWithSqlServer(Configuration);
             services.AddSingleton<IDynamicRepository, DynamicRepository>();
-            services.AddSingleton<ISignInRepository, SignInRepository>();
             services.AddSingleton<IRobotDetector, RobotDetector>();
             services.AddSingleton<IDistributedCacheHelper, DistributedCacheHelper>();
             services.AddSingleton<IDistributedCacheService, DistributedCacheService>();
@@ -103,7 +102,6 @@ namespace Fanex.Alpha.Before
 
             app.UseForwardedHeaders();
 
-            app.UseFanexDataWithSqlServer(Configuration, env);
             app.UseWebOptimizer();
             app.UseStaticFiles();
             app.UseRouting();

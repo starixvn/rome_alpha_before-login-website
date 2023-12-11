@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using Fanex.Alpha.Before.Models;
 using Fanex.Logging;
 using UAParser;
 
@@ -6,9 +6,9 @@ namespace Fanex.Alpha.Before.Helpers;
 
 public static class DeviceHelper
 {
-    public static Hashtable GetRequestInfo(HttpRequest request, string browserSize, string clientIP)
+    public static RequestInfo GetRequestInfo(HttpRequest request, string browserSize, string clientIP)
     {
-        Hashtable requestInfo = InitClientRequestInfo(request, clientIP);
+        RequestInfo requestInfo = InitClientRequestInfo(request, clientIP);
 
         try
         {
@@ -22,20 +22,18 @@ public static class DeviceHelper
         return requestInfo;
     }
 
-    private static Hashtable InitClientRequestInfo(HttpRequest request, string clientIP)
-    {
-        return new Hashtable
+    private static RequestInfo InitClientRequestInfo(HttpRequest request, string clientIP)
+        => new RequestInfo
         {
-            ["loginip"] = clientIP,
-            ["countrycode"] = "Unknown",
-            // ["logindomain"] = request.ServerVariables["SERVER_NAME"],
-            ["logindomain"] = request.Host.Value,
-            ["browsername"] = string.Empty,
-            ["platform"] = string.Empty
+            LoginIP = clientIP,
+            CountryCode = "Unknown",
+            // LoginDomain = request.ServerVariables["SERVER_NAME"],
+            LoginDomain = request.Host.Value,
+            BrowserName = string.Empty,
+            Platform = string.Empty
         };
-    }
 
-    private static void GetRequestInfoFromContext(HttpRequest request, string browserSize, Hashtable requestInfo)
+    private static void GetRequestInfoFromContext(HttpRequest request, string browserSize, RequestInfo requestInfo)
     {
         var userAgent = request.Headers["User-Agent"].ToString() ?? string.Empty;
         var userAgentParser = Parser.GetDefault();
@@ -56,7 +54,7 @@ public static class DeviceHelper
         var osVersion = clientInfo.OS.Patch ?? "0";
         var operateSystem = $"{clientInfo.OS.Family} {majorVersion}.{minorVersion}.{osVersion}";
 
-        requestInfo["browsername"] = browser;
-        requestInfo["platform"] = $"{operateSystem}, Device: {device}";
+        requestInfo.BrowserName = browser;
+        requestInfo.Platform = $"{operateSystem}, Device: {device}";
     }
 }
