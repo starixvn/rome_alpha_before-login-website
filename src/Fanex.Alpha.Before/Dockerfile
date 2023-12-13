@@ -3,7 +3,8 @@ WORKDIR /src
 
 COPY src/Fanex.Alpha.Before/Fanex.Alpha.Before.csproj ./Fanex.Alpha.Before/Fanex.Alpha.Before.csproj
 RUN dotnet nuget add source https://nuget.nexdev.net/api/v2
-RUN dotnet restore Fanex.Alpha.Before/Fanex.Alpha.Before.csproj -v n
+RUN --mount=type=cache,target=/root/.nuget/packages \
+    dotnet restore Fanex.Alpha.Before/Fanex.Alpha.Before.csproj -v n
 
 COPY src/Fanex.Alpha.Before ./Fanex.Alpha.Before
 
@@ -15,6 +16,11 @@ RUN if [ "$TRANSFORM_CONFIG" = "PRO" ] \
 		|| [ "$TRANSFORM_CONFIG" = "PRO2" ] \
     || [ "$TRANSFORM_CONFIG" = "PRO3" ] \
     || [ "$TRANSFORM_CONFIG" = "PRO5" ] \
+    || [ "$TRANSFORM_CONFIG" = "DR" ] \
+    || [ "$TRANSFORM_CONFIG" = "DR2" ] \
+    || [ "$TRANSFORM_CONFIG" = "DR3" ] \
+    || [ "$TRANSFORM_CONFIG" = "DR4" ] \
+    || [ "$TRANSFORM_CONFIG" = "DR5" ] \
     || [ "$TRANSFORM_CONFIG" = "STG" ] \
     || [ "$TRANSFORM_CONFIG" = "STG2" ] \
 		|| [ "$TRANSFORM_CONFIG" = "STG3" ]; \
@@ -32,13 +38,14 @@ RUN if [ "$TRANSFORM_CONFIG" = "LOCAL2" ] \
   || [ "$TRANSFORM_CONFIG" = "STG2" ] \
   || [ "$TRANSFORM_CONFIG" = "PRO2" ] \
   || [ "$TRANSFORM_CONFIG" = "AWS2" ] \
-  || [ "$TRANSFORM_CONFIG" = "backupMNLi7" ]; \
+  || [ "$TRANSFORM_CONFIG" = "DR2" ]; \
 then \
 	cp "Fanex.Alpha.Before/wwwroot/favicon2.ico" "Fanex.Alpha.Before/wwwroot/favicon.ico"; \
 fi
 
 WORKDIR /src/Fanex.Alpha.Before
-RUN dotnet publish -r linux-x64 --self-contained false -o /app
+RUN --mount=type=cache,target=/root/.nuget/packages \
+    dotnet publish -r linux-x64 --self-contained false -o /app
 
 FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0-slim AS base
 
