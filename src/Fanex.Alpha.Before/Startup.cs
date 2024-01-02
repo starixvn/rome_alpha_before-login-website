@@ -15,6 +15,7 @@ using Fanex.Caching.Redis;
 using Fanex.Data.Repository;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
+using StackExchange.Redis;
 using TelegramBot.Client.Services;
 
 namespace Fanex.Alpha.Before
@@ -41,7 +42,9 @@ namespace Fanex.Alpha.Before
 
             services.AddDataProtection()
                 .SetApplicationName("alpha-before-login")
-                .PersistKeysToFileSystem(new DirectoryInfo(Configuration.GetValue("SharedDirectory", "login_site_cache")));
+                .PersistKeysToStackExchangeRedis(
+                    ConnectionMultiplexer.Connect(redisConfiguration),
+                    $"BeforeLogin-{Configuration.GetValue<string>("Environment")}-DataProtection-Keys");
 
             services.AddFanexLogging(Configuration)
                  .AddONEbookUM(Configuration)

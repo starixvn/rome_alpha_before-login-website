@@ -35,31 +35,39 @@ namespace Fanex.Alpha.Before.Services
 
         public bool IsLimitedAccess(string clientIP)
         {
-            if (IpServiceImpl.IsIPV6(clientIP))
+            try
             {
-                logger.Info($"Customer Access via IPV6: {clientIP}");
-            }
+                if (IpServiceImpl.IsIPV6(clientIP))
+                {
+                    logger.Info($"Customer Access via IPV6: {clientIP}");
+                }
 
-            var activeRestrictedCountriesConfig = GetActiveRestrictedCountriesConfig();
-            if (!activeRestrictedCountriesConfig.Any())
+                var activeRestrictedCountriesConfig = GetActiveRestrictedCountriesConfig();
+                if (!activeRestrictedCountriesConfig.Any())
+                {
+                    return false;
+                }
+
+                if (IsTestedIP(activeRestrictedCountriesConfig, clientIP))
+                {
+                    return true;
+                }
+
+                var range = GetRestrictedIPRange(activeRestrictedCountriesConfig, clientIP);
+                if (range == null)
+                {
+                    return false;
+                }
+
+                var allowedAccessIps = GetsAllowedAccessIPs();
+
+                return !allowedAccessIps.Any(ip => ip == clientIP);
+            }
+            catch (Exception ex)
             {
+                logger.Error(ex.Message, ex);
                 return false;
             }
-
-            if (IsTestedIP(activeRestrictedCountriesConfig, clientIP))
-            {
-                return true;
-            }
-
-            var range = GetRestrictedIPRange(activeRestrictedCountriesConfig, clientIP);
-            if (range == null)
-            {
-                return false;
-            }
-
-            var allowedAccessIps = GetsAllowedAccessIPs();
-
-            return !allowedAccessIps.Any(ip => ip == clientIP);
         }
 
         private IpRange GetRestrictedIPRange(
@@ -78,7 +86,7 @@ namespace Fanex.Alpha.Before.Services
                         && ipNumber <= ipRange.IPTo);
         }
 
-        public IEnumerable<IpRange> GetIPRangesByRestrictedCountry(
+        private IEnumerable<IpRange> GetIPRangesByRestrictedCountry(
             IEnumerable<LimitedCountriesConfigModel> activeLimitedCountriesConfig,
             bool isIpV6)
         {
@@ -101,7 +109,7 @@ namespace Fanex.Alpha.Before.Services
             });
         }
 
-        public IEnumerable<string> GetsAllowedAccessIPs()
+        private IEnumerable<string> GetsAllowedAccessIPs()
             => memoryCache.GetOrCreate(
                 AllowedAccessIPsCachedKey,
                 (cacheEntry) =>
