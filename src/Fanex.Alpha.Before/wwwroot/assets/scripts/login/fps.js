@@ -47,6 +47,8 @@ var __fpsImporter = {
                 return fetch(url + '/hc.html', {
                     cache: "no-cache",
                     timeout: 1000
+                }).catch((error) => {
+                    return Promise.reject();
                 });
             });
 
