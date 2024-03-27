@@ -189,6 +189,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             }
 
             var assetAppPath = AssetAppPathHelper.IsValidAssetAppPath(model.AssetAppPath) ? model.AssetAppPath : string.Empty;
+            var dcsStaticAppPath = AssetAppPathHelper.IsValidDCSStaticAppPath(model.DCSStaticAppPath) ? model.DCSStaticAppPath : string.Empty;
             await VerifyDownlineLogin(
                 model.Username,
                 password,
@@ -198,6 +199,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 signInResult,
                 DarkModeHelper.GetDarkModeValue(httpContext.Request),
                 assetAppPath,
+                dcsStaticAppPath,
                 httpContext);
 
             return signInResult;
@@ -223,7 +225,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 return signInResult;
             }
 
-            await VerifyDownlineLogin(username, password, LanguageHelper.DefaultLanguage, deviceId, browserSize, signInResult, null, string.Empty, httpContext);
+            await VerifyDownlineLogin(username, password, LanguageHelper.DefaultLanguage, deviceId, browserSize, signInResult, null, string.Empty, string.Empty, httpContext);
 
             return signInResult;
         }
@@ -335,6 +337,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             SignInResult signInResult,
             string darkModeName,
             string assetAppPath,
+            string dcsStaticAppPath,
             HttpContext httpContext)
         {
             var verifySignInResult = new VerifySignInResult();

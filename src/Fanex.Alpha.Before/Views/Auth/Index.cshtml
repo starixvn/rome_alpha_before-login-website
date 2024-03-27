@@ -68,6 +68,7 @@
 <div id="captcha" name="captchaToken"></div>
 <input type="hidden" name="browserSize" id="browserSize" value="" />
 <input type="hidden" name="assetAppPath" id="assetAppPath" value="" />
+<input type="hidden" name="dcsStaticAppPath" id="dcsStaticAppPath" value="" />
 @if (AppSetting.IsShowTechnicalErrorMessage)
 {
     <input type="hidden" id="hiddenTechnicalErrorTime" value="@AppSetting.TechnicalErrorTime" />
@@ -76,6 +77,7 @@
     <input type="button" class="btnLogin" value="Login" id="btnLogin" tabindex="5" />
 </div>
 <input type="hidden" id="hiddenAssetAppPaths" value="@Model.AssetAppPaths" />
+<input type="hidden" id="hiddenDCSStaticAppPaths" value="@Model.DCSStaticAppPaths" />
 
 @if (Model.ErrCode == Fanex.Alpha.Before.Constants.SignInErrorContants.CaptchaRequired)
 {
