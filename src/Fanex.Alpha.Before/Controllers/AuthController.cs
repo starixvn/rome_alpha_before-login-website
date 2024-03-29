@@ -48,11 +48,12 @@ public class AuthController : Controller
         string captchaToken,
         string browserSize,
         string deviceId = "N/A",
-        string assetAppPath = "")
+        string assetAppPath = "",
+        string dcsStaticAppPath = "")
     {
         AssignSettingLanguage(hidLanguage);
         ViewBag.FPSToken = FPS.Client.NetStandard.Token.Generate();
-        var model = new SignInModel(txtUserName, txtPassWord, hidLanguage, code, captchaToken, browserSize, deviceId, assetAppPath);
+        var model = new SignInModel(txtUserName, txtPassWord, hidLanguage, code, captchaToken, browserSize, deviceId, assetAppPath, dcsStaticAppPath);
         var loginResult = await signInService.SignIn(model, HttpContext);
         if (loginResult.ErrCode == SignInErrorContants.Success && !string.IsNullOrEmpty(loginResult.AfterLoginUrl))
         {

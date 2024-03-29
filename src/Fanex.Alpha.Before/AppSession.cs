@@ -288,6 +288,19 @@ public static class AppSession
         }
     }
 
+    public static string DCSStaticAppPath
+    {
+        get
+        {
+            return CurrentSession.Get<string>(SessionConstants.DCSStaticAPPPATH);
+        }
+
+        set
+        {
+            CurrentSession.Set(SessionConstants.DCSStaticAPPPATH, value);
+        }
+    }
+
     public static bool InputCaptchaSuccess
     {
         get
@@ -315,7 +328,8 @@ public static class AppSession
         string robotResult,
         string deviceId,
         string browserSize,
-        string assetAppPath)
+        string assetAppPath,
+        string dcsStaticAppPath)
     {
         CustId = custId;
         Username = username;
@@ -332,6 +346,7 @@ public static class AppSession
         DeviceId = deviceId;
         BrowserSize = browserSize;
         AssetAppPath = assetAppPath;
+        DCSStaticAppPath = dcsStaticAppPath;
     }
 
     public static void ResetRobotCaptchaSession()

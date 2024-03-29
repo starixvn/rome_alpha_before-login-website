@@ -19,7 +19,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
             string browserSize,
             string encryptCode,
             string darkModeName,
-            string assetAppPath);
+            string assetAppPath,
+             string dcsStaticAppPath);
     }
 
     public class EncryptUrlHelper : IEncryptUrlHelper
@@ -56,7 +57,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 AppSession.BrowserSize,
                 AppSession.EncryptCode,
                 AppSession.DarkModeName,
-                AppSession.AssetAppPath);
+                AppSession.AssetAppPath,
+                AppSession.DCSStaticAppPath);
 
             AppSession.ResetRobotCaptchaSession();
 
@@ -72,12 +74,13 @@ namespace Fanex.Alpha.Before.Services.SignIn
             string browserSize,
             string encryptCode,
             string darkModeName,
-            string assetAppPath)
+            string assetAppPath,
+            string dcsStaticAppPath)
         {
             WriteLoginLogs(verifySignInResult.SuperId, $"Build after url, sessionId: {httpContext.Session.Id}, custId:{verifySignInResult.CustId}");
 
             var parameter = string.Format(
-                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}&{10}&{11}&{12}",
+                "{0}&{1}&{2}&{3}&{4}&{5}&__utms&{6}&{7}&{8}&{9}&{10}&{11}&{12}&{13}",
                 verifySignInResult.CustId,
                 verifySignInResult.SubAccId,
                 verifySignInResult.LoginTime.Ticks,
@@ -90,7 +93,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 browserSize,
                 encryptCode,
                 darkModeName,
-                assetAppPath);
+                assetAppPath,
+                dcsStaticAppPath);
 
             var host = httpContext.Request.Host.Value.TrimEnd('.');
             var afterUrl = AppSetting.DomainMappings[host];

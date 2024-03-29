@@ -55,6 +55,8 @@ namespace Fanex.Alpha.Before.Configurations
 
         public static string AssetAppPaths => GetValue<string>("AssetAppPaths");
 
+        public static string DCSStaticAppPaths => GetValue<string>("DCSStaticAppPaths");
+
         public static string AfterLoginAuthorizationPage => GetValue<string>("AfterLoginPage");
 
         public static T GetValue<T>(string key)
