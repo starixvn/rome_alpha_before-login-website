@@ -334,6 +334,7 @@ Sphinx.Login = {
     var size = Sphinx.Login.getBrowserSize();
     $("#browserSize").val(size);
     $("#assetAppPath").val(Sphinx.AssetAppPaths.getAvailableAssetAppPaths());
+
     $("#dcsStaticAppPath").val(
       Sphinx.DCSStaticAppPaths.getAvailableDCSStaticAppPaths()
     );

@@ -314,6 +314,7 @@ public static class AppSession
         }
     }
 
+
     public static void AssignRobotCaptchaSession(
         int custId,
         string username,
