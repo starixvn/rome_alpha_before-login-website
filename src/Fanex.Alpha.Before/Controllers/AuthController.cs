@@ -59,19 +59,9 @@ public class AuthController : Controller
         {
             fpsHelper.FPSTracking(HttpContext.Request, new Models.SignInResult
             {
-                Username = loginResult.Username,
-                ErrCode = loginResult.ErrCode,
-                ErrMsg = loginResult.ErrMsg,
+                Username = loginResult.Username,                
                 LoginTime = loginResult.LoginTime
-            });
-
-            fpsHelper.NewFPSTracking(HttpContext.Request, new Models.SignInResult
-            {
-                Username = loginResult.Username,
-                LoginTime = loginResult.LoginTime,
-                CustId = loginResult.CustId,
-                CustSubId = loginResult.CustSubId
-            });
+            });           
 
             return Redirect(loginResult.AfterLoginUrl);
         }

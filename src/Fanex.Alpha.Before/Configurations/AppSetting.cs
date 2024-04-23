@@ -39,13 +39,7 @@ namespace Fanex.Alpha.Before.Configurations
 
         public static string FpsApi => GetValue<string>("FPS:API");
 
-        public static bool IsEnableFPS => !string.IsNullOrEmpty(FpsActivator) && !string.IsNullOrEmpty(FpsApi);
-
-        public static string NewFPSPortalAPI = GetValue<string>("NewFPS:PortalAPI");
-
-        public static string NewFPSScriptAPI = GetValue<string>("NewFPS:ScriptAPI");
-
-        public static bool NewFPSEnabled = GetValue<bool>("NewFPS:IsEnabled");
+        public static bool IsEnableFPS => !string.IsNullOrEmpty(FpsActivator) && !string.IsNullOrEmpty(FpsApi);                       
 
         public static bool TrackRunTime => GetValue<bool>("TrackRunTime");
 
