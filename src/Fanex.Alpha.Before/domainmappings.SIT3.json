@@ -1,0 +1,8 @@
+{
+    "DomainMappings": [
+        {
+            "Before": "ibc.playonesit.com",
+            "After": "http://imb.playonesit.com/ex-main/"
+        }
+    ]
+}
