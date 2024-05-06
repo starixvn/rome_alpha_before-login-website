@@ -3,6 +3,18 @@
         {
             "Before": "ibc.playonesit.com",
             "After": "http://imb.playonesit.com/ex-main/"
+        },
+        {
+            "Before": "bf9.playonesit.com",
+            "After": "http://mb9.playonesit.com/ex-main/"
+        },
+        {
+            "Before": "bf10.playonesit.com",
+            "After": "http://mb10.playonesit.com/ex-main/"
+        },
+        {
+            "Before": "bf11.playonesit.com",
+            "After": "http://mb11.playonesit.com/ex-main/"
         }
     ]
 }

@@ -3,6 +3,22 @@
         {
             "Before": "mbc.playonesit.com",
             "After": "http://mb.playonesit.com/ex-main/"
+        },
+        {
+            "Before": "bf1.playonesit.com",
+            "After": "http://mb1.playonesit.com/ex-main/"
+        },
+        {
+            "Before": "bf2.playonesit.com",
+            "After": "http://mb2.playonesit.com/ex-main/"
+        },
+        {
+            "Before": "bf3.playonesit.com",
+            "After": "http://mb3.playonesit.com/ex-main/"
+        },
+        {
+            "Before": "bf4.playonesit.com",
+            "After": "http://mb4.playonesit.com/ex-main/"
         }
     ]
 }
