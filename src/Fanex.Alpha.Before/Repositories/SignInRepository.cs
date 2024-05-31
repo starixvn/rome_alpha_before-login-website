@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Extensions;
 using Fanex.Alpha.Before.Models;
 using Fanex.Common;
@@ -8,39 +9,62 @@ namespace Fanex.Alpha.Before.Repositories
 {
     public interface ISignInRepository
     {
-        VerifySignInResult VerifyDownlineLogin(string username, string password, Hashtable requestInfo, bool? isDarkMode);
+        Task<VerifySignInResult> VerifyDownlineLogin(string username, string password, Hashtable requestInfo, bool? isDarkMode);
     }
 
     public class SignInRepository : ISignInRepository
     {
-        public VerifySignInResult VerifyDownlineLogin(string username, string password, Hashtable requestInfo, bool? isDarkMode)
+        public readonly HttpClient httpClient;
+        public SignInRepository(HttpClient httpClient)
         {
+            this.httpClient = httpClient;
+        }
+
+        private async Task<string> HashPassword(string password)
+        {
+            try
+            {
+                return AppSetting.EnabledCallHashPassword
+                    ? await httpClient.PostAsJsonAsync<string>("password/hash", new { password })
+                    : EncryptExtension.CfsEnCode(password);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return EncryptExtension.CfsEnCode(password);
+            }
+        }
+
+        public async Task<VerifySignInResult> VerifyDownlineLogin(string username, string password, Hashtable requestInfo, bool? isDarkMode)
+        {
+            var hashPassword = await HashPassword(password);
+
             using var objectDB = ObjectDbFactory.CreateInstance("Age_LoginVerifyDownline");
             Hashtable parameters = new()
             {
-                    { "username", username },
-                    { "userpwd", EncryptExtension.CfsEnCode(password) },
-                    { "custid", 0 },
-                    { "subaccid", 0 },
-                    { "serverid", 0 },
-                    { "logintime", DateTime.Now },
-                    { "language", AppSession.LangKey },
-                    { "isnickname", false },
-                    { "nickname", string.Empty },
-                    { "errcode", 0 },
-                    { "errmsg", string.Empty },
-                    { "lastchangedpwddate", null },
-                    { "superid", 0 },
-                    { "site", string.Empty },
-                    { "roleid", 0 },
-                    { "subusername", string.Empty },
-                    { "iskickout", false },
-                    { "isdarkmode", isDarkMode }
-                };
+                { "username", username },
+                { "userpwd", hashPassword },
+                { "custid", 0 },
+                { "subaccid", 0 },
+                { "serverid", 0 },
+                { "logintime", DateTime.Now },
+                { "language", AppSession.LangKey },
+                { "isnickname", false },
+                { "nickname", string.Empty },
+                { "errcode", 0 },
+                { "errmsg", string.Empty },
+                { "lastchangedpwddate", null },
+                { "superid", 0 },
+                { "site", string.Empty },
+                { "roleid", 0 },
+                { "subusername", string.Empty },
+                { "iskickout", false },
+                { "isdarkmode", isDarkMode }
+            };
             InsertRequestInfo(requestInfo, parameters);
 
             objectDB.AssignParamValues(parameters);
-            objectDB.ExecuteNonQuery();
+            await objectDB.ExecuteNonQueryAsync();
             var outputParams = objectDB.GetOutputParams();
 
             return new VerifySignInResult

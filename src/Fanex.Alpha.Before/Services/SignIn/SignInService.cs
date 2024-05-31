@@ -361,7 +361,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize, clientIP);
                     requestInfo["countrycode"] = GetCountryCode(clientIP);
                     requestInfo.Add("sitegroup", AppSetting.SiteGroup);
-                    verifySignInResult = signInRepository.VerifyDownlineLogin(username, password, requestInfo, !string.IsNullOrWhiteSpace(darkModeName));
+                    verifySignInResult = await signInRepository.VerifyDownlineLogin(username, password, requestInfo, !string.IsNullOrWhiteSpace(darkModeName));
                     encryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
 
                     if (verifySignInResult.ErrorCode == 0)

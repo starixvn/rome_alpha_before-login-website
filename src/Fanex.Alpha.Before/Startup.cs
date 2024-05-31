@@ -65,7 +65,11 @@ namespace Fanex.Alpha.Before
             services.AddAssetsBundle(Configuration);
 
             services.AddSingleton<IDynamicRepository, DynamicRepository>();
-            services.AddSingleton<ISignInRepository, SignInRepository>();
+            services.AddHttpClient<ISignInRepository, SignInRepository>(httpClient =>
+           {
+               httpClient.BaseAddress = new Uri(Configuration.GetValue<string>("PasswordService:Uri"));
+               httpClient.Timeout = TimeSpan.FromMinutes(5);
+           });
             services.AddSingleton<IRobotDetector, RobotDetector>();
             services.AddSingleton<IDistributedCacheHelper, DistributedCacheHelper>();
             services.AddSingleton<IDistributedCacheService, DistributedCacheService>();
