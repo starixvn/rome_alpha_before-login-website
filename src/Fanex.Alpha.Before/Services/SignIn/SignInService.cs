@@ -333,7 +333,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             }
         }
 
-        private async Task<string> HashPassword(string password)
+        private async Task<string> HashPassword(string username, string password)
         {
             var newHash = EncryptExtension.CfsEnCode(password);
             try
@@ -344,7 +344,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
 
                     if (!oldHash.Equals(newHash))
                     {
-                        await logger.InfoAsync($"Old Hash: {oldHash} - New Hash: {newHash}");
+                        await logger.InfoAsync($"Username: {username} - Old Hash: {oldHash} - New Hash: {newHash}");
                     }
 
                     return oldHash;
@@ -389,7 +389,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize, clientIP);
                     requestInfo["countrycode"] = GetCountryCode(clientIP);
                     requestInfo.Add("sitegroup", AppSetting.SiteGroup);
-                    verifySignInResult = signInRepository.VerifyDownlineLogin(username, await HashPassword(password), requestInfo, !string.IsNullOrWhiteSpace(darkModeName));
+                    verifySignInResult = signInRepository.VerifyDownlineLogin(username, await HashPassword(username, password), requestInfo, !string.IsNullOrWhiteSpace(darkModeName));
                     encryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
 
                     if (verifySignInResult.ErrorCode == 0)
