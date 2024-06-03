@@ -53,7 +53,7 @@ namespace Fanex.Alpha.Before.Configurations
 
         public static string AfterLoginAuthorizationPage => GetValue<string>("AfterLoginPage");
 
-        public static bool EnabledCallHashPassword => GetValue<bool>("PasswordService:IsEnabled");
+        public static bool EnabledCallHashPasswordAPI => GetValue<bool>("PasswordService:IsEnabled");
 
         public static T GetValue<T>(string key)
         {

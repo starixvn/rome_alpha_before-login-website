@@ -47,6 +47,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
         private readonly ThrottlePolicy throttlePolicy;
         private readonly INetThrottler netThrottler;
         private readonly IEncryptUrlHelper encryptUrlHelper;
+        private readonly HttpClient httpClient;
 
         public SignInService(
             IOptions<ManualUMOptions> manualUMOptions,
@@ -65,7 +66,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
             INotificationService notificationService,
             IOptions<ThrottlePolicy> throttlePolicy,
             INetThrottler netThrottler,
-            IEncryptUrlHelper encryptUrlHelper)
+            IEncryptUrlHelper encryptUrlHelper,
+            HttpClient httpClient)
         {
             this.manualUMOptions = manualUMOptions.Value;
             this.commonOptions = commonOptions.Value;
@@ -83,7 +85,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             this.throttlePolicy = throttlePolicy.Value;
             this.netThrottler = netThrottler;
             this.encryptUrlHelper = encryptUrlHelper;
-
+            this.httpClient = httpClient;
             var loginThemeOpt = loginThemeOptions.Value;
             _loginTheme = loginThemeOpt.DefaultTheme;
             if (DateTime.Now >= loginThemeOpt.StartDate &&
@@ -331,6 +333,32 @@ namespace Fanex.Alpha.Before.Services.SignIn
             }
         }
 
+        private async Task<string> HashPassword(string password)
+        {
+            var newHash = EncryptExtension.CfsEnCode(password);
+            try
+            {
+                if (AppSetting.EnabledCallHashPasswordAPI)
+                {
+                    var oldHash = await httpClient.PostAsJsonAsync<string>("password/hash", new { password });
+
+                    if (!oldHash.Equals(newHash))
+                    {
+                        await logger.InfoAsync($"Old Hash: {oldHash} - New Hash: {newHash}");
+                    }
+
+                    return oldHash;
+                }
+
+                return newHash;
+            }
+            catch (Exception ex)
+            {
+                await logger.ErrorAsync(ex.Message, ex);
+                return newHash;
+            }
+        }
+
         private async Task VerifyDownlineLogin(
             string username,
             string password,
@@ -361,7 +389,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                     var requestInfo = DeviceHelper.GetRequestInfo(request, browserSize, clientIP);
                     requestInfo["countrycode"] = GetCountryCode(clientIP);
                     requestInfo.Add("sitegroup", AppSetting.SiteGroup);
-                    verifySignInResult = await signInRepository.VerifyDownlineLogin(username, password, requestInfo, !string.IsNullOrWhiteSpace(darkModeName));
+                    verifySignInResult = signInRepository.VerifyDownlineLogin(username, await HashPassword(password), requestInfo, !string.IsNullOrWhiteSpace(darkModeName));
                     encryptUrlHelper.WriteLoginLogs(verifySignInResult.SuperId, $"Call DB result: {JsonConvert.SerializeObject(verifySignInResult)}");
 
                     if (verifySignInResult.ErrorCode == 0)

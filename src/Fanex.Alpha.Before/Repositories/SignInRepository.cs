@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using Fanex.Alpha.Before.Configurations;
-using Fanex.Alpha.Before.Extensions;
 using Fanex.Alpha.Before.Models;
 using Fanex.Common;
 using Fanex.Data;
@@ -9,41 +7,18 @@ namespace Fanex.Alpha.Before.Repositories
 {
     public interface ISignInRepository
     {
-        Task<VerifySignInResult> VerifyDownlineLogin(string username, string password, Hashtable requestInfo, bool? isDarkMode);
+        VerifySignInResult VerifyDownlineLogin(string username, string password, Hashtable requestInfo, bool? isDarkMode);
     }
 
     public class SignInRepository : ISignInRepository
     {
-        public readonly HttpClient httpClient;
-        public SignInRepository(HttpClient httpClient)
+        public VerifySignInResult VerifyDownlineLogin(string username, string password, Hashtable requestInfo, bool? isDarkMode)
         {
-            this.httpClient = httpClient;
-        }
-
-        private async Task<string> HashPassword(string password)
-        {
-            try
-            {
-                return AppSetting.EnabledCallHashPassword
-                    ? await httpClient.PostAsJsonAsync<string>("password/hash", new { password })
-                    : EncryptExtension.CfsEnCode(password);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return EncryptExtension.CfsEnCode(password);
-            }
-        }
-
-        public async Task<VerifySignInResult> VerifyDownlineLogin(string username, string password, Hashtable requestInfo, bool? isDarkMode)
-        {
-            var hashPassword = await HashPassword(password);
-
             using var objectDB = ObjectDbFactory.CreateInstance("Age_LoginVerifyDownline");
             Hashtable parameters = new()
             {
                 { "username", username },
-                { "userpwd", hashPassword },
+                { "userpwd", password },
                 { "custid", 0 },
                 { "subaccid", 0 },
                 { "serverid", 0 },
@@ -64,7 +39,7 @@ namespace Fanex.Alpha.Before.Repositories
             InsertRequestInfo(requestInfo, parameters);
 
             objectDB.AssignParamValues(parameters);
-            await objectDB.ExecuteNonQueryAsync();
+            objectDB.ExecuteNonQuery();
             var outputParams = objectDB.GetOutputParams();
 
             return new VerifySignInResult
