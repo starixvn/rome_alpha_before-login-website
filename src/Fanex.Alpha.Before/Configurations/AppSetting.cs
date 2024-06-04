@@ -39,7 +39,7 @@ namespace Fanex.Alpha.Before.Configurations
 
         public static string FpsApi => GetValue<string>("FPS:API");
 
-        public static bool IsEnableFPS => !string.IsNullOrEmpty(FpsActivator) && !string.IsNullOrEmpty(FpsApi);                       
+        public static bool IsEnableFPS => !string.IsNullOrEmpty(FpsActivator) && !string.IsNullOrEmpty(FpsApi);
 
         public static bool TrackRunTime => GetValue<bool>("TrackRunTime");
 
@@ -52,6 +52,8 @@ namespace Fanex.Alpha.Before.Configurations
         public static string DCSStaticAppPaths => GetValue<string>("DCSStaticAppPaths");
 
         public static string AfterLoginAuthorizationPage => GetValue<string>("AfterLoginPage");
+
+        public static bool EnabledCallHashPasswordAPI => GetValue<bool>("PasswordService:IsEnabled");
 
         public static T GetValue<T>(string key)
         {

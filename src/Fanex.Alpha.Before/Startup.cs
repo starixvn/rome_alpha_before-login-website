@@ -81,7 +81,11 @@ namespace Fanex.Alpha.Before
                 httpClient.Timeout = TimeSpan.FromMinutes(5);
             });
             services.AddSingleton<ILimitedCountryAccessService, LimitedCountryAccessService>();
-            services.AddSingleton<ISignInService, SignInService>();
+            services.AddHttpClient<ISignInService, SignInService>(httpClient =>
+            {
+                httpClient.BaseAddress = new Uri(Configuration.GetValue<string>("PasswordService:Uri"));
+                httpClient.Timeout = TimeSpan.FromMinutes(5);
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

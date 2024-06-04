@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Fanex.Alpha.Before.Extensions;
 using Fanex.Alpha.Before.Models;
 using Fanex.Common;
 using Fanex.Data;
@@ -18,25 +17,25 @@ namespace Fanex.Alpha.Before.Repositories
             using var objectDB = ObjectDbFactory.CreateInstance("Age_LoginVerifyDownline");
             Hashtable parameters = new()
             {
-                    { "username", username },
-                    { "userpwd", EncryptExtension.CfsEnCode(password) },
-                    { "custid", 0 },
-                    { "subaccid", 0 },
-                    { "serverid", 0 },
-                    { "logintime", DateTime.Now },
-                    { "language", AppSession.LangKey },
-                    { "isnickname", false },
-                    { "nickname", string.Empty },
-                    { "errcode", 0 },
-                    { "errmsg", string.Empty },
-                    { "lastchangedpwddate", null },
-                    { "superid", 0 },
-                    { "site", string.Empty },
-                    { "roleid", 0 },
-                    { "subusername", string.Empty },
-                    { "iskickout", false },
-                    { "isdarkmode", isDarkMode }
-                };
+                { "username", username },
+                { "userpwd", password },
+                { "custid", 0 },
+                { "subaccid", 0 },
+                { "serverid", 0 },
+                { "logintime", DateTime.Now },
+                { "language", AppSession.LangKey },
+                { "isnickname", false },
+                { "nickname", string.Empty },
+                { "errcode", 0 },
+                { "errmsg", string.Empty },
+                { "lastchangedpwddate", null },
+                { "superid", 0 },
+                { "site", string.Empty },
+                { "roleid", 0 },
+                { "subusername", string.Empty },
+                { "iskickout", false },
+                { "isdarkmode", isDarkMode }
+            };
             InsertRequestInfo(requestInfo, parameters);
 
             objectDB.AssignParamValues(parameters);
