@@ -1,3 +1,4 @@
+using AspNetCore;
 using Fanex.Alpha.Before.Constants;
 using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using JavaScriptEngineSwitcher.V8;
@@ -9,7 +10,12 @@ public static class WebOptimizerExtensions
     public static IServiceCollection AddAssetsBundle(this IServiceCollection services, IConfiguration configuration)
     {
         var siteGroup = configuration.GetValue<string>("SiteGroup");
-        var cssSuffix = siteGroup == SiteGroupConstants.Site789y ? "2" : string.Empty;
+        var cssSuffix = siteGroup switch
+        {
+            SiteGroupConstants.Site789y => "2",
+            SiteGroupConstants.IBCIndo => "3",
+            _ => string.Empty
+        };
 
         services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName).AddV8();
 
