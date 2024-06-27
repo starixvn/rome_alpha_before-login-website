@@ -1,4 +1,3 @@
-using AspNetCore;
 using Fanex.Alpha.Before.Constants;
 using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using JavaScriptEngineSwitcher.V8;
