@@ -1,0 +1,70 @@
+﻿@font-face {
+  font-family: 'Roboto';  
+  src: url('../fonts/roboto/Roboto-Regular.woff2') format('woff2'), 
+       url('../fonts/roboto/Roboto-Regular.woff') format('woff'),
+       url('../fonts/roboto/Roboto-Regular.ttf')  format('truetype'),
+}
+
+body, html {
+    height: 100%;
+}
+
+body {
+    font-family: Roboto, sans-serif;    
+    background: #f0f0f0;
+    color: #333;
+    font-size: 14px;
+
+    @media only screen and (min-device-width: 767px) {
+        font-size: 20px;
+    }
+}
+
+.container {
+    max-width: 100%;
+    margin: 0 auto;
+    //padding-top: 10px;
+    text-align: center;
+    position: relative;
+
+    .img {
+        width: 100%;
+    }
+
+    @media only screen and (min-device-width: 768px) {
+        padding-top: 100px;
+        max-width: 800px;
+    }
+
+    @media only screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) {
+        padding-top: 0;
+    }
+}
+
+.title {
+    margin-top: 10px;
+    color: #67151b;
+    font-size: 36px;
+    font-weight: 600;
+    text-transform: uppercase;
+
+    @media only screen and (max-device-width: 767px) and (orientation: landscape) {
+        margin-top: 0;
+    }
+}
+
+.time {
+    color: #67151b;
+}
+
+.caption {
+    padding-top: 17px;
+
+    @media only screen and (max-device-width: 767px) and (orientation: landscape) {
+        padding-top: 5px;
+    }
+}
+
+.caption p {
+    margin: 0;
+}

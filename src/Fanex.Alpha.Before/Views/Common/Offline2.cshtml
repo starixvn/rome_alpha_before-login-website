@@ -1,0 +1,48 @@
+﻿@model UnderMaintenanceModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>UM Page</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=0.7, user-scalable=yes">
+    <link href="~/assets/bundles/themes/um2.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="title">Under Maintenance</div>
+
+        <div class="caption">
+            <p>We are having regular server maintenance.</p>
+            <p>The website is currently unavailable <span class="time"> from @(Model.FromTimeText) until
+                    @(Model.ToTimeText) (GMT +8).</span></p>
+            <p>Please come back later.</p>
+        </div>
+        <div class="caption">
+            <div class="caption">
+                <p>Hệ thống của chúng tôi đang trong thời gian bảo trì định kỳ.</p>
+                <p>Trang mạng đang ngừng hoạt động <span class="time"> từ @Model.FromTimeText cho đến @Model.ToTimeText
+                        (GMT +8).</span></p>
+                <p>Vui lòng quay trở lại sau.</p>
+            </div>
+        </div>
+        <div class="clock"></div>
+        <div class="message"></div>
+
+    </div>
+
+    @if (Model.ShowCountDown())
+    {
+        @Html.Hidden("countdown-time", Model.CountdownTime.TotalSeconds)
+    }
+
+    <script type="text/javascript" src="~/assets/bundles/um2.min.js"></script>
+</body>
+
+</html>
