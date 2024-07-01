@@ -44,10 +44,14 @@ input[type="radio"] {
   align-items: center;
   .msg-error{
     color: #A51313;
-    margin: 15px 0 14px 0!important;
+    line-height: 16px;
+    margin-bottom: 8px!important;
   }
   &::before{
-    content: url(../images/image-login.png);
+    width: 447px;
+    height: 336px;
+    content: "";
+    background: url(../images/image-login.png) no-repeat center center / cover;
   }
   .form-login{
     width: 350px;
@@ -67,16 +71,15 @@ input[type="radio"] {
     display: flex;
     align-items: center;
     flex-direction: row-reverse;
+    margin-bottom: 8px;
     .title {
       font-size: 24px;
       line-height: 2;
       font-weight: bold;
       color: $title-color;
-      margin: 0 auto 0 0;
-      
+      margin: 0 auto 0 0;      
     }
   }
-
   .switch-mode-box{
     .switch-mode{
         display: flex;
@@ -323,6 +326,37 @@ input[type="radio"] {
           }
         }
       }
+    }
+  }
+}
+@media only screen and (max-device-width: 767px) {
+  .block-login{
+    width: 100%;
+    min-height: 100%;
+    margin-left: 0;
+    transform: translateY(0);
+    background: url(../../styles/images/bg-form-login-sm.png) no-repeat center center / cover;
+    top: 0;
+    left: 0;
+    border-radius: 0;
+    flex-wrap: wrap;
+    padding: 27px 0;
+    align-items: flex-start;
+    flex-direction: column;
+    &:before{
+      width: 278px;
+      height: 228px;
+      content: "";
+      margin: 0 auto 17px;
+    }
+    .head-form-login .title{
+      line-height: 32px;
+    }
+    .form-login{
+      width: 350px;
+      padding: 20px;
+      margin: 0 auto;
+      min-height: 300px;
     }
   }
 }
