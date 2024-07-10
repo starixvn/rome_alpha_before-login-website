@@ -3,8 +3,10 @@
 
 html,
 body {
-  height: 100%;
   width: 100%;
+  @media only screen and (min-device-width: 768px) {
+    height: 100%;
+  }
 }
 
 body {
@@ -13,6 +15,10 @@ body {
   background: $body-bg-color;
   margin: 0;
   color: $text-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 input,
@@ -31,12 +37,7 @@ input[type="radio"] {
 
 .block-login{
   width: 820px;
-  padding: 20px 20px 20px 4px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -420px;
-  transform: translateY(-50%);
+  padding: 20px 20px 20px 4px;   
   background: url(../images/bg-form-login.png) no-repeat center center / cover;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
@@ -174,7 +175,7 @@ input[type="radio"] {
       }
 
       &.flag-tw {
-          background-position: 0 -42px;
+          background-position: 0 -21px;
       }
 
       &.flag-jp {
@@ -329,25 +330,48 @@ input[type="radio"] {
     }
   }
 }
+.block-info {    
+  max-width: 820px;
+  display: inline-block;
+  box-sizing: border-box;
+  color: #333;
+  margin-top: 18px;
+  margin-bottom: 18px;
+  padding-left: 24px;
+  line-height: 16px;
+  position: relative;
+  &:before {
+    background: url(../images/info.svg) no-repeat;
+    display: inline-block;         
+    content: '';
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    left: -1px;
+    top: -2px;
+  }
+}
 @media only screen and (max-device-width: 767px) {
+  body{
+    background-image: url(../../styles/images/bg-form-login-sm.png);    
+    background-repeat: repeat;
+    background-size: cover;
+    justify-content: flex-start;      
+  }
   .block-login{
-    width: 100%;
-    min-height: 100%;
-    margin-left: 0;
-    transform: translateY(0);
-    background: url(../../styles/images/bg-form-login-sm.png) no-repeat center center / cover;
-    top: 0;
-    left: 0;
+    width: 100%;     
+    background: none;
+    box-shadow: none;   
     border-radius: 0;
     flex-wrap: wrap;
-    padding: 27px 0;
+    padding: 12px 0 16px;
     align-items: flex-start;
     flex-direction: column;
     &:before{
       width: 278px;
       height: 228px;
       content: "";
-      margin: 0 auto 17px;
+      margin: 0 auto 0;
     }
     .head-form-login .title{
       line-height: 32px;
@@ -357,6 +381,16 @@ input[type="radio"] {
       padding: 20px;
       margin: 0 auto;
       min-height: 300px;
+    }
+  }
+  .block-info{
+    padding-left: 24px;
+    color: #6C8AA7;
+    margin: 0 31px 16px;
+    &:before{
+       background: url(../images/info-sm.svg) no-repeat;
+       left: 0px;
+       top: 0px;
     }
   }
 }
