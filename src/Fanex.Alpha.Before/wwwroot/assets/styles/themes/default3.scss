@@ -20,6 +20,11 @@ body {
   justify-content: center;
   flex-direction: column;
 }
+//remove icon eye in field password
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
 
 input,
 button {

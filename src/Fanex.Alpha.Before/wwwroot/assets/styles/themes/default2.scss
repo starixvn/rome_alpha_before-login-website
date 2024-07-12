@@ -14,7 +14,11 @@ body {
     padding-top: 8%;
     color: $text-color;
 }
-
+//remove icon eye in field password
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
 input, button {
     outline: none;
     font-family: inherit;
