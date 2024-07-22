@@ -79,6 +79,8 @@ Sphinx.Login = {
     divTechnicalErrorMsg: null,
     technicalErrorTime: null,
     iconSwitchMode: null,
+    labelUsername: null,
+    labelPassword: null,
   },
   cachedDomElements: function () {
     Sphinx.Login.domElements.txtUsername = $("#txtUserName");
@@ -100,6 +102,8 @@ Sphinx.Login = {
       "#hiddenTechnicalErrorTime"
     ).val();
     Sphinx.Login.domElements.iconSwitchMode = $("#icon-switch-mode");
+    Sphinx.Login.domElements.labelUsername = $("#labelUsername");
+    Sphinx.Login.domElements.labelPassword = $("#labelPassword");
   },
   initComponent: function () {
     var domElements = Sphinx.Login.domElements;
@@ -189,6 +193,9 @@ Sphinx.Login = {
     domElements.btnLogin.val(resource.Login);
     domElements.formTitle.text(resource.Login);
     document.title = resource.Login;
+
+    domElements.labelUsername.text(resource.Username);
+    domElements.labelPassword.text(resource.Password);
 
     Sphinx.Core.setUserData("LANGUAGE", languageCode);
     Sphinx.Login.currentLanguageCode = languageCode;

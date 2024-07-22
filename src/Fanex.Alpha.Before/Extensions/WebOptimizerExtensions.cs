@@ -9,7 +9,12 @@ public static class WebOptimizerExtensions
     public static IServiceCollection AddAssetsBundle(this IServiceCollection services, IConfiguration configuration)
     {
         var siteGroup = configuration.GetValue<string>("SiteGroup");
-        var cssSuffix = siteGroup == SiteGroupConstants.Site789y ? "2" : string.Empty;
+        var cssSuffix = siteGroup switch
+        {
+            SiteGroupConstants.Site789y => "2",
+            SiteGroupConstants.IBCIndo => "3",
+            _ => string.Empty
+        };
 
         services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName).AddV8();
 
@@ -25,6 +30,8 @@ public static class WebOptimizerExtensions
             pipeline.AddScssBundle("/assets/bundles/themes/um.min.css", "assets/styles/pages/um.scss");
             pipeline.AddScssBundle("/assets/bundles/themes/um-dark.min.css", "assets/styles/pages/um-dark.scss");
             pipeline.AddScssBundle("/assets/bundles/themes/um2.min.css", "assets/scripts/libs/flipclock/flipclock.css", "assets/styles/pages/um2.scss");
+            pipeline.AddScssBundle("/assets/bundles/themes/um3.min.css", "assets/styles/pages/um3.scss");
+            pipeline.AddScssBundle("/assets/bundles/themes/um3-dark.min.css", "assets/styles/pages/um3-dark.scss");
             pipeline.AddScssBundle("/assets/bundles/robotcaptcha.min.css", "assets/styles/pages/robotcaptcha.scss");
             pipeline.AddScssBundle("/assets/bundles/robotcaptcha-dark.min.css", "assets/styles/pages/robotcaptcha-dark.scss");
             pipeline.AddScssBundle("/assets/bundles/themes/error.min.css", "assets/styles/pages/error.scss");

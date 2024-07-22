@@ -10,7 +10,7 @@
     <link href="~/assets/bundles/themes/@(Model.LoginTemplate)@(darkModeName).min.css" rel="stylesheet" />
     <link href="~/assets/bundles/alpha.slider-captcha.css" rel="stylesheet" />
 }
-
+<div class="head-form-login">
 <div class="box-lang">
     <div class="switch-mode-box">
         <span class="switch-mode @(string.IsNullOrWhiteSpace(darkModeName) ? string.Empty : "dark-mode")" id="icon-switch-mode"></span>
@@ -38,7 +38,7 @@
 </div>
 
 <h1 class="title login-text">Login</h1>
-
+</div>
 @if (AppSetting.IsShowTechnicalErrorMessage)
 {
     <div class="rowlg msg-error" id="divTechnicalErrorMsg"></div>
@@ -49,11 +49,13 @@
 }
 
 <div class="rowlg">
+    <label class="label" id="labelUsername" style="display: none;">Username</label>
     <input type="text" class="txt" placeholder="Username" id="txtUserName" name="txtUserName" value="@Model.Username" tabindex="1" />
     <i class="icon-user"></i>
 </div>
 
 <div class="rowlg">
+    <label class="label" id="labelPassword" style="display: none;">Password</label>
     <input type="password" class="txt" placeholder="Password" id="txtPassWord" name="txtPassWord" tabindex="2" autocomplete="off" />
     <i class="icon-lock"></i>
 </div>
