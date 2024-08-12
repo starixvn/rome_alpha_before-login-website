@@ -47,21 +47,29 @@ public class AuthController : Controller
         string code,
         string captchaToken,
         string browserSize,
-        string deviceId = "N/A",
         string assetAppPath = "",
         string dcsStaticAppPath = "")
     {
         AssignSettingLanguage(hidLanguage);
         ViewBag.FPSToken = FPS.Client.NetStandard.Token.Generate();
-        var model = new SignInModel(txtUserName, txtPassWord, hidLanguage, code, captchaToken, browserSize, deviceId, assetAppPath, dcsStaticAppPath);
+        var model = new SignInModel(
+            txtUserName,
+            txtPassWord,
+            hidLanguage,
+            code,
+            captchaToken,
+            browserSize,
+            fpsHelper.GetDeviceID(HttpContext.Request),
+            assetAppPath,
+            dcsStaticAppPath);
         var loginResult = await signInService.SignIn(model, HttpContext);
         if (loginResult.ErrCode == SignInErrorContants.Success && !string.IsNullOrEmpty(loginResult.AfterLoginUrl))
         {
             fpsHelper.FPSTracking(HttpContext.Request, new Models.SignInResult
             {
-                Username = loginResult.Username,                
+                Username = loginResult.Username,
                 LoginTime = loginResult.LoginTime
-            });           
+            });
 
             return Redirect(loginResult.AfterLoginUrl);
         }
