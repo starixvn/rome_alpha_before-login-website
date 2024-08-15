@@ -56,7 +56,6 @@ namespace Fanex.Alpha.Before.Helpers
 
                 var fpsClient = new FPS.Client.NetStandard.Service().InitialRequest(AppSetting.FpsApi, request);
                 var deviceId = fpsClient.GetDeviceID();
-                Console.WriteLine(deviceId);
                 return deviceId;
 
             }
