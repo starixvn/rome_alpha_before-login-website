@@ -4,6 +4,7 @@
 // For more information on ASP.NET Core startup files, see https://docs.microsoft.com/aspnet/core/fundamentals/startup
 
 using System.Reflection;
+using System.Text;
 using Alpha.SliderCaptcha.AspNetCore;
 using Fanex.Alpha.Before.Extensions;
 using Fanex.Alpha.Before.Helpers;
@@ -31,6 +32,8 @@ namespace Fanex.Alpha.Before
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             var redisConfiguration = Configuration.GetValue<string>("RedisConfiguration");
             services.AddStackExchangeRedisCache(options =>
             {
