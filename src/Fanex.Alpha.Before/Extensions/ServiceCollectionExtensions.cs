@@ -1,10 +1,10 @@
 using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.NetThrottling;
 using Fanex.Alpha.Before.Services;
+using Fanex.Data;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.AspNetCore;
-using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.RabbitMQ;
 using Fanex.Logging.Sentry;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -26,8 +26,8 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<CheckUMFilterAttribute>();
         services.AddSingleton<IUMCacheService, MemoryUMCacheService>();
         services.AddSingleton<IUMRestClient, UMRestClient>();
-        services.AddHttpContextAccessor(); // For WEB 
-        services.AddSingleton<IHttpContextHelper, HttpContextHelper>(); // For WEB 
+        services.AddHttpContextAccessor(); // For WEB
+        services.AddSingleton<IHttpContextHelper, HttpContextHelper>(); // For WEB
         services.AddSingleton<IMaintenanceService, MaintenanceService>();
 
         return services;
@@ -57,8 +57,7 @@ public static class ServiceCollectionExtensions
 
         ExceptionHandler
             .UseConfig(new LoggingConfiguration()
-            .GetHttpHeaderInfo()
-            .UseGetDbExceptionInfo(DatabaseInfoGetters.GetDbExceptionInfo));
+            .GetHttpHeaderInfo());
 
         return services;
     }
@@ -87,6 +86,23 @@ public static class ServiceCollectionExtensions
         services.Configure<ThrottlePolicy>(configuration.GetSection("ThrottlePolicy"));
         services.AddSingleton<INetThrottler, NetThrottler>();
 
+        return services;
+    }
+
+    public static IServiceCollection AddFanexDataWithSqlServer(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionStrings = configuration
+            .GetSection("ConnectionStrings")
+            .GetChildren()
+            .ToDictionary(
+                connection => connection.Key,
+                connection => new ConnectionConfiguration(connection.Key, connection.Value, "System.Data.SqlClient"), StringComparer.OrdinalIgnoreCase);
+        DbSettingProviderManager
+            .StartNewSession()
+            .Use(connectionStrings)
+            .Use(configuration.GetValue<string>("FanexDataServiceApi"))
+            .Register("App_Data/SPNames.xml")
+            .Run();
         return services;
     }
 }
