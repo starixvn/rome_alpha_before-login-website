@@ -43,27 +43,6 @@ var __fpsImporter = {
     urls: function urls(_urls) {
 
         try {
-            var requests = _urls.map(function (url) {
-                return fetch(url + '/hc.html', {
-                    cache: "no-cache",
-                    timeout: 1000
-                }).catch((error) => {
-                    return Promise.reject();
-                });
-            });
-
-            Promise.race(requests).then(function (res) {
-                if (res.status == 200) {
-                    var str = res.url;
-                    var index = str.lastIndexOf('/');
-                    var url = str.substring(0, index);
-
-                    __fpsImporter.url(url).then(function () {
-                        Detecas.Config.host = url;
-                    });
-                }
-            });
-        } catch (e) {
             var requests = [];
 
             var results = _urls.map(function (_url) {
@@ -81,6 +60,10 @@ var __fpsImporter = {
                     break;
                 }
             }
+        } catch (e) {
+            __fpsImporter.loadJS(result.url, function () {
+                Detecas.Config.host = result[0].url;
+            }, function () { });
         }
     }
 };
