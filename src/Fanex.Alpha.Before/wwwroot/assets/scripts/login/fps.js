@@ -42,28 +42,24 @@ var __fpsImporter = {
     },
     urls: function urls(_urls) {
 
-        try {
-            var requests = [];
+        try {        
+            $.each(_urls, function (key, _url) {
 
-            var results = _urls.map(function (_url) {
-                return __fpsImporter.makeRequest(_url);
-            });
+                var result = __fpsImporter.makeRequest(_url);
 
-            for (var i = 0; i < results.length; i++) {
-                var result = results[i];
-
-                if (result.status == 200) {
+                if (result && result.status == 200) {
                     __fpsImporter.loadJS(result.url, function () {
                         Detecas.Config.host = result.url;
-                    }, function () { });
+                    }, function () {
+                        console.log("Cannot inject script");
+                    });
 
-                    break;
+                    return false;
                 }
-            }
+            });
+            
         } catch (e) {
-            __fpsImporter.loadJS(result.url, function () {
-                Detecas.Config.host = result[0].url;
-            }, function () { });
+            console.log(e);
         }
     }
 };
