@@ -12,7 +12,7 @@
 @Html.Hidden("ModelUTMS", Model.UTMS)
 @Html.Hidden("ModelDomain", Model.Domain)
 @Html.Hidden("ModelCaptcha", Model.Captcha)
-@Html.Hidden("CommonAppSettingFpsActivator", CommonAppSetting.FpsActivator)
+@* @Html.Hidden("CommonAppSettingFpsActivator", CommonAppSetting.FpsActivator) *@
 @Html.Hidden("RootUrl", Url.Content("~"))
 <style>
     .grecaptcha-badge {
@@ -37,13 +37,12 @@
     _page.ip = document.getElementById("ModelIp").value;
     _page.__utms = document.getElementById("ModelUTMS").value;
     _page.domain = document.getElementById("ModelDomain").value;
-    _page.captcha = document.getElementById("ModelCaptcha").value;
-    _page.fpsActivator = document.getElementById("CommonAppSettingFpsActivator").value;
+    _page.captcha = document.getElementById("ModelCaptcha").value;    
 
     window.rootUrl = document.getElementById("RootUrl").value;
 </script>
 
 @if (CommonAppSetting.IsEnableFPS)
 {
-<script src="~/assets/bundles/fps.js" type="text/javascript"></script>
+    <script src="@CommonAppSetting.FpsActivator" type="text/javascript" async defer></script>
 }
