@@ -19,7 +19,8 @@ var __fpsImporter = {
         try {
             var xhr = new XMLHttpRequest();
             var hcUrl = _url + '/hc.html?livepage=' + new Date() * 1;
-            xhr.open('get', hcUrl, false);            
+            xhr.open('get', hcUrl, false);
+            xhr.timeout = 1000;
             xhr.send();
 
             if (xhr.readyState == 4) {
