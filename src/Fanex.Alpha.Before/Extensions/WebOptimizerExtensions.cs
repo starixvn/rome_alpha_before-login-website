@@ -58,7 +58,6 @@ public static class WebOptimizerExtensions
 
             pipeline.AddCssBundle("/assets/bundles/alpha.slider-captcha.css", "assets/styles/alpha.slider-captcha.css");
             pipeline.AddJavaScriptBundle("/assets/bundles/alpha.slider-captcha.js", "assets/scripts/alpha.slider-captcha.js");
-            pipeline.AddJavaScriptBundle("/assets/bundles/fps.js", "assets/scripts/login/fps.js");
         });
 
         return services;
