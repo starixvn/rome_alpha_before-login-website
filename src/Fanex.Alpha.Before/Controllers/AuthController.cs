@@ -67,7 +67,7 @@ public class AuthController : Controller
         {
             fpsHelper.FPSTracking(HttpContext.Request, new Models.SignInResult
             {
-                Username = loginResult.Username,
+                Username = loginResult.Username.Trim(),
                 LoginTime = loginResult.LoginTime
             });
 
