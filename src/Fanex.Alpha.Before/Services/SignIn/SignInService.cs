@@ -31,6 +31,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
     public class SignInService : ISignInService
     {
         private readonly string _loginTheme;
+        private const int UsernameMaxLength = 50;
 
         private readonly ManualUMOptions manualUMOptions;
         private readonly CommonOptions commonOptions;
@@ -148,7 +149,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 NoInteractionTimeInMinutes = commonOptions.NoInteractionTimeInMinutes
             };
 
-            if (string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.Password))
+            if (string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.Password) || model.Username.Length > UsernameMaxLength)
             {
                 return signInResult;
             }
