@@ -35,9 +35,11 @@ Sphinx.Helper = (function () {
 Sphinx.Login = {
   currentLanguageCode: "en-US",
   is789y: "0",
+  isVerified: false,
 
   init: function () {
     this.is789y = $("#is789y").val();
+    this.isVerified = $("#isVerified").val() === "1";
 
     Sphinx.Login.browser = Sphinx.Core.detectBrowser();
     Sphinx.Login.cachedDomElements();
@@ -67,6 +69,8 @@ Sphinx.Login = {
     txtPassword: null,
     chbShowPassword: null,
     btnLogin: null,
+    btnVerify: null,
+    btnBack: null,
     txtCaptcha: null,
     imgCode: null,
     errorMsg: null,
@@ -81,6 +85,11 @@ Sphinx.Login = {
     iconSwitchMode: null,
     labelUsername: null,
     labelPassword: null,
+    verifyRegion: null,
+    loginRegion: null,
+    avatar: null,
+    username: null,
+    warningMessage: null,
   },
   cachedDomElements: function () {
     Sphinx.Login.domElements.txtUsername = $("#txtUserName");
@@ -94,6 +103,8 @@ Sphinx.Login = {
     Sphinx.Login.domElements.hidLanguage = $("#hidLanguage");
     Sphinx.Login.domElements.languageItems = $("#language-ddl a");
     Sphinx.Login.domElements.btnLogin = $("#btnLogin");
+    Sphinx.Login.domElements.btnVerify = $("#btnVerify");
+    Sphinx.Login.domElements.btnBack = $("#btnBack");
     Sphinx.Login.domElements.formTitle = $(".login-text");
     Sphinx.Login.domElements.lblShowPass = $("#lbShowPass");
     Sphinx.Login.domElements.formLogin = $("#formLogin");
@@ -104,16 +115,26 @@ Sphinx.Login = {
     Sphinx.Login.domElements.iconSwitchMode = $("#icon-switch-mode");
     Sphinx.Login.domElements.labelUsername = $("#labelUsername");
     Sphinx.Login.domElements.labelPassword = $("#labelPassword");
+    Sphinx.Login.domElements.verifyRegion = $("#verifyRegion");
+    Sphinx.Login.domElements.loginRegion = $("#loginRegion");
+    Sphinx.Login.domElements.avatar = $("#avatar");
+    Sphinx.Login.domElements.username = $("#username");
+    Sphinx.Login.domElements.warningMessage = $("#warningMessage");
   },
   initComponent: function () {
     var domElements = Sphinx.Login.domElements;
 
     $(document).keypress(function (evt) {
+      console.log(Sphinx.Login.isVerified);
       if (
         (!Sphinx.Login.browser.msie && evt.keyCode === 13) ||
         (Sphinx.Login.browser.msie && window.event.keyCode === 13)
       ) {
-        Sphinx.Login.doLogin();
+        if (Sphinx.Login.isVerified) {
+          Sphinx.Login.doLogin();
+        } else {
+          Sphinx.Login.doVerify();
+        }
       }
     });
 
@@ -123,6 +144,8 @@ Sphinx.Login = {
       Sphinx.Login.setLanguague($(this).find("span").data("language-code"));
     });
     domElements.btnLogin.click(Sphinx.Login.doLogin);
+    domElements.btnVerify.click(Sphinx.Login.doVerify);
+    domElements.btnBack.click(Sphinx.Login.doBack);
     domElements.chbShowPassword.click(Sphinx.Login.showPassword);
     domElements.iconSwitchMode.click(Sphinx.Login.changeTheme);
   },
@@ -190,12 +213,15 @@ Sphinx.Login = {
     domElements.hidLanguage.val(languageCode);
     domElements.lblShowPass.html(resource.ShowPassword);
 
+    domElements.btnBack.val(resource.Back);
     domElements.btnLogin.val(resource.Login);
+    domElements.btnVerify.val(resource.Login);
     domElements.formTitle.text(resource.Login);
     document.title = resource.Login;
 
     domElements.labelUsername.text(resource.Username);
     domElements.labelPassword.text(resource.Password);
+    domElements.warningMessage.text(resource.warningMessage);
 
     Sphinx.Core.setUserData("LANGUAGE", languageCode);
     Sphinx.Login.currentLanguageCode = languageCode;
@@ -284,25 +310,11 @@ Sphinx.Login = {
     );
     var domeElements = Sphinx.Login.domElements;
     if (
-      domeElements.txtUsername.val() === "" ||
-      domeElements.txtUsername.val() === language.Username
-    ) {
-      domeElements.errorMsg
-        .attr("errCode", Sphinx.Error.InvalidUserAndPass)
-        .html(language.errUserName)
-        .show();
-
-      domeElements.txtUsername.focus();
-
-      return false;
-    }
-
-    if (
       domeElements.txtPassword.val() === "" ||
       domeElements.txtPassword.val() === language.Password
     ) {
       domeElements.errorMsg
-        .html(language.errUserName)
+        .html(language.errPassWord)
         .attr("errCode", Sphinx.Error.InvalidUserAndPass)
         .show();
 
@@ -347,6 +359,55 @@ Sphinx.Login = {
     );
 
     Sphinx.Login.domElements.formLogin.submit();
+
+    return true;
+  },
+
+  validateVerifyInput: function () {
+    var language = Sphinx.Resources.getLanguage(
+      Sphinx.Login.currentLanguageCode
+    );
+    var domeElements = Sphinx.Login.domElements;
+    if (
+      domeElements.txtUsername.val() === "" ||
+      domeElements.txtUsername.val() === language.Username
+    ) {
+      domeElements.errorMsg
+        .attr("errCode", Sphinx.Error.InvalidUserAndPass)
+        .html(language.errUserName)
+        .show();
+
+      domeElements.txtUsername.focus();
+
+      return false;
+    }
+
+    return true;
+  },
+
+  doVerify: function () {
+    if (!Sphinx.Login.validateVerifyInput()) {
+      return false;
+    }
+
+    Sphinx.Login.domElements.btnVerify.attr("disabled", "disabled");
+    var username = Sphinx.Login.domElements.txtUsername.val();
+    var domElements = Sphinx.Login.domElements;
+
+    $.ajax({
+      url: Sphinx.rootUrl + "Auth/Verify",
+      method: "POST",
+      data: { username },
+      success: function (data) {
+        domElements.errorMsg.html("").hide();
+        domElements.avatar.attr("src", data);
+        domElements.username.text(username);
+        domElements.verifyRegion.hide();
+        domElements.loginRegion.show();
+        domElements.txtPassword.focus();
+        Sphinx.Login.isVerified = true;
+      },
+    });
 
     return true;
   },
@@ -412,6 +473,10 @@ Sphinx.Login = {
     var urlLength = url.length;
 
     return url[urlLength - 1] === "#" ? url.substr(0, urlLength - 1) : url;
+  },
+
+  doBack: function () {
+    window.location.reload();
   },
 };
 

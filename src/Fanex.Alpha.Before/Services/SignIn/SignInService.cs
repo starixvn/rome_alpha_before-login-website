@@ -246,7 +246,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             if (loginUserFailedCount >= commonOptions.LoginFailTimeToStartUsingCaptcha)
             {
                 signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
-                Task.Run(async () => await notificationService.NotifyWrongPassword(verifySignInResult.CustId, verifySignInResult.SubAccId, signInResult.Ip));
+                _ = Task.Run(async () => await notificationService.NotifyWrongPassword(verifySignInResult.CustId, verifySignInResult.SubAccId, signInResult.Ip));
             }
 
             signInResult.ErrMsg = verifySignInResult.ErrorMessage;

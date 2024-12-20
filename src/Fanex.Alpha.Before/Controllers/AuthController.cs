@@ -1,6 +1,7 @@
 using Fanex.Alpha.Before.Constants;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
+using Fanex.Alpha.Before.Services;
 using Fanex.Alpha.Before.Services.SignIn;
 using Microsoft.AspNetCore.Mvc;
 using ONEbook.UM.AspNetCore.Filters;
@@ -10,11 +11,13 @@ namespace Fanex.Alpha.Before.Controllers;
 [ServiceFilter(typeof(CheckUMFilterAttribute))]
 public class AuthController : Controller
 {
+    private readonly IProfilePictureService profilePictureService;
     private readonly ISignInService signInService;
     private readonly IFPSHelper fpsHelper;
 
-    public AuthController(ISignInService signInService, IFPSHelper fpsHelper)
+    public AuthController(IProfilePictureService profilePictureService, ISignInService signInService, IFPSHelper fpsHelper)
     {
+        this.profilePictureService = profilePictureService;
         this.signInService = signInService;
         this.fpsHelper = fpsHelper;
     }
@@ -63,6 +66,8 @@ public class AuthController : Controller
             assetAppPath,
             dcsStaticAppPath);
         var loginResult = await signInService.SignIn(model, HttpContext);
+
+
         if (loginResult.ErrCode == SignInErrorContants.Success && !string.IsNullOrEmpty(loginResult.AfterLoginUrl))
         {
             fpsHelper.FPSTracking(HttpContext.Request, new Models.SignInResult
@@ -75,8 +80,19 @@ public class AuthController : Controller
         }
 
         AssignDarkModeNameViewData();
+        loginResult.IsVerified = true;
+        var profilePicture = await profilePictureService.GetProfilePicture(loginResult.Username);
+        loginResult.Avatar = profilePicture.ImageBase64String;
 
         return View(loginResult);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Verify(string username)
+    {
+
+        var profilePicture = await profilePictureService.GetProfilePicture(username);
+        return Ok(profilePicture.ImageBase64String);
     }
 
     public async Task<IActionResult> AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)

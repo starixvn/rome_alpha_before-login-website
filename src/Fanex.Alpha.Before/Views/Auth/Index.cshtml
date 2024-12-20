@@ -10,6 +10,7 @@
     <link href="~/assets/bundles/themes/@(Model.LoginTemplate)@(darkModeName).min.css" rel="stylesheet" />
     <link href="~/assets/bundles/alpha.slider-captcha.css" rel="stylesheet" />
 }
+
 <div class="head-form-login">
     <div class="box-lang">
         <div class="switch-mode-box">
@@ -51,26 +52,48 @@
     <div class="rowlg msg-error" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
 }
 
-<div class="rowlg">
-    <label class="label" id="labelUsername" style="display: none;">Username</label>
-    <input type="text" class="txt" placeholder="Username" id="txtUserName" name="txtUserName" value="@Model.Username"
-        tabindex="1" maxlength="50" />
-    <i class="icon-user"></i>
+<div id="verifyRegion" style="@(Model.IsVerified ? "display: none;" : string.Empty)">
+    <div class="rowlg">
+        <label class="label" id="labelUsername" style="display: none;">Username</label>
+        <input type="text" class="txt" placeholder="Username" id="txtUserName" name="txtUserName"
+            value="@Model.Username" tabindex="1" maxlength="50" />
+        <i class="icon-user"></i>
+    </div>
+    <div>
+        <input type="button" class="btnLogin" value="Login" id="btnVerify" tabindex="5" />
+    </div>
+</div>
+<div style="@(Model.IsVerified ? string.Empty : "display: none;")" id="loginRegion">
+    <div class="rowlg">
+        <figure class="avatar">
+            <img src='@Model.Avatar' alt="Avatar" id="avatar" />
+            <figcaption><span class="username" id="username">@Model.Username</span></figcaption>
+        </figure>
+    </div>
+
+    <div class="rowlg warningMessage" id="warningMessage">Do not proceed if this is not your
+        profile picture.
+    </div>
+
+    <div class="rowlg">
+        <label class="label" id="labelPassword" style="display: none;">Password</label>
+        <input type="password" class="txt" placeholder="Password" id="txtPassWord" name="txtPassWord" tabindex="2"
+            autocomplete="off" />
+        <i class="icon-lock"></i>
+    </div>
+
+    <div class="rowlg checkbox">
+        <label>
+            <input name="chb-showpass" type="checkbox" id="chbShowPass" tabindex="3" />
+            <span id="lbShowPass">Show password</span>
+        </label>
+    </div>
+    <div class="list-button">
+        <input type="button" class="btnLogin" value="Back" id="btnBack" tabindex="5" />
+        <input type="button" class="btnLogin" value="Login" id="btnLogin" tabindex="5" />
+    </div>
 </div>
 
-<div class="rowlg">
-    <label class="label" id="labelPassword" style="display: none;">Password</label>
-    <input type="password" class="txt" placeholder="Password" id="txtPassWord" name="txtPassWord" tabindex="2"
-        autocomplete="off" />
-    <i class="icon-lock"></i>
-</div>
-
-<div class="rowlg checkbox">
-    <label>
-        <input name="chb-showpass" type="checkbox" id="chbShowPass" tabindex="3" />
-        <span id="lbShowPass">Show password</span>
-    </label>
-</div>
 
 <div id="captcha" name="captchaToken"></div>
 <input type="hidden" name="browserSize" id="browserSize" value="" />
@@ -80,9 +103,8 @@
 {
     <input type="hidden" id="hiddenTechnicalErrorTime" value="@AppSetting.TechnicalErrorTime" />
 }
-<div class="list-button">
-    <input type="button" class="btnLogin" value="Login" id="btnLogin" tabindex="5" />
-</div>
+
+<input type="hidden" id="isVerified" value="@(Model.IsVerified ? 1 : 0)" />
 <input type="hidden" id="hiddenAssetAppPaths" value="@Model.AssetAppPaths" />
 <input type="hidden" id="hiddenDCSStaticAppPaths" value="@Model.DCSStaticAppPaths" />
 

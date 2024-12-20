@@ -4,6 +4,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Login</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
@@ -15,6 +16,7 @@
     @RenderSection("styles", false)
 
 </head>
+
 <body>
 
     <div id="divLoading" style="display: none">
@@ -22,16 +24,19 @@
             Loading... please wait
         </h2>
     </div>
-    <div id="mainholder" class="block-login">
-        <form id="formLogin" class="form-login" action="" method="POST" autocomplete="off">
-            @RenderBody()
-            <input name="code" id="code" type="hidden" value="@data.Captcha" />
-            <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
-            <input id="__tk" name="__tk" value="@ViewBag.FPSToken" type="hidden" />
-            <input id="captcha_result" name="captcha_result" value="" type="hidden" />
-            @Html.AntiForgeryToken()
-        </form>
+    <div class="container">
+        <div id="mainholder" class="block-login">
+            <form id="formLogin" class="form-login" action="" method="POST" autocomplete="off">
+                @RenderBody()
+                <input name="code" id="code" type="hidden" value="@data.Captcha" />
+                <input id="detecas-analysis" name="detecas-analysis" value="{}" type="hidden" />
+                <input id="__tk" name="__tk" value="@ViewBag.FPSToken" type="hidden" />
+                <input id="captcha_result" name="captcha_result" value="" type="hidden" />
+                @Html.AntiForgeryToken()
+            </form>
+        </div>
     </div>
+
     @if (data.IsChangedPassword)
     {
         <div class="block-info">
@@ -45,7 +50,7 @@
 
     @RenderSection("scripts", false)
 
-    @Html.Hidden("is789y", AppSetting.Is789ySite? "1":"0")
+    @Html.Hidden("is789y", AppSetting.Is789ySite ? "1" : "0")
 </body>
-</html>
 
+</html>
