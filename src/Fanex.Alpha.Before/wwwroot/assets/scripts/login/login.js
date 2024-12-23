@@ -248,10 +248,10 @@ Sphinx.Login = {
     var valPlaceholder = $input.attr("placeholder");
     var inputPassword = $(
       '<input type="password" id="txtPassWord" name="txtPassWord" tabindex="2" placeholder="' +
-        valPlaceholder +
-        '"  class="txt"  value="' +
-        $("<div>").text($input.val()).html() +
-        '" autocomplete="off"  />'
+      valPlaceholder +
+      '"  class="txt"  value="' +
+      $("<div>").text($input.val()).html() +
+      '" autocomplete="off"  />'
     );
     $input.replaceWith(inputPassword);
     Sphinx.Login.domElements.txtPassword = inputPassword;
@@ -270,10 +270,10 @@ Sphinx.Login = {
     var valPlaceholder = $input.attr("placeholder");
     var inputPassword = $(
       '<input type="text" id="txtPassWord" name="txtPassWord" tabindex="2" placeholder="' +
-        valPlaceholder +
-        '" class="txt" value="' +
-        $("<div>").text($input.val()).html() +
-        '" autocomplete="off"  />'
+      valPlaceholder +
+      '" class="txt" value="' +
+      $("<div>").text($input.val()).html() +
+      '" autocomplete="off"  />'
     );
 
     $input.replaceWith(inputPassword);
@@ -311,17 +311,37 @@ Sphinx.Login = {
       Sphinx.Login.currentLanguageCode
     );
     var domeElements = Sphinx.Login.domElements;
-    if (
-      domeElements.txtPassword.val() === "" ||
-      domeElements.txtPassword.val() === language.Password
-    ) {
+
+    var username = domeElements.txtUsername.val();
+    if (username === "" || username === language.Username) {
+      domeElements.errorMsg
+        .attr("errCode", Sphinx.Error.InvalidUserAndPass)
+        .html(language.errUserName)
+        .show();
+
+      domeElements.txtUsername.focus();
+
+      return false;
+    }
+
+    if (/[^a-zA-Z0-9]/.test(username)) {
+      domeElements.errorMsg
+        .html(language.errUsernameFormat)
+        .attr("errCode", Sphinx.Error.InvalidUserAndPass)
+        .show();
+
+      domeElements.txtUsername.focus();
+      return false;
+    }
+
+    var password = domeElements.txtPassword.val();
+    if (password === "" || password === language.Password) {
       domeElements.errorMsg
         .html(language.errPassWord)
         .attr("errCode", Sphinx.Error.InvalidPass)
         .show();
 
       domeElements.txtPassword.focus();
-
       return false;
     }
 
@@ -370,10 +390,8 @@ Sphinx.Login = {
       Sphinx.Login.currentLanguageCode
     );
     var domeElements = Sphinx.Login.domElements;
-    if (
-      domeElements.txtUsername.val() === "" ||
-      domeElements.txtUsername.val() === language.Username
-    ) {
+    var username = domeElements.txtUsername.val();
+    if (username === "" || username === language.Username) {
       domeElements.errorMsg
         .attr("errCode", Sphinx.Error.InvalidUser)
         .html(language.errUserName)
@@ -381,6 +399,16 @@ Sphinx.Login = {
 
       domeElements.txtUsername.focus();
 
+      return false;
+    }
+
+    if (/[^a-zA-Z0-9]/.test(username)) {
+      domeElements.errorMsg
+        .html(language.errUsernameFormat)
+        .attr("errCode", Sphinx.Error.InvalidUserAndPass)
+        .show();
+
+      domeElements.txtUsername.focus();
       return false;
     }
 

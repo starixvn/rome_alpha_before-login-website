@@ -59,49 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root"
-    xmlns=""
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -122,54 +119,57 @@
   </resheader>
   <data name="errInvalidCaptcha" xml:space="preserve">
     <value>คุณใส่รหัสที่หมดอายุแล้วในการเข้าระบบ</value>
-    <comment/>
+    <comment />
   </data>
   <data name="invalidLogin" xml:space="preserve">
     <value>ชื่อ และ รหัสที่ใช้ในการเข้าระบบไม่ถูกต้อง</value>
-    <comment/>
+    <comment />
   </data>
   <data name="iploginfailedmultipletimeserror" xml:space="preserve">
     <value>หมายเลขไอพีของคุณ ({0}) ล้มเหลวในการล๊อคอินเกินกว่าจำนวนครั้งที่กำหนด ({1} ครั้ง)  ด้วยเหตุผลด้านความปลอดภัย ระบบล๊อคอินจะหยุดทำงานเป็นเวลา {2} นาที</value>
-    <comment/>
+    <comment />
   </data>
   <data name="lblLoginSuccessful" xml:space="preserve">
     <value>Login Successfully</value>
-    <comment/>
+    <comment />
   </data>
   <data name="lblPasswordChanged" xml:space="preserve">
     <value>รหัสที่เปลี่ยนครั้งที่แล้วคือ {0} หากยังไม่สามารถเข้าใช้งานได้ กรุณาฝ่ายลูกค้าสัมพันธ์</value>
-    <comment/>
+    <comment />
   </data>
   <data name="LoginTooOftenBlockedMessage" xml:space="preserve">
     <value>เข้าระบบบ่อยเกิน UserName: {0}</value>
-    <comment/>
+    <comment />
   </data>
   <data name="invalidsession" xml:space="preserve">
     <value>วาระไม่ถูกต้อง</value>
-    <comment/>
+    <comment />
   </data>
   <data name="inputCaptchaTooLong" xml:space="preserve">
     <value>ใช้เวลาใส่ Captcha นานเกินกำหนด</value>
-    <comment/>
+    <comment />
   </data>
   <data name="tooManyFailedCaptcha" xml:space="preserve">
     <value>จำนวนครั้งที่ผิดพลาดมากเกินกำหนด</value>
-    <comment/>
+    <comment />
   </data>
   <data name="BotDetectionMessage" xml:space="preserve">
     <value>โปรดดำเนินการตามมาตรการตรวจสอบ เพื่อความปลอดภัยของบัญชีนี้</value>
-    <comment/>
+    <comment />
   </data>
   <data name="GoBackToLoginPage" xml:space="preserve">
     <value>กลับไปยัง&lt;a href="{0}"&gt;หน้าล็อกอิน&lt;/a&gt;</value>
-    <comment/>
+    <comment />
   </data>
   <data name="Error_Server" xml:space="preserve">
     <value>มีปัญหาที่ไม่คาดคิดเกิดขึ้น โปรดติดต่อฝ่ายสนับสนุนลูกค้าหากท่านต้องการความช่วยเหลือ [{0}]</value>
-    <comment/>
+    <comment />
   </data>
   <data name="UM_Message" xml:space="preserve">
     <value>เราจะมีการบำรุงรักษาเซิร์ฟเวอร์ตามวงรอบปกติ โดยเว็บไซต์จะไม่สามารถใช้งานได้ตั้งแต่ {0} ถึง {1} (GMT +8) โปรดลองใหม่ภายหลัง.</value>
-    <comment/>
+    <comment />
+  </data>
+  <data name="usernameAlphanumericOnly" xml:space="preserve">
+    <value>ชื่อผู้ใช้ต้องเป็นตัวอักษรหรือตัวเลขเท่านั้น</value>
   </data>
 </root>

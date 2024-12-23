@@ -59,49 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root"
-    xmlns=""
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -122,54 +119,57 @@
   </resheader>
   <data name="errInvalidCaptcha" xml:space="preserve">
     <value>識別碼錯誤!</value>
-    <comment/>
+    <comment />
   </data>
   <data name="invalidLogin" xml:space="preserve">
     <value>帐号或密碼錯誤</value>
-    <comment/>
+    <comment />
   </data>
   <data name="lblLoginSuccessful" xml:space="preserve">
     <value>Login Successfully</value>
-    <comment/>
+    <comment />
   </data>
   <data name="lblPasswordChanged" xml:space="preserve">
     <value>您上次更改密碼於{0}。若您仍無法登入, 請聯繫客服部。</value>
-    <comment/>
+    <comment />
   </data>
   <data name="LoginTooOftenBlockedMessage" xml:space="preserve">
     <value>登錄次數過於頻繁,請稍後再試! UserName: {0}</value>
-    <comment/>
+    <comment />
   </data>
   <data name="iploginfailedmultipletimeserror" xml:space="preserve">
     <value>您的IP({0})身分憑證驗證次數已超過限制({1}次)。出於安全原因，登入功能已鎖定{2}分鐘。</value>
-    <comment/>
+    <comment />
   </data>
   <data name="invalidsession" xml:space="preserve">
     <value>會議無效！</value>
-    <comment/>
+    <comment />
   </data>
   <data name="inputCaptchaTooLong" xml:space="preserve">
     <value>等待驗證碼輸入時間過久</value>
-    <comment/>
+    <comment />
   </data>
   <data name="tooManyFailedCaptcha" xml:space="preserve">
     <value>無效驗證碼嘗試次數過多</value>
-    <comment/>
+    <comment />
   </data>
   <data name="BotDetectionMessage" xml:space="preserve">
     <value>為確保帳號安全 ， 本次登錄需要進行安全驗證 。</value>
-    <comment/>
+    <comment />
   </data>
   <data name="GoBackToLoginPage" xml:space="preserve">
     <value>請返回&lt;a href="{0}"&gt;"登錄頁面"&lt;/a&gt;</value>
-    <comment/>
+    <comment />
   </data>
   <data name="Error_Server" xml:space="preserve">
     <value>很抱歉，伺服器發生意外錯誤，請聯繫我們的客服協助處理。[{0}]</value>
-    <comment/>
+    <comment />
   </data>
   <data name="UM_Message" xml:space="preserve">
     <value>本公司將於 {0}至{1} (GMT+8) 對服務器進行例行維護。期間所有的網頁將無法登入。請您稍候再來。</value>
-    <comment/>
+    <comment />
+  </data>
+  <data name="usernameAlphanumericOnly" xml:space="preserve">
+    <value>用戶名只能包含字母或數字。</value>
   </data>
 </root>

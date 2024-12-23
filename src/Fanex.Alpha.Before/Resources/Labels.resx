@@ -59,49 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root"
-    xmlns=""
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -122,54 +119,57 @@
   </resheader>
   <data name="errInvalidCaptcha" xml:space="preserve">
     <value>You input an invalid code.</value>
-    <comment/>
+    <comment />
   </data>
   <data name="invalidLogin" xml:space="preserve">
     <value>Wrong username or password</value>
-    <comment/>
+    <comment />
   </data>
   <data name="iploginfailedmultipletimeserror" xml:space="preserve">
     <value>Your IP ({0}) exceeded maximum number ({1} times) of attempts to authenticate with your credentials. For security reasons, login function has been locked for {2} minutes.</value>
-    <comment/>
+    <comment />
   </data>
   <data name="lblLoginSuccessful" xml:space="preserve">
     <value>Login Successfully</value>
-    <comment/>
+    <comment />
   </data>
   <data name="lblPasswordChanged" xml:space="preserve">
     <value>Your password was last changed on {0}. Please contact to CSD at once if you still cannot login.</value>
-    <comment/>
+    <comment />
   </data>
   <data name="LoginTooOftenBlockedMessage" xml:space="preserve">
     <value>Login Too Often! UserName: {0}</value>
-    <comment/>
+    <comment />
   </data>
   <data name="inputCaptchaTooLong" xml:space="preserve">
     <value>Waited too long for Captcha's input</value>
-    <comment/>
+    <comment />
   </data>
   <data name="invalidsession" xml:space="preserve">
     <value>Invalid Session!</value>
-    <comment/>
+    <comment />
   </data>
   <data name="tooManyFailedCaptcha" xml:space="preserve">
     <value>Too many attempts of invalid Captcha</value>
-    <comment/>
+    <comment />
   </data>
   <data name="BotDetectionMessage" xml:space="preserve">
     <value>To ensure account security, safety verification is required for this login.</value>
-    <comment/>
+    <comment />
   </data>
   <data name="GoBackToLoginPage" xml:space="preserve">
     <value>Go back to &lt;a href="{0}"&gt;login page&lt;/a&gt;</value>
-    <comment/>
+    <comment />
   </data>
   <data name="Error_Server" xml:space="preserve">
     <value>Sorry, there was an unexpected issue on the server. Please seek help from our customer support. [{0}]</value>
-    <comment/>
+    <comment />
   </data>
   <data name="UM_Message" xml:space="preserve">
     <value>We are having regular server maintenance. The website is currently unavailable from {0} until {1} (GMT +8). Please come back later.</value>
-    <comment/>
+    <comment />
+  </data>
+  <data name="usernameAlphanumericOnly" xml:space="preserve">
+    <value>Username must be alphabet or numeric only.</value>
   </data>
 </root>

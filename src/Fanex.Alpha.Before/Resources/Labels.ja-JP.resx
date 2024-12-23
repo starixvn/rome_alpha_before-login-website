@@ -139,4 +139,7 @@ For security reasons, login function has been locked for {2} minutes.</value>
   <data name="Error_Server" xml:space="preserve">
     <value>Sorry, there was an unexpected issue on the server. Please seek help from our customer support. [{0}]</value>
   </data>
+  <data name="usernameAlphanumericOnly" xml:space="preserve">
+    <value>ユーザー名はアルファベットまたは数字のみ使用可能です。</value>
+  </data>
 </root>
