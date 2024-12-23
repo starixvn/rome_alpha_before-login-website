@@ -8,7 +8,7 @@ namespace Fanex.Alpha.Before.Services
 {
     public interface IProfilePictureService
     {
-        Task<ProfilePicture> GetProfilePicture(string username);
+        Task<ProfilePicture> GetProfilePicture(int custId);
     }
 
     public class ProfilePictureService : IProfilePictureService
@@ -24,49 +24,30 @@ namespace Fanex.Alpha.Before.Services
             this.ipHelper = ipHelper;
         }
 
-        public async Task<ProfilePicture> GetProfilePicture(string username)
-        {
-            int custId = 0;
-            if (custId > 0)
-            {
-                return await GetProfilePicture(custId);
-            }
-
-            return await GetRandomProfilePicture();
-        }
-
-        private async Task<ProfilePicture> GetRandomProfilePicture()
+        public async Task<ProfilePicture> GetProfilePicture(int custId)
         {
             try
             {
-                var profilePicture = await dynamicRepository.GetAsync<ProfilePicture>(new GetRandomProfilePictureCriteria());
-                return profilePicture;
-            }
-            catch (Exception ex)
-            {
-                await logger.ErrorAsync(ex.Message, ex);
-                return new ProfilePicture();
-            }
-        }
-
-
-        private async Task<ProfilePicture> GetProfilePicture(int custId)
-        {
-            try
-            {
-                var profilePicture = await dynamicRepository.GetAsync<ProfilePicture>(new GetProfilePictureCriteria(custId));
-                if (profilePicture == null || string.IsNullOrEmpty(profilePicture.ImageBase64String))
+                if (custId > 0)
                 {
-                    var result = await InsertDefaultProfilePicture(custId);
-                    if (result.IsSuccess)
+                    var profilePicture = await dynamicRepository.GetAsync<ProfilePicture>(new GetProfilePictureCriteria(custId));
+                    if (profilePicture == null || string.IsNullOrEmpty(profilePicture.ImageBase64String))
                     {
-                        return await dynamicRepository.GetAsync<ProfilePicture>(new GetProfilePictureCriteria(custId));
+                        var result = await InsertDefaultProfilePicture(custId);
+                        if (result.IsSuccess)
+                        {
+                            return await dynamicRepository.GetAsync<ProfilePicture>(new GetProfilePictureCriteria(custId));
+                        }
+
+                        return new ProfilePicture();
                     }
 
-                    return new ProfilePicture();
+                    return profilePicture;
                 }
-
-                return profilePicture;
+                else
+                {
+                    return await GetRandomProfilePicture();
+                }
             }
             catch (Exception ex)
             {
@@ -88,6 +69,20 @@ namespace Fanex.Alpha.Before.Services
             {
                 await logger.ErrorAsync(ex.Message, ex);
                 return new Result(100, "Auto insert Profile Picture Failed!");
+            }
+        }
+
+        public async Task<ProfilePicture> GetRandomProfilePicture()
+        {
+            try
+            {
+                var profilePicture = await dynamicRepository.GetAsync<ProfilePicture>(new GetRandomProfilePictureCriteria());
+                return profilePicture;
+            }
+            catch (Exception ex)
+            {
+                await logger.ErrorAsync(ex.Message, ex);
+                return new ProfilePicture();
             }
         }
     }

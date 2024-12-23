@@ -399,13 +399,17 @@ Sphinx.Login = {
       method: "POST",
       data: { username },
       success: function (data) {
-        domElements.errorMsg.html("").hide();
-        domElements.avatar.attr("src", data);
-        domElements.username.text(username);
-        domElements.verifyRegion.hide();
-        domElements.loginRegion.show();
-        domElements.txtPassword.focus();
-        Sphinx.Login.isVerified = true;
+        if (data.IsSuccess) {
+          domElements.errorMsg.html("").hide();
+          domElements.avatar.attr("src", data.Avatar);
+          domElements.username.text(username);
+          domElements.verifyRegion.hide();
+          domElements.loginRegion.show();
+          domElements.txtPassword.focus();
+          Sphinx.Login.isVerified = true;
+        } else {
+          domElements.errorMsg.html(data.Message).show();
+        }
       },
     });
 

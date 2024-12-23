@@ -6,7 +6,11 @@ namespace Fanex.Alpha.Before.Helpers;
 
 public interface IDistributedCacheHelper
 {
+    Task<bool> Contain(string key);
+
     Task<T> Get<T>(string key, T defaultValue);
+
+    Task Set<T>(string key, T value);
 
     Task Set<T>(string key, T value, DistributedCacheEntryOptions options);
 
@@ -22,6 +26,20 @@ public class DistributedCacheHelper : IDistributedCacheHelper
     {
         _cache = cache;
         _logger = logger;
+    }
+
+    public async Task<bool> Contain(string key)
+    {
+        try
+        {
+            var encodedCached = await _cache.GetAsync(key);
+            return encodedCached != null;
+        }
+        catch (Exception ex)
+        {
+            await _logger.WarnAsync(ex.ToString());
+            return false;
+        }
     }
 
     public async Task<T> Get<T>(string key, T defaultValue)
@@ -40,6 +58,15 @@ public class DistributedCacheHelper : IDistributedCacheHelper
         }
     }
 
+    public Task Set<T>(string key, T value)
+    {
+        return Set(key, value, TimeSpan.FromDays(1));
+    }
+
+    private async Task Set<T>(string key, T value, TimeSpan timeSpan)
+    {
+        await Set(key, value, new DistributedCacheEntryOptions().SetSlidingExpiration(timeSpan));
+    }
 
     public async Task Set<T>(string key, T value, DistributedCacheEntryOptions options)
     {

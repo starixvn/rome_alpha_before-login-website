@@ -1,9 +1,13 @@
+using System.Text.Json;
+using Fanex.Alpha.Before.Configurations;
 using Fanex.Alpha.Before.Constants;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
+using Fanex.Alpha.Before.Resources;
 using Fanex.Alpha.Before.Services;
 using Fanex.Alpha.Before.Services.SignIn;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using ONEbook.UM.AspNetCore.Filters;
 
 namespace Fanex.Alpha.Before.Controllers;
@@ -14,12 +18,27 @@ public class AuthController : Controller
     private readonly IProfilePictureService profilePictureService;
     private readonly ISignInService signInService;
     private readonly IFPSHelper fpsHelper;
+    private readonly IDistributedCacheService cacheService;
+    private readonly CommonOptions commonOptions;
+    private readonly IPHelper ipHelper;
+    private readonly Logging.ILogger logger;
 
-    public AuthController(IProfilePictureService profilePictureService, ISignInService signInService, IFPSHelper fpsHelper)
+    public AuthController(
+        IProfilePictureService profilePictureService,
+        ISignInService signInService,
+        IFPSHelper fpsHelper,
+        IDistributedCacheService cacheService,
+        IOptions<CommonOptions> commonOptions,
+        IPHelper ipHelper,
+        Logging.ILogger logger)
     {
         this.profilePictureService = profilePictureService;
         this.signInService = signInService;
         this.fpsHelper = fpsHelper;
+        this.cacheService = cacheService;
+        this.commonOptions = commonOptions.Value;
+        this.ipHelper = ipHelper;
+        this.logger = logger;
     }
 
     [HttpGet]
@@ -81,7 +100,8 @@ public class AuthController : Controller
 
         AssignDarkModeNameViewData();
         loginResult.IsVerified = true;
-        var profilePicture = await profilePictureService.GetProfilePicture(loginResult.Username);
+        var custId = await signInService.CheckUsername(loginResult.Username, HttpContext);
+        var profilePicture = await profilePictureService.GetProfilePicture(custId);
         loginResult.Avatar = profilePicture.ImageBase64String;
 
         return View(loginResult);
@@ -90,9 +110,39 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<IActionResult> Verify(string username)
     {
+        if (await cacheService.IsLoginIPBlocked())
+        {
+            var ipLockedError = string.Format(
+                   Labels.iploginfailedmultipletimeserror,
+                   ipHelper.ClientIP(),
+                   commonOptions.MaxTimesToAllowLoginFail,
+                   commonOptions.BlockLoginMinutes);
 
-        var profilePicture = await profilePictureService.GetProfilePicture(username);
-        return Ok(profilePicture.ImageBase64String);
+            return Json(VerifyResult.CreateErrorResult(ipLockedError, SignInErrorContants.IPBlocked));
+        }
+
+        var custId = await signInService.CheckUsername(username, HttpContext);
+        if (custId <= 0)
+        {
+            var loginIPFailedCount = await cacheService.IncreaseLoginIPFailedCount();
+            if (loginIPFailedCount > commonOptions.MaxTimesToAllowLoginFail)
+            {
+                if (loginIPFailedCount == commonOptions.MaxTimesToAllowLoginFail + 1)
+                {
+                    await logger.WarnAsync($"IP blocked for login: {JsonSerializer.Serialize(DeviceHelper.GetRequestInfo(HttpContext.Request, string.Empty, ipHelper.ClientIP()))}");
+                }
+
+                await cacheService.SetLoginIPBlocked(commonOptions.BlockLoginMinutes);
+                var ipLockedError = string.Format(
+                    Labels.iploginfailedmultipletimeserror,
+                    ipHelper.ClientIP(),
+                    commonOptions.MaxTimesToAllowLoginFail,
+                    commonOptions.BlockLoginMinutes);
+                return Json(VerifyResult.CreateErrorResult(ipLockedError, SignInErrorContants.IPBlocked));
+            }
+        }
+        var profilePicture = await profilePictureService.GetProfilePicture(custId);
+        return Ok(VerifyResult.CreateSuccessResult(profilePicture.ImageBase64String));
     }
 
     public async Task<IActionResult> AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)
