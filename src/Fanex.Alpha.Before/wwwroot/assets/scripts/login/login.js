@@ -9,13 +9,15 @@ var Sphinx = Sphinx || {};
 Sphinx.rootUrl = "";
 
 Sphinx.Error = {
-  InvalidUserAndPass: "1",
+  InvalidUser: "1",
   InvalidCaptcha: "2",
+  InvalidPass: "3",
 
   clientError: function (error) {
     if (
-      error === Sphinx.Error.InvalidUserAndPass ||
-      error === Sphinx.Error.InvalidCaptcha
+      error === Sphinx.Error.InvalidUser ||
+      error === Sphinx.Error.InvalidCaptcha ||
+      error === Sphinx.Error.InvalidPass
     ) {
       return true;
     }
@@ -315,7 +317,7 @@ Sphinx.Login = {
     ) {
       domeElements.errorMsg
         .html(language.errPassWord)
-        .attr("errCode", Sphinx.Error.InvalidUserAndPass)
+        .attr("errCode", Sphinx.Error.InvalidPass)
         .show();
 
       domeElements.txtPassword.focus();
@@ -373,7 +375,7 @@ Sphinx.Login = {
       domeElements.txtUsername.val() === language.Username
     ) {
       domeElements.errorMsg
-        .attr("errCode", Sphinx.Error.InvalidUserAndPass)
+        .attr("errCode", Sphinx.Error.InvalidUser)
         .html(language.errUserName)
         .show();
 
@@ -401,7 +403,7 @@ Sphinx.Login = {
       success: function (data) {
         if (data.IsSuccess) {
           domElements.errorMsg.html("").hide();
-          domElements.avatar.attr("src", data.Avatar);
+          data.Avatar && domElements.avatar.attr("src", data.Avatar);
           domElements.username.text(username);
           domElements.verifyRegion.hide();
           domElements.loginRegion.show();
@@ -437,11 +439,14 @@ Sphinx.Login = {
 
   getErrorMessage: function (errorCode, resource) {
     switch (errorCode) {
-      case Sphinx.Error.InvalidUserAndPass:
+      case Sphinx.Error.InvalidUser:
         return resource.errUserName;
 
       case Sphinx.Error.InvalidCaptcha:
         return resource.errValidCode;
+
+      case Sphinx.Error.InvalidPass:
+        return resource.errPassWord;
     }
 
     return "";
