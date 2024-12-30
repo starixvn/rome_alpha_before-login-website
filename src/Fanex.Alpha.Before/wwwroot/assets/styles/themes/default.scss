@@ -115,6 +115,7 @@ input[type="radio"] {
   flex-direction: column;
   justify-content: center;
   min-height: 100%;
+  align-items: center;
 }
 
 .block-login {
@@ -122,6 +123,7 @@ input[type="radio"] {
   background: $block-bg;
   padding: 40px 30px;
   @include box-shadow-multiple("0px 2px 2px rgba(0, 0, 0, 0.3)");
+  margin: 0;
 
   .title {
     font-size: $font-size + 11;
@@ -390,6 +392,7 @@ input[type="radio"] {
   margin-top: 16px;
   padding-left: 24px;
   position: relative;
+  margin: 10px 0 0;
 
   &:before {
     @extend %icon;
@@ -413,6 +416,7 @@ input[type="radio"] {
   .block-login {
     padding: 0 30px;
     width: 100%;
+    margin: 0;
     @include box-shadow-multiple(none);
 
     .rowlg {

@@ -30,13 +30,14 @@ namespace Fanex.Alpha.Before.Services
             {
                 if (custId > 0)
                 {
-                    var profilePicture = await dynamicRepository.GetAsync<ProfilePicture>(new GetProfilePictureCriteria(custId));
+                    var criteria = new GetProfilePictureCriteria(custId);
+                    var profilePicture = await GetProfilePicture(criteria);
                     if (profilePicture == null || string.IsNullOrEmpty(profilePicture.ImageBase64String))
                     {
                         var result = await InsertDefaultProfilePicture(custId);
                         if (result.IsSuccess)
                         {
-                            return await dynamicRepository.GetAsync<ProfilePicture>(new GetProfilePictureCriteria(custId));
+                            return await GetProfilePicture(criteria);
                         }
 
                         return new ProfilePicture();
@@ -54,6 +55,12 @@ namespace Fanex.Alpha.Before.Services
                 await logger.ErrorAsync(ex.Message, ex);
                 return new ProfilePicture();
             }
+        }
+
+        private async Task<ProfilePicture> GetProfilePicture(GetProfilePictureCriteria criteria)
+        {
+            var profilePicture = await dynamicRepository.GetAsync<ProfilePicture>(criteria);
+            return profilePicture ?? new ProfilePicture();
         }
 
         private async Task<Result> InsertDefaultProfilePicture(int custId)
@@ -77,7 +84,7 @@ namespace Fanex.Alpha.Before.Services
             try
             {
                 var profilePicture = await dynamicRepository.GetAsync<ProfilePicture>(new GetRandomProfilePictureCriteria());
-                return profilePicture;
+                return profilePicture ?? new ProfilePicture();
             }
             catch (Exception ex)
             {

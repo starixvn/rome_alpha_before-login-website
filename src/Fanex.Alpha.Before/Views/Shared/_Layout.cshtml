@@ -35,14 +35,13 @@
                 @Html.AntiForgeryToken()
             </form>
         </div>
+        @if (data.IsChangedPassword)
+        {
+            <div class="block-info">
+                @data.ChangedPasswordTime
+            </div>
+        }
     </div>
-
-    @if (data.IsChangedPassword)
-    {
-        <div class="block-info">
-            @data.ChangedPasswordTime
-        </div>
-    }
 
     <script src="~/assets/bundles/login.min.js?v=20240401" type="text/javascript"></script>
 
