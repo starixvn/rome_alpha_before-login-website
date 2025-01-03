@@ -411,6 +411,7 @@ Sphinx.Login = {
           Sphinx.Login.isVerified = true;
         } else {
           domElements.errorMsg.html(data.Message).show();
+          Sphinx.Login.domElements.btnVerify.removeAttr("disabled");
         }
       },
     });
