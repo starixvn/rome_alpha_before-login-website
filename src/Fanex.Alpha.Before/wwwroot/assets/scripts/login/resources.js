@@ -69,16 +69,15 @@ Sphinx.Resources = (function () {
     resource.AutumnTitle = "textTitle-tw";
     resource.SignIn = "SignIn";
     resource.Back = "退回";
-    resource.errUserName = "請輸入賬號及密碼。";
-    resource.errPassWord = "Please input password";
+    resource.errUserName = "請輸入用戶名";
+    resource.errPassWord = "請輸入密碼";
     resource.errValidCode = "您必须输入正确验证码";
     resource.browserWarning =
       "您的瀏覽器已過期，可能無法與我們的網站正常操作。為了提供更好的支援，我們強烈建議您升級至新的版本";
     resource.updateYourBrowser = "請點擊這里以升級您的瀏覽器";
     resource.messageAlwayShowOnLoginPage =
       "目前網站面對技術有誤，我們正在處理當中。估計完成時間為{0}（GMT +8）。請您稍後再試，給您帶來的不便請見諒";
-    resource.warningMessage =
-      "Do not proceed if this is not your profile picture.";
+    resource.warningMessage = "如果這不是您的個人頭像，請勿繼續操作";
 
     return resource;
   };
@@ -98,16 +97,15 @@ Sphinx.Resources = (function () {
     resource.AutumnTitle = "textTitle-cn";
     resource.SignIn = "SignIn";
     resource.Back = "退回";
-    resource.errUserName = "请输入账号及密码";
-    resource.errPassWord = "Please input password";
+    resource.errUserName = "请输入用户名";
+    resource.errPassWord = "请输入密码";
     resource.errValidCode = "您必須輸入正確驗證碼";
     resource.browserWarning =
       "您的浏览器已过期，可能无法与我们的网站正常操作。为了提供更好的支援，我们强烈建议您升级至新的版本";
     resource.updateYourBrowser = "请点击这里以升级您的浏览器";
     resource.messageAlwayShowOnLoginPage =
       "目前网站面对技术有误，我们正在处理当中。估计完成时间为{0}（GMT +8）。请您稍后再试，给您带来的不便请见谅";
-    resource.warningMessage =
-      "Do not proceed if this is not your profile picture.";
+    resource.warningMessage = "如果这不是您的个人头像，请勿继续操作";
 
     return resource;
   };
@@ -128,7 +126,7 @@ Sphinx.Resources = (function () {
     resource.errPassWord = "Please input password";
     resource.AutumnTitle = "textTitle_en";
     resource.SignIn = "SignIn";
-    resource.errUserName = "ユーザー名とパスワードを入力してください";
+    resource.errUserName = "Please input username";
     resource.errValidCode = "You must input validation code.";
     resource.browserWarning =
       "Your browser is out of date and might not be working properly with our website. For a better support, we strongly recommend that you upgrade to a newer version";
@@ -156,8 +154,8 @@ Sphinx.Resources = (function () {
     resource.AutumnTitle = "textTitle_en";
     resource.SignIn = "SignIn";
     resource.Back = "กลับ";
-    resource.errUserName = "โปรดใส่ชื่อผู้ใช้และรหัสผ่าน";
-    resource.errPassWord = "Please input password";
+    resource.errUserName = "กรุณาป้อนชื่อผู้ใช้";
+    resource.errPassWord = "กรุณาป้อนรหัสผ่าน";
     resource.errValidCode = "คุณต้องใส่หมายเลขที่ใช้ในการตรวจสอบ";
     resource.browserWarning =
       "เบราว์เซอร์ของท่านตกรุ่น ซึ่งอาจทำงานได้อย่างไม่เหมาะสมกับเวปไซค์ของทางบริษัท. เพื่อตอบสนองการใช้งานที่ดียิ่งขึ้น ทางเราใคร่ขอแนะนำให้ท่าน ทำการอัพเกรดให้เป็นเวอร์ชั่นที่ใหม่กว่าเดิม";
@@ -165,8 +163,7 @@ Sphinx.Resources = (function () {
       "คลิ๊กตรงนี้เพื่อทำการอัพเกรด เบราว์เซอร์ของท่าน";
     resource.messageAlwayShowOnLoginPage =
       "เว็บไซต์ตรวจพบข้อผิดพลาดทางเทคนิค เรากำลังดำเนินการแก้ไข โดยจะสิ้นสุดเวลาประมาณ {0} (GMT +8). โปรดลองใหม่อีกครั้งภายหลัง ขออภัยในความไม่สะดวก";
-    resource.warningMessage =
-      "Do not proceed if this is not your profile picture.";
+    resource.warningMessage = "อย่าดำเนินการต่อหากนี่ไม่ใช่รูปโปรไฟล์ของคุณ";
 
     return resource;
   };
@@ -186,7 +183,7 @@ Sphinx.Resources = (function () {
     resource.AutumnTitle = "textTitle_en";
     resource.SignIn = "SignIn";
     resource.Back = "뒤";
-    resource.errUserName = "사용자명과 비밀번호를 입력해주세요";
+    resource.errUserName = "Please input username";
     resource.errPassWord = "Please input password";
     resource.errValidCode = "확인코드를 입력해주세요.";
     resource.browserWarning =
@@ -215,8 +212,8 @@ Sphinx.Resources = (function () {
     resource.AutumnTitle = "textTitle_en";
     resource.SignIn = "SignIn";
     resource.Back = "Trở lại";
-    resource.errUserName = "Vui lòng điền Tên đăng nhập";
-    resource.errPassWord = "Vui lòng điền Mật khẩu";
+    resource.errUserName = "Vui lòng nhập tên đăng nhập";
+    resource.errPassWord = "Vui lòng nhập mật khẩu";
     resource.errValidCode = "Bạn phải nhập mã xác thực.";
     resource.browserWarning =
       "Trình duyệt của bạn đã cũ và có thể không tương thích với trang web của chúng tôi. Để hỗ trợ tốt hơn, chúng tôi đề nghị bạn nâng cấp lên một phiên bản mới hơn";
@@ -224,7 +221,7 @@ Sphinx.Resources = (function () {
     resource.messageAlwayShowOnLoginPage =
       "Hệ thống đang gặp sự cố và chúng tôi đang cố gắng khắc phục trong thời gian sớm nhất có thể. Dự kiến sẽ hoàn tất lúc {0} (GMT +8). Xin vui lòng thử lại sau thời gian trên. Chúng tôi rất tiếc về sự bất tiện này.";
     resource.warningMessage =
-      "Do not proceed if this is not your profile picture.";
+      "Không tiếp tục nếu đây không phải hình đại diện của bạn.";
     return resource;
   };
   addLanguage(vietnamese());

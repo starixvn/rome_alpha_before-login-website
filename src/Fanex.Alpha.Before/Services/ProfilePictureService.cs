@@ -1,4 +1,3 @@
-using Alpha.Captcha.Core.Models;
 using Fanex.Alpha.Before.Criteria;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
@@ -34,13 +33,7 @@ namespace Fanex.Alpha.Before.Services
                     var profilePicture = await GetProfilePicture(criteria);
                     if (profilePicture == null || string.IsNullOrEmpty(profilePicture.ImageBase64String))
                     {
-                        var result = await InsertDefaultProfilePicture(custId);
-                        if (result.IsSuccess)
-                        {
-                            return await GetProfilePicture(criteria);
-                        }
-
-                        return new ProfilePicture();
+                        return await InsertDefaultProfilePicture(custId);
                     }
 
                     return profilePicture;
@@ -63,20 +56,11 @@ namespace Fanex.Alpha.Before.Services
             return profilePicture ?? new ProfilePicture();
         }
 
-        private async Task<Result> InsertDefaultProfilePicture(int custId)
+        private async Task<ProfilePicture> InsertDefaultProfilePicture(int custId)
         {
-            try
-            {
-                var command = new UpdateProfilePictureCommand(custId, ipHelper.ClientIP());
-                await dynamicRepository.ExecuteAsync(command);
-                return new Result(command.ErrCode, command.ErrMsg);
-
-            }
-            catch (Exception ex)
-            {
-                await logger.ErrorAsync(ex.Message, ex);
-                return new Result(100, "Auto insert Profile Picture Failed!");
-            }
+            var command = new UpdateProfilePictureCommand(custId, ipHelper.ClientIP());
+            await dynamicRepository.ExecuteAsync(command);
+            return command.ErrCode == 0 ? new ProfilePicture { Image = command.Image } : new ProfilePicture();
         }
 
         public async Task<ProfilePicture> GetRandomProfilePicture()

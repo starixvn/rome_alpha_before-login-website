@@ -22,6 +22,8 @@ namespace Fanex.Alpha.Before.Criteria
 
         public string IP { get; }
 
+        public byte[] Image { get; set; }
+
         public int ErrCode { get; set; }
 
         public string ErrMsg { get; set; }
