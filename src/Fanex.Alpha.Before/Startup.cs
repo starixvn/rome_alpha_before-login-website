@@ -88,6 +88,7 @@ namespace Fanex.Alpha.Before
                 httpClient.BaseAddress = new Uri(Configuration.GetValue<string>("PasswordService:Uri"));
                 httpClient.Timeout = TimeSpan.FromMinutes(5);
             });
+            services.AddSingleton<IProfilePictureService, ProfilePictureService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

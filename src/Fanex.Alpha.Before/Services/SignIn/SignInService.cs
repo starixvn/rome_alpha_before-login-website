@@ -21,6 +21,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
 {
     public interface ISignInService
     {
+        Task<int> CheckUsername(string username, HttpContext httpContext);
+
         SignInResult SignIn(HttpContext httpContext);
 
         Task<SignInResult> SignIn(SignInModel model, HttpContext httpContext);
@@ -95,6 +97,15 @@ namespace Fanex.Alpha.Before.Services.SignIn
             {
                 _loginTheme = loginThemeOpt.EventTheme;
             }
+        }
+
+        public async Task<int> CheckUsername(string username, HttpContext httpContext)
+        {
+            var requestInfo = DeviceHelper.GetRequestInfo(httpContext.Request, string.Empty, ipHelper.ClientIP());
+            var command = new CheckUsernameCommand(username, requestInfo.LoginIP, requestInfo.LoginDomain);
+            await repository.ExecuteAsync(command);
+
+            return command.CustId;
         }
 
         public SignInResult SignIn(HttpContext httpContext)
@@ -246,7 +257,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             if (loginUserFailedCount >= commonOptions.LoginFailTimeToStartUsingCaptcha)
             {
                 signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
-                Task.Run(async () => await notificationService.NotifyWrongPassword(verifySignInResult.CustId, verifySignInResult.SubAccId, signInResult.Ip));
+                _ = Task.Run(async () => await notificationService.NotifyWrongPassword(verifySignInResult.CustId, verifySignInResult.SubAccId, signInResult.Ip));
             }
 
             signInResult.ErrMsg = verifySignInResult.ErrorMessage;
