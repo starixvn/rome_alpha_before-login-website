@@ -18,6 +18,7 @@ public static class WebOptimizerExtensions
 
         services.AddJsEngineSwitcher(options => options.DefaultEngineName = V8JsEngine.EngineName).AddV8();
 
+
         services.AddWebOptimizer(pipeline =>
         {
             pipeline.CompileScssFiles();

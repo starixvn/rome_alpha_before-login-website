@@ -248,10 +248,10 @@ Sphinx.Login = {
     var valPlaceholder = $input.attr("placeholder");
     var inputPassword = $(
       '<input type="password" id="txtPassWord" name="txtPassWord" tabindex="2" placeholder="' +
-      valPlaceholder +
-      '"  class="txt"  value="' +
-      $("<div>").text($input.val()).html() +
-      '" autocomplete="off"  />'
+        valPlaceholder +
+        '"  class="txt"  value="' +
+        $("<div>").text($input.val()).html() +
+        '" autocomplete="off"  />'
     );
     $input.replaceWith(inputPassword);
     Sphinx.Login.domElements.txtPassword = inputPassword;
@@ -270,10 +270,10 @@ Sphinx.Login = {
     var valPlaceholder = $input.attr("placeholder");
     var inputPassword = $(
       '<input type="text" id="txtPassWord" name="txtPassWord" tabindex="2" placeholder="' +
-      valPlaceholder +
-      '" class="txt" value="' +
-      $("<div>").text($input.val()).html() +
-      '" autocomplete="off"  />'
+        valPlaceholder +
+        '" class="txt" value="' +
+        $("<div>").text($input.val()).html() +
+        '" autocomplete="off"  />'
     );
 
     $input.replaceWith(inputPassword);
@@ -517,7 +517,6 @@ Sphinx.Login = {
     window.location.reload();
   },
 };
-
 $(document).ready(function () {
   Sphinx.AssetAppPaths.init();
   Sphinx.DCSStaticAppPaths.init();
