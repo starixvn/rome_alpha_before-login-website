@@ -136,7 +136,8 @@ Sphinx.Resources = (function () {
     resource.updateYourBrowser = "Click here to update your browser";
     resource.messageAlwayShowOnLoginPage =
       "The site encountered a technical error, we are working to resolve it. The estimated completion time is {0} (GMT +8). Please try again after that time. We are sorry for the inconvenience.";
-    resource.errUsernameFormat = "ユーザー名はアルファベットまたは数字のみ使用可能です。";
+    resource.errUsernameFormat =
+      "ユーザー名はアルファベットまたは数字のみ使用可能です。";
     resource.warningMessage =
       "Do not proceed if this is not your profile picture.";
 
@@ -226,7 +227,8 @@ Sphinx.Resources = (function () {
     resource.updateYourBrowser = "Nhấn vào đây để cập nhật trình duyệt của bạn";
     resource.messageAlwayShowOnLoginPage =
       "Hệ thống đang gặp sự cố và chúng tôi đang cố gắng khắc phục trong thời gian sớm nhất có thể. Dự kiến sẽ hoàn tất lúc {0} (GMT +8). Xin vui lòng thử lại sau thời gian trên. Chúng tôi rất tiếc về sự bất tiện này.";
-    resource.errUsernameFormat = "Username must be alphabet or numeric only.";
+    resource.errUsernameFormat =
+      "Tên Đăng Nhập chỉ chứa ký tự chữ cái và số đếm.";
     resource.warningMessage =
       "Không tiếp tục nếu đây không phải hình đại diện của bạn.";
     return resource;
@@ -234,7 +236,7 @@ Sphinx.Resources = (function () {
   addLanguage(vietnamese());
 
   return {
-    init: function () { },
+    init: function () {},
 
     languages: function () {
       return listLanguage;
