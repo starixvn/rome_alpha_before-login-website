@@ -8,12 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Fanex.Alpha.Before.Resources
-{
-
+namespace Fanex.Alpha.Before.Resources {
     using System;
-
-
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -24,190 +22,167 @@ namespace Fanex.Alpha.Before.Resources
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Labels
-    {
-
+    public class Labels {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Labels()
-        {
+        internal Labels() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if (object.ReferenceEquals(resourceMan, null))
-                {
+        public static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.Alpha.Before.Resources.Labels", typeof(Labels).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        public static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to To ensure account security, safety verification is required for this login..
         /// </summary>
-        public static string BotDetectionMessage
-        {
-            get
-            {
+        public static string BotDetectionMessage {
+            get {
                 return ResourceManager.GetString("BotDetectionMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to You input an invalid code..
         /// </summary>
-        public static string errInvalidCaptcha
-        {
-            get
-            {
+        public static string errInvalidCaptcha {
+            get {
                 return ResourceManager.GetString("errInvalidCaptcha", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Sorry, there was an unexpected issue on the server. Please seek help from our customer support. [{0}].
         /// </summary>
-        public static string Error_Server
-        {
-            get
-            {
+        public static string Error_Server {
+            get {
                 return ResourceManager.GetString("Error_Server", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Go back to &lt;a href=&quot;{0}&quot;&gt;login page&lt;/a&gt;.
         /// </summary>
-        public static string GoBackToLoginPage
-        {
-            get
-            {
+        public static string GoBackToLoginPage {
+            get {
                 return ResourceManager.GetString("GoBackToLoginPage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Waited too long for Captcha&apos;s input.
         /// </summary>
-        public static string inputCaptchaTooLong
-        {
-            get
-            {
+        public static string inputCaptchaTooLong {
+            get {
                 return ResourceManager.GetString("inputCaptchaTooLong", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Wrong username or password.
         /// </summary>
-        public static string invalidLogin
-        {
-            get
-            {
+        public static string invalidLogin {
+            get {
                 return ResourceManager.GetString("invalidLogin", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Invalid Session!.
         /// </summary>
-        public static string invalidsession
-        {
-            get
-            {
+        public static string invalidsession {
+            get {
                 return ResourceManager.GetString("invalidsession", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to Your IP ({0}) exceeded maximum number ({1} times) of attempts to authenticate with your credentials. 
-        ///For security reasons, login function has been locked for {2} minutes..
+        ///   Looks up a localized string similar to Your IP ({0}) exceeded maximum number ({1} times) of attempts to authenticate with your credentials. For security reasons, login function has been locked for {2} minutes..
         /// </summary>
-        public static string iploginfailedmultipletimeserror
-        {
-            get
-            {
+        public static string iploginfailedmultipletimeserror {
+            get {
                 return ResourceManager.GetString("iploginfailedmultipletimeserror", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Login Successfully.
         /// </summary>
-        public static string lblLoginSuccessful
-        {
-            get
-            {
+        public static string lblLoginSuccessful {
+            get {
                 return ResourceManager.GetString("lblLoginSuccessful", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Your password was last changed on {0}. Please contact to CSD at once if you still cannot login..
         /// </summary>
-        public static string lblPasswordChanged
-        {
-            get
-            {
+        public static string lblPasswordChanged {
+            get {
                 return ResourceManager.GetString("lblPasswordChanged", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Login Too Often! UserName: {0}.
         /// </summary>
-        public static string LoginTooOftenBlockedMessage
-        {
-            get
-            {
+        public static string LoginTooOftenBlockedMessage {
+            get {
                 return ResourceManager.GetString("LoginTooOftenBlockedMessage", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Too many attempts of invalid Captcha.
         /// </summary>
-        public static string tooManyFailedCaptcha
-        {
-            get
-            {
+        public static string tooManyFailedCaptcha {
+            get {
                 return ResourceManager.GetString("tooManyFailedCaptcha", resourceCulture);
             }
         }
-
-        public static string UM_Message
-        {
-            get
-            {
+        
+        /// <summary>
+        ///   Looks up a localized string similar to We are having regular server maintenance. The website is currently unavailable from {0} until {1} (GMT +8). Please come back later..
+        /// </summary>
+        public static string UM_Message {
+            get {
                 return ResourceManager.GetString("UM_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username must be alphabet or numeric only..
+        /// </summary>
+        public static string usernameAlphanumericOnly {
+            get {
+                return ResourceManager.GetString("usernameAlphanumericOnly", resourceCulture);
             }
         }
     }

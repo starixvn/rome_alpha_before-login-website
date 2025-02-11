@@ -9,5 +9,6 @@
         public const int LoginTooOften = -3;
         public const int Success = -1;
         public const int ManualUM = 999999;
+        public const int UsernameAlphanumericOnly = 103;
     }
 }
