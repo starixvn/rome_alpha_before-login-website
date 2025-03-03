@@ -107,9 +107,15 @@ public class AuthController : Controller
         return View(loginResult);
     }
 
-    [HttpPost]
+    [HttpPost, ValidateAntiForgeryToken]
     public async Task<IActionResult> Verify(string username)
     {
+        var host = Request.Host.Value.TrimEnd('.');
+        if (!AppSetting.DomainMappings.ContainsKey(host))
+        {
+            return BadRequest();
+        }
+
         if (await cacheService.IsLoginIPBlocked())
         {
             var ipLockedError = string.Format(
