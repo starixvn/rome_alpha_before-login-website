@@ -127,7 +127,6 @@ Sphinx.Login = {
     var domElements = Sphinx.Login.domElements;
 
     $(document).keypress(function (evt) {
-      console.log(Sphinx.Login.isVerified);
       if (
         (!Sphinx.Login.browser.msie && evt.keyCode === 13) ||
         (Sphinx.Login.browser.msie && window.event.keyCode === 13)
@@ -427,6 +426,12 @@ Sphinx.Login = {
     $.ajax({
       url: Sphinx.rootUrl + "Auth/Verify",
       method: "POST",
+      headers: {
+        RequestVerificationToken: $(
+          "input[name='__RequestVerificationToken']"
+        ).val(),
+        "X-Requested-With": "XMLHttpRequest",
+      },
       data: { username },
       success: function (data) {
         if (data.IsSuccess) {
