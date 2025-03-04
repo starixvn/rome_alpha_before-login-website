@@ -522,6 +522,7 @@ Sphinx.Login = {
     window.location.reload();
   },
 };
+
 $(document).ready(function () {
   Sphinx.AssetAppPaths.init();
   Sphinx.DCSStaticAppPaths.init();
