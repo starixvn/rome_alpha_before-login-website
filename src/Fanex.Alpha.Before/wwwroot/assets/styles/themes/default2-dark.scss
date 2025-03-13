@@ -459,7 +459,18 @@ div {
     top: 2px;
   }
 }
+.warning {
+    background: #191b2f url(../images/warning-dark.svg) no-repeat left 10px center;
+    padding: 10px 10px 10px 40px;
+    border-left: 3px solid #D99F3B;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
 
+    font {
+        color: #E54748 !important;
+    }
+}
 @media only screen and (max-device-width: 767px) {
   body {
     font-size: $font-size + 3;
