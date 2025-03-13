@@ -130,7 +130,7 @@
     <comment />
   </data>
   <data name="lblPasswordChanged" xml:space="preserve">
-    <value>您上次更改密碼於{0}。若您仍無法登入, 請聯繫客服部。</value>
+    <value>您上次更改密碼於&lt;font style='color: #ff0000'&gt;{0}&lt;/font&gt;。若您仍無法登入, 請聯繫客服部。</value>
     <comment />
   </data>
   <data name="LoginTooOftenBlockedMessage" xml:space="preserve">

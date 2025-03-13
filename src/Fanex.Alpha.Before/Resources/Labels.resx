@@ -134,7 +134,7 @@
     <comment />
   </data>
   <data name="lblPasswordChanged" xml:space="preserve">
-    <value>Your password was last changed on {0}. Please contact to CSD at once if you still cannot login.</value>
+    <value>Your password was last changed on &lt;font style='color: #ff0000'&gt;{0}&lt;/font&gt;. Please contact to CSD at once if you still cannot login.</value>
     <comment />
   </data>
   <data name="LoginTooOftenBlockedMessage" xml:space="preserve">
