@@ -134,7 +134,7 @@
     <comment />
   </data>
   <data name="lblPasswordChanged" xml:space="preserve">
-    <value>รหัสที่เปลี่ยนครั้งที่แล้วคือ {0} หากยังไม่สามารถเข้าใช้งานได้ กรุณาฝ่ายลูกค้าสัมพันธ์</value>
+    <value>รหัสที่เปลี่ยนครั้งที่แล้วคือ &lt;font style='color: #ff0000'&gt;{0}&lt;/font&gt; หากยังไม่สามารถเข้าใช้งานได้ กรุณาฝ่ายลูกค้าสัมพันธ์</value>
     <comment />
   </data>
   <data name="LoginTooOftenBlockedMessage" xml:space="preserve">

@@ -133,7 +133,7 @@
     <comment/>
   </data>
   <data name="lblPasswordChanged" xml:space="preserve">
-    <value>Mật khẩu đã được thay đổi  vào ngày {0}. Vui lòng liên hệ  với bộ phận CSD ngay lập tức nếu bạn vẫn không thể đăng nhập.</value>
+    <value>Mật khẩu đã được thay đổi  vào ngày &lt;font style='color: #ff0000'&gt;{0}&lt;/font&gt;. Vui lòng liên hệ  với bộ phận CSD ngay lập tức nếu bạn vẫn không thể đăng nhập.</value>
     <comment/>
   </data>
   <data name="LoginTooOftenBlockedMessage" xml:space="preserve">

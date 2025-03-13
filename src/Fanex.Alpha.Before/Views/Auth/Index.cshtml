@@ -51,6 +51,12 @@
 {
     <div class="rowlg msg-error" errCode="@Model.ErrCode" id="errmsg">@Model.ErrMsg</div>
 }
+@if (Model.IsChangedPassword)
+{
+    <div class="block-info">
+        @Html.Raw(Model.ChangedPasswordTime)
+    </div>
+}
 
 <div id="verifyRegion" style="@(Model.IsVerified ? "display: none;" : string.Empty)">
     <div class="rowlg">
