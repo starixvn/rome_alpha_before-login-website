@@ -185,5 +185,13 @@ namespace Fanex.Alpha.Before.Resources {
                 return ResourceManager.GetString("usernameAlphanumericOnly", resourceCulture);
             }
         }
+
+        public static string LoginFailedCountMessage
+        {
+            get
+            {
+                return ResourceManager.GetString("LoginFailedCountMessage", resourceCulture);
+            }
+        }
     }
 }

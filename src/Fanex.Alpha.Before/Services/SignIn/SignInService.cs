@@ -267,8 +267,13 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 signInResult.ErrCode = SignInErrorContants.CaptchaRequired;
                 _ = Task.Run(async () => await notificationService.NotifyWrongPassword(verifySignInResult.CustId, verifySignInResult.SubAccId, signInResult.Ip));
             }
-
+            else
+            {
+                signInResult.ErrCode = verifySignInResult.ErrorCode;
+            }
+            
             signInResult.ErrMsg = verifySignInResult.ErrorMessage;
+            signInResult.FailedCount = verifySignInResult.FailedCount;
         }
 
         private void UpdateResultAfterLoginSuccessfully(
@@ -494,7 +499,8 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 RoleId = criteria.RoleId,
                 SubUserName = criteria.SubUsername,
                 ServerId = criteria.ServerId,
-                IsKickoutDueToProtectedMode = criteria.IsKickOut
+                IsKickoutDueToProtectedMode = criteria.IsKickOut,
+                FailedCount = criteria.FailedCount
             };
         }
 

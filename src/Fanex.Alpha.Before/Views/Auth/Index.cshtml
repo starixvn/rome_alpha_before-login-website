@@ -57,7 +57,12 @@
         @Html.Raw(Model.ChangedPasswordTime)
     </div>
 }
-
+@if (Model.FailedCount > 2 && Model.FailedCount < 6)
+{
+    <div class="warning">
+        @Html.Raw(Model.FailedCountMessage)
+    </div>
+}
 <div id="verifyRegion" style="@(Model.IsVerified ? "display: none;" : string.Empty)">
     <div class="rowlg">
         <label class="label" id="labelUsername" style="display: none;">Username</label>

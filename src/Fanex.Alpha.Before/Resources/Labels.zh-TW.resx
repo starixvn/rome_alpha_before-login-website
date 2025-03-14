@@ -172,4 +172,7 @@
   <data name="usernameAlphanumericOnly" xml:space="preserve">
     <value>用戶名只能包含字母或數字。</value>
   </data>
+  <data name="LoginFailedCountMessage" xml:space="preserve">
+    <value>{0} 次失敗嘗試。累計 6 次失敗後，您的訪問將被鎖定。如需幫助，請聯繫客戶服務部門。</value>
+  </data>
 </root>
