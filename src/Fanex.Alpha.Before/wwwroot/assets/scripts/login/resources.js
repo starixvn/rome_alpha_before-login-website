@@ -51,7 +51,7 @@ Sphinx.Resources = (function () {
       "The site encountered a technical error, we are working to resolve it. The estimated completion time is {0} (GMT +8). Please try again after that time. We are sorry for the inconvenience.";
     resource.errUsernameFormat = "Username must be alphabet or numeric only.";
     resource.warningMessage =
-      "Do not proceed if this is not your profile picture.";
+      "Do not proceed if this is not <strong>your profile picture</strong> or <strong>the domain</strong> doesn't match the login link.";
     return resource;
   };
   addLanguage(english());
@@ -79,7 +79,7 @@ Sphinx.Resources = (function () {
     resource.messageAlwayShowOnLoginPage =
       "目前網站面對技術有誤，我們正在處理當中。估計完成時間為{0}（GMT +8）。請您稍後再試，給您帶來的不便請見諒";
     resource.errUsernameFormat = "用戶名只能包含字母或數字。";
-    resource.warningMessage = "如果這不是您的個人頭像，請勿繼續操作";
+    resource.warningMessage = "如果這不是 <strong>您的個人頭像</strong>，或<strong>該網域</strong>與登入連結不符，請勿繼續操作。";
 
     return resource;
   };
@@ -108,7 +108,7 @@ Sphinx.Resources = (function () {
     resource.messageAlwayShowOnLoginPage =
       "目前网站面对技术有误，我们正在处理当中。估计完成时间为{0}（GMT +8）。请您稍后再试，给您带来的不便请见谅";
     resource.errUsernameFormat = "用户名只能包含字母或数字。";
-    resource.warningMessage = "如果这不是您的个人头像，请勿继续操作";
+    resource.warningMessage = "如果这不是 <strong>您的个人头像</strong>，或<strong>该域名</strong>与登录链接不符，请勿继续操作。";
 
     return resource;
   };
@@ -139,7 +139,7 @@ Sphinx.Resources = (function () {
     resource.errUsernameFormat =
       "ユーザー名はアルファベットまたは数字のみ使用可能です。";
     resource.warningMessage =
-      "Do not proceed if this is not your profile picture.";
+      "Do not proceed if this is not <strong>your profile picture</strong> or <strong>the domain</strong> doesn't match the login link.";
 
     return resource;
   };
@@ -169,7 +169,7 @@ Sphinx.Resources = (function () {
       "คลิ๊กตรงนี้เพื่อทำการอัพเกรด เบราว์เซอร์ของท่าน";
     resource.messageAlwayShowOnLoginPage =
       "เว็บไซต์ตรวจพบข้อผิดพลาดทางเทคนิค เรากำลังดำเนินการแก้ไข โดยจะสิ้นสุดเวลาประมาณ {0} (GMT +8). โปรดลองใหม่อีกครั้งภายหลัง ขออภัยในความไม่สะดวก";
-    resource.warningMessage = "อย่าดำเนินการต่อหากนี่ไม่ใช่รูปโปรไฟล์ของคุณ";
+    resource.warningMessage = "อย่าดำเนินการต่อหากนี่ไม่ใช่ <strong>รูปโปรไฟล์ของคุณ</strong> หรือ <strong>โดเมน</strong> ไม่ตรงกับลิงก์เข้าสู่ระบบ";
 
     return resource;
   };
@@ -199,7 +199,7 @@ Sphinx.Resources = (function () {
       "The site encountered a technical error, we are working to resolve it. The estimated completion time is {0} (GMT +8). Please try again after that time. We are sorry for the inconvenience.";
     resource.errUsernameFormat = "Username must be alphabet or numeric only.";
     resource.warningMessage =
-      "Do not proceed if this is not your profile picture.";
+      "Do not proceed if this is not <strong>your profile picture</strong> or <strong>the domain</strong> doesn't match the login link.";
 
     return resource;
   };
@@ -230,7 +230,7 @@ Sphinx.Resources = (function () {
     resource.errUsernameFormat =
       "Tên Đăng Nhập chỉ chứa ký tự chữ cái và số đếm.";
     resource.warningMessage =
-      "Không tiếp tục nếu đây không phải hình đại diện của bạn.";
+      "Không tiếp tục nếu đây không phải là <strong>ảnh đại diện của bạn</strong> hoặc <strong>tên miền</strong> không khớp với link đăng nhập.";
     return resource;
   };
   addLanguage(vietnamese());

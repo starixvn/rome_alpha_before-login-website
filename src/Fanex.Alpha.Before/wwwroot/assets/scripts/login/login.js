@@ -222,7 +222,7 @@ Sphinx.Login = {
 
     domElements.labelUsername.text(resource.Username);
     domElements.labelPassword.text(resource.Password);
-    domElements.warningMessage.text(resource.warningMessage);
+    domElements.warningMessage.html(resource.warningMessage);
 
     Sphinx.Core.setUserData("LANGUAGE", languageCode);
     Sphinx.Login.currentLanguageCode = languageCode;

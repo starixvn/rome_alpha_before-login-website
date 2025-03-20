@@ -102,7 +102,9 @@ public class AuthController : Controller
         loginResult.IsVerified = true;
         var custId = await signInService.CheckUsername(loginResult.Username, HttpContext);
         var profilePicture = await profilePictureService.GetProfilePicture(custId);
-        loginResult.Avatar = profilePicture.ImageBase64String;
+
+        var host = Request.Host.Value.Contains(".") ? $"{Request.Host.Value.Split('.')[1]}.{Request.Host.Value.Split('.')[2]}" : Request.Host.Value;
+        loginResult.Avatar = profilePictureService.MakeWaterMarkImage(profilePicture.Image, host);
 
         return View(loginResult);
     }
@@ -147,8 +149,11 @@ public class AuthController : Controller
                 return Json(VerifyResult.CreateErrorResult(ipLockedError, SignInErrorContants.IPBlocked));
             }
         }
+        
         var profilePicture = await profilePictureService.GetProfilePicture(custId);
-        return Ok(VerifyResult.CreateSuccessResult(profilePicture.ImageBase64String));
+        host = host.Contains(".") ? $"{host.Split('.')[1]}.{host.Split('.')[2]}" : host;
+        
+        return Ok(VerifyResult.CreateSuccessResult(profilePictureService.MakeWaterMarkImage(profilePicture.Image, host)));
     }
 
     public async Task<IActionResult> AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)

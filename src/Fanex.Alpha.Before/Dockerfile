@@ -50,12 +50,16 @@ RUN --mount=type=cache,target=/root/.nuget/packages \
 
 FROM hub.nexdev.net/base/dotnet/core/aspnet:7.0-slim AS base
 
+COPY src/Fanex.Alpha.Before/arialbd.ttf Fanex.Alpha.Before/
+RUN mkdir -p /usr/share/fonts/truetype/
+RUN install -m644 Fanex.Alpha.Before/arialbd.ttf /usr/share/fonts/truetype/
+RUN rm Fanex.Alpha.Before/arialbd.ttf
+
 # Don’t run as root
 RUN adduser --disabled-password \
   --home /app \
   --gecos '' dotnetuser && chown -R dotnetuser /app && chown -R dotnetuser /tmp
 USER dotnetuser
-#
 
 # final stage/image
 ENV COMPlus_EnableDiagnostics=0

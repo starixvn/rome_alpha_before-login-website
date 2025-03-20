@@ -2,12 +2,19 @@ using Fanex.Alpha.Before.Criteria;
 using Fanex.Alpha.Before.Helpers;
 using Fanex.Alpha.Before.Models;
 using Fanex.Data.Repository;
+using SixLabors.Fonts;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace Fanex.Alpha.Before.Services
 {
     public interface IProfilePictureService
     {
         Task<ProfilePicture> GetProfilePicture(int custId);
+
+        public string MakeWaterMarkImage(byte[] imageBytes, string waterMarkText);
     }
 
     public class ProfilePictureService : IProfilePictureService
@@ -15,6 +22,15 @@ namespace Fanex.Alpha.Before.Services
         private readonly IPHelper ipHelper;
         private readonly Logging.ILogger logger;
         private readonly IDynamicRepository dynamicRepository;
+        private readonly Random random = new Random();
+        private readonly IEnumerable<Color> randomColors = new List<Color>
+        {
+            Color.Red,
+            Color.Blue,
+            Color.Purple,
+            Color.Brown,
+            Color.Black
+        };
 
         public ProfilePictureService(IDynamicRepository dynamicRepository, Logging.ILogger logger, IPHelper ipHelper)
         {
@@ -75,6 +91,41 @@ namespace Fanex.Alpha.Before.Services
                 await logger.ErrorAsync(ex.Message, ex);
                 return new ProfilePicture();
             }
+        }
+
+        public string MakeWaterMarkImage(byte[] imageBytes, string waterMarkText)
+        {
+            using var image = Image.Load<Rgba32>(imageBytes);
+            var font = SystemFonts.CreateFont("Arial", 24, FontStyle.Bold);
+
+            image.Mutate(x => ApplyScalingWaterMark(x, waterMarkText, font));
+
+            using var ms = new MemoryStream();
+            image.SaveAsJpeg(ms);
+
+            return $"data:image/jpeg;base64,{Convert.ToBase64String(ms.ToArray())}";
+        }
+
+        private IImageProcessingContext ApplyScalingWaterMark(IImageProcessingContext processingContext,
+            string text,
+            Font font)
+        {
+
+            var x = 50;
+            var y = 50;
+            var textPosition = new PointF(x + random.Next(-20, 50), y + random.Next(-20, 50));
+
+            var textSize = TextMeasurer.MeasureSize(text, new TextOptions(font));
+
+            var backgroundRectangle = new Rectangle(
+                (int)textPosition.X - 5,
+                (int)textPosition.Y,
+                (int)textSize.Width + 12,
+                (int)textSize.Height + 10);
+
+            processingContext.Fill(Color.LightBlue, backgroundRectangle);
+
+            return processingContext.DrawText(text, font, randomColors.ElementAt(random.Next(0, 4)), textPosition);
         }
     }
 }
