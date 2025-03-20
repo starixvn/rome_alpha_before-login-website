@@ -8,6 +8,10 @@
         <Setting Key="Age_LoginDownline_Admin" SpName="Age_LoginDownline_Admin" DbName="DBCust.CustDB.wsv_alp" Plain="0" />
         <Setting Key="Age_LoginDownline_CheckSubUsername" SpName="Age_LoginDownline_CheckSubUsername" DbName="DBCust.CustDB.wsv_alp" Plain="0" />
         <Setting Key="Age_LoginCheckUsername" SpName="Age_LoginCheckUsername" DbName="DBCust.CustDB.wsv_alp" Plain="0" />
+        
+        <Setting Key="Age_Msg_SetMessage" SpName="Age_Msg_SetMessage" DbName="DBMSG.bodb_Message.wsv_alp" />
+        <Setting Key="Age_Msg_SetUsrMessage" SpName="Age_Msg_SetUsrMessage" DbName="DBMSG.bodb_Message.wsv_alp" />
+        <Setting Key="Age_ToastMessage_Ins" SpName="Age_ToastMessage_Ins" DbName="DBMSG.bodb_Message.wsv_alp" />
     </Function>
     <Function Name="IP">
         <Setting Key="Age_IPRangesByCountrySel" SpName="Age_IPRangesByCountrySel" DbName="DBCUST.IPDB.wsv_alp" Plain="0">

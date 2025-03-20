@@ -175,4 +175,13 @@
   <data name="LoginFailedCountMessage" xml:space="preserve">
     <value>{0} failed attempts. Your access will be locked after 6 failed attempts total. For assistance, please contact CSD.</value>
   </data>
+  <data name="PersonalMessage_DownlineLoginFailed_ChangedPassword" xml:space="preserve">
+    <value>Your downline, &lt;b&gt;{0}&lt;/b&gt; is unable to log in due to using an old password changed on &lt;b&gt;{1}&lt;/b&gt;. Please assist or reset their password if needed.</value>
+  </data>
+  <data name="PersonalMessage_DownlineLoginFailed_ExceedCount" xml:space="preserve">
+    <value>Your downline, &lt;b&gt;{0}&lt;/b&gt;, has reached &lt;b&gt;3 failed login attempts&lt;/b&gt;. This could be a login issue or a security concern. Please check and take action if needed.</value>
+  </data>
+  <data name="ToastTitle_DownlineLoginFailed" xml:space="preserve">
+    <value>Downline Login Issue</value>
+  </data>
 </root>

@@ -175,4 +175,13 @@
   <data name="LoginFailedCountMessage" xml:space="preserve">
     <value>{0} 次失败尝试。累计 6 次失败后，您的访问将被锁定。如需帮助，请联系客户服务部门。</value>
   </data>
+  <data name="ToastTitle_DownlineLoginFailed" xml:space="preserve">
+    <value>下级登录问题</value>
+  </data>
+  <data name="PersonalMessage_DownlineLoginFailed_ChangedPassword" xml:space="preserve">
+    <value>您的下线 &lt;b&gt;{0}&lt;/b&gt; 因使用已于 &lt;b&gt;{1}&lt;/b&gt; 更改的旧密码而无法登录。请协助处理或重置该用户的密码如有需要。</value>
+  </data>
+  <data name="PersonalMessage_DownlineLoginFailed_ExceedCount" xml:space="preserve">
+    <value>您的下级 &lt;b&gt;{0}&lt;/b&gt; 已达到 &lt;b&gt;3 次登录失败&lt;/b&gt;。这可能是登录问题或安全问题。请检查并在需要时采取行动。</value>
+  </data>
 </root>

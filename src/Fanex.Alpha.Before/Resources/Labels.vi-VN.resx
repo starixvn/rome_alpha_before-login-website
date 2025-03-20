@@ -59,49 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root"
-    xmlns=""
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -122,57 +119,66 @@
   </resheader>
   <data name="errInvalidCaptcha" xml:space="preserve">
     <value>Đoạn mã  bạn nhập không có thực</value>
-    <comment/>
+    <comment />
   </data>
   <data name="invalidLogin" xml:space="preserve">
     <value>Sai Tên đăng nhập / Mật Khẩu</value>
-    <comment/>
+    <comment />
   </data>
   <data name="lblLoginSuccessful" xml:space="preserve">
     <value>Login Successfully</value>
-    <comment/>
+    <comment />
   </data>
   <data name="lblPasswordChanged" xml:space="preserve">
     <value>Mật khẩu đã được thay đổi  vào ngày &lt;font style='color: #ff0000'&gt;{0}&lt;/font&gt;. Vui lòng liên hệ với Bộ phận Chăm Sóc Khách Hàng ngay lập tức nếu bạn vẫn không thể đăng nhập.</value>
-    <comment/>
+    <comment />
   </data>
   <data name="LoginTooOftenBlockedMessage" xml:space="preserve">
     <value>Đăng nhập quá thường xuyên! UserName: {0}</value>
-    <comment/>
+    <comment />
   </data>
   <data name="iploginfailedmultipletimeserror" xml:space="preserve">
     <value>IP của bạn ({0}) đã vượt quá số lần quy định ({1} lần) trong việc xác thực thông tin đăng nhập.Vì lý do bảo mật, chức năng đăng nhập sẽ tạm khoá trong {2} phút.</value>
-    <comment/>
+    <comment />
   </data>
   <data name="invalidsession" xml:space="preserve">
     <value>Session không hợp lệ</value>
-    <comment/>
+    <comment />
   </data>
   <data name="inputCaptchaTooLong" xml:space="preserve">
     <value>Captcha hết hạn do đợi quá lâu mà không nhập</value>
-    <comment/>
+    <comment />
   </data>
   <data name="tooManyFailedCaptcha" xml:space="preserve">
     <value>Bạn đã nhập sai Captcha quá số lần quy định</value>
-    <comment/>
+    <comment />
   </data>
   <data name="BotDetectionMessage" xml:space="preserve">
     <value>Để đảm bảo an toàn cho tài khoản, bạn cần phải xác thực cho lần đăng nhập này.</value>
-    <comment/>
+    <comment />
   </data>
   <data name="GoBackToLoginPage" xml:space="preserve">
     <value>Quay lại trang &lt;a href="{0}"&gt;đăng nhập&lt;/a&gt;</value>
-    <comment/>
+    <comment />
   </data>
   <data name="Error_Server" xml:space="preserve">
     <value>Rất tiếc, đã xảy ra lỗi không mong muốn với máy chủ. Vui lòng liên hệ với bộ phận chăm sóc khách hàng của chúng tôi để được hỗ trợ. [{0}]</value>
-    <comment/>
+    <comment />
   </data>
   <data name="UM_Message" xml:space="preserve">
     <value>Hệ thống của chúng tôi đang trong thời gian bảo trì định kỳ. Trang mạng đang ngừng hoạt động từ {0} cho đến {1} (GMT +8). Vui lòng quay trở lại sau.</value>
-    <comment/>
+    <comment />
   </data>
   <data name="LoginFailedCountMessage" xml:space="preserve">
     <value>{0} lần thử không thành công. Truy cập sẽ bị khóa sau 6 lần thất bại. Để được hỗ trợ, vui lòng liên hệ Bộ phận Chăm Sóc Khách Hàng.</value>
+  </data>
+  <data name="ToastTitle_DownlineLoginFailed" xml:space="preserve">
+    <value>Sự cố đăng nhập của cấp dưới</value>
+  </data>
+  <data name="PersonalMessage_DownlineLoginFailed_ChangedPassword" xml:space="preserve">
+    <value>Cấp dưới &lt;b&gt;{0}&lt;/b&gt; không thể đăng nhập do sử dụng mật khẩu cũ đã được thay đổi vào &lt;b&gt;{1}&lt;/b&gt;. Vui lòng hỗ trợ hoặc đặt lại mật khẩu cho họ nếu cần.</value>
+  </data>
+  <data name="PersonalMessage_DownlineLoginFailed_ExceedCount" xml:space="preserve">
+    <value>Cấp dưới &lt;b&gt;{0}&lt;/b&gt; đã &lt;b&gt;nhập sai mật khẩu 3 lần&lt;/b&gt;. Đây có thể là sự cố đăng nhập hoặc vấn đề bảo mật. Vui lòng kiểm tra và xử lý nếu cần.</value>
   </data>
 </root>

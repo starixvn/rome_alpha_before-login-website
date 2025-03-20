@@ -69,4 +69,6 @@ public class VerifySignInResult
     public bool IsKickoutDueToProtectedMode { get; set; }
 
     public int FailedCount { get; set; }
+    public int UplineId { get; set; }
+    public string UplineName { get; set; }
 }

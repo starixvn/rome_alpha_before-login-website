@@ -175,4 +175,13 @@
   <data name="LoginFailedCountMessage" xml:space="preserve">
     <value>{0} ครั้งที่ล้มเหลว การเข้าถึงจะถูกล็อกหลังจากล้มเหลว 6 ครั้ง หากต้องการความช่วยเหลือ กรุณาติดต่อฝ่ายบริการลูกค้า</value>
   </data>
+  <data name="ToastTitle_DownlineLoginFailed" xml:space="preserve">
+    <value>ปัญหาการเข้าสู่ระบบของดาวน์ไลน์</value>
+  </data>
+  <data name="PersonalMessage_DownlineLoginFailed_ChangedPassword" xml:space="preserve">
+    <value>ดาวน์ไลน์ของคุณ &lt;b&gt;{0}&lt;/b&gt; ไม่สามารถเข้าสู่ระบบได้ เนื่องจากใช้รหัสผ่านเก่าที่มีการเปลี่ยนเมื่อวันที่ &lt;b&gt;{1}&lt;/b&gt; กรุณาช่วยเหลือหรือรีเซ็ตรหัสผ่านของเขาหากจำเป็น</value>
+  </data>
+  <data name="PersonalMessage_DownlineLoginFailed_ExceedCount" xml:space="preserve">
+    <value>ดาวน์ไลน์ของคุณ &lt;b&gt;{0}&lt;/b&gt; ได้พยายามเข้าสู่ระบบผิดพลาดครบ &lt;b&gt;3 ครั้งแล้ว&lt;/b&gt; อาจเป็นปัญหาการเข้าสู่ระบบหรือปัญหาด้านความปลอดภัย กรุณาตรวจสอบและดำเนินการหากจำเป็น</value>
+  </data>
 </root>

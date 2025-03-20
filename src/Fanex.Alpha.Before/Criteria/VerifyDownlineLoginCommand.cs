@@ -78,6 +78,8 @@ namespace Fanex.Alpha.Before.Criteria
         public string ErrMsg { get; set; }
 
         public int FailedCount { get; set; }
+        public int? UplineId { get; set; }
+        public string UplineName { get; set; }
 
         public override string GetSettingKey()
             => "Age_LoginVerifyDownline";

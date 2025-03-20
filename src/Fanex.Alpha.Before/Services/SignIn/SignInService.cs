@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Globalization;
+using System.Net;
 using Alpha.Captcha.Core;
 using Alpha.Captcha.Core.Services;
 using Fanex.Alpha.Before.Configurations;
@@ -271,7 +272,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
             {
                 signInResult.ErrCode = verifySignInResult.ErrorCode;
             }
-            
+
             signInResult.ErrMsg = verifySignInResult.ErrorMessage;
             signInResult.FailedCount = verifySignInResult.FailedCount;
         }
@@ -440,6 +441,7 @@ namespace Fanex.Alpha.Before.Services.SignIn
                     else
                     {
                         await UpdateResultAfterLoginFail(signInResult, verifySignInResult);
+                        await NotifyLoginFail(signInResult, verifySignInResult);
 
                         return ThrottleResult.Allowed;
                     }
@@ -500,13 +502,77 @@ namespace Fanex.Alpha.Before.Services.SignIn
                 SubUserName = criteria.SubUsername,
                 ServerId = criteria.ServerId,
                 IsKickoutDueToProtectedMode = criteria.IsKickOut,
-                FailedCount = criteria.FailedCount
+                FailedCount = criteria.FailedCount,
+                UplineId = criteria.UplineId ?? 0,
+                UplineName = criteria.UplineName
             };
         }
 
         private static bool IsAlphanumericOnly(string text)
         {
             return alphanumericRegex.IsMatch(text);
+        }
+
+        private async Task NotifyLoginFail(SignInResult signInResult, VerifySignInResult verifySignInResult)
+        {
+            try
+            {
+                if (verifySignInResult.UplineId <= 0 ||
+                    !(verifySignInResult.FailedCount == 3 || signInResult.IsChangedPassword))
+                {
+                    return;
+                }
+
+                var targetId = verifySignInResult.UplineId;
+                var targetName = verifySignInResult.UplineName;
+                string message;
+                InsertPersonalMessageCriteria personalMessageCriteria;
+                InsertToastMessageCriteria insertToastMessageCriteria;
+
+                if (verifySignInResult.FailedCount == 3)
+                {
+                    message = "PersonalMessage_DownlineLoginFailed_ExceedCount";
+                    var messageEn = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.English)), signInResult.Username);
+                    var messageCh = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.ChineseTraditional)), signInResult.Username);
+                    var messageCs = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.ChineseSimplified)), signInResult.Username);
+                    var messageTh = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.Thai)), signInResult.Username);
+                    var messageVi = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.Vietnamese)), signInResult.Username);
+                    var messageJp = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.Japanese)), signInResult.Username);
+                    var messageKo = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.Korean)), signInResult.Username);
+                    personalMessageCriteria = new InsertPersonalMessageCriteria(
+                        messageEn, messageCh, messageCs, messageTh, messageVi, messageJp, messageKo);
+
+                    insertToastMessageCriteria = new InsertToastMessageCriteria(
+                        targetId, verifySignInResult.CustId, messageEn, messageCh, messageCs, messageTh, messageVi, messageJp, messageKo);
+                }
+                else
+                {
+                    message = "PersonalMessage_DownlineLoginFailed_ChangedPassword";
+                    var messageEn = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.English)), signInResult.Username, verifySignInResult.LastTimeToChangePassword);
+                    var messageCh = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.ChineseTraditional)), signInResult.Username, verifySignInResult.LastTimeToChangePassword);
+                    var messageCs = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.ChineseSimplified)), signInResult.Username, verifySignInResult.LastTimeToChangePassword);
+                    var messageTh = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.Thai)), signInResult.Username, verifySignInResult.LastTimeToChangePassword);
+                    var messageVi = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.Vietnamese)), signInResult.Username, verifySignInResult.LastTimeToChangePassword);
+                    var messageJp = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.Japanese)), signInResult.Username, verifySignInResult.LastTimeToChangePassword);
+                    var messageKo = string.Format(Labels.ResourceManager.GetString(message, CultureInfo.CreateSpecificCulture(LanguageCodeConstants.Korean)), signInResult.Username, verifySignInResult.LastTimeToChangePassword);
+                    personalMessageCriteria = new InsertPersonalMessageCriteria(
+                        messageEn, messageCh, messageCs, messageTh, messageVi, messageJp, messageKo);
+
+                    insertToastMessageCriteria = new InsertToastMessageCriteria(
+                        targetId, verifySignInResult.CustId, messageEn, messageCh, messageCs, messageTh, messageVi, messageJp, messageKo);
+                }
+
+                var messageId = (await repository.FetchAsync<long>(personalMessageCriteria))
+                    .FirstOrDefault();
+
+                var assignPersonalMessageCriteria = new AssignPersonalMessageCriteria(messageId, targetId, targetName);
+                repository.Fetch<bool>(assignPersonalMessageCriteria);
+                await repository.FetchAsync<long>(insertToastMessageCriteria);
+            }
+            catch (Exception ex)
+            {
+                await logger.ErrorAsync(ex.Message, ex);
+            }
         }
     }
 }

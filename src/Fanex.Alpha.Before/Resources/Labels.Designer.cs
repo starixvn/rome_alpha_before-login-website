@@ -19,7 +19,7 @@ namespace Fanex.Alpha.Before.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Labels {
@@ -142,11 +142,20 @@ namespace Fanex.Alpha.Before.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your password was last changed on {0}. Please contact to CSD at once if you still cannot login..
+        ///   Looks up a localized string similar to Your password was last changed on &lt;font style=&apos;color: #ff0000&apos;&gt;{0}&lt;/font&gt;. Please contact to CSD at once if you still cannot login..
         /// </summary>
         public static string lblPasswordChanged {
             get {
                 return ResourceManager.GetString("lblPasswordChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} failed attempts. Your access will be locked after 6 failed attempts total. For assistance, please contact CSD..
+        /// </summary>
+        public static string LoginFailedCountMessage {
+            get {
+                return ResourceManager.GetString("LoginFailedCountMessage", resourceCulture);
             }
         }
         
@@ -156,6 +165,33 @@ namespace Fanex.Alpha.Before.Resources {
         public static string LoginTooOftenBlockedMessage {
             get {
                 return ResourceManager.GetString("LoginTooOftenBlockedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your downline, &lt;b&gt;{0}&lt;/b&gt; is unable to log in due to using an old password changed on &lt;b&gt;{1}&lt;/b&gt;. Please assist or reset their password if needed..
+        /// </summary>
+        public static string PersonalMessage_DownlineLoginFailed_ChangedPassword {
+            get {
+                return ResourceManager.GetString("PersonalMessage_DownlineLoginFailed_ChangedPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your downline, &lt;b&gt;{0}&lt;/b&gt;, has reached &lt;b&gt;3 failed login attempts&lt;/b&gt;. This could be a login issue or a security concern. Please check and take action if needed..
+        /// </summary>
+        public static string PersonalMessage_DownlineLoginFailed_ExceedCount {
+            get {
+                return ResourceManager.GetString("PersonalMessage_DownlineLoginFailed_ExceedCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Downline Login Issue.
+        /// </summary>
+        public static string ToastTitle_DownlineLoginFailed {
+            get {
+                return ResourceManager.GetString("ToastTitle_DownlineLoginFailed", resourceCulture);
             }
         }
         
@@ -183,14 +219,6 @@ namespace Fanex.Alpha.Before.Resources {
         public static string usernameAlphanumericOnly {
             get {
                 return ResourceManager.GetString("usernameAlphanumericOnly", resourceCulture);
-            }
-        }
-
-        public static string LoginFailedCountMessage
-        {
-            get
-            {
-                return ResourceManager.GetString("LoginFailedCountMessage", resourceCulture);
             }
         }
     }
