@@ -103,8 +103,15 @@ public class AuthController : Controller
         var custId = await signInService.CheckUsername(loginResult.Username, HttpContext);
         var profilePicture = await profilePictureService.GetProfilePicture(custId);
 
-        var host = Request.Host.Value.Contains(".") ? $"{Request.Host.Value.Split('.')[1]}.{Request.Host.Value.Split('.')[2]}" : Request.Host.Value;
-        loginResult.Avatar = profilePictureService.MakeWaterMarkImage(profilePicture.Image, host);
+        if (AppSetting.IsProfilePictureAllowedWatermark)
+        {
+            var host = Request.Host.Value.Contains(".") ? $"{Request.Host.Value.Split('.')[1]}.{Request.Host.Value.Split('.')[2]}" : Request.Host.Value;
+            loginResult.Avatar = profilePictureService.MakeWaterMarkImage(profilePicture.Image, host);
+            
+            return View(loginResult);
+        }
+        
+        loginResult.Avatar = profilePicture.ImageBase64String;
 
         return View(loginResult);
     }
@@ -151,9 +158,13 @@ public class AuthController : Controller
         }
         
         var profilePicture = await profilePictureService.GetProfilePicture(custId);
-        host = host.Contains(".") ? $"{host.Split('.')[1]}.{host.Split('.')[2]}" : host;
+        if (AppSetting.IsProfilePictureAllowedWatermark)
+        {
+            host = host.Contains(".") ? $"{host.Split('.')[1]}.{host.Split('.')[2]}" : host;
+            return Ok(VerifyResult.CreateSuccessResult(profilePictureService.MakeWaterMarkImage(profilePicture.Image, host)));
+        }
         
-        return Ok(VerifyResult.CreateSuccessResult(profilePictureService.MakeWaterMarkImage(profilePicture.Image, host)));
+        return Ok(VerifyResult.CreateSuccessResult(profilePicture.ImageBase64String));
     }
 
     public async Task<IActionResult> AutomationTest(string username, string password, string captcha, string deviceId, string browserSize)

@@ -55,6 +55,8 @@ namespace Fanex.Alpha.Before.Configurations
 
         public static bool EnabledCallHashPasswordAPI => GetValue<bool>("PasswordService:IsEnabled");
 
+        public static bool IsProfilePictureAllowedWatermark => GetValue<bool>("ProfilePicture:AllowedWatermark");
+
         public static T GetValue<T>(string key)
         {
             try

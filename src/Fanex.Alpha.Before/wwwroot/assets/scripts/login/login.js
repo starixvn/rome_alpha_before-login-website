@@ -222,7 +222,7 @@ Sphinx.Login = {
 
     domElements.labelUsername.text(resource.Username);
     domElements.labelPassword.text(resource.Password);
-    domElements.warningMessage.html(resource.warningMessage);
+    domElements.warningMessage.html(document.getElementById("showWatermarkProfilePicture").value == "1" ? resource.warningMessage2 : resource.warningMessage);
 
     Sphinx.Core.setUserData("LANGUAGE", languageCode);
     Sphinx.Login.currentLanguageCode = languageCode;

@@ -132,6 +132,7 @@
 <input type="hidden" name="browserSize" id="browserSize" value="" />
 <input type="hidden" name="assetAppPath" id="assetAppPath" value="" />
 <input type="hidden" name="dcsStaticAppPath" id="dcsStaticAppPath" value="" />
+<input type="hidden" id="showWatermarkProfilePicture" value="@(AppSetting.IsProfilePictureAllowedWatermark ? 1 : 0)" />
 @if (AppSetting.IsShowTechnicalErrorMessage)
 {
     <input type="hidden" id="hiddenTechnicalErrorTime" value="@AppSetting.TechnicalErrorTime" />
