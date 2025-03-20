@@ -172,4 +172,7 @@
   <data name="usernameAlphanumericOnly" xml:space="preserve">
     <value>ชื่อผู้ใช้ต้องเป็นตัวอักษรหรือตัวเลขเท่านั้น</value>
   </data>
+  <data name="LoginFailedCountMessage" xml:space="preserve">
+    <value>{0} ครั้งที่ล้มเหลว การเข้าถึงจะถูกล็อกหลังจากล้มเหลว 6 ครั้ง หากต้องการความช่วยเหลือ กรุณาติดต่อฝ่ายบริการลูกค้า</value>
+  </data>
 </root>

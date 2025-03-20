@@ -1,4 +1,5 @@
 ﻿using Fanex.Alpha.Before.Configurations;
+using Fanex.Alpha.Before.Resources;
 
 namespace Fanex.Alpha.Before.Models
 {
@@ -93,5 +94,9 @@ namespace Fanex.Alpha.Before.Models
         public bool IsVerified { get; set; }
 
         public string Avatar { get; set; }
+
+        public int FailedCount { get; set; }
+
+        public string FailedCountMessage => string.Format(Labels.LoginFailedCountMessage, FailedCount);
     }
 }

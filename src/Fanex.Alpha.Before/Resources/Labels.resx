@@ -172,4 +172,7 @@
   <data name="usernameAlphanumericOnly" xml:space="preserve">
     <value>Username must be alphabet or numeric only.</value>
   </data>
+  <data name="LoginFailedCountMessage" xml:space="preserve">
+    <value>{0} failed attempts. Your access will be locked after 6 failed attempts total. For assistance, please contact CSD.</value>
+  </data>
 </root>

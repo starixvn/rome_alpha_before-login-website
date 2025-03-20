@@ -67,4 +67,6 @@ public class VerifySignInResult
     public int ServerId { get; set; }
 
     public bool IsKickoutDueToProtectedMode { get; set; }
+
+    public int FailedCount { get; set; }
 }
