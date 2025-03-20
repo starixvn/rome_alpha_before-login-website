@@ -7,7 +7,28 @@
 
 @section styles
 {
-    <link href="~/assets/bundles/themes/@(Model.LoginTemplate)@(darkModeName).min.css" rel="stylesheet" />
+    @if (!string.IsNullOrWhiteSpace(darkModeName))
+    {
+        if (Model.LoginTemplate.Equals("default", StringComparison.OrdinalIgnoreCase))
+        {
+            <link href="~/assets/bundles/themes/default-dark.min.css" rel="stylesheet" />
+        }
+        else
+        {
+            <link href="~/assets/bundles/themes/event-dark.min.css" rel="stylesheet" />
+        }
+    }
+    else
+    {
+        if (Model.LoginTemplate.Equals("default", StringComparison.OrdinalIgnoreCase))
+        {
+            <link href="~/assets/bundles/themes/default.min.css" rel="stylesheet" />
+        }
+        else
+        {
+            <link href="~/assets/bundles/themes/event.min.css" rel="stylesheet" />
+        }
+    }
     <link href="~/assets/bundles/alpha.slider-captcha.css" rel="stylesheet" />
 }
 
