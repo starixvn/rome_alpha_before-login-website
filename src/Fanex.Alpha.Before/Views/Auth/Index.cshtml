@@ -7,7 +7,28 @@
 
 @section styles
 {
-    <link href="~/assets/bundles/themes/@(Model.LoginTemplate)@(darkModeName).min.css" rel="stylesheet" />
+    @if (!string.IsNullOrWhiteSpace(darkModeName))
+    {
+        if (Model.LoginTemplate.Equals("default", StringComparison.OrdinalIgnoreCase))
+        {
+            <link href="~/assets/bundles/themes/default-dark.min.css" rel="stylesheet" />
+        }
+        else
+        {
+            <link href="~/assets/bundles/themes/event-dark.min.css" rel="stylesheet" />
+        }
+    }
+    else
+    {
+        if (Model.LoginTemplate.Equals("default", StringComparison.OrdinalIgnoreCase))
+        {
+            <link href="~/assets/bundles/themes/default.min.css" rel="stylesheet" />
+        }
+        else
+        {
+            <link href="~/assets/bundles/themes/event.min.css" rel="stylesheet" />
+        }
+    }
     <link href="~/assets/bundles/alpha.slider-captcha.css" rel="stylesheet" />
 }
 
@@ -77,7 +98,7 @@
 <div style="@(Model.IsVerified ? string.Empty : "display: none;")" id="loginRegion">
     <div class="rowlg">
         <figure class="avatar">
-            <img src='@(!string.IsNullOrEmpty(Model.Avatar) ? Model.Avatar : Url.Content("~/assets/images/icon_user_default.png"))'
+            <img style="width: 100px; height: 100px;" src='@(!string.IsNullOrEmpty(Model.Avatar) ? Model.Avatar : Url.Content("~/assets/images/icon_user_default.png"))'
                 alt="Avatar" id="avatar" />
             <figcaption><span class="username" id="username">@Model.Username</span></figcaption>
         </figure>
@@ -111,6 +132,7 @@
 <input type="hidden" name="browserSize" id="browserSize" value="" />
 <input type="hidden" name="assetAppPath" id="assetAppPath" value="" />
 <input type="hidden" name="dcsStaticAppPath" id="dcsStaticAppPath" value="" />
+<input type="hidden" id="showWatermarkProfilePicture" value="@(AppSetting.IsProfilePictureAllowedWatermark ? 1 : 0)" />
 @if (AppSetting.IsShowTechnicalErrorMessage)
 {
     <input type="hidden" id="hiddenTechnicalErrorTime" value="@AppSetting.TechnicalErrorTime" />
