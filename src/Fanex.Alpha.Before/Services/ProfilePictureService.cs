@@ -95,6 +95,11 @@ namespace Fanex.Alpha.Before.Services
 
         public string MakeWaterMarkImage(byte[] imageBytes, string waterMarkText)
         {
+            if (imageBytes == null || imageBytes.Length == 0)
+            {
+                return string.Empty;
+            }
+            
             using var image = Image.Load<Rgba32>(imageBytes);
             var font = SystemFonts.CreateFont("Arial", 24, FontStyle.Bold);
 
