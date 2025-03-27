@@ -12,7 +12,7 @@ namespace Fanex.Alpha.Before.Helpers
         {
             get { return languages[0]; }
         }
-
+ 
         public static int CheckingLanguageFromCookie()
         {
             var language = 0;

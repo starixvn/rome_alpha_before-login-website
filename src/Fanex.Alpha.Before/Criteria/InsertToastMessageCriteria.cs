@@ -8,7 +8,7 @@ using Fanex.Alpha.Before.Models;
 
 namespace Fanex.Alpha.Before.Criteria;
 
-public class InsertToastMessageCriteria : CriteriaBase
+public class InsertToastMessageCriteria : NonQueryCommand
 {
     public InsertToastMessageCriteria(
         int targetId,

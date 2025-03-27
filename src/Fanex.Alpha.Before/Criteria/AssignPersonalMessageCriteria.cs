@@ -4,7 +4,7 @@ using Fanex.Data.Repository;
 namespace Fanex.Alpha.Before.Criteria
 {
 
-    public class AssignPersonalMessageCriteria : CriteriaBase
+    public class AssignPersonalMessageCriteria : NonQueryCommand
     {
         public AssignPersonalMessageCriteria(long messageId, int custId, string custName)
         {
